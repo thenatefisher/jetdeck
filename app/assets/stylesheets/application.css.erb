@@ -1,0 +1,97 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require bootstrap_and_overrides 
+ *= require_self
+ *= require_tree .
+*/
+
+body {
+  background: url(<%= asset_path 'cork_1.png' %>) repeat;
+}
+
+.navbar .brand:hover {
+  text-decoration: none;
+}
+
+.navbar .brand {
+  font-family: 'Condiment', cursive;
+  position: left;
+  display: block;
+  padding: 12px 20px 0px 0px;
+  margin-left: 0px;
+  font-size: 35px;
+  font-weight: 200;
+  line-height: 1;
+  color: #ffffff;
+  width: 140px;
+}
+
+.navbar .brand strong { }
+
+.inline_edit {
+border: 0px;
+box-shadow: none;
+outline: 0px;
+padding: 0px;
+margin: 0px;
+font-size: 15px;
+vertical-align: baseline;
+width: 100px;
+background: transparent;
+
+}
+.inline_edit :focus {
+border: 0px;
+outline: 0px;
+}
+#main-thumbnail {
+  height: 200px;
+  overflow: hidden; -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+#main-thumbnail:hover {
+  opacity:0.6;
+  filter:alpha(opacity=60); /* For IE8 and earlier */
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+.pagination a {
+  padding: 0px 6px;
+  line-height: 19px;
+}
+.modal {
+  width: 700px;
+  margin: -250px 0 0 -280px;
+}
+
+.alerts_enabled { display:block; }
+.notes_enabled { display:block; }
+.send_enabled { display:block; }
+.history_enabled { display:block; }
+.team_enabled { display:block; }
+.listings_enabled { display:block; }
+.documents_enabled { display:block; }
+.tasks_enabled { display:block; }
+.associates_enabled { display:block; }
+.leads_enabled { display:block; }
+.details_enabled { display:block; }
+.nav_contacts_enabled { display:block; }
+.nav_deals_enabled { display:block; }
+.nav_searches_enabled { display:block; }
+
