@@ -26,7 +26,7 @@ gem 'delayed_job_active_record'
 gem 'nokogiri'
 gem 'factory_girl_rails'
 gem 'capybara'
-#gem 'jbuilder'
+gem 'jbuilder'
 
 group :test, :development do
   gem "rspec-rails", "~> 2.6"
