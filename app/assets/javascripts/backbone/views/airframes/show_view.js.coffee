@@ -4,5 +4,10 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   template: JST["backbone/templates/airframes/show"]
 
   render: ->
-    $(@el).html(@template(@model.toJSON() ))
+    @model.fetch(
+      success: () =>
+        $(@el).html(@template(@model.toJSON() ))
+      failure: () ->
+    )
+
     return this
