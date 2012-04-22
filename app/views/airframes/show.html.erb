@@ -1,0 +1,38 @@
+<h1>Airframe</h1>
+
+<p>
+  <b>Serial</b><br>
+  <%= @airframe.serial %>
+</p>
+
+<p>
+  <b>Registration</b><br>
+  <%= @airframe.registration %>
+</p>
+
+
+<p>
+  <b>Model</b><br>
+  <%= @airframe.model_id %>
+</p>
+
+<p>
+  <b>Year</b><br>
+  <%= @airframe.year %>
+</p>
+
+<p>
+  <b>TotalTime</b><br>
+  <%= @airframe.TotalTime %>
+</p>
+
+<p>
+  <b>TotalCycles</b><br>
+  <%= @airframe.TotalCycles %>
+</p>
+
+<div class="form-actions">
+  <%= link_to 'Back', airframes_path, :class => 'btn'  %>
+  <%= link_to 'Edit', edit_airframe_path(@airframe), :class => 'btn' %>
+  <%= link_to 'Delete', airframe_path(@airframe), :method => 'delete', :confirm => 'Are you sure?', :class => 'btn btn-danger' %>
+</div>

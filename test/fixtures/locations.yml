@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  city: MyString
+  country: MyString
+  state: MyString
+  registrationPrefix: MyString
+  salesTax: 1.5
+
+two:
+  city: MyString
+  country: MyString
+  state: MyString
+  registrationPrefix: MyString
+  salesTax: 1.5

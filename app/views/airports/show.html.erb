@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Icao:</b>
+  <%= @airport.icao %>
+</p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @airport.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @airport.longitude %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @airport.name %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @airport.city %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @airport.state %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @airport.country %>
+</p>
+
+
+<%= link_to 'Edit', edit_airport_path(@airport) %> |
+<%= link_to 'Back', airports_path %>

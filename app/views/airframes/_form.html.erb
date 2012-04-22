@@ -1,0 +1,53 @@
+<%= form_for @airframe, :html => { :class => 'form-horizontal' } do |f| %>
+  <fieldset>
+    <legend><%= controller.action_name.capitalize %> Airframe</legend>
+
+    <div class="control-group">
+      <%= f.label :serial, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :serial, :class => 'text_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :registration, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.text_field :registration, :class => 'text_field' %>
+      </div>
+    </div>
+
+
+    <div class="control-group">
+      <%= f.label :model_id, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :model_id, :class => 'number_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :year, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :year, :class => 'number_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :totalTime, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :totalTime, :class => 'number_field' %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :totalCycles, :class => 'control-label' %>
+      <div class="controls">
+        <%= f.number_field :totalCycles, :class => 'number_field' %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to 'Cancel', airframes_path, :class => 'btn' %>
+    </div>
+  </fieldset>
+<% end %>
