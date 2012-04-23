@@ -17,15 +17,29 @@
           <% } %>
 
           <% for (var i = 0; i < tags.length; i++) { %>
-            <a href="#"><span class="label label-info tags_enabled"><%= tags[i].name %></span></a>
+            <a href="#"><span class="label label-info tags_enabled">
+              <%= tags[i].name %></span>
+            </a>
           <% } %>
 
           <div style="margin: 20px 0px 0px 0px; font-size: 110%">
-            <div style="margin: 5px 0px;"><strong>Serial Number</strong> <%= serial %> </div>
-            <div style="margin: 5px 0px"><strong>Registration</strong> <%= registration %> </div>
-            <div style="margin: 5px 0px"><strong>Location</strong> <a href="<%= location.id %>"><%= location.icao %></a> (<%= location.city %>) </div>
-            <div style="margin: 5px 0px;"><strong>Asking</strong> <input type="text" class="inline_edit" value="<%= askPrice %>" name="registration"></input></div>
-            <div style="margin: 5px 0px;"><strong>Agent</strong> <a href="<%= agent.id %>"> <%= agent.name %> </a></div>
+            <div style="margin: 5px 0px;"><strong>Serial Number</strong>
+              <%= serial %> </div>
+
+            <div style="margin: 5px 0px"><strong>Registration</strong>
+              <%= registration %> </div>
+
+            <div style="margin: 5px 0px"><strong>Location</strong>
+              <a href="<%= location.id %>"><%= location.icao %></a>
+              (<%= location.city %>) </div>
+
+            <div style="margin: 5px 0px;"><strong>Asking</strong>
+
+            <input type="text" class="inline_edit" value="<%= askPrice %>"
+              name="registration"></input></div>
+
+            <div style="margin: 5px 0px;"><strong>Agent</strong>
+              <a href="<%= agent.id %>"> <%= agent.name %> </a></div>
           </div>
         </div>
 
@@ -41,7 +55,7 @@
 
         <div class="span6">
 
-          <div class="alert alert-block alert-error alerts_enabled">
+          <div class="alert alert-block alert-error hide">
 
             <a class="close" data-dismiss="alert" style=""><i class="icon-remove"></i></a>
             <h4 class="alert-heading">This Aircraft May Have Been Listed!</h4>
