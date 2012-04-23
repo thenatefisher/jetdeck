@@ -21,16 +21,14 @@
 
     </head>
 <body>
+
   <div class="container">
 
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
           <div class="container">
-
             <a class="brand" href="#"><strong>JetDeck.co</strong></a>
-
             <div class="nav-collapse">
-
               <ul class="nav pull-right">
                 <li><a href="#">Help</a></li>
                 <li class="divider-vertical"></li>
@@ -43,36 +41,31 @@
                   </ul>
                 </li>
               </ul>
-
             </div><!-- /.nav-collapse -->
-
           </div>
-
         </div><!-- /navbar-inner -->
-
     </div> <!-- navbar navbar-fixed-top -->
 
     <div class="row" style="padding: 15px 0px 10px;">
-              <div class="btn-toolbar btn-group pull-right" style="margin: 10px 30px 0 0;">
-                <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
-                  <i class="icon-plus icon-white"></i> New
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" style="left: auto">
-                  <li><a href="#"><i class="icon-plane"></i> New Spec</a></li>
-                  <li><a href="#"><i class="icon-user"></i> New Contact</a></li>
-                </ul>
-              </div>
+      <div class="btn-toolbar btn-group pull-right" style="margin: 10px 20px 0 0;">
+        <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+          <i class="icon-plus icon-white"></i> New
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" style="left: auto">
+          <li><a href="#"><i class="icon-plane"></i> New Spec</a></li>
+          <li><a href="#"><i class="icon-user"></i> New Contact</a></li>
+        </ul>
+      </div>
 
-              <form class="navbar-search pull-right" action="">
-                <input type="text" class="jui-autocomplete input-xlarge" placeholder="Find an aircraft or contact" style="margin: 4px 10px;"></input>
-              </form>
+      <form class="navbar-search pull-right" action="">
+        <input type="text" class="jui-autocomplete input-xlarge" placeholder="Find an aircraft or contact" style="margin: 4px 10px;"></input>
+      </form>
     </div> <!-- end row class for search bar and new spec/contact-->
 
     <div class="row">
 
       <div class="span2">
-
         <ul class="nav nav-list">
           <li class="">
             <a href="list.htm"> <i class="icon-th-list"></i> My Deck <span class="badge badge-info">8</span></a>
@@ -83,67 +76,24 @@
           <li class="nav_contacts_enabled">
             <a href="#"> <i class="icon-book"></i> Contacts</a>
           </li>
-          <li class="nav_deals_enabled">
+          <!--<li class="nav_deals_enabled">
             <a href="#"> <i class="icon-folder-close"></i> Deals <span class="badge badge-info">2</span></a>
-          </li>
+          </li>-->
 
-          <div class="team_enabled">
-          <li class="nav-header">
-            Team Members
-          </li>
+          <!-- MEMBERS -->
 
-          <li>
-            <a href="#"><i class="icon-eye-open"></i> Steve Muller</a>
-          </li>
-          <li">
-            <a href="#"><i class="icon-time"></i> Charlie Belcher</a>
-          </li>
-          <li>
-            <a href="#"><i class="icon-eye-open"></i> Jacob Simons</a>
-          </li>
-          <li>
-            <a href="#"><i class="icon-eye-close"></i> John Holland</a>
-          </li>
-          <li>
-            <a href="#"><i class="icon-time"></i> Chris Davies</a>
-          </li>
-
-
-          <li class="nav-header">
-            Team Activity
-          </li>
-          <li>
-           <a href="#"><i class="icon-plus"></i> <span class="label label-info"><i class="icon-plane icon-white"></i> BB-1241</span></a>
-          </li>
-          <li>
-            <a href="#"><i class="icon-refresh"></i> <span class="label label-info"> <i class="icon-user icon-white"></i> Lou Green..</span></a>
-          </li>
-          <li>
-            <a href="#"><i class="icon-refresh"></i> <span class="label label-info"><i class="icon-plane icon-white"></i> 208B341</span></a>
-          </li>
-          <li>
-            <a href="#"><i class="icon-refresh"></i> <span class="label label-info"><i class="icon-plane icon-white"></i> LJ-123</span></a>
-          </li>
-          <li>
-            <a href="#"><i class="icon-plus"></i> <span class="label label-info"> <i class="icon-user icon-white"></i> Mary Toew..</span></a>
-          </li>
-          <li>
-            <a href="#"><i class="icon-refresh"></i> <span class="label label-info"><i class="icon-plane icon-white"></i> 208B0923</span></a>
-          </li>
-          </div>
+          <!-- ACTIVITY -->
 
         </ul>
-      </div> <!-- end MY DECK ... navigation -->
+      </div> <!-- end span2 - MY DECK ... navigation -->
 
+      <div class="span10" style="border: 1px solid #ccc; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; margin:0px; background: #fff;">
+          <div style="margin-top: 20px;"></div>
+          <%= yield %>
+      </div> <!-- span10 entire spec (White background) -->
 
-    <div class="span10" style="border: 1px solid #ccc; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; margin:0px; background: #fff;">
+    </div> <!-- end main row -->
 
-        <div style="margin-top: 20px;"></div>
-
-        <%= yield %>
-
-    </div> <!-- span10 entire spec (White background) -->
-  </div> <!-- end main row -->
   </div> <!-- end container class -->
 
 </body>
