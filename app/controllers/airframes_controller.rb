@@ -55,7 +55,7 @@ class AirframesController < ApplicationController
     @airframe = Airframe.find(params[:id])
 
     respond_to do |format|
-      if @airframe.update_attributes(params[:airframe])
+      if @airframe.update_attributes(params[:airframe].slice(:id, :askingPrice, :serial, :registration, :totalTime, :totalCycles))
         format.html { redirect_to @airframe, :notice => 'Airframe was successfully updated.' }
         format.json { head :no_content }
       else

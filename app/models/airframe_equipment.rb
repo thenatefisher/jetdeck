@@ -1,3 +1,17 @@
+# == Schema Information
+# Schema version: 20120418040641
+#
+# Table name: airframe_equipments
+#
+#  id           :integer         not null, primary key
+#  airframe_id  :integer
+#  equipment_id :integer
+#  type         :string(255)
+#  user_id      :integer
+#  created_at   :datetime        not null
+#  updated_at   :datetime        not null
+#
+
 class AirframeEquipment < ActiveRecord::Base
 
   belongs_to :airframe

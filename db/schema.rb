@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120418040641) do
+ActiveRecord::Schema.define(:version => 20120427044143) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "location_id"
@@ -69,6 +69,7 @@ ActiveRecord::Schema.define(:version => 20120418040641) do
     t.boolean  "baseline"
     t.integer  "totalTime"
     t.integer  "totalCycles"
+    t.integer  "askingPrice"
   end
 
   add_index "airframes", ["model_id"], :name => "index_airframes_on_model_id"

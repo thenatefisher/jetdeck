@@ -1,3 +1,22 @@
+# == Schema Information
+# Schema version: 20120418040641
+#
+# Table name: users
+#
+#  id            :integer         not null, primary key
+#  type          :integer
+#  contact_id    :integer
+#  created_at    :datetime        not null
+#  updated_at    :datetime        not null
+#  password_hash :string(255)
+#  password_salt :string(255)
+#  active        :boolean
+#
+# Indexes
+#
+#  indexusers_on_contact_id  (contact_id)
+#
+
 require 'bcrypt'
 
 class User < ActiveRecord::Base

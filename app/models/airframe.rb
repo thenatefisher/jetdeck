@@ -1,3 +1,28 @@
+# == Schema Information
+# Schema version: 20120427044143
+#
+# Table name: airframes
+#
+#  id           :integer         not null, primary key
+#  serial       :string(255)
+#  registration :string(255)
+#  model_id     :integer
+#  year         :integer
+#  created_at   :datetime        not null
+#  updated_at   :datetime        not null
+#  airport_id   :integer
+#  user_id      :integer
+#  baseline_id  :integer
+#  baseline     :boolean
+#  totalTime    :integer
+#  totalCycles  :integer
+#  askingPrice  :integer
+#
+# Indexes
+#
+#  index_airframes_on_model_id  (model_id)
+#
+
 class Airframe < ActiveRecord::Base
 
   has_many :airframe_equipments

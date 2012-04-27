@@ -1,3 +1,21 @@
+# == Schema Information
+# Schema version: 20120418040641
+#
+# Table name: xspecs
+#
+#  id          :integer         not null, primary key
+#  airframe_id :integer
+#  recipient   :integer
+#  sender      :integer
+#  sent        :datetime
+#  format      :string(255)
+#  message     :text
+#  published   :boolean
+#  created_at  :datetime        not null
+#  updated_at  :datetime        not null
+#  urlCode     :string(255)
+#
+
 class Xspec < ActiveRecord::Base
 
   has_many :views, :foreign_key => :spec_id, :class_name => "SpecView", :dependent => :destroy

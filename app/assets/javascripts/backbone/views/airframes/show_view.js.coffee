@@ -2,8 +2,24 @@ Jetdeck.Views.Airframes ||= {}
 
 class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   template: JST["backbone/templates/airframes/show"]
-
-  render: ->
+    
+  events:
+    "change .inline_edit": "edit"
+  
+  edit: (e) ->
+    if $(e.target).hasClass('number')
+      value = parseInt($(e.target).val().replace(/[^0-9]/g,""))
+      $(e.target).val(value.formatMoney(0, ".", ","))
+    else if $(e.target).hasClass('money')
+      value = parseInt($(e.target).val().replace(/[^0-9]/g,""))
+      $(e.target).val("$"+value.formatMoney(0, ".", ","))    
+    else
+      value = $(e.target).val()
+      
+    name = $(e.target).attr('name')
+    editInline(@model, name, value)   
+  
+  render: =>
     @model.fetch(
       success: () =>
         $(@el).html(@template(@model.toJSON() ))
@@ -15,13 +31,25 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
         @$("#airframe_spec_details").html(@spec.render().el)           
         
         @send = new Jetdeck.Views.Airframes.ShowSendView(model: @model)
-        @$("#airframe_send").html(@send.render().el)          
-           
+        @$("#airframe_send").html(@send.render().el)
+
+        @$(".money").each(->
+            if $(this).val() != null
+              intPrice = parseInt($(this).val().replace(/[^0-9]/g,""))
+              $(this).val("$"+intPrice.formatMoney(0, ".", ","))
+        )
+        
+        @$(".number").each(->
+            if $(this).val() != null
+              intPrice = parseInt($(this).val().replace(/[^0-9]/g,""))
+              $(this).val(intPrice.formatMoney(0, ".", ","))
+        )
+               
       failure: () ->
     )
-
-    return this
     
+    return this
+  
 class Jetdeck.Views.Airframes.ShowHeaderView extends Backbone.View
   template: JST["backbone/templates/airframes/_header"]
 

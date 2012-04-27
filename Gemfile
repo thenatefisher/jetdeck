@@ -27,6 +27,7 @@ gem 'nokogiri'
 gem 'factory_girl_rails'
 gem 'capybara'
 gem 'jbuilder'
+gem 'annotate', ">= 2.4.1.beta"
 
 group :test, :development do
   gem "rspec-rails", "~> 2.6"
