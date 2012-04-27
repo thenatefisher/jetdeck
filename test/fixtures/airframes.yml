@@ -1,3 +1,24 @@
+# == Schema Information
+# Schema version: 20120427044143
+#
+# Table name: airframes
+#
+#  id           :integer         not null, primary key
+#  serial       :string(255)
+#  registration :string(255)
+#  model_id     :integer         indexed
+#  year         :integer
+#  created_at   :datetime        not null
+#  updated_at   :datetime        not null
+#  airport_id   :integer
+#  user_id      :integer
+#  baseline_id  :integer
+#  baseline     :boolean
+#  totalTime    :integer
+#  totalCycles  :integer
+#  askingPrice  :integer
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:

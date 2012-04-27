@@ -1,10 +1,10 @@
 # == Schema Information
-# Schema version: 20120418040641
+# Schema version: 20120427044143
 #
 # Table name: equipment
 #
 #  id              :integer         not null, primary key
-#  manufacturer_id :integer
+#  manufacturer_id :integer         indexed
 #  abbreviation    :string(255)
 #  modelNumber     :string(255)
 #  name            :string(255)
@@ -12,10 +12,7 @@
 #  etype           :string(255)
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
-#
-# Indexes
-#
-#  index_equipment_on_manufacturer_id  (manufacturer_id)
+#  serial          :string(255)
 #
 
 class Equipment < ActiveRecord::Base

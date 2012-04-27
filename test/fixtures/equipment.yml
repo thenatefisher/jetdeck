@@ -1,3 +1,20 @@
+# == Schema Information
+# Schema version: 20120427044143
+#
+# Table name: equipment
+#
+#  id              :integer         not null, primary key
+#  manufacturer_id :integer         indexed
+#  abbreviation    :string(255)
+#  modelNumber     :string(255)
+#  name            :string(255)
+#  description     :text
+#  etype           :string(255)
+#  created_at      :datetime        not null
+#  updated_at      :datetime        not null
+#  serial          :string(255)
+#
+
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
