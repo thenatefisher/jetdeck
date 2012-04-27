@@ -121,9 +121,18 @@ ActiveRecord::Schema.define(:version => 20120427044143) do
     t.string   "etype"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
+    t.string   "serial"
   end
 
   add_index "equipment", ["manufacturer_id"], :name => "index_equipment_on_manufacturer_id"
+
+  create_table "equipment_details", :force => true do |t|
+    t.integer  "equipment_id"
+    t.string   "value"
+    t.string   "parameter"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
 
   create_table "locations", :force => true do |t|
     t.string   "city"
