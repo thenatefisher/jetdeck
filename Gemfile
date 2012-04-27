@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'rails', '3.2.2'
 gem 'mysql2'
@@ -27,6 +27,7 @@ gem 'nokogiri'
 gem 'factory_girl_rails'
 gem 'capybara'
 gem 'jbuilder'
+gem 'annotate-models'
 
 group :test, :development do
   gem "rspec-rails", "~> 2.6"
