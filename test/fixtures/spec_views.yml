@@ -1,17 +1,3 @@
-# == Schema Information
-# Schema version: 20120427044143
-#
-# Table name: spec_views
-#
-#  id         :integer         not null, primary key
-#  spec_id    :integer
-#  timeOnPage :integer
-#  agent      :string(255)
-#  ip         :string(255)
-#  created_at :datetime        not null
-#  updated_at :datetime        not null
-#
-
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20120418040641
+# Schema version: 20120429080558
 #
 # Table name: locations
 #
@@ -13,7 +13,6 @@
 #  updated_at         :datetime        not null
 #  stateAbbreviation  :string(255)
 #
-
 class Location < ActiveRecord::Base
   has_many :airports
   has_many :addresses

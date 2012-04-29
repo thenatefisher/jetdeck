@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120427044143) do
+ActiveRecord::Schema.define(:version => 20120429184433) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "location_id"
@@ -37,10 +37,11 @@ ActiveRecord::Schema.define(:version => 20120427044143) do
   create_table "airframe_equipments", :force => true do |t|
     t.integer  "airframe_id"
     t.integer  "equipment_id"
-    t.string   "type"
     t.integer  "user_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.integer  "engine_id"
+    t.string   "label"
   end
 
   create_table "airframe_histories", :force => true do |t|
@@ -112,6 +113,22 @@ ActiveRecord::Schema.define(:version => 20120427044143) do
 
   add_index "credits", ["user_id"], :name => "index_credits_on_user_id"
 
+  create_table "engines", :force => true do |t|
+    t.string   "serial"
+    t.integer  "totalTime"
+    t.integer  "totalCycles"
+    t.integer  "year"
+    t.integer  "smoh"
+    t.integer  "tbo"
+    t.integer  "hsi"
+    t.integer  "shsi"
+    t.integer  "model_id"
+    t.boolean  "baseline"
+    t.integer  "baseline_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "equipment", :force => true do |t|
     t.integer  "manufacturer_id"
     t.string   "abbreviation"
@@ -121,17 +138,16 @@ ActiveRecord::Schema.define(:version => 20120427044143) do
     t.string   "etype"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.string   "serial"
   end
 
   add_index "equipment", ["manufacturer_id"], :name => "index_equipment_on_manufacturer_id"
 
   create_table "equipment_details", :force => true do |t|
-    t.integer  "equipment_id"
     t.string   "value"
     t.string   "parameter"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.integer  "airframeEquipment_id"
   end
 
   create_table "locations", :force => true do |t|

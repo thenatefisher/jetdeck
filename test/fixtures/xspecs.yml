@@ -1,21 +1,3 @@
-# == Schema Information
-# Schema version: 20120427044143
-#
-# Table name: xspecs
-#
-#  id          :integer         not null, primary key
-#  airframe_id :integer
-#  recipient   :integer
-#  sender      :integer
-#  sent        :datetime
-#  format      :string(255)
-#  message     :text
-#  published   :boolean
-#  created_at  :datetime        not null
-#  updated_at  :datetime        not null
-#  urlCode     :string(255)
-#
-
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:

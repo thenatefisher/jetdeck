@@ -1,12 +1,12 @@
 # == Schema Information
-# Schema version: 20120427044143
+# Schema version: 20120429080558
 #
 # Table name: airframes
 #
 #  id           :integer         not null, primary key
 #  serial       :string(255)
 #  registration :string(255)
-#  model_id     :integer
+#  model_id     :integer         indexed
 #  year         :integer
 #  created_at   :datetime        not null
 #  updated_at   :datetime        not null
@@ -17,10 +17,6 @@
 #  totalTime    :integer
 #  totalCycles  :integer
 #  askingPrice  :integer
-#
-# Indexes
-#
-#  index_airframes_on_model_id  (model_id)
 #
 
 class Airframe < ActiveRecord::Base
@@ -42,10 +38,9 @@ class Airframe < ActiveRecord::Base
   has_many    :engines,
               :through => :airframe_equipments,
               :foreign_key => "airframe_id",
-              :class_name => "Equipment",
-              :source => :equipment,
-              :conditions => "equipment.etype = 'engines'"
-
+              :class_name => "Engine",
+              :source => :engine
+            
   has_many    :exteriors,
               :through => :airframe_equipments,
               :foreign_key => "airframe_id",

@@ -1,5 +1,5 @@
 # == Schema Information
-# Schema version: 20120427044143
+# Schema version: 20120429080558
 #
 # Table name: equipment
 #
@@ -12,7 +12,6 @@
 #  etype           :string(255)
 #  created_at      :datetime        not null
 #  updated_at      :datetime        not null
-#  serial          :string(255)
 #
 
 class Equipment < ActiveRecord::Base
@@ -25,14 +24,18 @@ class Equipment < ActiveRecord::Base
   has_many :airframes, :through => :airframe_equipments
   has_many :equipment_details
 
-  def self.eTypes
-    types = [ "avionics",
-              "engines",
-              "interiors",
-              "exteriors",
-              "modifications",
-              "equipment"]
-  end
+  validates :etype, 
+    :inclusion => { :in => [ "avionics",
+                              "interiors",
+                              "exteriors",
+                              "engines",
+                              "modifications",
+                              "equipment"] }
 
+  before_save :add_details
+
+  def add_details
+  
+  end
 
 end

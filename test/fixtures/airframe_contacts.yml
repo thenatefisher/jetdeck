@@ -1,16 +1,3 @@
-# == Schema Information
-# Schema version: 20120427044143
-#
-# Table name: airframe_contacts
-#
-#  id          :integer         not null, primary key
-#  airframe_id :integer
-#  contact_id  :integer
-#  relation    :string(255)
-#  created_at  :datetime        not null
-#  updated_at  :datetime        not null
-#
-
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:

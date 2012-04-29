@@ -1,18 +1,3 @@
-# == Schema Information
-# Schema version: 20120427044143
-#
-# Table name: airports
-#
-#  id          :integer         not null, primary key
-#  icao        :string(255)
-#  latitude    :string(255)
-#  longitude   :string(255)
-#  name        :string(255)
-#  created_at  :datetime        not null
-#  updated_at  :datetime        not null
-#  location_id :integer
-#
-
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
 one:
