@@ -29,6 +29,7 @@ class Equipment < ActiveRecord::Base
                               "interiors",
                               "exteriors",
                               "engines",
+                              "airframes",
                               "modifications",
                               "equipment"] }
 

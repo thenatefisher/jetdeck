@@ -21,12 +21,13 @@
 
 class Airframe < ActiveRecord::Base
 
+  # relationships
   has_many :airframe_equipments
 
   belongs_to  :m,
               :class_name => "Equipment",
               :foreign_key => "model_id",
-              :conditions => "etype = 'airframe'"
+              :conditions => "etype = 'airframes'"
 
   has_many    :avionics,
               :through => :airframe_equipments,
@@ -77,12 +78,19 @@ class Airframe < ActiveRecord::Base
 
   has_many :credits, :as => :creditable
 
+  # accessor
   attr_accessor :model, :make
 
+  # hooks
   before_save :record_history
 
+  # named scopes
+  scope :reg, lambda { |r| where("registration like ?", r) }
+
+  # validation
   validates_presence_of :m
 
+  # methods
   def record_history
     self.changed.each do |c|
       event = AirframeHistory.create(
@@ -94,8 +102,6 @@ class Airframe < ActiveRecord::Base
       end
     end
   end
-
-  scope :reg, lambda { |r| where("registration like ?", r) }
 
   def make
     self.m.make.name

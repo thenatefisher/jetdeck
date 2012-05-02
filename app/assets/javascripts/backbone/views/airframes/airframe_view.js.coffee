@@ -11,7 +11,6 @@ class Jetdeck.Views.Airframes.AirframeView extends Backbone.View
   destroy: () ->
     @model.destroy()
     this.remove()
-
     return false
 
   render: ->
