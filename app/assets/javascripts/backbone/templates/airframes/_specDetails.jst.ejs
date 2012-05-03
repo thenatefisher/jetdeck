@@ -66,18 +66,18 @@
                 <td style="border-top: 0px;"><input type="text" class="inline_edit" value="PT6-34A" name="registration"></input></td>
               </tr>
               <tr>
-                <td style="border-top: 0px;"><h4><small>MSN</small></h4></td>
-                <td style="border-top: 0px;"><input type="text" class="inline_edit" value="PWC-0023" name="registration"></input></td>
-                <td style="border-top: 0px;"><input type="text" class="inline_edit" value="PWC-0523" name="registration"></input></td>
-                <td style="border-top: 0px;"><input type="text" class="inline_edit" value="PWC-0074" name="registration"></input></td>
-                <td style="border-top: 0px;"><input type="text" class="inline_edit" value="PWC-0245" name="registration"></input></td>
+                <td><h4><small>MSN</small></h4></td>
+                <td><input type="text" class="inline_edit" value="PWC-0023" name="registration"></input></td>
+                <td><input type="text" class="inline_edit" value="PWC-0523" name="registration"></input></td>
+                <td><input type="text" class="inline_edit" value="PWC-0074" name="registration"></input></td>
+                <td><input type="text" class="inline_edit" value="PWC-0245" name="registration"></input></td>
               </tr>
               <tr>
-                <td style="border-top: 0px;"><h4><small>TT</small></h4></td>
-                <td style="border-top: 0px;"><input type="text" class="inline_edit" value="12,345" name="registration"></input></td>
-                <td style="border-top: 0px;"><input type="text" class="inline_edit" value="11,274" name="registration"></input></td>
-                <td style="border-top: 0px;"><input type="text" class="inline_edit" value="13,933" name="registration"></input></td>
-                <td style="border-top: 0px;"><input type="text" class="inline_edit" value="9,231" name="registration"></input></td>
+                <td><h4><small>TT</small></h4></td>
+                <td><input type="text" class="inline_edit" value="12,345" name="registration"></input></td>
+                <td><input type="text" class="inline_edit" value="11,274" name="registration"></input></td>
+                <td><input type="text" class="inline_edit" value="13,933" name="registration"></input></td>
+                <td><input type="text" class="inline_edit" value="9,231" name="registration"></input></td>
               </tr>
 
 
@@ -86,7 +86,35 @@
 
         </div>
 
-        <div class="tab-pane" id="pane_avionics"></div>
+        <div class="tab-pane" id="pane_avionics">
+            <table class="table table-condensed">
+            <tbody>
+            
+              <% for (var i = 0; i < avionics.length; i++) { %>
+              <% if (i % 2 == 0) { %>
+              <tr>
+                <td><h4><small><%= avionics[i].label %></small></h4></td>
+                <td class="equipmentTooltip">
+                    <%= avionics[i].make %> <%= avionics[i].model %> &nbsp;&nbsp;<i data-eid="<%= avionics[i].id %>" class="removeEquipment icon-trash"></i>
+                </td>
+                <td>&nbsp;</td>
+                <% } else { %>
+                <td><h4><small><%= avionics[i].label %></small></h4></td>
+                <td class="equipmentTooltip">
+                    <%= avionics[i].make %> <%= avionics[i].model %> &nbsp;&nbsp;<i data-eid="<%= avionics[i].id %>" class="removeEquipment icon-trash"></i>
+                </td>
+              </tr>
+              <% }} %>
+              
+              <% if (avionics.length % 2 == 1) { %>
+                <td></td>
+                <td></td>
+              </tr>              
+              <% } %>
+              
+            </tbody>
+            </table>        
+        </div>
         <div class="tab-pane" id="pane_cosmetics"></div>
         <div class="tab-pane" id="pane_equipment"></div>
 

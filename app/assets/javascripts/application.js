@@ -31,6 +31,7 @@ function editInline(model, fname, value) {
 }
 
 $(function() {
+
     var results = [
         {
 	        value: "Nate Fisher",

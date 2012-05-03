@@ -53,9 +53,19 @@ class AirframesController < ApplicationController
   # PUT /airframes/1.json
   def update
     @airframe = Airframe.find(params[:id])
+    whitelist = params[:airframe].slice(:id, :askingPrice, :serial, :registration, :totalTime, :totalCycles)
 
+    avionics_ids = params[:airframe][:avionics]
+    if avionics_ids.present?
+        @avionics = []
+        avionics_ids.each do |a|
+             @avionics << Equipment.find(a[:id]) 
+        end
+        whitelist[:avionics] = @avionics
+    end
+   
     respond_to do |format|
-      if @airframe.update_attributes(params[:airframe].slice(:id, :askingPrice, :serial, :registration, :totalTime, :totalCycles))
+      if @airframe.update_attributes(whitelist)
         format.html { redirect_to @airframe, :notice => 'Airframe was successfully updated.' }
         format.json { head :no_content }
       else

@@ -24,6 +24,8 @@ class Airframe < ActiveRecord::Base
   # relationships
   has_many :airframe_equipments
 
+  belongs_to :airport
+
   belongs_to  :m,
               :class_name => "Equipment",
               :foreign_key => "model_id",

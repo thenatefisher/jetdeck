@@ -75,7 +75,7 @@ titles = [
     :first => fname,
     :last => lname,
     :source => "",
-    :email => email,
+    :email => email.gsub(/[^a-zA-Z0-9\-]+/,''),
     :company => company,
     :title => title,
     :description => ""
@@ -105,6 +105,10 @@ titles = [
     contact.save
   end
 
+end
+
+Airframe.all.each do |a|
+    a.creator = User.find(rand(User.count))
 end
 
 puts "Finished Creating Contact Data"

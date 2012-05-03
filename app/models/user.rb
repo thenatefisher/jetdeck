@@ -42,11 +42,7 @@ class User < ActiveRecord::Base
   def set_defaults
 
     # default to active status
-    if active == false
-      self.active = false
-    else
-      self.active = true
-    end
+    self.active ||= true
 
     # default 10 credits for new users
     self.credits << Credit.create(:amount=>10, :direction=>true)

@@ -60,8 +60,36 @@ class Jetdeck.Views.Airframes.ShowHeaderView extends Backbone.View
 class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
   template: JST["backbone/templates/airframes/_specDetails"]
 
+  events: 
+    "click .removeEquipment" : "destroy"
+    
+  destroy: (event) ->
+    e = event.target || event.currentTarget
+    eid = $(e).data('eid')
+    
+    k = new Backbone.Collection()
+    k.reset @model.get('avionics')
+    k.remove(eid)
+
+    avionics = []
+    k.models.forEach((i) -> avionics.push({id: i.id}))
+    
+    window.m = @model
+    @model.set({avionics: avionics})
+    @model.save(null)
+
   render: ->
+  
     $(@el).html(@template(@model.toJSON() ))
+    
+    @$("#pane_avionics table").children('tbody').children('tr').first().children('td').css('border-top', '0px')
+
+    @$(".equipmentTooltip").hover( 
+      ->
+        $(this).children('.removeEquipment').css('visibility', 'visible')
+      ->
+        $(this).children('.removeEquipment').css('visibility', 'hidden')
+    )
     return this        
     
 class Jetdeck.Views.Airframes.ShowSendView extends Backbone.View
