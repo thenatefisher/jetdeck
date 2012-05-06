@@ -77,14 +77,52 @@ class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
     )
     return this        
 
+
+class Jetdeck.Models.EquipmentModel extends Backbone.Model
+#    paramRoot: "equipment"
+
+class Jetdeck.Collections.EquipmentCollection extends Backbone.Collection
+    model: Jetdeck.Models.EquipmentModel
+    url: "/equipment"
+
 class Jetdeck.Views.Airframes.NewAvionicsView extends Backbone.View
   template: JST["backbone/templates/airframes/avionics/new"]
   
+  initialize : ->
+    
   render : ->
+    eCollection = new Jetdeck.Collections.EquipmentCollection()
+    eCollection.fetch(
+        success: (c) =>
+            #@model = new Backbone.Model()
+
+            $(@el).html(@template(c.toJSON() ))
+            
+            @$('#equipment-form').multiSelect({
+              selectableHeader : '<input type="text" class="input-large" id="equipment-search" autocomplete = "off" />',
+              selectedHeader : '<h4 style="background: #eee; margin-bottom: 5px; padding: 7px 10px;">Selected Equipment</h4>'
+            })
+
+            @$('input#equipment-search').quicksearch('#ms-equipment-form .ms-selectable li')
+            
+            @$('#ms-equipment-form .ms-selectable').find('li.ms-elem-selectable').hide()
+            
+            @$('.ms-optgroup-label').click(() ->
+              if ($(this).hasClass('ms-collapse'))
+                $(this).nextAll('li').hide()
+                $(this).removeClass('ms-collapse')
+              else
+                $(this).nextAll('li:not(.ms-selected)').show()
+                $(this).addClass('ms-collapse')
+            )
+        failure: (failmsg) ->
+            console.log failmsg
+    )
+    
     return this
     
-  modal : ->
-    
+  modal : =>
+    modal(@render().el)
     return this
   
 class Jetdeck.Views.Airframes.ShowAvionicsView extends Backbone.View

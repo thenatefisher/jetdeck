@@ -1,22 +1,28 @@
-
 <div class="modal-header">
+
   <a class="close" data-dismiss="modal">x</a>
-  <h3>Photo Manager</h3>
+
+  <h3>Manage Airframe Equipment</h3>
+  <p>Select the equipment currently on-board this airframe</p>
 </div> <!-- modal header -->
 
 <div class="modal-body">
-  <div id="controls"></div>
-  <div id="loading"></div>
-  <div id="slideshow"><img src="http://placehold.it/400x300" alt="your image title again for graceful degradation" /></div>
-  <div id="caption"></div>
-  <div id="thumbs">
-      <ul class="thumbs noscript">
-          <li>
-              <a class="thumb" href="http://placehold.it/300x250" title="your image title">
-                  <img src="http://placehold.it/75x75" alt="your image title again for graceful degradation" />
-              </a>
-          </li>
-      </ul>
-  </div>
+
+     <form id="equipment-form" method=POST>
+        <select multiple="multiple" class="multiselect span3" id="avail-parts">
+
+          <optgroup label="Avionics">
+  <% for (var i = 0; i < avionics.length; i++) { %>
+  <% if (i % 2 == 0) { %>          
+            <option value="<%= avionics[i].id %>"><%= avionics[i].label %>: <%= avionics[i].make %> <%= avionics[i].model %></option>
+  <% }} %>            
+          </optgroup>
+        
+
+        </select>
+      </form>
+
 </div> <!-- modal body -->
+
+<div class="modal-footer"></div> <!-- modal footer -->
 

@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require bootstrap_and_overrides 
+ *= require multi-select
  *= require_self
  *= require_tree .
 */
@@ -75,10 +76,7 @@ outline: 0px;
   padding: 0px 6px;
   line-height: 19px;
 }
-.modal {
-  width: 700px;
-  margin: -250px 0 0 -280px;
-}
+
 a.labelLink:hover {text-decoration :none; }
 
 .alerts_enabled { display:block; }
@@ -106,3 +104,7 @@ a.labelLink:hover {text-decoration :none; }
     display: none;
 }
 
+input#equipment-search {
+    width: 210px;
+    margin: 3px 5px;    
+}

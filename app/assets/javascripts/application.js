@@ -18,6 +18,8 @@
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require backbone/jetdeck
+//= require jquery.multi-select
+//= require jquery.quicksearch
 //= require_tree .
 
 Number.prototype.formatMoney = function(c, d, t) {
@@ -26,7 +28,7 @@ Number.prototype.formatMoney = function(c, d, t) {
 };
 
 function modal(content) {
-    if (content != "") {
+    if (content != "" && content != null) {
         $("#jetdeckModal").html(content);
         $("#jetdeckModal").modal();
     }
@@ -34,7 +36,7 @@ function modal(content) {
 
 var alertSuccessTimeout;
 function alertSuccess(content) {
-    if (content != "") {
+    if (content != "" && content != null) {
         $("#jetdeck-notification div.notification-content").html(content)
         $("#jetdeck-notification").fadeIn('fast');
         alertSuccessTimeout = setTimeout("alertSuccessClose()", 2500);

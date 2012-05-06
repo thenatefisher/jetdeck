@@ -14,6 +14,8 @@ Jetdeck::Application.routes.draw do
 
   resources :sessions
 
+  resources :equipment
+  
   match "/s/:code" => "xspecs#show"
   match "/s" => "xspecs#recordTimeOnPage"
   root :to => 'index#index'
