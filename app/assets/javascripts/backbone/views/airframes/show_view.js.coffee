@@ -60,28 +60,13 @@ class Jetdeck.Views.Airframes.ShowHeaderView extends Backbone.View
 class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
   template: JST["backbone/templates/airframes/_specDetails"]
 
-  events: 
-    "click .removeEquipment" : "destroy"
-    
-  destroy: (event) ->
-    e = event.target || event.currentTarget
-    eid = $(e).data('eid')
-    
-    k = new Backbone.Collection()
-    k.reset @model.get('avionics')
-    k.remove(eid)
-
-    avionics = []
-    k.models.forEach((i) -> avionics.push({id: i.id}))
-    
-    window.m = @model
-    @model.set({avionics: avionics})
-    @model.save(null)
-
   render: ->
   
     $(@el).html(@template(@model.toJSON() ))
     
+    @avionics = new Jetdeck.Views.Airframes.ShowAvionicsView(model: @model)
+    @$("#pane_avionics").html(@avionics.render().el)
+            
     @$("#pane_avionics table").children('tbody').children('tr').first().children('td').css('border-top', '0px')
 
     @$(".equipmentTooltip").hover( 
@@ -91,7 +76,50 @@ class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
         $(this).children('.removeEquipment').css('visibility', 'hidden')
     )
     return this        
+
+class Jetdeck.Views.Airframes.NewAvionicsView extends Backbone.View
+  template: JST["backbone/templates/airframes/avionics/new"]
+  
+  render : ->
+    return this
     
+  modal : ->
+    
+    return this
+  
+class Jetdeck.Views.Airframes.ShowAvionicsView extends Backbone.View
+  template: JST["backbone/templates/airframes/avionics/spec"]
+
+  events: 
+    "click .removeEquipment" : "destroy"
+    "click .addEquipment" : "add"
+    
+  add: () ->
+    newAvionic = new Jetdeck.Views.Airframes.NewAvionicsView()
+    newAvionic.modal()
+    
+  destroy: (event) ->
+    e = event.target || event.currentTarget
+    eid = $(e).data('eid')
+    
+    k = new Backbone.Collection()
+    k.reset @model.get('avionics')
+    k.remove(eid)
+    avionics = []
+    k.models.forEach((i) -> avionics.push({id: i.id}))
+
+    old = @model
+    @model.set({avionics: avionics})
+
+    @model.save(null,
+        success: =>
+            @render()
+    )
+        
+  render: ->
+    $(@el).html(@template(@model.toJSON() ))
+    return this  
+        
 class Jetdeck.Views.Airframes.ShowSendView extends Backbone.View
   template: JST["backbone/templates/airframes/_send"]
 

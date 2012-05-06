@@ -70,6 +70,11 @@
     </div> <!-- end row class for search bar and new spec/contact-->
 
     <div class="row">
+      
+      <div class="alert alert-success span5" id="jetdeck-notification">
+        <button class="close" data-dismiss="alert">×</button>
+        <div class="notification-content"></div>
+      </div>  
 
       <div class="span2">
 
@@ -135,16 +140,17 @@
         </ul>
       </div> <!-- end MY DECK ... navigation -->
 
-
     <div class="span10" style="border: 1px solid #ccc; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; margin:0px; background: #fff;">
 
         <div style="margin-top: 20px;"></div>
-
+        
         <%= yield %>
 
     </div> <!-- span10 entire spec (White background) -->
   </div> <!-- end main row -->
   </div> <!-- end container class -->
+
+<div class="modal fade" id="jetdeckModal"></div> <!-- modal container -->   
 
 </body>
 </html>

@@ -86,35 +86,7 @@
 
         </div>
 
-        <div class="tab-pane" id="pane_avionics">
-            <table class="table table-condensed">
-            <tbody>
-            
-              <% for (var i = 0; i < avionics.length; i++) { %>
-              <% if (i % 2 == 0) { %>
-              <tr>
-                <td><h4><small><%= avionics[i].label %></small></h4></td>
-                <td class="equipmentTooltip">
-                    <%= avionics[i].make %> <%= avionics[i].model %> &nbsp;&nbsp;<i data-eid="<%= avionics[i].id %>" class="removeEquipment icon-trash"></i>
-                </td>
-                <td>&nbsp;</td>
-                <% } else { %>
-                <td><h4><small><%= avionics[i].label %></small></h4></td>
-                <td class="equipmentTooltip">
-                    <%= avionics[i].make %> <%= avionics[i].model %> &nbsp;&nbsp;<i data-eid="<%= avionics[i].id %>" class="removeEquipment icon-trash"></i>
-                </td>
-              </tr>
-              <% }} %>
-              
-              <% if (avionics.length % 2 == 1) { %>
-                <td></td>
-                <td></td>
-              </tr>              
-              <% } %>
-              
-            </tbody>
-            </table>        
-        </div>
+        <div class="tab-pane" id="pane_avionics"></div>
         <div class="tab-pane" id="pane_cosmetics"></div>
         <div class="tab-pane" id="pane_equipment"></div>
 

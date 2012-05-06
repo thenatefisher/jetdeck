@@ -1,0 +1,38 @@
+<table class="table-condensed">
+<tbody>
+
+  <% for (var i = 0; i < avionics.length; i++) { %>
+  <% if (i % 2 == 0) { %>
+  <tr>
+    <td><h4><small><%= avionics[i].label %></small></h4></td>
+    <td class="equipmentTooltip">
+        <%= avionics[i].make %> <%= avionics[i].model %> &nbsp;&nbsp;<i data-eid="<%= avionics[i].id %>" class="removeEquipment icon-trash"></i>
+    </td>
+    <td>&nbsp;</td>
+    <% } else { %>
+    <td><h4><small><%= avionics[i].label %></small></h4></td>
+    <td class="equipmentTooltip">
+        <%= avionics[i].make %> <%= avionics[i].model %> &nbsp;&nbsp;<i data-eid="<%= avionics[i].id %>" class="removeEquipment icon-trash"></i>
+    </td>
+  </tr>
+  <% }} %>
+  
+  <% if (avionics.length % 2 == 1) { %>
+    <td></td>
+    <td></td>
+  </tr>              
+  <% } %>
+
+  <% if (avionics.length == 0) { %>
+  <tr>  
+      <td colspan=5>
+        <div class="alert alert-info">
+         This airframe currently has no avionics associated. <a href="#" class="addEquipment">Click here to add avionics!</a>
+        </div>
+      </td>
+  </tr>              
+  <% } %>               
+  
+</tbody>
+</table>        
+

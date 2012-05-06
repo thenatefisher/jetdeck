@@ -25,6 +25,25 @@ Number.prototype.formatMoney = function(c, d, t) {
 	return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
 
+function modal(content) {
+    if (content != "") {
+        $("#jetdeckModal").html(content);
+        $("#jetdeckModal").modal();
+    }
+}
+
+var alertSuccessTimeout;
+function alertSuccess(content) {
+    if (content != "") {
+        $("#jetdeck-notification div.notification-content").html(content)
+        $("#jetdeck-notification").fadeIn('fast');
+        alertSuccessTimeout = setTimeout("alertSuccessClose()", 2500);
+    }
+}
+function alertSuccessClose() {
+    $("#jetdeck-notification").fadeOut('fast');
+}
+
 function editInline(model, fname, value) {
     model.set(fname, value);
     model.save(null);
