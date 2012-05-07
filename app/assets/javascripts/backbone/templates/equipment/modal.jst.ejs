@@ -10,15 +10,11 @@
 
      <form id="equipment-form" method=POST>
         <select multiple="multiple" class="multiselect span3" id="avail-parts">
-
-          <optgroup label="Avionics">
-  <% for (var i = 0; i < avionics.length; i++) { %>
-  <% if (i % 2 == 0) { %>          
-            <option value="<%= avionics[i].id %>"><%= avionics[i].label %>: <%= avionics[i].make %> <%= avionics[i].model %></option>
-  <% }} %>            
-          </optgroup>
-        
-
+          <optgroup label="Avionics"></optgroup>
+          <optgroup label="Interiors"></optgroup>        
+          <optgroup label="Exteriors"></optgroup>        
+          <optgroup label="Equipment"></optgroup>        
+          <optgroup label="Modifications"></optgroup>                            
         </select>
       </form>
 

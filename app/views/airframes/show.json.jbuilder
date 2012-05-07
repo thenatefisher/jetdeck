@@ -24,21 +24,25 @@ json.avionics @airframe.avionics do |json, i|
     json.id i.id
 end
 
-json.location ({
-    :icao => @airframe.airport.icao,
-    :city => @airframe.airport.location.city,
-    :state => @airframe.airport.location.stateAbbreviation,    
-    :id => @airframe.airport.id
-})
+if (@airframe.airport)
+    json.location ({
+        :icao => @airframe.airport.icao,
+        :city => @airframe.airport.location.city,
+        :state => @airframe.airport.location.stateAbbreviation,    
+        :id => @airframe.airport.id
+    })
+end
 
-json.agent ({
-    :first => @airframe.creator.contact.first,
-    :last => @airframe.creator.contact.last,
-    :id => @airframe.creator.id
-})
+if (@airframe.creator && @airframe.creator.contact)
+    json.agent ({
+        :first => @airframe.creator.contact.first,
+        :last => @airframe.creator.contact.last,
+        :id => @airframe.creator.id
+    })
+end
 
 # TODO create model methods for these
-json.damage (true)
-json.listed (true)
-json.tags ([{:name => "April Research", :id => "1"}, {:name => "Previously Held", :id => "1"}])
+#json.damage (true)
+#json.listed (true)
+#json.tags ([{:name => "April Research", :id => "1"}, {:name => "Previously Held", :id => "1"}])
 

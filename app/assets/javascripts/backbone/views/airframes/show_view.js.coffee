@@ -51,14 +51,15 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     return this
   
 class Jetdeck.Views.Airframes.ShowHeaderView extends Backbone.View
-  template: JST["backbone/templates/airframes/_header"]
+  template: JST["backbone/templates/airframes/partials/_header"]
 
   render: ->
+    templateParams = $.extend(@model.toJSON() )
     $(@el).html(@template(@model.toJSON() ))
     return this    
     
 class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
-  template: JST["backbone/templates/airframes/_specDetails"]
+  template: JST["backbone/templates/airframes/partials/_specDetails"]
 
   render: ->
   
@@ -77,30 +78,42 @@ class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
     )
     return this        
 
-
-class Jetdeck.Models.EquipmentModel extends Backbone.Model
-#    paramRoot: "equipment"
-
-class Jetdeck.Collections.EquipmentCollection extends Backbone.Collection
-    model: Jetdeck.Models.EquipmentModel
-    url: "/equipment"
-
-class Jetdeck.Views.Airframes.NewAvionicsView extends Backbone.View
-  template: JST["backbone/templates/airframes/avionics/new"]
+class Jetdeck.Views.Airframes.AddEquipmentModalItem extends Backbone.View
+  template: JST["backbone/templates/equipment/modalItem"]
   
-  initialize : ->
-    
+  render : ->
+    $(@el).html(@template(@model.toJSON() ))
+    return this
+
+class Jetdeck.Views.Airframes.AddEquipmentModal extends Backbone.View
+  template: JST["backbone/templates/equipment/modal"]
+  
   render : ->
     eCollection = new Jetdeck.Collections.EquipmentCollection()
     eCollection.fetch(
-        success: (c) =>
-            #@model = new Backbone.Model()
+        success: (equipment) =>
 
-            $(@el).html(@template(c.toJSON() ))
+            $(@el).html(@template() )
+            
+            equipment.each((item) =>
+                view = new Jetdeck.Views.Airframes.AddEquipmentModalItem(model: item)
+                switch item.get("type")
+                  when "avionics"
+                    @$("optgroup[label='Avionics']").append(view.render().el)
+                  when "interiors"
+                    @$("optgroup[label='Interiors']").append(view.render().el)
+                  when "exteriors"
+                    @$("optgroup[label='Exteriors']").append(view.render().el)
+                  when "equipment"
+                    @$("optgroup[label='Equipment']").append(view.render().el)
+                  when "modifications"
+                    @$("optgroup[label='Modifications']").append(view.render().el)                    
+            )
             
             @$('#equipment-form').multiSelect({
               selectableHeader : '<input type="text" class="input-large" id="equipment-search" autocomplete = "off" />',
-              selectedHeader : '<h4 style="background: #eee; margin-bottom: 5px; padding: 7px 10px;">Selected Equipment</h4>'
+              selectedHeader : '<h4 style="background: #eee; margin-bottom: 5px; padding: 7px 10px;">Selected Equipment</h4>',
+              afterSelect : @addEquipment
             })
 
             @$('input#equipment-search').quicksearch('#ms-equipment-form .ms-selectable li')
@@ -115,25 +128,39 @@ class Jetdeck.Views.Airframes.NewAvionicsView extends Backbone.View
                 $(this).nextAll('li:not(.ms-selected)').show()
                 $(this).addClass('ms-collapse')
             )
+            
         failure: (failmsg) ->
             console.log failmsg
     )
     
     return this
     
+  addEquipment : (e) =>
+    k = new Backbone.Collection()
+    k.reset @model.get('avionics')
+    avionics = []
+    k.models.forEach((i) -> avionics.push({id: i.id}))
+    avionics.push({id: e})
+
+    @model.set({avionics: avionics})
+    @model.save(null,
+        success: =>
+            #@render()
+    )
+      
   modal : =>
     modal(@render().el)
     return this
   
 class Jetdeck.Views.Airframes.ShowAvionicsView extends Backbone.View
-  template: JST["backbone/templates/airframes/avionics/spec"]
+  template: JST["backbone/templates/equipment/spec"]
 
   events: 
     "click .removeEquipment" : "destroy"
     "click .addEquipment" : "add"
     
   add: () ->
-    newAvionic = new Jetdeck.Views.Airframes.NewAvionicsView()
+    newAvionic = new Jetdeck.Views.Airframes.AddEquipmentModal(model: @model)
     newAvionic.modal()
     
   destroy: (event) ->
@@ -159,7 +186,7 @@ class Jetdeck.Views.Airframes.ShowAvionicsView extends Backbone.View
     return this  
         
 class Jetdeck.Views.Airframes.ShowSendView extends Backbone.View
-  template: JST["backbone/templates/airframes/_send"]
+  template: JST["backbone/templates/airframes/partials/_send"]
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))
