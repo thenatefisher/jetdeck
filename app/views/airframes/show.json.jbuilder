@@ -14,13 +14,7 @@ json.equipment @airframe.equipment do |json, i|
     json.label i.abbreviation
     json.name i.name
     json.make i.make.name
-end
-
-json.avionics @airframe.avionics do |json, i|
-    json.model i.modelNumber
-    json.label i.abbreviation
-    json.name i.name
-    json.make i.make.name
+    json.type i.etype
     json.id i.id
 end
 

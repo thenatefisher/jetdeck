@@ -61,128 +61,66 @@ class Jetdeck.Views.Airframes.ShowHeaderView extends Backbone.View
 class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
   template: JST["backbone/templates/airframes/partials/_specDetails"]
 
+  events:
+    "click .addEquipment"       : "add"
+    
+  add: () =>
+    newEquipment = new Jetdeck.Views.Airframes.AddEquipmentModal(model: @model, parent: this)
+    newEquipment.modal()
+    
   render: ->
-  
+    console.log "render specview"
+    # load the tabs container
     $(@el).html(@template(@model.toJSON() ))
     
-    @avionics = new Jetdeck.Views.Airframes.ShowAvionicsView(model: @model)
+    # populate avionics tab
+    @avionics = new Jetdeck.Views.Airframes.SpecPaneView(type: 'avionics', model: @model)
     @$("#pane_avionics").html(@avionics.render().el)
-            
-    @$("#pane_avionics table").children('tbody').children('tr').first().children('td').css('border-top', '0px')
+    
+    # populate cosmetics tab
+    @cosmetics = new Jetdeck.Views.Airframes.SpecPaneView(type: 'cosmetics', model: @model)
+    @$("#pane_cosmetics").html(@cosmetics.render().el)
+        
+    # populate the equipment tab
+    @equipment = new Jetdeck.Views.Airframes.SpecPaneView(type: 'equipment', model: @model)
+    @$("#pane_equipment").html(@equipment.render().el)  
+    
+    # remove top border on first table item in spec panes
+    @$(".spec_pane table").children('tbody').children('tr').first().children('td').css('border-top', '0px')
 
+    # trashcan icon visible on hover
     @$(".equipmentTooltip").hover( 
       ->
         $(this).children('.removeEquipment').css('visibility', 'visible')
       ->
         $(this).children('.removeEquipment').css('visibility', 'hidden')
     )
+    
     return this        
 
-class Jetdeck.Views.Airframes.AddEquipmentModalItem extends Backbone.View
-  template: JST["backbone/templates/equipment/modalItem"]
-  
-  render : ->
-    $(@el).html(@template(@model.toJSON() ))
-    return this
-
-class Jetdeck.Views.Airframes.AddEquipmentModal extends Backbone.View
-  template: JST["backbone/templates/equipment/modal"]
-  
-  render : ->
-    eCollection = new Jetdeck.Collections.EquipmentCollection()
-    eCollection.fetch(
-        success: (equipment) =>
-
-            $(@el).html(@template() )
-            
-            equipment.each((item) =>
-                view = new Jetdeck.Views.Airframes.AddEquipmentModalItem(model: item)
-                switch item.get("type")
-                  when "avionics"
-                    @$("optgroup[label='Avionics']").append(view.render().el)
-                  when "interiors"
-                    @$("optgroup[label='Interiors']").append(view.render().el)
-                  when "exteriors"
-                    @$("optgroup[label='Exteriors']").append(view.render().el)
-                  when "equipment"
-                    @$("optgroup[label='Equipment']").append(view.render().el)
-                  when "modifications"
-                    @$("optgroup[label='Modifications']").append(view.render().el)                    
-            )
-            
-            @$('#equipment-form').multiSelect({
-              selectableHeader : '<input type="text" class="input-large" id="equipment-search" autocomplete = "off" />',
-              selectedHeader : '<h4 style="background: #eee; margin-bottom: 5px; padding: 7px 10px;">Selected Equipment</h4>',
-              afterSelect : @addEquipment
-            })
-
-            @$('input#equipment-search').quicksearch('#ms-equipment-form .ms-selectable li')
-            
-            @$('#ms-equipment-form .ms-selectable').find('li.ms-elem-selectable').hide()
-            
-            @$('.ms-optgroup-label').click(() ->
-              if ($(this).hasClass('ms-collapse'))
-                $(this).nextAll('li').hide()
-                $(this).removeClass('ms-collapse')
-              else
-                $(this).nextAll('li:not(.ms-selected)').show()
-                $(this).addClass('ms-collapse')
-            )
-            
-        failure: (failmsg) ->
-            console.log failmsg
-    )
-    
-    return this
-    
-  addEquipment : (e) =>
-    k = new Backbone.Collection()
-    k.reset @model.get('avionics')
-    avionics = []
-    k.models.forEach((i) -> avionics.push({id: i.id}))
-    avionics.push({id: e})
-
-    @model.set({avionics: avionics})
-    @model.save(null,
-        success: =>
-            #@render()
-    )
-      
-  modal : =>
-    modal(@render().el)
-    return this
-  
-class Jetdeck.Views.Airframes.ShowAvionicsView extends Backbone.View
-  template: JST["backbone/templates/equipment/spec"]
+class Jetdeck.Views.Airframes.SpecPaneView extends Backbone.View
+  template: JST["backbone/templates/equipment/spec_pane"]
 
   events: 
-    "click .removeEquipment" : "destroy"
-    "click .addEquipment" : "add"
-    
-  add: () ->
-    newAvionic = new Jetdeck.Views.Airframes.AddEquipmentModal(model: @model)
-    newAvionic.modal()
+    "click .removeEquipment"    : "destroy"
     
   destroy: (event) ->
     e = event.target || event.currentTarget
-    eid = $(e).data('eid')
+    equipmentId = $(e).data('eid')
     
-    k = new Backbone.Collection()
-    k.reset @model.get('avionics')
-    k.remove(eid)
-    avionics = []
-    k.models.forEach((i) -> avionics.push({id: i.id}))
-
-    old = @model
-    @model.set({avionics: avionics})
-
+    @model.equipment.remove(equipmentId)
     @model.save(null,
         success: =>
             @render()
     )
         
-  render: ->
-    $(@el).html(@template(@model.toJSON() ))
+  render: =>
+    data = Array()
+    @model.equipment.forEach((i) =>
+        if i.get('type') == @options.type
+            data.push(i.toJSON())
+    )
+    $(@el).html(@template(equipmentItems: data ))
     return this  
         
 class Jetdeck.Views.Airframes.ShowSendView extends Backbone.View

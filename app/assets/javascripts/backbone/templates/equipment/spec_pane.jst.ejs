@@ -1,0 +1,41 @@
+<table class="table-condensed">
+<tbody>
+
+  <% for (var i = 0; i < equipmentItems.length; i++) { %>
+  <% if (i % 2 == 0) { %>
+  <tr>
+    <td><h4><small><%= equipmentItems[i].label %></small></h4></td>
+    <td class="equipmentTooltip">
+        <%= equipmentItems[i].make %> <%= equipmentItems[i].model %> &nbsp;&nbsp;<i data-eid="<%= equipmentItems[i].id %>" class="removeEquipment icon-trash"></i>
+    </td>
+    <td>&nbsp;</td>
+    <% } else { %>
+    <td><h4><small><%= equipmentItems[i].label %></small></h4></td>
+    <td class="equipmentTooltip">
+        <%= equipmentItems[i].make %> <%= equipmentItems[i].model %> &nbsp;&nbsp;<i data-eid="<%= equipmentItems[i].id %>" class="removeEquipment icon-trash"></i>
+    </td>
+  </tr>
+  <% }} %>
+  
+  <% if (equipmentItems.length % 2 == 1) { %>
+    <td></td>
+    <td></td>
+  </tr>              
+  <% } %>
+
+  <% if (equipmentItems.length == 0) { %>
+  <tr>  
+      <td colspan=5>
+        <div class="alert alert-info">
+         This airframe currently has no equipment items associated. <a onclick="return false;" href="#" class="addEquipment">Click here to add an item!</a>
+        </div>
+      </td>
+  </tr>              
+  <% } %>            
+  
+</tbody>
+</table>
+    
+<% if (equipmentItems.length > 0) { %>    
+<a onclick="return false;" href="#" class="addEquipment pull-right">Add Item</a>
+<% } %>
