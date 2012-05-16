@@ -14,14 +14,14 @@ class XspecsController < ApplicationController
   
     xspec = Xspec.where(:urlCode => params[:code]).first
     
-    if !xspec.nil?
+    if xspec.present?
         specView = xspec.views.where(
             :agent => request.user_agent, 
             :ip => request.remote_ip        
         ).first
         
-        if !specView.nil?
-            specView.timeOnPage = params[:time] if !params[:time].nil?
+        if specView.present?
+            specView.timeOnPage = params[:time] if params[:time].present?
             specView.save()
         end
     end
@@ -33,7 +33,9 @@ class XspecsController < ApplicationController
   # GET /specs/1
   # GET /specs/1.json
   def show
+  
     @spec = Xspec.where(:urlCode => params[:code]).first
+    @airframe = @spec.airframe
     
     if @spec.nil? then
         redirect_to "/"
@@ -41,11 +43,7 @@ class XspecsController < ApplicationController
     else
         @spec.views << SpecView.create(:agent => request.user_agent, :ip => request.remote_ip)
     end
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @spec }
-    end
+
   end
 
   # GET /specs/new
@@ -68,17 +66,25 @@ class XspecsController < ApplicationController
   # POST /specs.json
   def create
 
-    sender = Contact.find(params[:xspec]['sender_id'])
-    recipient = Contact.find(params[:xspec]['recipient_id'])
+    #sender = Contact.find(params[:xspec]['sender_id'])
+    sender = Contact.first
+    
+    recipient = Contact.where("email = ?", params[:xspec]['recipient_email']).first
+    if recipient.nil?
+        recipient = Contact.create(:email => params[:xspec]['recipient_email'])
+    end
+    
     af = Airframe.find(params[:xspec]['airframe_id'])
     @spec = Xspec.new(:recipient => recipient, :sender => sender, :airframe => af )
     
     respond_to do |format|
       if @spec.save
+        #@spec.send_spec()
+        XSpecMailer.sendRetail(@spec, @spec.recipient).deliver
         format.html { redirect_to "#{root_url}s/#{CGI.escape(@spec.urlCode)}" }
         format.json { render :json => @spec, :status => :created, :location => @spec }
       else
-        format.html { render :action => "new" }
+        format.html { redirect_to "/" }
         format.json { render :json => @spec.errors, :status => :unprocessable_entity }
       end
     end

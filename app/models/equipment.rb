@@ -26,8 +26,7 @@ class Equipment < ActiveRecord::Base
 
   validates :etype, 
     :inclusion => { :in => [ "avionics",
-                              "interiors",
-                              "exteriors",
+                              "cosmetics",
                               "engines",
                               "airframes",
                               "modifications",

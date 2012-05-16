@@ -31,46 +31,18 @@ class Airframe < ActiveRecord::Base
               :foreign_key => "model_id",
               :conditions => "etype = 'airframes'"
 
-  has_many    :avionics,
-              :through => :airframe_equipments,
-              :foreign_key => "airframe_id",
-              :class_name => "Equipment",
-              :source => :equipment,
-              :conditions => "equipment.etype = 'avionics'"
-
   has_many    :engines,
               :through => :airframe_equipments,
               :foreign_key => "airframe_id",
               :class_name => "Engine",
               :source => :engine
-            
-  has_many    :exteriors,
-              :through => :airframe_equipments,
-              :foreign_key => "airframe_id",
-              :class_name => "Equipment",
-              :source => :equipment,
-              :conditions => "equipment.etype = 'exteriors'"
-
-  has_many    :interiors,
-              :through => :airframe_equipments,
-              :foreign_key => "airframe_id",
-              :class_name => "Equipment",
-              :source => :equipment,
-              :conditions => "equipment.etype = 'interiors'"
-
-  has_many    :modifications,
-              :through => :airframe_equipments,
-              :foreign_key => "airframe_id",
-              :class_name => "Equipment",
-              :source => :equipment,
-              :conditions => "equipment.etype = 'modifications'"
-
+    
   has_many    :equipment,
               :through => :airframe_equipments,
               :foreign_key => "airframe_id",
               :class_name => "Equipment",
               :source => :equipment,
-              :conditions => "equipment.etype = 'equipment'"
+              :conditions => "etype != 'engines'"
 
   has_many :xspecs, :dependent => :destroy
 
@@ -81,7 +53,7 @@ class Airframe < ActiveRecord::Base
   has_many :credits, :as => :creditable
 
   # accessor
-  attr_accessor :model, :make
+  attr_accessor :model, :make, :leads
 
   # hooks
   before_save :record_history
@@ -104,7 +76,7 @@ class Airframe < ActiveRecord::Base
       end
     end
   end
-
+  
   def make
     self.m.make.name
   end

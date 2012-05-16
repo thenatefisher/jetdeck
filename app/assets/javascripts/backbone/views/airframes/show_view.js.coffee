@@ -33,6 +33,9 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
         @send = new Jetdeck.Views.Airframes.ShowSendView(model: @model)
         @$("#airframe_send").html(@send.render().el)
 
+        @leads = new Jetdeck.Views.Airframes.ShowLeadsView(model: @model)
+        @$("#airframe_leads").html(@leads.render().el)
+        
         @$(".money").each(->
             if $(this).val() != null
               intPrice = parseInt($(this).val().replace(/[^0-9]/g,""))
@@ -51,116 +54,140 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     return this
   
 class Jetdeck.Views.Airframes.ShowHeaderView extends Backbone.View
-  template: JST["backbone/templates/airframes/_header"]
+  template: JST["backbone/templates/airframes/partials/_header"]
 
   render: ->
+    templateParams = $.extend(@model.toJSON() )
     $(@el).html(@template(@model.toJSON() ))
     return this    
     
 class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
-  template: JST["backbone/templates/airframes/_specDetails"]
+  template: JST["backbone/templates/airframes/partials/_specDetails"]
 
+  events:
+    "click .addEquipment"       : "add"
+    
+  add: () =>
+    newEquipment = new Jetdeck.Views.Airframes.AddEquipmentModal(model: @model, parent: this)
+    newEquipment.modal()
+    
   render: ->
-  
+    # load the tabs container
     $(@el).html(@template(@model.toJSON() ))
     
-    @avionics = new Jetdeck.Views.Airframes.ShowAvionicsView(model: @model)
-    @$("#pane_avionics").html(@avionics.render().el)
-            
-    @$("#pane_avionics table").children('tbody').children('tr').first().children('td').css('border-top', '0px')
+    # populate avionics tab
+    @engines = new Jetdeck.Views.Airframes.EnginePaneView(model: @model)
+    @$("#pane_engines").html(@engines.render().el)
 
+    # populate avionics tab
+    @avionics = new Jetdeck.Views.Airframes.SpecPaneView(type: 'avionics', model: @model)
+    @$("#pane_avionics").html(@avionics.render().el)
+    
+    # populate cosmetics tab
+    @cosmetics = new Jetdeck.Views.Airframes.SpecPaneView(type: 'cosmetics', model: @model)
+    @$("#pane_cosmetics").html(@cosmetics.render().el)
+        
+    # populate the equipment tab
+    @equipment = new Jetdeck.Views.Airframes.SpecPaneView(type: 'equipment', model: @model)
+    @$("#pane_equipment").html(@equipment.render().el)  
+    
+    # remove top border on first table item in spec panes
+    @$(".spec_pane table").children('tbody').children('tr').first().children('td').css('border-top', '0px')
+
+    # trashcan icon visible on hover
     @$(".equipmentTooltip").hover( 
       ->
         $(this).children('.removeEquipment').css('visibility', 'visible')
       ->
         $(this).children('.removeEquipment').css('visibility', 'hidden')
     )
+    
     return this        
 
-
-class Jetdeck.Models.EquipmentModel extends Backbone.Model
-#    paramRoot: "equipment"
-
-class Jetdeck.Collections.EquipmentCollection extends Backbone.Collection
-    model: Jetdeck.Models.EquipmentModel
-    url: "/equipment"
-
-class Jetdeck.Views.Airframes.NewAvionicsView extends Backbone.View
-  template: JST["backbone/templates/airframes/avionics/new"]
-  
-  initialize : ->
-    
-  render : ->
-    eCollection = new Jetdeck.Collections.EquipmentCollection()
-    eCollection.fetch(
-        success: (c) =>
-            #@model = new Backbone.Model()
-
-            $(@el).html(@template(c.toJSON() ))
-            
-            @$('#equipment-form').multiSelect({
-              selectableHeader : '<input type="text" class="input-large" id="equipment-search" autocomplete = "off" />',
-              selectedHeader : '<h4 style="background: #eee; margin-bottom: 5px; padding: 7px 10px;">Selected Equipment</h4>'
-            })
-
-            @$('input#equipment-search').quicksearch('#ms-equipment-form .ms-selectable li')
-            
-            @$('#ms-equipment-form .ms-selectable').find('li.ms-elem-selectable').hide()
-            
-            @$('.ms-optgroup-label').click(() ->
-              if ($(this).hasClass('ms-collapse'))
-                $(this).nextAll('li').hide()
-                $(this).removeClass('ms-collapse')
-              else
-                $(this).nextAll('li:not(.ms-selected)').show()
-                $(this).addClass('ms-collapse')
-            )
-        failure: (failmsg) ->
-            console.log failmsg
-    )
-    
-    return this
-    
-  modal : =>
-    modal(@render().el)
-    return this
-  
-class Jetdeck.Views.Airframes.ShowAvionicsView extends Backbone.View
-  template: JST["backbone/templates/airframes/avionics/spec"]
+# This is a pane inside the specification tab container
+# and only displays engines
+class Jetdeck.Views.Airframes.EnginePaneView extends Backbone.View
+  template: JST["backbone/templates/equipment/engine_pane"]
 
   events: 
-    "click .removeEquipment" : "destroy"
-    "click .addEquipment" : "add"
+    "click .remove_engine"    : "destroy"
+    #"change .inline_edit"     : "edit"
+    "click .add_engine"      : "add"
     
-  add: () ->
-    newAvionic = new Jetdeck.Views.Airframes.NewAvionicsView()
-    newAvionic.modal()
-    
+  add: () =>
+    newEquipment = new Jetdeck.Views.Airframes.AddEquipmentModal(type: "engines", model: @model, parent: this)
+    newEquipment.modal()
+  
   destroy: (event) ->
     e = event.target || event.currentTarget
-    eid = $(e).data('eid')
+    equipmentId = $(e).data('eid')
     
-    k = new Backbone.Collection()
-    k.reset @model.get('avionics')
-    k.remove(eid)
-    avionics = []
-    k.models.forEach((i) -> avionics.push({id: i.id}))
-
-    old = @model
-    @model.set({avionics: avionics})
-
+    @model.equipment.remove(equipmentId)
     @model.save(null,
         success: =>
             @render()
     )
         
-  render: ->
-    $(@el).html(@template(@model.toJSON() ))
+  render: =>
+    $(@el).html(@template(equipmentItems: @model.get("engines") ))
+    return this  
+
+# This is a pane inside the specification tab container
+# The SpecPaneView doesn't display engines
+class Jetdeck.Views.Airframes.SpecPaneView extends Backbone.View
+  template: JST["backbone/templates/equipment/spec_pane"]
+
+  events: 
+    "click .removeEquipment"    : "destroy"
+    
+  destroy: (event) ->
+    e = event.target || event.currentTarget
+    equipmentId = $(e).data('eid')
+    
+    @model.equipment.remove(equipmentId)
+    @model.save(null,
+        success: =>
+            @render()
+    )
+        
+  render: =>
+    data = Array()
+    @model.equipment.forEach((i) =>
+        if i.get('type') == @options.type
+            data.push(i.toJSON())
+    )
+    $(@el).html(@template(equipmentItems: data ))
     return this  
         
 class Jetdeck.Views.Airframes.ShowSendView extends Backbone.View
-  template: JST["backbone/templates/airframes/_send"]
-
-  render: ->
+  template: JST["backbone/templates/airframes/partials/_send"]
+ 
+  events :
+    "click #send_spec" : "send"
+  
+  send : ->
+    email = $("#recipient_email").val()
+    $.post("/xspecs", {"xspec[receipient_email]": email, "xspec[airframe_id]": @model.get("id")})
+    
+  render : ->
     $(@el).html(@template(@model.toJSON() ))
     return this            
+    
+class Jetdeck.Views.Airframes.ShowLeadsView extends Backbone.View
+  template: JST["backbone/templates/airframes/partials/_leads"]
+
+  render : ->
+    $(@el).html(@template(@model.toJSON() ))
+    leads = @model.get("leads")
+    for lead in leads
+        do (lead) =>
+            v = new Jetdeck.Views.Airframes.EntryView(params: lead)
+            @$("tbody").append(v.render().el)
+    return this    
+    
+class Jetdeck.Views.Airframes.EntryView extends Backbone.View
+  template : JST["backbone/templates/airframes/partials/_lead_entry"]
+  tagName : "tr"  
+  render : ->
+    $(@el).html(@template(@options.params ))
+    return this                  

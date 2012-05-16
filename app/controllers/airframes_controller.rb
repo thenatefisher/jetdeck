@@ -55,11 +55,11 @@ class AirframesController < ApplicationController
     @airframe = Airframe.find(params[:id])
     whitelist = params[:airframe].slice(:id, :askingPrice, :serial, :registration, :totalTime, :totalCycles)
 
-    @avionics = []
-    params[:airframe][:avionics].each do |a|
-         @avionics << Equipment.find(a[:id]) 
+    @equipment = []
+    params[:airframe][:equipment].each do |a|
+         @equipment << Equipment.find(a[:id]) 
     end
-    whitelist[:avionics] = @avionics
+    whitelist[:equipment] = @equipment
 
     respond_to do |format|
       if @airframe.update_attributes(whitelist)

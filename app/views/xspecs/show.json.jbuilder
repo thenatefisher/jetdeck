@@ -44,24 +44,6 @@ if (@airframe.creator && @airframe.creator.contact)
     })
 end
 
-json.leads @airframe.xspecs do |json, x|
-
-    json.email x.recipient.email
-    json.name x.recipient.first + " " + x.recipient.last
-    json.company x.recipient.company
-    json.hits x.hits
-    
-    json.recipient_id x.recipient.id
-    if x.hits > 0
-        json.last_viewed x.views.last.created_at
-    else
-        json.last_viewed ""
-    end
-    
-    json.fire x.fire
-        
-end
-
 # TODO create model methods for these
 #json.damage (true)
 #json.listed (true)
