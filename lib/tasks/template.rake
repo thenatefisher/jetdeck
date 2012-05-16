@@ -18,7 +18,9 @@ namespace :db do
           # ActiveRecord::Base.connection.execute("TRUNCATE #{table}")
 
           # SQLite
-          ActiveRecord::Base.connection.execute("DELETE FROM #{table}")
+          if table != "schema_migrations"
+            ActiveRecord::Base.connection.execute("DELETE FROM #{table} WHERE 1=1")
+          end
         end
     end
 end

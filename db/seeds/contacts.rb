@@ -96,8 +96,8 @@ titles = [
   )
 
   if (rand(3) > 1 || User.all.length == 0)
-    user = User.create(:contact => contact)
-  else
+    user = User.create(:contact => contact, :password => "a", :password_confirmation => "a")
+  elsif User.all.length > 0
     UIdMax = User.maximum(:id)
     UIdMin = User.minimum(:id)
     UIdRange = UIdMax - UIdMin
@@ -107,8 +107,14 @@ titles = [
 
 end
 
-Airframe.all.each do |a|
-    a.creator = User.find(rand(User.count).floor+1)
+if User.all.length > 0
+    UIdMax = User.maximum(:id)
+    UIdMin = User.minimum(:id)
+    UIdRange = UIdMax - UIdMin
+        
+    Airframe.all.each do |a|
+       a.creator = User.find(rand(UIdRange).floor+UIdMin)
+    end
 end
 
 puts "Finished Creating Contact Data"

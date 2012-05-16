@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120429190246) do
+ActiveRecord::Schema.define(:version => 20120516031037) do
 
   create_table "addresses", :force => true do |t|
     t.integer  "location_id"
@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(:version => 20120429190246) do
     t.boolean  "published"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "urlCode"
   end
 
 end
