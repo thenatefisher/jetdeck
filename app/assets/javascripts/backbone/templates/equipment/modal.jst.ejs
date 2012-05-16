@@ -10,10 +10,12 @@
 
      <form id="equipment-form" method=POST>
         <select multiple="multiple" class="multiselect span3" id="avail-parts">
+          <% if (typeof(type) == "undefined") { %>
           <optgroup label="Avionics"></optgroup>
           <optgroup label="Cosmetics"></optgroup>  
           <optgroup label="Equipment"></optgroup>        
-          <optgroup label="Modifications"></optgroup>                            
+          <optgroup label="Modifications"></optgroup> 
+          <% } %>
         </select>
       </form>
 

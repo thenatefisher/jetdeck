@@ -24,22 +24,30 @@ class Xspec < ActiveRecord::Base
   belongs_to :recipient, :class_name => "Contact", :foreign_key => "recipient"
   belongs_to :sender, :class_name => "Contact", :foreign_key => "sender"
 
-  before_save :generate_url_code
+  before_create :generate_url_code
 
   validates_presence_of :airframe
   validates_presence_of :recipient
   validates_presence_of :sender
 
-  attr_accessor :hits
+  attr_accessor :hits, :fire
 
   def send_spec
-
-    # mail spec link to recipient
-
+    XSpecMailer.sendRetail(self, self.recipient).deliver
   end
 
   def hits
     self.views.length
+  end
+
+  def fire
+    
+    recent_views = views.where("created_at > ?", Time.now - 24.hours).length
+    
+    0
+    
+    1 if recent_views > 3
+    
   end
 
   private
@@ -55,7 +63,7 @@ class Xspec < ActiveRecord::Base
   end
 
   def create_code
-    BCrypt::Engine.generate_salt.gsub(/[\.]+/, '').last(7)
+    BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, '').last(7)
   end
 
 

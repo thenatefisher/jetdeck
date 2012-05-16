@@ -33,6 +33,9 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
         @send = new Jetdeck.Views.Airframes.ShowSendView(model: @model)
         @$("#airframe_send").html(@send.render().el)
 
+        @leads = new Jetdeck.Views.Airframes.ShowLeadsView(model: @model)
+        @$("#airframe_leads").html(@leads.render().el)
+        
         @$(".money").each(->
             if $(this).val() != null
               intPrice = parseInt($(this).val().replace(/[^0-9]/g,""))
@@ -69,10 +72,13 @@ class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
     newEquipment.modal()
     
   render: ->
-    console.log "render specview"
     # load the tabs container
     $(@el).html(@template(@model.toJSON() ))
     
+    # populate avionics tab
+    @engines = new Jetdeck.Views.Airframes.EnginePaneView(model: @model)
+    @$("#pane_engines").html(@engines.render().el)
+
     # populate avionics tab
     @avionics = new Jetdeck.Views.Airframes.SpecPaneView(type: 'avionics', model: @model)
     @$("#pane_avionics").html(@avionics.render().el)
@@ -98,6 +104,36 @@ class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
     
     return this        
 
+# This is a pane inside the specification tab container
+# and only displays engines
+class Jetdeck.Views.Airframes.EnginePaneView extends Backbone.View
+  template: JST["backbone/templates/equipment/engine_pane"]
+
+  events: 
+    "click .remove_engine"    : "destroy"
+    #"change .inline_edit"     : "edit"
+    "click .add_engine"      : "add"
+    
+  add: () =>
+    newEquipment = new Jetdeck.Views.Airframes.AddEquipmentModal(type: "engines", model: @model, parent: this)
+    newEquipment.modal()
+  
+  destroy: (event) ->
+    e = event.target || event.currentTarget
+    equipmentId = $(e).data('eid')
+    
+    @model.equipment.remove(equipmentId)
+    @model.save(null,
+        success: =>
+            @render()
+    )
+        
+  render: =>
+    $(@el).html(@template(equipmentItems: @model.get("engines") ))
+    return this  
+
+# This is a pane inside the specification tab container
+# The SpecPaneView doesn't display engines
 class Jetdeck.Views.Airframes.SpecPaneView extends Backbone.View
   template: JST["backbone/templates/equipment/spec_pane"]
 
@@ -125,7 +161,33 @@ class Jetdeck.Views.Airframes.SpecPaneView extends Backbone.View
         
 class Jetdeck.Views.Airframes.ShowSendView extends Backbone.View
   template: JST["backbone/templates/airframes/partials/_send"]
-
-  render: ->
+ 
+  events :
+    "click #send_spec" : "send"
+  
+  send : ->
+    email = $("#recipient_email").val()
+    $.post("/xspecs", {"xspec[receipient_email]": email, "xspec[airframe_id]": @model.get("id")})
+    
+  render : ->
     $(@el).html(@template(@model.toJSON() ))
     return this            
+    
+class Jetdeck.Views.Airframes.ShowLeadsView extends Backbone.View
+  template: JST["backbone/templates/airframes/partials/_leads"]
+
+  render : ->
+    $(@el).html(@template(@model.toJSON() ))
+    leads = @model.get("leads")
+    for lead in leads
+        do (lead) =>
+            v = new Jetdeck.Views.Airframes.EntryView(params: lead)
+            @$("tbody").append(v.render().el)
+    return this    
+    
+class Jetdeck.Views.Airframes.EntryView extends Backbone.View
+  template : JST["backbone/templates/airframes/partials/_lead_entry"]
+  tagName : "tr"  
+  render : ->
+    $(@el).html(@template(@options.params ))
+    return this                  

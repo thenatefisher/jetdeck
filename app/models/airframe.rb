@@ -41,7 +41,8 @@ class Airframe < ActiveRecord::Base
               :through => :airframe_equipments,
               :foreign_key => "airframe_id",
               :class_name => "Equipment",
-              :source => :equipment
+              :source => :equipment,
+              :conditions => "etype != 'engines'"
 
   has_many :xspecs, :dependent => :destroy
 
@@ -52,7 +53,7 @@ class Airframe < ActiveRecord::Base
   has_many :credits, :as => :creditable
 
   # accessor
-  attr_accessor :model, :make
+  attr_accessor :model, :make, :leads
 
   # hooks
   before_save :record_history
@@ -75,7 +76,7 @@ class Airframe < ActiveRecord::Base
       end
     end
   end
-
+  
   def make
     self.m.make.name
   end
