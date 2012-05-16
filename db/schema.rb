@@ -215,7 +215,6 @@ ActiveRecord::Schema.define(:version => 20120429190246) do
     t.boolean  "published"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "urlCode"
   end
 
 end

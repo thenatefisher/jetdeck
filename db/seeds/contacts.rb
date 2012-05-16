@@ -108,7 +108,7 @@ titles = [
 end
 
 Airframe.all.each do |a|
-    a.creator = User.find(rand(User.count))
+    a.creator = User.find(rand(User.count).floor+1)
 end
 
 puts "Finished Creating Contact Data"

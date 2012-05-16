@@ -1,6 +1,5 @@
 puts "Creating Baseline Airframe Data"
 
-
 # manufacturers, models, baseline_airframes
 open("#{Rails.root}/db/seeds/data/aircraft_data.csv") do |infile|
 
@@ -74,16 +73,16 @@ open("#{Rails.root}/db/seeds/data/aircraft_data.csv") do |infile|
               "model_id" => @model.id,
               :baseline => true
             )
-            
+
             for i in 1..2
                 baselineEngine = Engine.first(:offset => rand(Engine.count).to_i)
                 engine = baselineEngine.dup
                 engine.baseline = false
                 engine.baseline_id = baselineEngine.id
-                engine.label = "Engine " + a.engines.length.to_s                
+                engine.label = "Engine " + a.engines.length.to_s
                 a.engines << engine
             end
-            
+
             a.save
 
         end
