@@ -17,7 +17,7 @@
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
-//= require backbone/jetdeck
+//= require jetdeck
 //= require jquery.multi-select
 //= require jquery.quicksearch
 //= require_tree .
@@ -97,8 +97,8 @@ $(function() {
 	        icon: "sizzlejs_32x32.png"
         },
         {
-	        value: "208B1245 (N14G)",
-	        label: "<i class=\"icon-plane\"></i> 208B1245 (N15G)",
+	        value: "208B1245 (N14IS)",
+	        label: "<i class=\"icon-plane\"></i> 208B1245 (N15IS)",
 	        desc: "2010 Cessna Grand Caravan ",
 	        icon: "sizzlejs_32x32.png"
         },
@@ -115,7 +115,7 @@ $(function() {
 	        icon: "sizzlejs_32x32.png"
         }
     ];
-/*
+
     $( ".jui-autocomplete" ).autocomplete({
         minLength: 2,
         source: results,
@@ -135,12 +135,13 @@ $(function() {
 
     $(".result").live('hover',
       function(e){
-        if (e.type == 'mouseenter')
+        if (e.type == 'mouseenter') {
           $(this).addClass('active');
-        else
+          $("i", this).addClass("icon-white");
+        } else {
           $(this).removeClass('active');
+          $("i", this).removeClass("icon-white");
+        }
       } );
-*/
+
 });
-
-

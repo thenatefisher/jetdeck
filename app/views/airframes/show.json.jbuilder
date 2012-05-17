@@ -31,7 +31,7 @@ if (@airframe.airport)
     json.location ({
         :icao => @airframe.airport.icao,
         :city => @airframe.airport.location.city,
-        :state => @airframe.airport.location.stateAbbreviation,    
+        :state => @airframe.airport.location.stateAbbreviation,
         :id => @airframe.airport.id
     })
 end
@@ -47,23 +47,32 @@ end
 json.leads @airframe.xspecs do |json, x|
 
     json.email x.recipient.email
-    json.name x.recipient.first + " " + x.recipient.last
-    json.company x.recipient.company
+
+    if x.recipient.first && x.recipient.last
+      json.name x.recipient.first + " " + x.recipient.last
+    end
+
+    if x.recipient.company
+      json.company x.recipient.company
+    end
+
     json.hits x.hits
-    
+
     json.recipient_id x.recipient.id
+
     if x.hits > 0
         json.last_viewed x.views.last.created_at
     else
         json.last_viewed ""
     end
-    
-    json.fire x.fire
-        
+
+    json.fire x.fire || false
+
+    json.url "/s/" + x.urlCode
+
 end
 
 # TODO create model methods for these
 #json.damage (true)
 #json.listed (true)
 #json.tags ([{:name => "April Research", :id => "1"}, {:name => "Previously Held", :id => "1"}])
-

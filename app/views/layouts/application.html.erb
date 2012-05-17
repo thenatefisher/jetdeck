@@ -27,7 +27,7 @@
         <div class="navbar-inner">
           <div class="container">
 
-            <a class="brand" href="#"><strong>JetDeck.co</strong></a>
+            <a class="brand" href="#"><strong style="position: absolute;">JetDeck.co</strong></a>
 
             <div class="nav-collapse">
 
@@ -70,18 +70,18 @@
     </div> <!-- end row class for search bar and new spec/contact-->
 
     <div class="row">
-      
+
       <!-- notification message placeholder -->
       <div class="alert alert-success span5" id="jetdeck-notification">
         <button class="close" data-dismiss="alert">×</button>
         <div class="notification-content"></div>
-      </div>  
+      </div>
 
       <div class="span2">
-
+        <br/>
         <ul class="nav nav-list">
           <li class="">
-            <a href="list.htm"> <i class="icon-th-list"></i> My Deck <span class="badge badge-info">8</span></a>
+            <a href="/airframes"> <i class="icon-th-list"></i> My Deck <!-- TODO add badges to deck nav <span class="badge badge-info">8</span> --></a>
           </li>
           <li class="nav_searches_enabled">
             <a href="#"> <i class="icon-search"></i> Searches</a>
@@ -96,14 +96,14 @@
     <div class="span10" style="border: 1px solid #ccc; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; margin:0px; background: #fff;">
 
         <div style="margin-top: 20px;"></div>
-        
+
         <%= yield %>
 
     </div> <!-- span10 entire spec (White background) -->
   </div> <!-- end main row -->
   </div> <!-- end container class -->
 
-<div class="modal fade" id="jetdeckModal"></div> <!-- modal container place holder -->   
+<div class="modal fade" id="jetdeckModal"></div> <!-- modal container place holder -->
 
 </body>
 </html>

@@ -24,13 +24,31 @@ class Xspec < ActiveRecord::Base
   belongs_to :recipient, :class_name => "Contact", :foreign_key => "recipient"
   belongs_to :sender, :class_name => "Contact", :foreign_key => "sender"
 
+  before_save :unique_recipients_per_airframe
+
   before_create :generate_url_code
 
-  validates_presence_of :airframe
-  validates_presence_of :recipient
-  validates_presence_of :sender
+  validates_associated :airframe
+  validates_associated :recipient
+  validates_associated :sender
 
   attr_accessor :hits, :fire
+
+  def unique_recipients_per_airframe
+
+    if self.id.nil?
+      if Xspec.where("recipient == ? AND airframe_id == ?", self.recipient, self.airframe).length > 0
+        self.errors.add(:recipient, "Contact is already on the lead list for this airframe")
+        false
+      end
+    else
+      if Xspec.where("recipient == ? AND airframe_id == ? AND id != ?", self.recipient, self.airframe, self.id).length > 0
+        self.errors.add(:recipient, "Contact is already on the lead list for this airframe")
+        false
+      end
+    end
+
+  end
 
   def send_spec
     XSpecMailer.sendRetail(self, self.recipient).deliver
@@ -41,13 +59,13 @@ class Xspec < ActiveRecord::Base
   end
 
   def fire
-    
+
     recent_views = views.where("created_at > ?", Time.now - 24.hours).length
-    
-    0
-    
-    1 if recent_views > 3
-    
+
+    false # return false if not on fire
+
+    true if recent_views > 3
+
   end
 
   private

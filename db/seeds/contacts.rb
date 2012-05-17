@@ -75,7 +75,7 @@ titles = [
     :first => fname,
     :last => lname,
     :source => "",
-    :email => email.gsub(/[^a-zA-Z0-9\-]+/,''),
+    :email => email.gsub(/[^@\.a-zA-Z0-9\-]+/,''),
     :company => company,
     :title => title,
     :description => ""
@@ -111,7 +111,7 @@ if User.all.length > 0
     UIdMax = User.maximum(:id)
     UIdMin = User.minimum(:id)
     UIdRange = UIdMax - UIdMin
-        
+
     Airframe.all.each do |a|
        a.creator = User.find(rand(UIdRange).floor+UIdMin)
     end
