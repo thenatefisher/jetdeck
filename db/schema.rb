@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120516031037) do
+ActiveRecord::Schema.define(:version => 20120517032746) do
+
+  create_table "accessories", :force => true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.integer  "airframe_id"
+    t.datetime "created_at",            :null => false
+    t.datetime "updated_at",            :null => false
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.string   "document_file_name"
+    t.string   "document_content_type"
+    t.integer  "document_file_size"
+    t.datetime "document_updated_at"
+  end
 
   create_table "addresses", :force => true do |t|
     t.integer  "location_id"
