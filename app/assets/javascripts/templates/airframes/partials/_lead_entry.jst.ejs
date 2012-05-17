@@ -1,0 +1,19 @@
+<td>
+<%= (name != "") ? name : email %>
+<% if (fire) { %><i class="icon-fire"></i><% } %>
+</td>
+
+<td><%= hits %></td>
+
+<td>
+<% if (last_viewed != "") {
+    var s = new Date(last_viewed);
+    var dateString = (s.getMonth()+1) +"/"+ s.getDate() +"/"+ s.getFullYear() +" "+ s.getHours() +":"+ s.getMinutes();
+    } %>
+<%= dateString %>
+</td>
+
+<td>
+  <i class="icon-envelope resend" data-recip_id="<%= recipient_id %>"></i>
+  <a href="<%= url %>"><i class="icon-share view"></i></a>
+</td>
