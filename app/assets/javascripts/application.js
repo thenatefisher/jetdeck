@@ -17,10 +17,12 @@
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
+//= require collection_book
 //= require jetdeck
 //= require jquery.multi-select
 //= require jquery.quicksearch
 //= require_tree .
+
 
 Number.prototype.formatMoney = function(c, d, t) {
 	var n = this, c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "," : d, t = t == undefined ? "." : t, s = n < 0 ? "-" : "", i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;

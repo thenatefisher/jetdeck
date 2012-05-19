@@ -32,7 +32,7 @@
             <div class="nav-collapse">
 
               <ul class="nav pull-right">
-                <li><a href="#">Help</a></li>
+                <!--<li><a href="#">Help</a></li>-->
                 <li class="divider-vertical"></li>
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Chris Jansson <b class="caret"></b></a>
@@ -83,9 +83,9 @@
           <li class="">
             <a href="/airframes"> <i class="icon-th-list"></i> My Deck <!-- TODO add badges to deck nav <span class="badge badge-info">8</span> --></a>
           </li>
-          <li class="nav_searches_enabled">
+          <!--<li class="nav_searches_enabled">
             <a href="#"> <i class="icon-search"></i> Searches</a>
-          </li>
+          </li>-->
           <li class="nav_contacts_enabled">
             <a href="#"> <i class="icon-book"></i> Contacts</a>
           </li>
@@ -100,7 +100,13 @@
         <%= yield %>
 
     </div> <!-- span10 entire spec (White background) -->
+
   </div> <!-- end main row -->
+
+
+    <div class="span12" style="text-align: center; margin: 20px; color: #555"><p>Copyright JetDeck <%=  Time.now.year %></p></div>
+
+
   </div> <!-- end container class -->
 
 <div class="modal fade" id="jetdeckModal"></div> <!-- modal container place holder -->

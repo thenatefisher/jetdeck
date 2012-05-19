@@ -15,9 +15,12 @@ class Jetdeck.Routers.AirframesRouter extends Backbone.Router
     $("#airframes").html(@view.render().el)
 
   index: ->
-    @view = new Jetdeck.Views.Airframes.IndexView(airframes: @airframes)
-    $("#airframes").html(@view.render().el)
-
+    airframes = new Jetdeck.Collections.AirframesCollection()
+    airframes.fetch ( success: =>
+        @view = new Jetdeck.Views.Airframes.IndexView(airframes: airframes)
+        $("#airframes").html(@view.render().el)
+    )
+    
   show: (id) ->
     airframe = @airframes.get(id)
 

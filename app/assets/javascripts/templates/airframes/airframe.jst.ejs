@@ -1,7 +1,10 @@
-<td><%= serial %></td>
-<td><%= registration %></td>
-<td><%= year %></td>
+<div class="span3" data-airframe="<%= id %>" style="margin-bottom: 20px;">
+    <a href="/airframes#/<%= id %>" class="thumbnail">
+        <img src="http://www.controller.com/ImageService/ServeImage.aspx?img=90534121&listingPub=CNT&nMaxW=565&nMaxH=424" alt="">
+        <div class="caption" style="color: black;">
+          <h5><%= to_s %></h5>
+          <%= serial %> <% if (registration != "") { %>(<%= registration %>) <% } %>
+        </div>
+    </a>
+</div> 
 
-<td><a href="#/<%= id %>">Show</td>
-<td><a href="#/<%= id %>/edit">Edit</td>
-<td><a href="#/<%= id %>/destroy" class="destroy">Destroy</a></td>

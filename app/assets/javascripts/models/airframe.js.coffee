@@ -9,6 +9,7 @@ class Jetdeck.Models.Airframe extends Backbone.Model
     damage: false
     tags: []
     location: false
+    string: null
 
   initialize : () =>
     ## leads collection
@@ -29,6 +30,30 @@ class Jetdeck.Models.Airframe extends Backbone.Model
   updateLeads : =>
     @leads.reset @get('leads')
 
-class Jetdeck.Collections.AirframesCollection extends Backbone.Collection
+class Jetdeck.Collections.AirframesCollection extends Backbone.CollectionBook
+  
   model: Jetdeck.Models.Airframe
+  
   url: '/airframes'
+  
+  initialize: ->
+    @order = "year"
+    @dx = "asc"
+  
+  orderBy : (o) ->
+    @order = o
+
+  direction : (d) ->
+    @dx = d
+    
+  comparator: (i) ->
+    d = 1
+    d = -1 if @dx == "desc"
+    
+    if @order == "created_at"
+        dt = new Date(i.get("created_at"))
+        return d*dt
+    console.log d * parseInt(i.get(@order))
+    return d * parseInt(i.get(@order))
+
+    

@@ -44,11 +44,11 @@ class Airframe < ActiveRecord::Base
               :source => :equipment,
               :conditions => "etype != 'engines'"
 
-  has_many :images as => :accessories, :dependent => :destroy
+  has_many :images, :as => :accessories, :dependent => :destroy
   
   accepts_nested_attributes_for :images, :reject_if => lambda { |t| t['image'].nil? }
   
-  has_many :documents as => :accessories, :dependent => :destroy
+  has_many :documents, :as => :accessories, :dependent => :destroy
   
   accepts_nested_attributes_for :documents, :reject_if => lambda { |t| t['document'].nil? }
     

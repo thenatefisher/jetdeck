@@ -2,17 +2,13 @@ class AirframesController < ApplicationController
   # GET /airframes
   # GET /airframes.json
   def index
-    @airframes = Airframe.all.first(10)
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @airframes }
-    end
+    @airframes = Airframe.all
   end
 
   # GET /airframes/1
   # GET /airframes/1.json
   def show
+
     @airframe = Airframe.find(params[:id])
 
   end
