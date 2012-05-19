@@ -8,10 +8,10 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
 
   edit: (e) ->
     if $(e.target).hasClass('number')
-      value = parseInt($(e.target).val().replace(/[^0-9]/g,""))
+      value = parseInt($(e.target).val().replace(/[^0-9]/g,""), 10)
       $(e.target).val(value.formatMoney(0, ".", ","))
     else if $(e.target).hasClass('money')
-      value = parseInt($(e.target).val().replace(/[^0-9]/g,""))
+      value = parseInt($(e.target).val().replace(/[^0-9]/g,""), 10)
       $(e.target).val("$"+value.formatMoney(0, ".", ","))
     else
       value = $(e.target).val()
@@ -45,16 +45,63 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
 
         @$(".money").each(->
             if $(this).val() != null
-              intPrice = parseInt($(this).val().replace(/[^0-9]/g,""))
+              intPrice = parseInt($(this).val().replace(/[^0-9]/g,""), 10)
               $(this).val("$"+intPrice.formatMoney(0, ".", ","))
         )
 
         @$(".number").each(->
             if $(this).val() != null
-              intPrice = parseInt($(this).val().replace(/[^0-9]/g,""))
+              intPrice = parseInt($(this).val().replace(/[^0-9]/g,""), 10)
               $(this).val(intPrice.formatMoney(0, ".", ","))
         )
-
+        
+        @$('#airframe_image_upload').fileupload()
+        
+        # enable iframe cross-domain access via redirect option:
+        $('#airframe_image_upload').fileupload(
+            'option',
+            'redirect',
+            window.location.href.replace(
+                /\/[^\/]*$/,
+                '/cors/result.html?%s'
+            )
+        )
+        
+        # uploader settings:
+        $('#airframe_image_upload').fileupload('option', {
+            url: '/airframes',
+            maxFileSize: 5000000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+            process: [
+                {
+                    action: 'load',
+                    fileTypes: /^image\/(gif|jpeg|png)$/,
+                    maxFileSize: 50000000 # 5MB
+                },
+                {
+                    action: 'resize',
+                    maxWidth: 1440,
+                    maxHeight: 900
+                },
+                {
+                    action: 'save'
+                }
+            ]
+        })
+        
+        # upload server status check for browsers with CORS support:
+        if ($.support.cors)
+            $.ajax({
+                url: '/airframes',
+                type: 'HEAD'
+            }).fail( () ->
+                $('<span class="alert alert-error"/>')
+                    .text('Upload server currently unavailable - ' +
+                            new Date())
+                    .appendTo('#airframe_image_upload');
+            )
+          
+      # handle failure on load of airframe data    
       failure: () ->
     )
 

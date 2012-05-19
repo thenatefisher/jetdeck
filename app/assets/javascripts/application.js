@@ -12,15 +12,32 @@
 //
 //= require jquery
 //= require jquery_ujs
+
 //= require twitter/bootstrap
+
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require collection_book
 //= require jetdeck
+
 //= require jquery.multi-select
 //= require jquery.quicksearch
+
+//= require uploader/jquery.ui.widget
+//= require uploader/jquery.postmessage-transport
+//= require uploader/jquery.xdr-transport
+//= require uploader/load-image.min
+//= require uploader/canvas-to-blob.min.js
+//= require uploader/bootstrap-image-gallery.min
+//= require uploader/jquery.iframe-transport
+//= require uploader/tmpl.min
+//= require uploader/jquery.fileupload
+//= require uploader/jquery.fileupload-fp
+//= require uploader/jquery.fileupload-ui
+//= require uploader/locale
+
 //= require_tree .
 
 

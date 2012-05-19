@@ -36,5 +36,17 @@ class Accessory < ActiveRecord::Base
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
         "application/msexcel", "application/x-msexcel"]
-    
+
+      #one convenient method to pass jq_upload the necessary information
+      def to_jq_upload
+        {
+          "name" => "name",
+          "size" => "123",
+          "url" => "/",
+          "thumbnail_url" => "/",
+          "delete_url" => "",
+          "delete_type" => "DELETE" 
+        }
+      end
+      
 end

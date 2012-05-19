@@ -53,7 +53,7 @@ class Jetdeck.Collections.AirframesCollection extends Backbone.CollectionBook
     if @order == "created_at"
         dt = new Date(i.get("created_at"))
         return d*dt
-    console.log d * parseInt(i.get(@order))
-    return d * parseInt(i.get(@order))
+
+    return d * parseInt(i.get(@order), 10)
 
     
