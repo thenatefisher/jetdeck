@@ -6,19 +6,19 @@ class AccessoriesController < ApplicationController
   end
 
   def create
-    @picture = Accessory.new(params[:picture])
+    @picture = Accessory.new(params[:files])
     if @picture.save
       respond_to do |format|
-        format.html {  
-          render :json => [@picture.to_jq_upload].to_json, 
+        format.html {
+          render :json => [@picture.to_jq_upload].to_json,
           :content_type => 'text/html',
           :layout => false
         }
-        format.json {  
-          render :json => [@picture.to_jq_upload].to_json			
+        format.json {
+          render :json => [@picture.to_jq_upload].to_json
         }
       end
-    else 
+    else
       render :json => [{:error => "custom_failure"}], :status => 304
     end
   end

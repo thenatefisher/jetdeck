@@ -6,7 +6,7 @@
 <div class="offset3">
 
     <h1><%= title %></h1>
-    
+
     <div style="height: 5px;"></div>
 
     <% if (damage) { %>
@@ -28,13 +28,13 @@
     <% } %>
 
     <div style="margin: 20px 0px 0px 0px; font-size: 110%">
-    
+
         <div style="margin: 5px 0px;"><strong>Serial Number</strong>
         <input type="text" class="inline_edit" value="<%= serial ? serial : '--' %>"
           name="serial"></input></div>
 
         <div style="margin: 5px 0px"><strong>Registration</strong>
-        <input type="text" class="inline_edit"  value="<%= registration ? registration : '--' %>" 
+        <input type="text" class="inline_edit"  value="<%= registration ? registration : '--' %>"
           name="registration"></input></div>
 
         <% if (location) { %>
@@ -49,57 +49,58 @@
         <% if (location) { %>
         <div style="margin: 5px 0px;"><strong>Agent</strong>
           <a href="<%= agent.id %>"> <%= agent.name %> </a></div>
-        <% } %>      
+        <% } %>
     </div>
-  
+
 </div> <!-- offset3 -->
 
+<form id="airframe_image_upload" action="/accessories" method="POST" enctype="multipart/form-data">
+  <div id="uploader">
 
-<div id="uploader">
+      <!-- The loading indicator is shown during file processing -->
+      <div class="fileupload-loading"></div><br>
 
-    <!-- The loading indicator is shown during file processing -->
-    <div class="fileupload-loading"></div>
-    <br>
-    <!-- The table listing the files available for upload/download -->
-    <table class="table table-striped">
-        <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
-    </table>
+      <!-- The table listing the files available for upload/download -->
+      <table class="table table-striped">
+          <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+      </table>
 
-    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-    <div class="fileupload-buttonbar" style="clear: both;">
-        <div class="span6">
-            <!-- The fileinput-button span is used to style the file input field as button -->
-            <span class="btn fileinput-button">
-                <i class="icon-plus "></i>
-                <span>Add files...</span>
-                <input type="file" name="files[]" multiple>
-            </span>
-            <button type="submit" class="btn btn-primary start">
-                <i class="icon-upload icon-white"></i>
-                <span>Start upload</span>
-            </button>
-            <button type="reset" class="btn cancel">
-                <i class="icon-ban-circle"></i>
-                <span>Cancel upload</span>
-            </button>
-            <button type="button" class="btn delete">
-                <i class="icon-trash"></i>
-                <span>Delete</span>
-            </button>
-            <input type="checkbox" class="toggle">
-        </div>
-        <!-- The global progress information -->
-        <div class="span3 fileupload-progress fade">
-            <!-- The global progress bar -->
-            <div class="progress progress-success progress-striped active">
-                <div class="bar" style="width:0%;"></div>
-            </div>
-            <!-- The extended global progress information -->
-            <div class="progress-extended">&nbsp;</div>
-        </div>
-    </div>
+      <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+      <div class="fileupload-buttonbar" style="clear: both;">
+          <div class="span6">
+              <!-- The fileinput-button span is used to style the file input field as button -->
+              <span class="btn fileinput-button">
+                  <i class="icon-plus "></i>
+                  <span>Add files...</span>
+                  <input type="file" name="files[image]" multiple>
+              </span>
+              <button type="submit" class="btn btn-primary start">
+                  <i class="icon-upload icon-white"></i>
+                  <span>Start upload</span>
+              </button>
+              <button type="reset" class="btn cancel">
+                  <i class="icon-ban-circle"></i>
+                  <span>Cancel upload</span>
+              </button>
+              <button type="button" class="btn delete">
+                  <i class="icon-trash"></i>
+                  <span>Delete</span>
+              </button>
+              <input type="checkbox" class="toggle">
+          </div>
+          <!-- The global progress information -->
+          <div class="span3 fileupload-progress fade">
+              <!-- The global progress bar -->
+              <div class="progress progress-success progress-striped active">
+                  <div class="bar" style="width:0%;"></div>
+              </div>
+              <!-- The extended global progress information -->
+              <div class="progress-extended">&nbsp;</div>
+          </div>
+      </div>
 
-</div>
+  </div>
+</form>
 
 <!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
@@ -124,14 +125,15 @@
             <td colspan="2"></td>
         {% } %}
         <td class="cancel">{% if (!i) { %}
-            <button class="btn btn-warning">
-                <i class="icon-ban-circle icon-white"></i>
+            <button class="btn">
+                <i class="icon-ban-circle"></i>
                 <span>{%=locale.fileupload.cancel%}</span>
             </button>
         {% } %}</td>
     </tr>
 {% } %}
 </script>
+
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}

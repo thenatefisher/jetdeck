@@ -54,9 +54,9 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
               intPrice = parseInt($(this).val().replace(/[^0-9]/g,""), 10)
               $(this).val(intPrice.formatMoney(0, ".", ","))
         )
-        
+
         @$('#airframe_image_upload').fileupload()
-        
+
         # enable iframe cross-domain access via redirect option:
         $('#airframe_image_upload').fileupload(
             'option',
@@ -66,10 +66,10 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
                 '/cors/result.html?%s'
             )
         )
-        
+
         # uploader settings:
         $('#airframe_image_upload').fileupload('option', {
-            url: '/airframes',
+            url: '/accessories',
             maxFileSize: 5000000,
             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
             process: [
@@ -88,20 +88,19 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
                 }
             ]
         })
-        
+
         # upload server status check for browsers with CORS support:
         if ($.support.cors)
             $.ajax({
-                url: '/airframes',
+                url: '/accessories',
                 type: 'HEAD'
             }).fail( () ->
                 $('<span class="alert alert-error"/>')
-                    .text('Upload server currently unavailable - ' +
-                            new Date())
+                    .text('Uploads unavailable')
                     .appendTo('#airframe_image_upload');
             )
-          
-      # handle failure on load of airframe data    
+
+      # handle failure on load of airframe data
       failure: () ->
     )
 

@@ -53,7 +53,7 @@ class AirframesController < ApplicationController
 
     @equipment = []
     params[:airframe][:equipment].each do |a|
-         @equipment << Equipment.find(a[:id]) 
+         @equipment << Equipment.find(a[:id])
     end
     whitelist[:equipment] = @equipment
 
