@@ -36,7 +36,7 @@ class Airframe < ActiveRecord::Base
               :foreign_key => "airframe_id",
               :class_name => "Engine",
               :source => :engine
-    
+
   has_many    :equipment,
               :through => :airframe_equipments,
               :foreign_key => "airframe_id",
@@ -44,14 +44,10 @@ class Airframe < ActiveRecord::Base
               :source => :equipment,
               :conditions => "etype != 'engines'"
 
-  has_many :images, :as => :accessories, :dependent => :destroy
-  
-  accepts_nested_attributes_for :images, :reject_if => lambda { |t| t['image'].nil? }
-  
-  has_many :documents, :as => :accessories, :dependent => :destroy
-  
-  accepts_nested_attributes_for :documents, :reject_if => lambda { |t| t['document'].nil? }
-    
+  has_many :accessories, :dependent => :destroy
+
+  accepts_nested_attributes_for :accessories, :reject_if => lambda { |t| t['image'].nil? }
+
   has_many :xspecs, :dependent => :destroy
 
   belongs_to :creator, :class_name => "User", :foreign_key => "user_id"
@@ -61,7 +57,7 @@ class Airframe < ActiveRecord::Base
   has_many :credits, :as => :creditable
 
   # accessor
-  attr_accessor :model, :make, :leads
+  attr_accessor :model, :make, :leads, :thumbnail
 
   # hooks
   before_save :record_history
@@ -84,7 +80,23 @@ class Airframe < ActiveRecord::Base
       end
     end
   end
-  
+
+  def avatar
+
+    avatars = {}
+    assy = accessories.where(:thumbnail => true).first
+    if assy.present?
+
+        { :original => "/assets/airframes/#{assy.id}/original/#{assy.image_file_name}",
+          :listing => "/assets/airframes/#{assy.id}/listing/#{assy.image_file_name}",
+          :mini => "/assets/airframes/#{assy.id}/mini/#{assy.image_file_name}",
+          :thumb => "/assets/airframes/#{assy.id}/thumb/#{assy.image_file_name}" }
+
+    end
+
+
+  end
+
   def make
     self.m.make.name
   end

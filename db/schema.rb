@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120517032746) do
+ActiveRecord::Schema.define(:version => 20120520231442) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20120517032746) do
     t.string   "document_content_type"
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
+    t.boolean  "thumbnail"
   end
 
   create_table "addresses", :force => true do |t|

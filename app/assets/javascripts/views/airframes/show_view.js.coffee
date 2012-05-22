@@ -4,7 +4,16 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   template: JST["templates/airframes/show"]
 
   events:
-    "change .inline_edit": "edit"
+    "change .inline_edit"  : "edit"
+    "click .manage_images" : "manageImages"
+
+  manageImages: () ->
+    if @$("#uploader").is(":visible")
+      @$("#uploader").hide()
+      @$(".manage_images a").html("Manage Images")
+    else
+      @$("#uploader").show()
+      @$(".manage_images a").html("Hide Images")
 
   edit: (e) ->
     if $(e.target).hasClass('number')
@@ -57,21 +66,9 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
 
         @$('#airframe_image_upload').fileupload()
 
-        # enable iframe cross-domain access via redirect option:
-        $('#airframe_image_upload').fileupload(
-            'option',
-            'redirect',
-            window.location.href.replace(
-                /\/[^\/]*$/,
-                '/cors/result.html?%s'
-            )
-        )
-
         # uploader settings:
-        $('#airframe_image_upload').fileupload('option', {
-            url: '/accessories',
-            maxFileSize: 5000000,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+        @$('#airframe_image_upload').fileupload('option', {
+            url: '/accessories'
             process: [
                 {
                     action: 'load',
@@ -89,6 +86,11 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
             ]
         })
 
+        @$('#airframe_image_upload').bind('fileuploaddrop', =>
+          @$('#uploader').show()
+          @$(".manage_images a").html("Hide Images")
+        )
+
         # upload server status check for browsers with CORS support:
         if ($.support.cors)
             $.ajax({
@@ -96,9 +98,16 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
                 type: 'HEAD'
             }).fail( () ->
                 $('<span class="alert alert-error"/>')
-                    .text('Uploads unavailable')
+                    .text('Uploads Unavailable')
                     .appendTo('#airframe_image_upload');
             )
+
+        $.getJSON("/accessories/?airframe=" + @model.get("id"),  (files) =>
+            fu = @$('#airframe_image_upload').data('fileupload')
+            fu._renderDownload(files)
+                .appendTo(@$('#airframe_image_upload .files'))
+                .removeClass("fade")
+        )
 
       # handle failure on load of airframe data
       failure: () ->

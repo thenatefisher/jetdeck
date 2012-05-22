@@ -1,4 +1,4 @@
-json.(@airframe, :totalTime, :totalCycles, :serial, :askingPrice)
+json.(@airframe, :avatar, :totalTime, :totalCycles, :serial, :askingPrice)
 
 json.title (@airframe.to_s)
 
