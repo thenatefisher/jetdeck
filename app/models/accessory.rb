@@ -4,8 +4,8 @@ class Accessory < ActiveRecord::Base
 
     has_attached_file :image,
                       :styles => {  :thumb => "220x200#",
-                                    :mini => "80x60",
-                                    :listing => "210x157" },
+                                    :mini => "80x60#",
+                                    :listing => "210x157#" },
                       :url  => "/assets/airframes/:id/:style/:basename.:extension",
                       :path => ":rails_root/public/assets/airframes/:id/:style/:basename.:extension"
 

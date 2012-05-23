@@ -1,15 +1,16 @@
 Airframes#index
-    Pagination
-    Search result total
-    Sorting
+    Pagination - done
+    Search result total - done
+    Sorting - done
 
 Create Airframe
 
 Airframe Photos
-    Adding
-    Viewing
-    Editing
-    Crop Area
+    Adding - done
+    Viewing - done
+    Editing - done
+    Crop Area - defer
+    set thumbnail ( and handle removal if deleted )
 
 Airframe Send
     Stats
@@ -32,7 +33,11 @@ Searching
     Sorting
     Quick search and autosuggest
 
-Logo 
+Airframe#show 
+    Engine Spec
+    Add/Remove Engine
+
+Logo - done
 
 Contacts    
     Create

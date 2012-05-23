@@ -1,9 +1,9 @@
 
 <div class="span3" id="main-thumbnail">
 <% if (typeof(avatar) != "undefined" && avatar != null && typeof(avatar.thumb) != "undefined") { %>
-  <a data-toggle="modal" href="#photo_modal"><img src="<%= avatar.thumb %>"></a>
+  <a class="manage_images" href="#" onclick="return false;"><img src="<%= avatar.thumb %>"></a>
   <% } else { %>
-  <a data-toggle="modal" href="#photo_modal"><img src=""></a>
+  <a class="manage_images" href="#" onclick="return false;"><img src=""></a>
   <% } %>
 </div>
 
