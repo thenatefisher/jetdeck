@@ -1,25 +1,32 @@
-<h1>New airframe</h1>
+<div class="modal-header">
+<button class="close" data-dismiss="modal">×</button>
+<h3>New Aircraft Spec</h3>
+</div>
 
 <form id="new-airframe" name="airframe">
-  <div class="field">
-    <label for="serial"> serial:</label>
-    <input type="text" name="serial" id="serial" value="<%= serial %>" >
+<div class="modal-body" style="padding-left: 50px;">
+  
+  <br/>
+  <div class="control-group">
+    <label for="registration" style="clear: both; color: #000">Find Details By Registration Number:</label>
+    <input class="pull-left" type="text" name="registration" id="registration" value="<%= registration %>"  placeholder="N123XX, VP-XXX, etc.">
+    <p class="help-block pull-left hide" style="margin-top: 4px; margin-left: 15px;">Aircraft Registration Not Found</p>
   </div>
-
-  <div class="field">
-    <label for="registration"> registration:</label>
-    <input type="text" name="registration" id="registration" value="<%= registration %>" >
+  
+  <div style="clear: both; margin-left: 20px;"><br/><h3>OR</h3><br/></div>
+      
+  <div class="control-group">
+    <label for="serial" style="clear: both; color: #000">Begin By Selecting a Model:</label>
+    <input type="text" name="year" id="year" class="input-mini" placeholder="2005">
+    <input type="text" name="model" id="model" class="input-large"  placeholder="Beechcraft King Air 200">
+    <input type="text" name="serial" id="serial" class="input-small"  placeholder="BB-XXXX">
+    <span class="help-block hide">Invalid Aircraft Model</span>
   </div>
-
-  <div class="field">
-    <label for="year"> year:</label>
-    <input type="text" name="year" id="year" value="<%= year %>" >
-  </div>
-
-  <div class="actions">
-    <input type="submit" value="Create Airframe" />
-  </div>
-
+  
+</div>
 </form>
 
-<a href="#/index">Back</a>
+<div class="modal-footer">
+<a href="#" class="btn">Cancel</a>
+<a href="#" class="btn btn-primary">Create Spec</a>
+</div>
