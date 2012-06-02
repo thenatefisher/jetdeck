@@ -1,0 +1,41 @@
+<div class="row" style="margin-left: 20px;">
+
+    <div style="margin-left: 20px;">
+        <div class="span9 page-header">
+            <h1>All Contacts <small> (<%= count %>)</small></h1>        
+        </div>
+    </div>
+
+    <div class="span9">
+    <table id="contacts" class="table table-condensed">       
+        <thead>
+            <tr>
+            <th>First</th>
+            <th>Last</th>
+            <th>Email</th>
+            <th>Company</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    </div>
+    
+</div>
+
+<div class="row"  style="margin-left: 20px;" >
+    <div class="span9">
+        <div class="pagination pull-right">
+          <ul>
+            <li><a class="prev"  onclick="return false;" href="#">Prev</a></li>
+
+            <% if (pages > 2) { %>
+            <% for (var i = 1; i < pages + 1; i++) { %>
+            <li><a class="page" rel="<%= i %>" onclick="return false;" href="#"><%= i %></a></li>
+            <% } } %>
+
+            <li><a class="next" onclick="return false;" href="#">Next</a></li>
+          </ul>
+        </div>
+    </div>
+</div>
+

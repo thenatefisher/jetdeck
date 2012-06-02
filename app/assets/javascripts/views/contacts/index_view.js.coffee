@@ -1,10 +1,10 @@
-Jetdeck.Views.Airframes ||= {}
+Jetdeck.Views.Contacts ||= {}
 
-class Jetdeck.Views.Airframes.IndexView extends Backbone.View
-  template: JST["templates/airframes/index"]
+class Jetdeck.Views.Contacts.IndexView extends Backbone.View
+  template: JST["templates/contacts/index"]
 
   initialize: ->
-    @options.airframes.bind('reset', @addAll)
+    @options.contacts.bind('reset', @addAll)
     
   events : 
     "click a.next" : "next"
@@ -19,9 +19,9 @@ class Jetdeck.Views.Airframes.IndexView extends Backbone.View
     direction = $(e).data('dir')  
     
     # perform the sort
-    @options.airframes.orderBy(sort)
-    @options.airframes.direction(direction)
-    @options.airframes.sort()  
+    @options.contacts.orderBy(sort)
+    @options.contacts.direction(direction)
+    @options.contacts.sort()  
     
     # set the sort button styles
     @$('.sort').parent("li").removeClass('active')
@@ -37,7 +37,7 @@ class Jetdeck.Views.Airframes.IndexView extends Backbone.View
     $(e).data('dir', 'asc') if direction == "desc"    
         
     # go back to first page  
-    @options.airframes.turnTo(1)
+    @options.contacts.turnTo(1)
     @addAll()
     @$('a.page').parent('li').removeClass('active')
     @$('.page[rel=1]').parent('li').addClass('active')
@@ -45,42 +45,42 @@ class Jetdeck.Views.Airframes.IndexView extends Backbone.View
   page : (event) ->
     e = event.target || event.currentTarget
     n = $(e).attr('rel')
-    @options.airframes.turnTo(n)
+    @options.contacts.turnTo(n)
     @addAll()
     @$('a.page').parent('li').removeClass('active')
     $(e).parent('li').addClass('active')
     
   next : ->
-    @options.airframes.next()
+    @options.contacts.next()
     @addAll()
     @$('a.page').parent('li').removeClass('active')
-    p = @options.airframes.currentPage()
+    p = @options.contacts.currentPage()
     @$('.page[rel='+p+']').parent('li').addClass('active')    
 
   prev : ->
-    @options.airframes.prev()
+    @options.contacts.prev()
     @addAll()
     @$('a.page').parent('li').removeClass('active')
-    p = @options.airframes.currentPage()
+    p = @options.contacts.currentPage()
     @$('.page[rel='+p+']').parent('li').addClass('active')    
 
   addAll: =>
-    window.m = @options.airframes
+    window.m = @options.contacts
     @clear()
-    @options.airframes.eachOnPage(@addOne)
+    @options.contacts.eachOnPage(@addOne)
 
   clear : ->
-    @$("#airframes").html('')
+    @$("#contacts tbody").html('')
     
-  addOne: (airframe) => 
-    if airframe
-        view = new Jetdeck.Views.Airframes.AirframeView({model : airframe})
-        @$("#airframes").append(view.render().el)
+  addOne: (contact) => 
+    if contact
+        view = new Jetdeck.Views.Contacts.ContactView({model : contact})
+        @$("#contacts tbody").append(view.render().el)
 
   render: =>  
     params =
-        count : @options.airframes.length
-        pages : @options.airframes.pages()
+        count : @options.contacts.length
+        pages : @options.contacts.pages()
     $(@el).html(@template(params))
     @addAll()    
     @$('.page[rel=1]').parent('li').addClass('active')   

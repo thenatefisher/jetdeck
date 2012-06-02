@@ -5,7 +5,10 @@ class Backbone.CollectionBook extends Backbone.Collection
     super()
  
     # set options (Should be private)
-    @_page_size      = 9
+    if options && options.page_size
+        @_page_size = options.page_size
+    else
+        @_page_size = 9
    
     # state variables (Should be private)
     @_current_page   = 1

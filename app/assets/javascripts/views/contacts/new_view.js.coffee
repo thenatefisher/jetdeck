@@ -24,7 +24,5 @@ class Jetdeck.Views.Contacts.NewView extends Backbone.View
 
   render: ->
     $(@el).html(@template( ))
-
-    #this.$("form").backboneLink(@model)
-
+    #@$("form").backboneLink(@model)
     return this
