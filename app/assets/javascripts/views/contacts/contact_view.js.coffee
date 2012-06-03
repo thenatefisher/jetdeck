@@ -20,4 +20,5 @@ class Jetdeck.Views.Contacts.ContactView extends Backbone.View
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))
+    $(@el).css('cursor', 'pointer')
     return this
