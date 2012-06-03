@@ -5,7 +5,12 @@ class Jetdeck.Views.Contacts.ContactView extends Backbone.View
 
   events:
     "click .destroy" : "destroy"
-    
+    "click" : "gotoContact"
+
+  gotoContact: ->
+    location.href = "/contacts#/" + @model.id
+    return
+
   tagName: "tr"
 
   destroy: () ->
