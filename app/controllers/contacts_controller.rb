@@ -57,9 +57,17 @@ class ContactsController < ApplicationController
   # PUT /contacts/1.json
   def update
     @contact = Contact.find(params[:id])
+    whitelist = params[:contact].slice(
+        :id,
+        :first,
+        :last,
+        :company,
+        :phone,
+        :email
+      )
 
     respond_to do |format|
-      if @contact.update_attributes(params[:contact])
+      if @contact.update_attributes(whitelist)
         format.html { redirect_to @contact, :notice => 'Contact was successfully updated.' }
         format.json { head :no_content }
       else

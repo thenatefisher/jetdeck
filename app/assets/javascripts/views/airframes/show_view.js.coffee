@@ -4,7 +4,7 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   template: JST["templates/airframes/show"]
 
   events:
-    "change .inline_edit"  : "edit"
+    "change .airframe_field"  : "edit"
     "click .manage_images" : "manageImages"
 
   manageImages: () ->

@@ -3,6 +3,14 @@ Airframes#index
     Search result total - done
     Sorting - done
 
+
+User Sessions
+    Login
+    Create User
+    Edit Profile
+    Access Control
+    Cookies
+
 Create Airframe
 
 Airframe Photos
@@ -10,7 +18,7 @@ Airframe Photos
     Viewing - done
     Editing - done
     Crop Area - defer
-    set thumbnail ( and handle removal if deleted )
+    Set thumbnail ( and handle removal if deleted )
 
 Airframe Send
     Stats
@@ -20,42 +28,37 @@ Airframe Send
     Permissions
     Custom Data per Recipient
 
-User Sessions
-    Login
-    Create User
-    Edit Profile
-    Access Control
-    Cookies
-
-Searching    
+Searching
     Combine contacts and airframes in results
     Apply new filters
     Sorting
     Quick search and autosuggest
 
-Airframe#show 
+Airframe#show
     Engine Spec
     Add/Remove Engine
 
 Logo - done
 
-Contacts    
+Contacts
+    Listing - done
     Create
-    Show
+    Show - done
+    Show (avatar placeholder)
 
 Email Templates
 
 Email Server
 
 Retail Spec Page
-    
+
 Mobile Views
-    
+
 Brochure Site
     Video
     Pricing
     Trial Signup
-    
+
 Help Balloons
 
 Reading Emails (replied from recipients)

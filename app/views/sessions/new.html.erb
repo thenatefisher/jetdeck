@@ -1,13 +1,37 @@
-<h1>Log in</h1>
+<div style="padding: 20px;">
 
-<%= form_tag sessions_path do %>
-  <p>
-    <%= label_tag :email %><br />
-    <%= text_field_tag :email, params[:email] %>
-  </p>
-  <p>
-    <%= label_tag :password %><br />
-    <%= password_field_tag :password %>
-  </p>
-  <p class="button"><%= submit_tag "Log in" %></p>
-<% end %>
+    <form class="form-horizontal" method="POST" action="/session/create">
+
+      <div class="control-group">
+
+          <label class="control-label" for="email">Email</label>
+          <div class="controls">
+            <input
+              class="input-xlarge focused"
+              id="email"
+              name="email"
+              type="text"
+              value="">
+          </div><br>
+
+          <label class="control-label" for="password">Password</label>
+          <div class="controls">
+            <input class="input-xlarge focused" id="password"
+                    name="password" type="password" value="">
+
+            <span class="help-inline hide">
+              Invalid Login. <a href="#" onclick="return false;">
+                  Forgot Your Password?</a>
+            </span>
+          </div>
+
+      </div>
+
+      <div class="offset2 pull-right login">
+        <span><a href="/features">Learn More!</a></span>
+        <submit class="btn btn-primary">Log In</submit>
+      </div>
+
+    </form>
+
+</div>

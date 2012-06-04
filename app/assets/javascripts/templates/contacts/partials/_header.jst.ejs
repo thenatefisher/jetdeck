@@ -9,70 +9,59 @@
 
        <div id="contact_name_edit" class="">
            <input  type="text"
-                    class="inline_edit span3"
+                    class="inline-edit contact_field span3"
                     name="first"
-                    value="<%= first %>">
-           </input> 
+                    value="<%= first %>"
+                    placeholder="[First Name]">
+           </input>
            <input  type="text"
-                    class="inline_edit span3"
+                    class="inline-edit contact_field span3"
                     name="last"
-                    value="<%= last %>">
+                    value="<%= last %>"
+                    placeholder="[Last Name]">
            </input>
        </div>
-              
+
        <input  type="text"
-                class="inline_edit span6"
+                class="inline-edit contact_field span6"
                 value="<%= company %>"
                 name="company"
-                placeholder="Enter Company Name">
-       </input> 
+                placeholder="[Enter Company Name]">
+       </input>
 
-      <div style="margin: 20px 0px 0px 0px;" class="span7">
-
-        <table class="contact_header_details table table-condensed">
-            <tbody>
-                <tr>
-                    <td>
-                        <div class="header_label">Phone</div>
-                    </td>
-                    <td>
-                        <input  type="text"
-                                class="inline_edit span4"
-                                value=""
-                                name="phone"
-                                placeholder="Enter Phone Number">
-                        </input>                
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="header_label">Email</div>
-                    </td>
-                    <td>
-                        <input  type="text"
-                                class="inline_edit span4"
-                                value=""
-                                name="email"
-                                placeholder="Enter Email Address">
-                        </input>                
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="header_label">Address</div>
-                    </td>
-                    <td>
-                        <textarea   type="text"
-                                    class="inline_edit span4"
-                                    name="address"
-                                    rows="3"></textarea>                
-                    </td>
-                </tr>
-                                
-            </tbody>
-        </table>
-
+      <div class="row">
+        <div class="span7">
+          <table class="contact-header-details table table-condensed">
+              <tbody>
+                  <tr>
+                      <td>
+                          <div class="contact-header-label">Phone</div>
+                      </td>
+                      <td>
+                          <input  type="text"
+                                  class="inline-edit contact_field span4"
+                                  value="<%= phone %>"
+                                  name="phone"
+                                  placeholder="[Enter Phone Number]">
+                          </input>
+                      </td>
+                  </tr>
+                  <tr>
+                      <td>
+                          <div class="contact-header-label">Email</div>
+                      </td>
+                      <td>
+                          <input  type="text"
+                                  class="inline-edit contact_field span4"
+                                  value="<%= email %>"
+                                  name="email"
+                                  placeholder="[Enter Email Address]">
+                          </input>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+        </div>
       </div>
 
-  </div> <!-- offset3 -->
-
+  </div> <!-- offset2 -->

@@ -23,9 +23,9 @@ gem 'rails-backbone'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'delayed_job_active_record'
-gem 'nokogiri'
+#gem 'nokogiri'
 gem 'factory_girl_rails'
-gem 'capybara'
+#gem 'capybara'
 gem 'jbuilder'
 gem 'annotate', ">= 2.4.1.beta"
 gem "paperclip"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120520231442) do
+ActiveRecord::Schema.define(:version => 20120603192822) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20120520231442) do
     t.integer  "user_id"
     t.integer  "baseline_id"
     t.boolean  "baseline"
+    t.string   "phone"
   end
 
   create_table "credits", :force => true do |t|

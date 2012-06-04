@@ -15,15 +15,9 @@
  *= require_tree .
 */
 
-body { padding-top: 60px; }
 body {
+  padding-top: 60px;
   background: url(<%= asset_path 'cork_1.png' %>) repeat;
-}
-
-.header_label { 
-    font-weight: bold; 
-    vertical-align: top; 
-    margin-right: 15px;
 }
 
 .navbar .brand:hover {
@@ -45,23 +39,22 @@ body {
 
 .navbar .brand strong { }
 
-.inline_edit {
-border: 0px;
-box-shadow: none;
-outline: 0px;
-padding: 0px;
-margin: 0px;
-font-size: 15px;
-vertical-align: baseline;
-width: 100px;
-background: transparent;
-
-}
-.inline_edit :focus {
-border: 0px;
-outline: 0px;
+.inline-edit {
+  border: 0px;
+  box-shadow: none;
+  outline: 0px;
+  padding: 2px;
+  margin: 0px;
+  font-size: 15px;
+  vertical-align: baseline;
+  width: 100px;
+  background: transparent;
 }
 
+.inline-edit :focus {
+  border: 0px;
+  outline: 0px;
+}
 
 .main-thumbnail {
   height: 200px;
@@ -92,21 +85,6 @@ outline: 0px;
 a.labelLink:hover {text-decoration :none; }
 a.thumbnail:hover {text-decoration :none; }
 
-.alerts_enabled { display:block; }
-.notes_enabled { display:block; }
-.send_enabled { display:block; }
-.history_enabled { display:block; }
-.team_enabled { display:block; }
-.listings_enabled { display:block; }
-.documents_enabled { display:block; }
-.tasks_enabled { display:block; }
-.associates_enabled { display:block; }
-.leads_enabled { display:block; }
-.details_enabled { display:block; }
-.nav_contacts_enabled { display:block; }
-.nav_deals_enabled { display:block; }
-.nav_searches_enabled { display:block; }
-
 .equipmentTooltip .icon-trash {cursor: pointer}
 .removeEquipment { visibility: hidden }
 
@@ -124,5 +102,8 @@ input#equipment-search {
 
 #uploader {
   margin-top: 90px;
+}
 
+.footer {
+text-align: center; margin: 20px; color: #555
 }

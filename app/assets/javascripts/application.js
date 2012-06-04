@@ -61,6 +61,7 @@ function alertSuccess(content) {
         alertSuccessTimeout = setTimeout("alertSuccessClose()", 2500);
     }
 }
+
 function alertSuccessClose() {
     $("#jetdeck-notification").fadeOut('fast');
 }
@@ -70,12 +71,22 @@ function editInline(model, fname, value) {
     model.save(null);
 }
 
+$(".dropdown-menu li").live('hover',
+  function(e){
+    if (e.type == 'mouseenter') {
+      $("i", this).addClass("icon-white");
+    } else {
+      $("i", this).removeClass("icon-white");
+    }
+  } );
+
+/*
 $(function() {
 
     var results = [
         {
-	        value: "Nate Fisher",
-	        label: "<i class=\"icon-user\"></i> Nate Fisher",
+	        value: "Jeb Fisher",
+	        label: "<i class=\"icon-user\"></i> Jeb Fisher",
 	        desc: "Owner, Five Stories Enterprises, Inc.",
 	        icon: "jquery_32x32.png"
         },
@@ -142,7 +153,8 @@ $(function() {
 	        $( ".jui-autocomplete" ).val( ui.item.value );
 	        return false;
         }
-    })
+    });
+
     .data( "autocomplete" )._renderItem = function( ul, item ) {
       ul.addClass('dropdown-menu');
       ul.addClass('typeahead');
@@ -163,4 +175,4 @@ $(function() {
         }
       } );
 
-});
+});*/

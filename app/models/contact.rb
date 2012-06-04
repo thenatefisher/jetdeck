@@ -32,7 +32,7 @@ class Contact < ActiveRecord::Base
       :foreign_key => 'baseline_id',
       :readonly => true
 
-  attr_accessible :first, :last, :source, :email, :company, :title, :description
+  attr_accessible :phone, :first, :last, :source, :email, :company, :title, :description
 
   has_many :credits, :as => :creditable
 

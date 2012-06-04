@@ -8,9 +8,7 @@ class AirframesController < ApplicationController
   # GET /airframes/1
   # GET /airframes/1.json
   def show
-
     @airframe = Airframe.find(params[:id])
-
   end
 
   # GET /airframes/new
