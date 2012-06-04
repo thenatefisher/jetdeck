@@ -1,4 +1,7 @@
 class AirframesController < ApplicationController
+  
+  before_filter :authorize
+  
   # GET /airframes
   # GET /airframes.json
   def index

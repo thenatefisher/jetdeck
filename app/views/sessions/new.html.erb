@@ -2,35 +2,35 @@
 
     <form class="form-horizontal" method="POST" action="/session/create">
 
-      <div class="control-group">
+          <div class="control-group">
 
-          <label class="control-label" for="email">Email</label>
-          <div class="controls">
-            <input
-              class="input-xlarge focused"
-              id="email"
-              name="email"
-              type="text"
-              value="">
-          </div><br>
+              <label class="control-label" for="email">Email</label>
+              <div class="controls">
+                <input
+                  class="input-xlarge focused"
+                  id="email"
+                  name="email"
+                  type="text"
+                  value="">
+              </div><br>
 
-          <label class="control-label" for="password">Password</label>
-          <div class="controls">
-            <input class="input-xlarge focused" id="password"
-                    name="password" type="password" value="">
+              <label class="control-label" for="password">Password</label>
+              <div class="controls">
+                <input class="input-xlarge focused" id="password"
+                        name="password" type="password" value="">
 
-            <span class="help-inline hide">
-              Invalid Login. <a href="#" onclick="return false;">
-                  Forgot Your Password?</a>
-            </span>
+                <span class="help-inline hide">
+                  Invalid Login. <a href="#" onclick="return false;">
+                      Forgot Your Password?</a>
+                </span>
+              </div>
+
           </div>
 
-      </div>
-
-      <div class="offset2 pull-right login">
-        <span><a href="/features">Learn More!</a></span>
-        <submit class="btn btn-primary">Log In</submit>
-      </div>
+          <div class="offset2 pull-right login">
+              <span><a href="/features">Learn More!</a></span>
+              <input type="submit" class="btn btn-primary" value="Log In"></input>
+          </div>
 
     </form>
 

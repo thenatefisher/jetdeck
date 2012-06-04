@@ -34,6 +34,9 @@ class User < ActiveRecord::Base
   has_many :credits
   belongs_to :contact
 
+  #has_secure_password
+  force_ssl
+  
   validates_uniqueness_of :contact_id
   validates_presence_of :contact_id, :on => :create
   validates_presence_of :password, :on => :create
