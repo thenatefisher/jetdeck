@@ -9,8 +9,12 @@ class SessionsController < ApplicationController
         user = User.authenticate(params[:email], params[:password])
 
         if user
-          session[:user_id] = user.id
-          redirect_to root_url, :notice => "Logged in!"
+          if params[:remember_me]
+              cookies.permanent[:auth_token] = user.auth_token
+          else
+              cookies[:auth_token] = user.auth_token      
+          end
+          redirect_to airframes_url, :notice => "Logged in!"
         else
           flash.now.alert = "Invalid login credentials"
           render "new"
@@ -19,8 +23,8 @@ class SessionsController < ApplicationController
     end
   
     def destroy
-        session[:user_id] = nil
-        redirect_to root_url, :notice => "Logged out!"
+        cookies.delete(:auth_token)
+        redirect_to login_url, :notice => "Logged out!"
     end  
 
 end

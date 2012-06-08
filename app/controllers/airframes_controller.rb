@@ -2,6 +2,18 @@ class AirframesController < ApplicationController
   
   before_filter :authorize
   
+  # GET /airframes/models
+  def models
+
+    @airframes = []
+    Airframe.where(:baseline => true).each do |a|
+        @airframes << a.m.make.name + " " + a.m.name
+    end
+    
+    @airframes.uniq!
+    
+  end
+  
   # GET /airframes
   # GET /airframes.json
   def index
@@ -11,7 +23,20 @@ class AirframesController < ApplicationController
   # GET /airframes/1
   # GET /airframes/1.json
   def show
-    @airframe = Airframe.find(params[:id])
+  
+    if params[:id].present?
+        @airframe = Airframe.find(params[:id])
+    end
+    
+    if params[:registration].present?
+        @airframe = Airframe.where(:registration => params[:registration], :baseline => true).first
+        if @airframe.nil?
+            render :layout => false, :nothing => true, :status => :unprocessable_entity
+        else
+            render :json => @airframe.to_json( :methods => :to_s )
+        end      
+    end
+     
   end
 
   # GET /airframes/new

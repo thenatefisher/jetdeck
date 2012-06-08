@@ -24,6 +24,7 @@
 
 //= require jquery.multi-select
 //= require jquery.quicksearch
+//= require jquery.autoGrowInput
 
 //= require uploader/jquery.ui.widget
 //= require uploader/jquery.postmessage-transport

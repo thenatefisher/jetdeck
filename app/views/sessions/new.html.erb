@@ -1,6 +1,6 @@
 <div style="padding: 20px;">
 
-    <form class="form-horizontal" method="POST" action="/session/create">
+    <form class="form-horizontal" method="POST" action="/authenticate">
 
           <div class="control-group">
 
@@ -23,13 +23,17 @@
                   Invalid Login. <a href="#" onclick="return false;">
                       Forgot Your Password?</a>
                 </span>
+                <span class="help-inline">
+                   <input type="checkbox" name="remember_me" checked></input> 
+                   <span>Remember Login</span>
+                </span>                
               </div>
 
           </div>
 
           <div class="offset2 pull-right login">
               <span><a href="/features">Learn More!</a></span>
-              <input type="submit" class="btn btn-primary" value="Log In"></input>
+              <input style="margin-top: -5px; margin-left: 10px;" type="submit" class="btn btn-primary" value="Log In"></input>
           </div>
 
     </form>

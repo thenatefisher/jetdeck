@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   attr_accessor  :password
 
   before_save :encrypt_password
-  before_create :set_defaults
+  before_create { set_defaults(:auth_token) }
 
   has_many :logins
   has_many :airframes, :dependent => :destroy
@@ -35,14 +35,14 @@ class User < ActiveRecord::Base
   belongs_to :contact
 
   #has_secure_password
-  force_ssl
+  #force_ssl
   
   validates_uniqueness_of :contact_id
   validates_presence_of :contact_id, :on => :create
   validates_presence_of :password, :on => :create
   validates_confirmation_of :password
 
-  def set_defaults
+  def set_defaults(paramName)
 
     # default to active status
     self.active ||= true
@@ -50,6 +50,11 @@ class User < ActiveRecord::Base
     # default 10 credits for new users
     self.credits << Credit.create(:amount=>10, :direction=>true)
 
+    # generate auth token
+    begin
+        self[paramName] = SecureRandom.urlsafe_base64
+    end while User.exists?(col => self[paramName])
+    
   end
 
   def encrypt_password

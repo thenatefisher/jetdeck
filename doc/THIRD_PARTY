@@ -1,17 +1,22 @@
 Third Party Libraries
 
   Front End:
-  jQuery MultiSelect
-  jQueryUI AutoComplete
-  SubtleBackgrounds Cork
-  Google Web Fonts
-
-  Backend
-  Paperclip
-  Bootstrap
-  Backbone.js
-  jBuilder
-  Annotate
-  Factory Girl
-  Delayed Job
-  rspec
+      jQuery MultiSelect
+      jQueryUI AutoComplete
+      SubtleBackgrounds Cork
+      Google Web Fonts
+      jquery.autoGrowInput
+      
+      
+      
+      
+      
+  Back End:
+      Paperclip
+      Bootstrap
+      Backbone.js
+      jBuilder
+      Annotate
+      Factory Girl
+      Delayed Job
+      rspec

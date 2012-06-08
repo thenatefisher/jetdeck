@@ -7,9 +7,9 @@
 <div class="modal-body" style="padding-left: 50px;">
   
   <br/>
-  <div class="control-group">
+  <div class="control-group registration_group">
     <label for="registration" style="clear: both; color: #000">Find Details By Registration Number:</label>
-    <input class="pull-left" type="text" name="registration" id="registration" value="<%= registration %>"  placeholder="N123XX, VP-XXX, etc.">
+    <input class="pull-left airframe_registration" type="text" name="registration" id="registration" value="<%= registration %>"  placeholder="N123XX, VP-XXX, etc.">
     <p class="help-block pull-left hide" style="margin-top: 4px; margin-left: 15px;">Aircraft Registration Not Found</p>
   </div>
   
@@ -17,9 +17,9 @@
       
   <div class="control-group">
     <label for="serial" style="clear: both; color: #000">Begin By Selecting a Model:</label>
-    <input type="text" name="year" id="year" class="input-mini" placeholder="2005">
-    <input type="text" name="model" id="model" class="input-large"  placeholder="Beechcraft King Air 200">
-    <input type="text" name="serial" id="serial" class="input-small"  placeholder="BB-XXXX">
+    <input type="text" name="year" id="year" class="input-mini airframe_year" placeholder="2005">
+    <input type="text" name="model" id="model" class="input-large airframe_model"  placeholder="Beechcraft King Air 200">
+    <input type="text" name="serial" id="serial" class="input-small airframe_serial"  placeholder="BB-XXXX">
     <span class="help-block hide">Invalid Aircraft Model</span>
   </div>
   
