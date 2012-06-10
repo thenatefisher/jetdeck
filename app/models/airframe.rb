@@ -110,6 +110,7 @@ class Airframe < ActiveRecord::Base
   end
 
   def to_s
+    retval = ''
     retval = self.year.to_s if self.year
     retval += " " + self.m.make.name if (self.m && self.m.make)
     retval += " " + self.m.name if self.m

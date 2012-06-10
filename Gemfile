@@ -13,14 +13,14 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'therubyracer'
   gem 'uglifier', '>= 1.0.3'
-
+  gem 'jquery-ui-rails'
 end
 
 gem 'bundler'
 gem 'jquery-rails'
 gem 'twitter-bootstrap-rails'
 gem 'rails-backbone'
-gem 'jquery-rails'
+
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'delayed_job_active_record'
 #gem 'nokogiri'

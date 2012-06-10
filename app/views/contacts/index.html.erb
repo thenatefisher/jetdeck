@@ -2,7 +2,9 @@
 
 <script type="text/javascript">
   $(function() {
-    window.router = new Jetdeck.Routers.ContactsRouter({contacts: <%= @contacts.to_json.html_safe -%>});
+    window.router = new Jetdeck.Routers.ContactsRouter({
+      contacts: <%= @contacts.to_json.html_safe -%>
+    });
     Backbone.history.start();
   });
 </script>

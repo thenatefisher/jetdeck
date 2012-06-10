@@ -1,42 +1,56 @@
 class AirframesController < ApplicationController
-  
+
   before_filter :authorize
-  
+
   # GET /airframes/models
   def models
 
-    @airframes = []
-    Airframe.where(:baseline => true).each do |a|
-        @airframes << a.m.make.name + " " + a.m.name
+    if params[:q]
+      @airframes = Airframe.find(:all,
+        :joins => [:m => [:make]],
+        :conditions => ["(manufacturers.name || ' ' || equipment.name) LIKE ?
+                             AND (baseline = 't' OR user_id = ?)",
+                          "%#{params[:q]}%",
+                          @current_user.id
+                       ],
+        :group => "model_id"
+      ).first(4)
     end
-    
-    @airframes.uniq!
-    
+
   end
-  
+
   # GET /airframes
   # GET /airframes.json
   def index
-    @airframes = Airframe.all
+    @airframes = Airframe.where("user_id = ?", @current_user.id)
+
+    # registration number search
+    if params[:term].present?
+
+        @airframes = Airframe.where(
+          "registration like ? AND (baseline = 't' OR user_id = ?)",
+          "%"+params[:term].to_s+"%",
+          @current_user.id
+        ).first(5)
+
+        if @airframes.nil?
+            render :layout => false, :nothing => true, :status => :unprocessable_entity
+        else
+            render :json => @airframes.to_json( :methods => [:model, :make, :to_s] )
+        end
+
+    end
+
   end
 
   # GET /airframes/1
   # GET /airframes/1.json
   def show
-  
+
     if params[:id].present?
         @airframe = Airframe.find(params[:id])
     end
-    
-    if params[:registration].present?
-        @airframe = Airframe.where(:registration => params[:registration], :baseline => true).first
-        if @airframe.nil?
-            render :layout => false, :nothing => true, :status => :unprocessable_entity
-        else
-            render :json => @airframe.to_json( :methods => :to_s )
-        end      
-    end
-     
+
   end
 
   # GET /airframes/new
@@ -58,7 +72,9 @@ class AirframesController < ApplicationController
   # POST /airframes
   # POST /airframes.json
   def create
-    @airframe = Airframe.new(params[:airframe])
+    whitelist = params[:airframe].slice(:registration, :serial, :model_id, :year)
+    whitelist[:user_id] = @current_user.id
+    @airframe = Airframe.new(whitelist)
 
     respond_to do |format|
       if @airframe.save

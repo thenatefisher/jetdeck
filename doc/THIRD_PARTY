@@ -1,16 +1,15 @@
 Third Party Libraries
 
+  Brochure:
+    https://github.com/mhoofman/wordpress-heroku
+    Wordpress
+
   Front End:
       jQuery MultiSelect
       jQueryUI AutoComplete
       SubtleBackgrounds Cork
       Google Web Fonts
-      jquery.autoGrowInput
-      
-      
-      
-      
-      
+
   Back End:
       Paperclip
       Bootstrap

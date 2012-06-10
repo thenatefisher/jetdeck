@@ -11,8 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-///= require jquery_ujs
-//= require jquery-ui.min
+//= require jquery_ujs
+//= require jquery.ui.autocomplete
 //= require twitter/bootstrap
 
 //= require underscore
@@ -24,7 +24,7 @@
 
 //= require jquery.multi-select
 //= require jquery.quicksearch
-//= require jquery.autoGrowInput
+//= require select2.min
 
 //= require uploader/jquery.ui.widget
 //= require uploader/jquery.postmessage-transport
@@ -52,6 +52,10 @@ function modal(content) {
         $("#jetdeckModal").html(content);
         $("#jetdeckModal").modal();
     }
+}
+
+function modalClose() {
+  $("#jetdeckModal").modal('hide');
 }
 
 var alertSuccessTimeout;
@@ -147,16 +151,15 @@ $(function() {
         }
     ];
 
-    $( ".jui-autocomplete" ).autocomplete({
+    $(".jui-autocomplete").autocomplete({
         minLength: 2,
         source: results,
         select: function( event, ui ) {
 	        $( ".jui-autocomplete" ).val( ui.item.value );
 	        return false;
         }
-    });
-
-    .data( "autocomplete" )._renderItem = function( ul, item ) {
+    })
+    .data("autocomplete")._renderItem = function( ul, item ) {
       ul.addClass('dropdown-menu');
       ul.addClass('typeahead');
         return $( "<li class='result' style='cursor: pointer'></li>" )

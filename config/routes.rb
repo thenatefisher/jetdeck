@@ -2,12 +2,10 @@ Jetdeck::Application.routes.draw do
 
   resources :contacts
 
-  match "/airframes/registration/:registration" => "airframes#show"
-  
   match "/airframes/models" => "airframes#models"
-  
+
   resources :airframes
-  
+
   resources :equipment
 
   resources :accessories, :only => [:index, :create, :destroy]
