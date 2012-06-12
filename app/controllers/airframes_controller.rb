@@ -1,5 +1,4 @@
 class AirframesController < ApplicationController
-
   before_filter :authorize
 
   # GET /airframes/models

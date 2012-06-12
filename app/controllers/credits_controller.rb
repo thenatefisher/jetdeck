@@ -1,4 +1,6 @@
 class CreditsController < ApplicationController
+  before_filter :authorize
+
   # GET /credits
   # GET /credits.json
   def index

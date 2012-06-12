@@ -1,5 +1,5 @@
 class AccessoriesController < ApplicationController
-
+  before_filter :authorize
   def index
     if params[:airframe]
       @assys = Airframe.find(params[:airframe]).accessories

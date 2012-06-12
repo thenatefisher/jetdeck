@@ -22,6 +22,6 @@ Jetdeck::Application.routes.draw do
 
   match "/s" => "xspecs#recordTimeOnPage"
 
-  root :to => 'index#index'
+  root :to => 'sessions#new'
 
 end

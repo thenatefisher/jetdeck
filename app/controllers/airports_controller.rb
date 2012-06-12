@@ -1,4 +1,6 @@
 class AirportsController < ApplicationController
+  before_filter :authorize
+
   # GET /airports
   # GET /airports.json
   def index

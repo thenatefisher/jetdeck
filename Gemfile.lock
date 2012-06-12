@@ -83,6 +83,7 @@ GEM
     mime-types (1.18)
     multi_json (1.3.6)
     mysql2 (0.3.11)
+    newrelic_rpm (3.3.5)
     paperclip (3.0.4)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
@@ -174,6 +175,7 @@ DEPENDENCIES
   jquery-ui-rails
   json
   mysql2
+  newrelic_rpm
   paperclip
   rails (= 3.2.2)
   rails-backbone

@@ -30,6 +30,8 @@ gem 'jbuilder'
 gem 'annotate', ">= 2.4.1.beta"
 gem "paperclip"
 
+gem 'newrelic_rpm'
+
 group :test, :development do
   gem "rspec-rails", "~> 2.6"
 end
