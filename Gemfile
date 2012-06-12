@@ -1,14 +1,11 @@
 source 'http://rubygems.org'
 
 gem 'rails', '3.2.2'
-gem 'mysql2'
-gem 'sqlite3'
-gem 'json'
+gem 'bundler'
 
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'therubyracer'
@@ -16,25 +13,27 @@ group :assets do
   gem 'jquery-ui-rails'
 end
 
-gem 'bundler'
+gem 'json'
 gem 'jquery-rails'
 gem 'twitter-bootstrap-rails'
 gem 'rails-backbone'
-
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'delayed_job_active_record'
 #gem 'nokogiri'
 gem 'factory_girl_rails'
 #gem 'capybara'
 gem 'jbuilder'
-gem 'annotate', ">= 2.4.1.beta"
-gem "paperclip"
-
+gem 'annotate', '>= 2.4.1.beta'
+gem 'paperclip'
+gem 'thin'
 gem 'newrelic_rpm'
 
 group :test, :development do
-  gem "rspec-rails", "~> 2.6"
+  gem 'rspec-rails', '~> 2.6'
+  gem 'mysql2'
+  gem 'sqlite3'
 end
 
-# Use unicorn as the web server
-# gem 'unicorn'
+group :production do
+  gem 'pg'
+end
