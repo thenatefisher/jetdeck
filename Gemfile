@@ -10,11 +10,11 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'therubyracer'
   gem 'uglifier', '>= 1.0.3'
-  gem 'jquery-ui-rails'
 end
 
 gem 'json'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'twitter-bootstrap-rails'
 gem 'rails-backbone'
 gem 'bcrypt-ruby', :require => 'bcrypt'
