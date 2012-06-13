@@ -98,7 +98,7 @@ class Airframe < ActiveRecord::Base
   end
 
   def make
-    self.m.make.name
+    self.m.make.name if self.m.make
   end
 
   def model
