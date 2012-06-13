@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
     # generate auth token
     begin
         self[paramName] = SecureRandom.urlsafe_base64
-    end while User.exists?(col => self[paramName])
+    end while User.exists?(paramName => self[paramName])
     
   end
 
