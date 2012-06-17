@@ -2,7 +2,9 @@
 
 <script type="text/javascript">
   $(function() {
-    window.router = new Jetdeck.Routers.ProfileRouter({profile: <%= @user.to_json( :include => :contact ).html_safe -%>});
+    window.router = new Jetdeck.Routers.ProfileRouter(
+      { profile: <%= render( template: 'users/show.json.jbuilder', locals: { user: @user}).html_safe %> }
+    );
     Backbone.history.start();
   });
 </script>

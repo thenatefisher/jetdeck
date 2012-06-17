@@ -4,7 +4,7 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    @contacts = Contact.all
+    @contacts = @current_user.contacts
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,7 +15,7 @@ class ContactsController < ApplicationController
   # GET /contacts/1
   # GET /contacts/1.json
   def show
-    @contact = Contact.find(params[:id])
+    @contact = Contact.find(:all, :conditions => ["id = ? AND owner_id = ?", params[:id], @current_user.id]).first
 
     respond_to do |format|
       format.html # show.html.erb

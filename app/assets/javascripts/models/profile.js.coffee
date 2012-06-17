@@ -6,4 +6,7 @@ class Jetdeck.Models.Profile extends Backbone.Model
     first: null
     last: null
     email: null
-
+    airframes: 0
+    contacts: 0
+    sent: 0
+    views: 0

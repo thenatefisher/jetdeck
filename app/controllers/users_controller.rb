@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
-  
+
   before_filter :authorize
-  
+
   # GET /users
   # GET /users.json
   def index
@@ -20,10 +20,6 @@ class UsersController < ApplicationController
 
     @user = @current_user if @current_user.present?
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @user.to_json( :include => :contact ) }
-    end
   end
 
   # GET /users/new

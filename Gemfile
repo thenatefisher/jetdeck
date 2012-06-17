@@ -18,20 +18,22 @@ gem 'jquery-rails'
 gem 'twitter-bootstrap-rails'
 gem 'rails-backbone'
 gem 'bcrypt-ruby', :require => 'bcrypt'
-gem 'delayed_job_active_record'
+#gem 'delayed_job_active_record'
 #gem 'nokogiri'
-gem 'factory_girl_rails'
 #gem 'capybara'
 gem 'jbuilder'
-gem 'annotate', '>= 2.4.1.beta'
 gem 'paperclip'
 gem 'thin'
+gem 'capistrano'
 gem 'newrelic_rpm'
+gem 'aws-sdk', '~> 1.3.4'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'
   gem 'mysql2'
   gem 'sqlite3'
+  #gem 'factory_girl_rails'
+  #gem 'annotate', '>= 2.4.1.beta'
 end
 
 group :production do

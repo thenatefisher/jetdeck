@@ -32,11 +32,12 @@ class User < ActiveRecord::Base
   has_many :logins
   has_many :airframes, :dependent => :destroy
   has_many :credits
+  has_many :contacts, :class_name => 'Contact'
   belongs_to :contact
 
   #has_secure_password
   #force_ssl
-  
+
   validates_uniqueness_of :contact_id
   validates_presence_of :contact_id, :on => :create
   validates_presence_of :password, :on => :create
@@ -54,7 +55,7 @@ class User < ActiveRecord::Base
     begin
         self[paramName] = SecureRandom.urlsafe_base64
     end while User.exists?(col => self[paramName])
-    
+
   end
 
   def encrypt_password

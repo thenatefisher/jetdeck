@@ -6,8 +6,13 @@ class Accessory < ActiveRecord::Base
                       :styles => {  :thumb => "220x200#",
                                     :mini => "80x60#",
                                     :listing => "210x157#" },
-                      :url  => "/assets/airframes/:id/:style/:basename.:extension",
-                      :path => ":rails_root/public/assets/airframes/:id/:style/:basename.:extension"
+                      :s3_credentials => "#{Rails.root}/config/aws_keys.yml",
+                      :storage => :s3,
+                      :s3_host_alias => "jetdeck.s3.amazonaws.com",
+                      :url => "jetdeck.s3.amazonaws.com",
+                      :bucket => "jetdeck",
+                      :s3_permissions => :public_read,
+                      :path => ":attachment/:id/:style/:basename.:extension"
 
     has_attached_file :document
 
@@ -47,8 +52,8 @@ class Accessory < ActiveRecord::Base
         {
           "name" => self.image_file_name,
           "size" => self.image_file_size,
-          "url" => "/assets/airframes/#{id}/original/#{image_file_name}",
-          "thumbnail_url" => "/assets/airframes/#{id}/mini/#{image_file_name}",
+          "url" => "http://s3.amazonaws.com/jetdeck/images/#{id}/original/#{image_file_name}",
+          "thumbnail_url" => "http://s3.amazonaws.com/jetdeck/images/#{id}/mini/#{image_file_name}",
           "delete_url" => "/accessories/#{id}",
           "delete_type" => "DELETE"
         }

@@ -38,4 +38,8 @@ Jetdeck::Application.configure do
   # Paperclip config path
   Paperclip.options[:command_path] = "/usr/bin/"
 
+  # Actually send emails in dev mode!!
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+
 end

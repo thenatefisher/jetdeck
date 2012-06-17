@@ -21,16 +21,23 @@
 class Contact < ActiveRecord::Base
 
   has_one :user
+
   has_many :specsSent,
       :class_name => "Airframe",
       :foreign_key => "sender"
+
   has_many :specsReceived,
       :class_name => "Airframe",
       :foreign_key => "recipient"
+
   has_one :base,
       :class_name => 'Contact',
       :foreign_key => 'baseline_id',
       :readonly => true
+
+  has_one :owner,
+      :class_name => 'User',
+      :foreign_key => 'owner_id'
 
   attr_accessible :phone, :first, :last, :source, :email, :company, :title, :description
 

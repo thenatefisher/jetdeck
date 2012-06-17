@@ -1,0 +1,9 @@
+development:
+  access_key_id: ***REMOVED***
+  secret_access_key: t72j+f9/***REMOVED***
+test:
+  access_key_id: ***REMOVED***
+  secret_access_key: t72j+f9/***REMOVED***
+production:
+  access_key_id: ***REMOVED***
+  secret_access_key: t72j+f9/***REMOVED***
