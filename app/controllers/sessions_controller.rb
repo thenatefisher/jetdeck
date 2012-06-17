@@ -16,8 +16,9 @@ class SessionsController < ApplicationController
           end
           redirect_to airframes_url, :notice => "Logged in!"
         else
-          flash.now.alert = "Invalid login credentials"
-          render "new"
+          flash[:error] = "Invalid login credentials"
+          flash[:email] = params[:email]
+          redirect_to login_url
         end
 
     end

@@ -84,4 +84,11 @@ class Jetdeck.Views.Airframes.IndexView extends Backbone.View
     $(@el).html(@template(params))
     @addAll()    
     @$('.page[rel=1]').parent('li').addClass('active')   
+    if @options.airframes.length == 0
+        $('.new-spec').popover(
+            title: "<i class='icon-exclamation-sign' style='margin-top: 4px;'></i> Start Here",
+            content: "Create a new aircraft spec to share with customers, new leads or brokers.",
+            placement: "bottom"
+        )
+        @helpBubble = setTimeout("$('.new-spec').popover('show')", 500)
     return this

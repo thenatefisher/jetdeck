@@ -28,7 +28,7 @@ Airframe Send
     Permissions
     Custom Data per Recipient
 
-Searching
+Searching - defer
     Combine contacts and airframes in results
     Apply new filters
     Sorting
@@ -44,6 +44,8 @@ Contacts
     Listing - done
     Create
     Show - done
+    Notes
+    Aiframes 
     Show (avatar placeholder)
 
 Email Templates

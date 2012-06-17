@@ -3,17 +3,20 @@
 <% if (fire) { %><i class="icon-fire"></i><% } %>
 </td>
 
-<td><%= hits %></td>
+<td style="text-align:center;"><%= hits %></td>
 
-<td>
+<td style="text-align:center;">
+<% var dateString = "--"; %>
 <% if (last_viewed != "") {
     var s = new Date(last_viewed);
-    var dateString = (s.getMonth()+1) +"/"+ s.getDate() +"/"+ s.getFullYear() +" "+ s.getHours() +":"+ s.getMinutes();
+    dateString = (s.getMonth()+1) +"/"+ s.getDate() +"/"+ s.getFullYear() +" "+ s.getHours() +":"+ s.getMinutes();
     } %>
 <%= dateString %>
 </td>
 
 <td>
-  <i class="icon-envelope resend" data-recip_id="<%= recipient_id %>"></i>
-  <a href="<%= url %>"><i class="icon-share view"></i></a>
+    <div class="btn-group pull-right">
+      <button class="btn btn-mini" data-recip_id="<%= recipient_id %>"><i class="icon-folder-open resend"></i> Open</button>
+      <a class="btn btn-mini" href="<%= url %>"><i class="icon-eye-open view"></i> View</a>
+    </div>
 </td>
