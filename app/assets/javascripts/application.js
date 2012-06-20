@@ -14,18 +14,15 @@
 //= require jquery_ujs
 //= require jquery.ui.autocomplete
 //= require twitter/bootstrap
-
 //= require underscore
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require collection_book
 //= require jetdeck
-
 //= require jquery.multi-select
 //= require jquery.quicksearch
 //= require select2.min
-
 //= require uploader/jquery.ui.widget
 //= require uploader/jquery.postmessage-transport
 //= require uploader/jquery.xdr-transport
@@ -38,7 +35,6 @@
 //= require uploader/jquery.fileupload-fp
 //= require uploader/jquery.fileupload-ui
 //= require uploader/locale
-
 //= require_tree .
 
 

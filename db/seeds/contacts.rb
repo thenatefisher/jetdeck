@@ -117,4 +117,9 @@ if User.all.length > 0
     end
 end
 
+# test account
+k = User.first.contact
+k.email = "test@test.com"
+k.save
+
 puts "Finished Creating Contact Data"

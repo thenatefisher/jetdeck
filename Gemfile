@@ -3,8 +3,6 @@ source 'http://rubygems.org'
 gem 'rails', '3.2.2'
 gem 'bundler'
 
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
@@ -18,15 +16,15 @@ gem 'jquery-ui-rails'
 gem 'twitter-bootstrap-rails'
 gem 'rails-backbone'
 gem 'bcrypt-ruby', :require => 'bcrypt'
-#gem 'delayed_job_active_record'
-#gem 'nokogiri'
-#gem 'capybara'
 gem 'jbuilder'
 gem 'paperclip'
 gem 'thin'
-gem 'capistrano'
 gem 'newrelic_rpm'
 gem 'aws-sdk', '~> 1.3.4'
+
+#gem 'delayed_job_active_record'
+#gem 'nokogiri'
+#gem 'capybara'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'

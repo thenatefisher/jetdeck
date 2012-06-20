@@ -1,6 +1,10 @@
-<%= @airframe.to_s %>
-<br/>Serial: <%= @airframe.serial %>
-<br/>
-<br/>Sent To: <%= @spec.recipient.email %>
-<br/>From: <%= @spec.sender.email %>
-<br/>On: <%= @spec.created_at %>
+<div id="spec"></div>
+
+<script type="text/javascript">
+  $(function() {
+    window.router = new Jetdeck.Routers.SpecRouter(
+      { spec: <%= render( template: 'xspecs/show.json.jbuilder', locals: { spec: @spec}).html_safe %> }
+    );
+    Backbone.history.start();
+  });
+</script>    
