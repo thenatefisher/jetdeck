@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120624213149) do
+ActiveRecord::Schema.define(:version => 20120625050746) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -148,6 +148,7 @@ ActiveRecord::Schema.define(:version => 20120624213149) do
     t.datetime "updated_at",  :null => false
     t.string   "label"
     t.integer  "owner_id"
+    t.string   "modelName"
   end
 
   create_table "equipment", :force => true do |t|

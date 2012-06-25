@@ -167,7 +167,9 @@
                 <span>{%=locale.fileupload.destroy%}</span>
             </button>
             <input type="checkbox" name="delete" value="1">
-            {% if (file.is_thumbnail != true) { %}<br><br><a href="#" style="margin-left: 30px;" onclick="return false;">Set as Thumbnail</a>{% } %}
+            {% if (file.is_thumbnail != true) { %}<br><br>
+            <a href="#" style="margin-left: 30px;" class="set-thumbnail" data-aid="{%= file.id %}" onclick="return false;">Set as Thumbnail</a>
+            {% } %}
         </td>
     </tr>
 {% } %}

@@ -68,18 +68,21 @@ class XspecsController < ApplicationController
   # POST /specs.json
   def create
 
-    # todo sender = Contact.find(params[:xspec]['sender_id'])
-    sender = Contact.first
+    authorize()
+    
+    sender = @current_user.contact
 
-    # todo check that contact is also owned by user
-    recipient = Contact.where("email = ?", params[:xspec]['recipient_email']).first
+    recipient = Contact.where("email = ? AND owner_id = ?", params[:xspec]['recipient_email'], @current_user.id).first
 
     # create a contact record if none found
     if recipient.nil?
         recipient = Contact.create(:email => params[:xspec]['recipient_email'])
+        recipient.owner_id = @current_user.id if recipient.present?
+        recipient.baseline = false if recipient.present?
+        recipient.save
     end
-
-    af = Airframe.find(params[:xspec]['airframe_id'])
+    
+    af = Airframe.find(:first, :conditions => ["id = ? AND user_id = ?", params[:xspec]['airframe_id'], @current_user.id])
 
     @spec = Xspec.new(:recipient => recipient, :sender => sender, :airframe => af )
 

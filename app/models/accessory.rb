@@ -71,7 +71,8 @@ class Accessory < ActiveRecord::Base
           "thumbnail_url" => "http://s3.amazonaws.com/jetdeck/images/#{id}/mini/#{image_file_name}",
           "delete_url" => "/accessories/#{id}",
           "delete_type" => "DELETE",
-          "is_thumbnail" => self.thumbnail
+          "is_thumbnail" => self.thumbnail,
+          "id" => self.id
         }
       end
 

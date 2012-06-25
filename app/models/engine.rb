@@ -28,7 +28,7 @@ class Engine < ActiveRecord::Base
                 :foreign_key => "model_id",
                 :conditions => "etype = 'engines'"
               
-    before_save :init
+    before_create :init
 
     belongs_to  :owner,
                 :class_name => "User"    
@@ -38,6 +38,9 @@ class Engine < ActiveRecord::Base
         if (self.baseline == true)
             self.label = nil
         end
+        
+        self.modelName = self.m.modelNumber if self.m
+        
     end           
 
 end

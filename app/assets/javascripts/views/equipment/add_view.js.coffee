@@ -88,6 +88,7 @@ class Jetdeck.Views.Airframes.AddEquipmentModal extends Backbone.View
     else
         m = new Jetdeck.Models.EngineModel({id: e})
         @model.engines.add(m)
+        @model.set('engines', @model.engines.toJSON())
     
     @model.save(null,
         success: =>

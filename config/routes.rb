@@ -12,7 +12,7 @@ Jetdeck::Application.routes.draw do
   
   resources :engines
 
-  resources :accessories, :only => [:index, :create, :destroy]
+  resources :accessories, :only => [:index, :create, :destroy, :update]
 
   match "/login" => "sessions#new"
 

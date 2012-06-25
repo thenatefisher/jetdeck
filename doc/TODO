@@ -1,3 +1,5 @@
+Create Custom Avionics/Equipment/Cosmetic Items
+
 Airframes#index
     Pagination - done
     Search result total - done
@@ -28,7 +30,7 @@ Airframe Photos
     Viewing - done
     Editing - done
     Crop Area - defer
-    Set thumbnail 
+    Set thumbnail - done
     Handle thumb change if deleted - done
 
 Airframe Send
@@ -58,7 +60,7 @@ Contacts
     Show - done
     Notes
     Aiframes
-    Show (avatar placeholder)
+    Show (avatar placeholder) - done
 
 Email Templates
 

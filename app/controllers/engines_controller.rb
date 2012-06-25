@@ -12,7 +12,7 @@ class EnginesController < ApplicationController
   def update
     @engine = Engine.find(:first, :conditions => ["id = ? AND owner_id = ?", params[:id], @current_user.id])
     whitelist = Hash.new
-    whitelist = params[:engine].slice(:year, :serial, :smoh, :shsi, :hsi, :tbo, :totalTime, :totalCycles)
+    whitelist = params[:engine].slice(:year, :modelName, :serial, :smoh, :shsi, :hsi, :tbo, :totalTime, :totalCycles)
 
     logger.info(whitelist)
 
@@ -43,7 +43,8 @@ class EnginesController < ApplicationController
     whitelist[:owner_id] = @current_user.id
     if params[:engine][:airframe_id] && params[:engine][:model]
         @engine = Engine.new(whitelist)
-        @engine.m = Equipment.find_by_modelNumber(params[:engine][:model])
+        @engine.m |= Equipment.find_by_modelNumber(params[:engine][:model]) 
+        @engine.modelName = params[:engine][:model] if params[:engine][:model]
         airframe = Airframe.find(:first, :conditions => ["id = ? AND user_id = ?", params[:engine][:airframe_id], @current_user.id])
         airframe.engines << @engine
         

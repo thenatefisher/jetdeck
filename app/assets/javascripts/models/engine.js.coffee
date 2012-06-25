@@ -6,6 +6,7 @@ class Jetdeck.Models.EngineModel extends Backbone.Model
         make: null
         model: null
         id: null
+        modelName: null
 
 class Jetdeck.Collections.EnginesCollection extends Backbone.Collection
     model: Jetdeck.Models.EngineModel

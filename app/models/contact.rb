@@ -20,8 +20,6 @@
 
 class Contact < ActiveRecord::Base
 
-  has_one :user
-
   has_many :specsSent,
       :class_name => "Airframe",
       :foreign_key => "sender"

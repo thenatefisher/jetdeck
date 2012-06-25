@@ -40,6 +40,24 @@ class AccessoriesController < ApplicationController
 
   end
 
+  def update
+    @Assy = Accessory.find(params[:id])
+
+    if params[:thumbnail] && @Assy.present?
+        @Assy.airframe.accessories.each { |a| a.thumbnail = false; a.save }
+        @Assy.thumbnail = true
+    end
+
+    respond_to do |format|
+      if @Assy.update_attributes(params[:accessory])
+        format.json { head :no_content }
+      else
+        format.html { render :action => "edit" }
+        format.json { render :json => @Assy.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     @Assy = Accessory.find(params[:id])
     @Assy.destroy

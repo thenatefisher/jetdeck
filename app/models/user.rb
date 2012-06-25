@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   has_many :logins
   has_many :airframes, :dependent => :destroy
   has_many :credits
-  has_many :contacts, :class_name => 'Contact'
+  has_many :contacts, :class_name => 'Contact', :foreign_key => "owner_id"
   belongs_to :contact
 
   #has_secure_password
