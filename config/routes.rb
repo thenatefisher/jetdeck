@@ -9,6 +9,8 @@ Jetdeck::Application.routes.draw do
   resources :equipment
 
   resources :xspecs
+  
+  resources :engines
 
   resources :accessories, :only => [:index, :create, :destroy]
 

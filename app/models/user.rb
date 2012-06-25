@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   before_create { set_defaults(:auth_token) }
 
+  has_many :engines
   has_many :logins
   has_many :airframes, :dependent => :destroy
   has_many :credits

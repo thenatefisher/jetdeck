@@ -6,26 +6,38 @@ Airframes#index
 User Sessions
     Login - done
     Password Recovery
-    Create User
+    Create User - defer
     Edit Profile
     Access Control
     Cookies - done
 
 Create Airframe - done
 
+Retail Spec Page
+    Message
+    Headlines 1-3
+    Photo Resize
+    Photo Download
+    Notes
+    Company Logo
+    Equipment List
+    Email Broker
+
 Airframe Photos
     Adding - done
     Viewing - done
     Editing - done
     Crop Area - defer
-    Set thumbnail ( and handle removal if deleted )
+    Set thumbnail 
+    Handle thumb change if deleted - done
 
 Airframe Send
-    Stats
-    Modify
-    Re-send
+    Stats - defer
+    Allow Analytics Code - defer
+    Modify 
+    Re-send - defer
     Revoke
-    Permissions
+    Permissions - defer
     Custom Data per Recipient
 
 Searching - defer
@@ -35,8 +47,8 @@ Searching - defer
     Quick search and autosuggest
 
 Airframe#show
-    Engine Spec
-    Add/Remove Engine
+    Engine Spec - done
+    Add/Remove Engine - done
 
 Logo - done
 
@@ -50,22 +62,21 @@ Contacts
 
 Email Templates
 
-Email Server
+Email Server - done
 
-Retail Spec Page
+Mobile Views - defer
 
-Mobile Views
-
-SSL
+SSL - defer
 
 Brochure Site
     Video
-    Pricing
-    Trial Signup
+    Pricing - defer
+    Trial Signup - defer
+    Invite list - done
 
 Help Balloons
 
-Reading Emails (replied from recipients)
+Reading Emails (replied from recipients) - defer
 
 Tutorial
 

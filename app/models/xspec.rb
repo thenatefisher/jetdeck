@@ -78,6 +78,9 @@ class Xspec < ActiveRecord::Base
         self.urlCode = create_code
     end
 
+    # show the message by default
+    self.show = true
+
   end
 
   def create_code

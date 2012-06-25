@@ -30,6 +30,9 @@ class Engine < ActiveRecord::Base
               
     before_save :init
 
+    belongs_to  :owner,
+                :class_name => "User"    
+
     def init
         # baseline records should not have labels
         if (self.baseline == true)

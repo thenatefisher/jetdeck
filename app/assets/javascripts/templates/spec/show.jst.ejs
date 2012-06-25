@@ -2,12 +2,13 @@
 
   <div class="row company-banner">
     <div class="span12 whitebox">
-      <img class="company-logo" src="/assets/generic.jpg">
+      <!--<img class="company-logo" src="/assets/generic.jpg">-->
+      <h2 class="company-name"><%= agentCompany %></h2>
       <div class="pull-right" style="margin: 10px 20px; text-align: right">
-        <h1>(800) 222-1212</h1>
+        <h1>&nbsp;<%= agentPhone %> </h1>
         <h4>&nbsp;</h4>
-        <h4>Chris Jacobson</h4>
-        <h4><a href="#">www.exojetsales.com</a></h4>
+        <h4><%= agentName %></h4>
+        <h4><a href="http://<%= agentWebsite %>"><%= agentWebsite %></a></h4>
       </div>
       <div style="clear: both"></div>
     </div>
@@ -15,30 +16,39 @@
 
   <div class="hero-unit" style="background: white; padding: 30px;">
 
+    <% if (show) { %>
+    <% if (message != "" && message != null) { %>
     <div class="alert alert-info broker-message">
       <a class="close" data-dismiss="alert" href="#">×</a>
-      <h2 class="alert-heading">Hi Don!</h2>
-      <p>Thanks for speaking with me today about this G-V. As a reminder,
-      the aircraft is available AFTER July 20th. Looking forward
-      to our demo flight on Monday! Best, Chris.</p>
-      <span class="pull-right" style="margin-top: 7px; margin-right: 20px;"> <input type="checkbox" style="margin-top: -3px"></input> Don't Show Again</span>
+      <h2 class="alert-heading"><%= salutation %></h2>
+      <p><%= message %></p>
+      <span class="pull-right" style="margin-top: 7px; margin-right: 20px;"> <input type="checkbox" id="show-message" style="margin-top: -3px"></input> Don't Show Again</span>
       <div style="clear: both"></div>
     </div>
+    <% } } %>
 
     <div class="span5 hero-text-data">
-      <h1>2000 Gulfstream GV</h1>
-      <p>Asking $4,500,000</p>
+      <h1><%= title %></h1>
+      <% if (askingPrice != null) { %>
+      <p>Asking $<%= askingPrice.formatMoney(0, ".", ",") %> </p>
+      <% } else { %> <p> &nbsp;</p> <% } %>
       <br>
       <p>
         <a class="btn btn-primary btn-large" id="message-seller">
-          <i class="icon-envelope icon-white" style="margin: 2px"></i> Chris Jacobson
+          <i class="icon-envelope icon-white" style="margin: 2px"></i> <%= agentName %>
         </a>
       </p>
 
       <ul class="hero-list">
-        <li><h3>Incredible Endurance/Max Cruise</h3></li>
-        <li><h3>Lowest TT Machine in Class</h3></li>
-        <li><h3>New Paint From Stevens!</h3></li>
+        <% if (headline1 != null) { %>
+            <li><h3><%= headline1 %></h3></li>
+        <% } %>
+        <% if (headline2 != null) { %>
+            <li><h3><%= headline2 %></h3></li>
+        <% } %>
+        <% if (headline3 != null) { %>
+            <li><h3><%= headline3 %></h3></li>
+        <% } %>        
       </ul>
 
     </div>
@@ -48,8 +58,11 @@
       <div id="hero-carousel" class="carousel slide">
         <!-- Carousel items -->
         <div class="carousel-inner">
-          <div class="active item"><img style="width: 400px;" class="hero-image" src="/assets/g550.jpg"/></div>
-          <div class="item"><img style="width: 400px;" class="hero-image" src="/assets/p180.jpg"/></div>
+          <% for (i in images) { %>
+          <div class="item<% if (images[i].thumbnail == true) { %> active<% } %>">
+            <img class="hero-image" src="<%= images[i].preview %>" data-original="<%= images[i].original %>"/>
+          </div>
+          <% } %>
         </div>
         <!-- Carousel nav -->
         <a class="carousel-control left hide" href="#hero-carousel" data-slide="prev">&lsaquo;</a>
@@ -68,7 +81,7 @@
       <div class="page-header" style="margin-left: 20px; margin-right: 20px;">
         <h1>
           Detailed Specifications
-          <span class="pull-right"><button class="btn btn-small print-spec"><i class="icon-print"></i> Print</button></span>
+          <!-- <span class="pull-right"><button class="btn btn-small print-spec"><i class="icon-print"></i> Print</button></span> -->
         </h1>
       </div>
 
@@ -77,57 +90,82 @@
           <tr><th colspan=2>General Information</th></tr>
           <tr>
             <td><strong>Serial Number</strong></td>
-            <td>0095</td>
+            <td><%= serial %></td>
           </tr>
           <tr>
             <td><strong>Registration</strong></td>
-            <td>N89S (US)</td>
+            <td><%= registration %></td>
           </tr>
+          <% if (location != null && location != "") { %>
           <tr>
             <td><strong>Location</strong></td>
-            <td>Van Nuys, CA</td>
+            <td><%= location.city %>, <%= location.state %></td>
           </tr>
+          <% } %>   
+          <% if (totalTime != null && totalTime != "") { %>
           <tr>
             <td><strong>Total Time</strong></td>
-            <td>7,899</td>
+            <td><%= totalTime.formatMoney(0, ".", ",") %></td>
           </tr>
+          <% } %>                   
+          <% if (totalCycles != null && totalCycles != "") { %>
           <tr>
             <td><strong>Landings</strong></td>
-            <td>8,111</td>
+            <td><%= totalCycles.formatMoney(0, ".", ",") %></td>
           </tr>
+          <% } %>          
         </table>
       </div> <!-- end table wrapper div -->
       <div class="offset4 spec-data" style="margin-right: 20px;">
         <table class="table table-striped table-bordered ">
           <tr>
             <th>Engine Information</strong></th>
-            <th>Left</th>
-            <th>Right</th>
+            <% for (i in engines) { %>
+                <td><% if (engines[i].label != null) { %> <%= engines[i].label %> <% } %></td>
+            <% } %>
           </tr>
+          
           <tr>
             <td><strong>Model Number</strong></td>
-            <td>PT6-80</td>
-            <td>PT6-80</td>
+            <% for (i in engines) { %>
+                <td><% if (engines[i].model != null) { %> <%= engines[i].model %> <% } %></td>
+            <% } %>
           </tr>
           <tr>
             <td><strong>Serial Number</strong></td>
-            <td>PTE2122</td>
-            <td>PTE829</td>
+            <% for (i in engines) { %>
+                <td><% if (engines[i].serial != null) { %> <%= engines[i].serial %> <% } %></td>
+            <% } %>
           </tr>
           <tr>
             <td><strong>TTSN</strong></td>
-            <td>8,476</td>
-            <td>8,476</td>
+            <% for (i in engines) { %>
+                <td>
+                    <% if (typeof(engines[i].totalTime) != "undefined") { %> 
+                        <%= engines[i].totalTime.formatMoney(0, ".", ",") %> 
+                    <% } %>
+                </td>
+            <% } %>
           </tr>
           <tr>
             <td><strong>SMOH</strong></td>
-            <td>8,476</td>
-            <td>8,476</td>
+            <% for (i in engines) { %>
+                <td>
+                    <% if (typeof(engines[i].smoh) != "undefined") { %> 
+                        <%= engines[i].smoh.formatMoney(0, ".", ",") %> 
+                    <% } %>
+                </td> 
+            <% } %>
           </tr>
           <tr>
             <td><strong>SHSI</strong></td>
-            <td>8,476</td>
-            <td>8,476</td>
+            <% for (i in engines) { %>
+                <td>
+                    <% if (typeof(engines[i].shsi) != "undefined") { %> 
+                        <%= engines[i].shsi.formatMoney(0, ".", ",") %> 
+                    <% } %>
+                </td>
+            <% } %>
           </tr>
         </table>
       </div> <!-- end table wrapper div -->
@@ -135,36 +173,29 @@
       <div class="span6 spec-data">
         <table class="table table-striped table-bordered ">
           <tr><th colspan=4>Avionics</th></tr>
-          <tr>
-            <td><strong>EFIS</strong></td>
-            <td>COLLINS EFIS-85	</td>
-            <td><strong>COMM</strong></td>
-            <td>DUAL COLLINS VHF-22C</td>
-          </tr>
-          <tr>
-            <td><strong>XPDR</strong></td>
-            <td>DUAL COLLINS TDR-90	</td>
-            <td><strong>NAV</strong></td>
-            <td>DUAL COLLINS VIR-32</td>
-          </tr>
-          <tr>
-            <td><strong>ADF</strong></td>
-            <td>COLLINS ADF-462</td>
-            <td><strong>TCAS</strong></td>
-            <td>BENDIX/KING KMH-980</td>
-          </tr>
-          <tr>
-            <td><strong>DME</strong></td>
-            <td>COLLINS DME-42</td>
-            <td><strong>RADALT</strong></td>
-            <td>COLLINS ALT-55B</td>
-          </tr>
-          <tr>
-            <td><strong>ELT</strong></td>
-            <td>ARTEX 406 NAV	</td>
-            <td><strong>COMM</strong></td>
-            <td>L-3 FA2100	</td>
-          </tr>
+            <% for (i in avionics) { %>
+                <% if (i % 2 == 0) { %>
+                    <tr>
+                <% } %>              
+                <td>
+                    <% if (typeof(avionics[i].label) != "undefined") { %> 
+                        <strong><%= avionics[i].label %></strong>
+                    <% } %>
+                </td>
+                <td>
+                    <% if (typeof(avionics[i].model) != "undefined") { %> 
+                    <% if (typeof(avionics[i].make) != "undefined") { %> 
+                        <%= avionics[i].make %> <%= avionics[i].model %>
+                    <% } } %>
+                </td>    
+                <% if (i % 2 == 1) { %>
+                    </tr>
+                <% } %>                            
+            <% } %>                
+
+            <% if (avionics.length % 2 == 1) { %>
+                <td></td><td></td></tr>
+            <% } %>
         </table>
       </div> <!-- end table wrapper div -->
       <div class="offset6 spec-data" style="margin-right: 20px;">
@@ -232,20 +263,23 @@
 <div class="modal hide" id="message-modal">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">×</button>
-    <h3>Re: 2011 Gulfstream G550 S/N 0012</h3>
+    <h3>
+        Re: <%= title %> 
+        <% if (serial != null && serial != "") { %> S/N <%= serial %> <% } %>
+    </h3>
   </div>
   <div class="modal-body">
 
         <div style="margin-left: 15px;">
           <div class="span1" style="padding-right: 15px; padding-top: 4px;"><strong>From:</strong></div>
-          <input type="text" id="to-field" class="input-xlarge span5 disabled"disabled placeholder="chris@exojetsales.com">
+          <input type="text" id="to-field" class="input-xlarge disabled" disabled placeholder="<%= recipient %>">
 
           <div style="clear:both; margin-top: 10px;"></div>
 
           <div class="span1" style="padding-right: 15px; padding-top: 4px;"><strong>To:</strong></div>
-          <input type="text" id="from-field" class="input-xlarge span5 disabled" disabled placeholder="don.j@atfaster.com">
+          <input type="text" id="from-field" class="input-xlarge disabled" disabled placeholder="<%= agentEmail %>">
 
-          <textarea class="input-xlarge span6"  style="margin-left: 15px; margin-top: 10px;" id="textarea" rows="6"></textarea>
+          <textarea class="input-xlarge"  style="width: 90%; margin-top: 10px;" id="textarea" rows="6"></textarea>
         </div>
   </div>
   <div class="modal-footer">

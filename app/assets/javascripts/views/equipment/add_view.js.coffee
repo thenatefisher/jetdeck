@@ -10,13 +10,32 @@ class Jetdeck.Views.Airframes.AddEquipmentModal extends Backbone.View
   template: JST["templates/equipment/modal"]
 
   render : =>
-    eCollection = new Jetdeck.Collections.EquipmentCollection()
-    eCollection.fetch(
-        success: (equipment) =>
+  
+    if (@options.type == "engines") 
+        collection = new Jetdeck.Collections.EnginesCollection()
+        collection.fetch(
+            success: (engines) =>
+                $(@el).html(@template({type: @options.type}) )
+                engines.each((item) =>
+                    view = new Jetdeck.Views.Airframes.AddEquipmentModalItem(model: item)
+                    @$("#avail-parts").append(view.render().el)
+                )
+                @$('#equipment-form').multiSelect({
+                  selectableHeader : '<input type="text" class="input-large" id="equipment-search" autocomplete = "off" />',
+                  selectedHeader : '<h4 style="background: #eee; margin-bottom: 5px; padding: 7px 10px;">Selected Equipment</h4>',
+                  afterSelect : @addEquipment,
+                  afterDeselect : @removeEquipment
+                })
 
-            $(@el).html(@template({type: @options.type}) )
+                @$('input#equipment-search').quicksearch('#ms-equipment-form .ms-selectable li')                       
+        )
+    else
+        collection = new Jetdeck.Collections.EquipmentCollection()
+        collection.fetch(
+            success: (equipment) =>
 
-            if !(@options.type)
+                $(@el).html(@template({type: @options.type}) )
+                
                 equipment.each((item) =>
                     view = new Jetdeck.Views.Airframes.AddEquipmentModalItem(model: item)
                     switch item.get("type")
@@ -29,24 +48,16 @@ class Jetdeck.Views.Airframes.AddEquipmentModal extends Backbone.View
                       when "modifications"
                         @$("optgroup[label='Modifications']").append(view.render().el)
                 )
-            else
-                equipment.each((item) =>
-                    if item.get("type") == "engines"
-                        view = new Jetdeck.Views.Airframes.AddEquipmentModalItem(model: item)
-                        @$("#avail-parts").append(view.render().el)
 
-                )
+                @$('#equipment-form').multiSelect({
+                  selectableHeader : '<input type="text" class="input-large" id="equipment-search" autocomplete = "off" />',
+                  selectedHeader : '<h4 style="background: #eee; margin-bottom: 5px; padding: 7px 10px;">Selected Equipment</h4>',
+                  afterSelect : @addEquipment,
+                  afterDeselect : @removeEquipment
+                })
 
-            @$('#equipment-form').multiSelect({
-              selectableHeader : '<input type="text" class="input-large" id="equipment-search" autocomplete = "off" />',
-              selectedHeader : '<h4 style="background: #eee; margin-bottom: 5px; padding: 7px 10px;">Selected Equipment</h4>',
-              afterSelect : @addEquipment,
-              afterDeselect : @removeEquipment
-            })
+                @$('input#equipment-search').quicksearch('#ms-equipment-form .ms-selectable li')
 
-            @$('input#equipment-search').quicksearch('#ms-equipment-form .ms-selectable li')
-
-            if !(@options.type)
                 @$('#ms-equipment-form .ms-selectable').find('li.ms-elem-selectable').hide()
                 @$('.ms-optgroup-label').click(() ->
                   if ($(this).hasClass('ms-collapse'))
@@ -57,11 +68,9 @@ class Jetdeck.Views.Airframes.AddEquipmentModal extends Backbone.View
                     $(this).addClass('ms-collapse')
                 )
 
-            @model.equipment.forEach((elem) => @$("#equipment-form").multiSelect('select', elem.id))
+                #@model.equipment.forEach((elem) => @$("#equipment-form").multiSelect('select', elem.id))
 
-        failure: (failmsg) ->
-            console.log failmsg
-    )
+        )
 
     return this
 
@@ -73,7 +82,13 @@ class Jetdeck.Views.Airframes.AddEquipmentModal extends Backbone.View
     )
 
   addEquipment : (e) =>
-    @model.equipment.push({id: e})
+  
+    if !(@options.type)
+        @model.equipment.push({id: e})    
+    else
+        m = new Jetdeck.Models.EngineModel({id: e})
+        @model.engines.add(m)
+    
     @model.save(null,
         success: =>
             @model.fetch( success: => @options.parent.render())

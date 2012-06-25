@@ -44,7 +44,7 @@
         <% if (location) { %>
         <div style="margin: 5px 0px"><strong>Location</strong>
           <a href="<%= location.id %>"><%= location.icao %></a>
-          (<%= location.city %>) </div>
+          (<%= location.city %>, <%= location.state %>) </div>
         <% } %>
 
         <div style="margin: 5px 0px;"><strong>Asking</strong>
@@ -54,7 +54,10 @@
         <div style="margin: 5px 0px;"><strong>Agent</strong>
           <a href="<%= agent.id %>"> <%= agent.name %> </a></div>
         <% } %>
+            
     </div>
+    
+
 
 </div> <!-- offset3 -->
 
@@ -164,6 +167,7 @@
                 <span>{%=locale.fileupload.destroy%}</span>
             </button>
             <input type="checkbox" name="delete" value="1">
+            {% if (file.is_thumbnail != true) { %}<br><br><a href="#" style="margin-left: 30px;" onclick="return false;">Set as Thumbnail</a>{% } %}
         </td>
     </tr>
 {% } %}

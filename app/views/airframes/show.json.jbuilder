@@ -5,6 +5,7 @@ json.title (@airframe.to_s)
 json.model (@airframe.m.name)
 
 json.engines @airframe.engines do |json, e|
+    json.id e.id
     json.model e.m.modelNumber
     json.make e.m.make
     json.label e.label

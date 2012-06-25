@@ -7,7 +7,7 @@
  *
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
- *= require bootstrap_and_overrides
+ *= require retail_bootstrap_and_overrides
  *= require_self
 */
 
@@ -22,14 +22,20 @@ body {
 }
 
 .hero-image {
+  width: 400px;
+  overflow: hidden;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   border-radius: 6px;
-  cursor: pointer;
+  cursor: pointer;  
 }
 
 .hero-list {
   margin-top: 40px;
+}
+
+.item {
+  height: 300px;
 }
 
 .hero-list li {
@@ -73,6 +79,10 @@ body {
   margin: 10px 20px; height: 90px;
 }
 
+.company-name {
+    margin: 30px 20px;
+    float: left;
+}
 
 @media (min-width: 768px) and (max-width: 979px) {
 

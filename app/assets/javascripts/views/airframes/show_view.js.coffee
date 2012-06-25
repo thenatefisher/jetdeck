@@ -137,7 +137,7 @@ class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
     # load the tabs container
     $(@el).html(@template(@model.toJSON() ))
 
-    # populate avionics tab
+    # populate engines tab
     @engines = new Jetdeck.Views.Airframes.EnginePaneView(model: @model)
     @$("#pane_engines").html(@engines.render().el)
 
@@ -173,25 +173,62 @@ class Jetdeck.Views.Airframes.EnginePaneView extends Backbone.View
 
   events:
     "click .remove_engine"    : "destroy"
-    #"change .inline_edit"     : "edit"
-    "click .add_engine"      : "add"
+    "change .inline-edit"     : "edit"
+    "click .copy_engine"      : "copy"
+    "click .add_engine"       : "add"
 
+  edit: (event) ->
+    e = event.target || event.currentTarget
+    engineId = $(e).data('eid')
+    
+    if $(e).hasClass('number')
+      value = parseInt($(e).val().replace(/[^0-9]/g,""), 10)
+      $(e).val(value.formatMoney(0, ".", ","))
+    else
+      value = $(e).val()
+
+    name = $(e).attr('name')
+    
+    @model.engines.get(engineId).set(name, value)
+    @model.engines.get(engineId).save()
+  
+  copy: (event) ->
+    e = event.target || event.currentTarget
+    engineId = $(e).data('eid')
+    
+    newEngine = new Jetdeck.Models.EngineModel()
+    newEngine.attributes = @model.engines.get(engineId).attributes
+    newEngine.attributes.airframe_id = @model.id
+    delete newEngine.attributes.id
+
+    @model.engines.url = "/engines"
+    @model.engines.on("add", @render)
+    @model.engines.create(newEngine.toJSON())    
+    return
+  
   add: () =>
     newEquipment = new Jetdeck.Views.Airframes.AddEquipmentModal(type: "engines", model: @model, parent: this)
     newEquipment.modal()
+    return
 
   destroy: (event) ->
     e = event.target || event.currentTarget
-    equipmentId = $(e).data('eid')
-
-    @model.equipment.remove(equipmentId)
-    @model.save(null,
+    engineId = $(e).data('eid')
+    @model.engines.get(engineId).destroy(
         success: =>
-            @render()
+           @render()
     )
-
+    return 
+    
   render: =>
-    $(@el).html(@template(equipmentItems: @model.get("engines") ))
+    $(@el).html(@template(engineItems: @model.engines.toJSON() ))
+
+    @$(".number").each(->
+        if $(this).val() != null
+          intPrice = parseInt($(this).val().replace(/[^0-9]/g,""), 10)
+          $(this).val(intPrice.formatMoney(0, ".", ","))
+    )    
+    
     return this
 
 # This is a pane inside the specification tab container

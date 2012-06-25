@@ -1,4 +1,4 @@
-json.(@airframe, :totalTime, :totalCycles, :serial, :askingPrice)
+json.(@airframe, :totalTime, :registration, :totalCycles, :serial, :askingPrice)
 
 json.title (@airframe.to_s)
 
@@ -18,7 +18,16 @@ json.engines @airframe.engines do |json, e|
     json.year e.year
 end
 
-json.equipment @airframe.equipment do |json, i|
+json.avionics @airframe.equipment.where("etype == 'avionics'") do |json, i|
+    json.model i.modelNumber
+    json.label i.abbreviation
+    json.name i.name
+    json.make i.make.name
+    json.type i.etype
+    json.id i.id
+end
+
+json.equipment @airframe.equipment.where("etype != 'avionics' AND etype != 'engines'") do |json, i|
     json.model i.modelNumber
     json.label i.abbreviation
     json.name i.name
@@ -37,11 +46,21 @@ if (@airframe.airport)
 end
 
 if (@airframe.creator && @airframe.creator.contact)
-    json.agent ({
-        :first => @airframe.creator.contact.first,
-        :last => @airframe.creator.contact.last,
-        :id => @airframe.creator.id
-    })
+    json.agentName @airframe.creator.contact.first + " " + @airframe.creator.contact.last
+    json.agentPhone @airframe.creator.contact.phone
+    json.agentWebsite @airframe.creator.contact.website
+    json.agentCompany @airframe.creator.contact.company
+    json.agentEmail @airframe.creator.contact.email
+end
+
+json.recipient @spec.recipient.email
+
+json.(@spec, :message, :salutation, :show, :headline1, :headline2, :headline3)
+
+json.images @airframe.accessories do |json, i|
+    json.preview "http://s3.amazonaws.com/jetdeck/images/#{i.id}/spec_monitor/#{i.image_file_name}" if i.image_file_name
+    json.original "http://s3.amazonaws.com/jetdeck/images/#{i.id}/original/#{i.image_file_name}" if i.image_file_name    
+    json.thumbnail i.thumbnail
 end
 
 # TODO create model methods for these

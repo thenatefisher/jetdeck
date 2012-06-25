@@ -12,7 +12,7 @@
  *= require multi-select
  *= require jquery.fileupload-ui
  *= require select2
- *= require_tree .
+ *= require_tree ./controllers
  *= require_self
 */
 
@@ -54,6 +54,10 @@ body {
 .inline-edit :focus {
   border: 0px;
   outline: 0px;
+}
+
+#pane_engines .inline-edit {
+    width: 80px;
 }
 
 .main-thumbnail {

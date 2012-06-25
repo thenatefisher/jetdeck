@@ -5,6 +5,7 @@ class Accessory < ActiveRecord::Base
     has_attached_file :image,
                       :styles => {  :thumb => "220x200#",
                                     :mini => "80x60#",
+                                    :spec_monitor => "400",
                                     :listing => "210x157#" },
                       :s3_credentials => "#{Rails.root}/config/aws_keys.yml",
                       :storage => :s3,
@@ -47,6 +48,20 @@ class Accessory < ActiveRecord::Base
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         "application/msexcel", "application/x-msexcel"]
 
+      before_destroy :next_thumbnail
+      
+      def next_thumbnail
+      
+        if self.thumbnail
+            new_thumb = self.airframe.accessories.where("image_file_name IS NOT null AND thumbnail = 'f'").first
+            if new_thumb
+                new_thumb.thumbnail = true
+                new_thumb.save()
+            end
+        end
+      
+      end        
+        
       #one convenient method to pass jq_upload the necessary information
       def to_jq_upload
         {
@@ -55,7 +70,8 @@ class Accessory < ActiveRecord::Base
           "url" => "http://s3.amazonaws.com/jetdeck/images/#{id}/original/#{image_file_name}",
           "thumbnail_url" => "http://s3.amazonaws.com/jetdeck/images/#{id}/mini/#{image_file_name}",
           "delete_url" => "/accessories/#{id}",
-          "delete_type" => "DELETE"
+          "delete_type" => "DELETE",
+          "is_thumbnail" => self.thumbnail
         }
       end
 

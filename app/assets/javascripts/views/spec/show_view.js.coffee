@@ -12,7 +12,7 @@ class Jetdeck.Views.Spec.ShowView extends Backbone.View
         $('.carousel-control').fadeOut('fast')
     )
     @$('.hero-image').click(() ->
-      imgsrc = $(this).attr('src')
+      imgsrc = $(this).data('original')
       $("#image-modal").children(".modal-body").html("<img src='" + imgsrc + "'>")
       $("#image-modal").modal("show")
     )

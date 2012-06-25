@@ -8,7 +8,7 @@ class Jetdeck.Models.Airframe extends Backbone.Model
     listed: false
     damage: false
     tags: []
-    location: false
+    location: null
     string: null
 
   initialize : () =>
@@ -23,6 +23,15 @@ class Jetdeck.Models.Airframe extends Backbone.Model
     @equipment.airframe = this
     @updateEquipment()
     @on('change', @updateEquipment)
+
+    ## engines collection
+    @engines = new Jetdeck.Collections.EnginesCollection()
+    @engines.airframe = this
+    @updateEngines()
+    @on('change', @updateEngines)
+
+  updateEngines : =>
+    @engines.reset @get('engines')
 
   updateEquipment : =>
     @equipment.reset @get('equipment')

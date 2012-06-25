@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120615145813) do
+ActiveRecord::Schema.define(:version => 20120624213149) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -116,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20120615145813) do
     t.boolean  "baseline"
     t.string   "phone"
     t.integer  "owner_id"
+    t.string   "website"
   end
 
   create_table "credits", :force => true do |t|
@@ -146,6 +147,7 @@ ActiveRecord::Schema.define(:version => 20120615145813) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "label"
+    t.integer  "owner_id"
   end
 
   create_table "equipment", :force => true do |t|
@@ -236,6 +238,11 @@ ActiveRecord::Schema.define(:version => 20120615145813) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "urlCode"
+    t.string   "salutation"
+    t.boolean  "show"
+    t.string   "headline1"
+    t.string   "headline2"
+    t.string   "headline3"
   end
 
 end
