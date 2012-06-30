@@ -3,6 +3,14 @@ json.(@user, :id)
 json.contact (@user.contact)
 
 json.airframes @user.airframes.count
-json.contacts rand(1..100)
-json.sent rand(1..100)
-json.views rand(1..100)
+json.contacts @user.contacts.count
+
+@totalSent = 0
+@user.airframes.each { |a| @totalSent += a.xspecs.count } 
+json.sent @totalSent
+
+@totalViews = 0
+@user.airframes.each do |a| 
+    a.xspecs.each { |x| @totalViews += x.views.count }
+end
+json.views @totalViews

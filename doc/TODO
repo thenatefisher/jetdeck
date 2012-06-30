@@ -7,10 +7,9 @@ Airframes#index
 
 User Sessions
     Login - done
-    Password Recovery
+    Password Recovery - done
     Create User - defer
     Edit Profile
-    Access Control
     Cookies - done
 
 Create Airframe - done
@@ -32,6 +31,7 @@ Airframe Photos
     Crop Area - defer
     Set thumbnail - done
     Handle thumb change if deleted - done
+    S3 storage - done
 
 Airframe Send
     Stats - defer

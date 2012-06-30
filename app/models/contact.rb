@@ -37,6 +37,10 @@ class Contact < ActiveRecord::Base
       :class_name => 'User',
       :foreign_key => 'owner_id'
 
+  has_one :user,
+      :class_name => 'User',
+      :foreign_key => 'contact_id'
+
   attr_accessible :phone, :first, :last, :source, :email, :company, :title, :description
 
   has_many :credits, :as => :creditable

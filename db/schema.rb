@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120625050746) do
+ActiveRecord::Schema.define(:version => 20120626031407) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -218,12 +218,14 @@ ActiveRecord::Schema.define(:version => 20120625050746) do
   create_table "users", :force => true do |t|
     t.integer  "type"
     t.integer  "contact_id"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
     t.string   "password_hash"
     t.string   "password_salt"
     t.boolean  "active"
     t.string   "auth_token"
+    t.string   "password_reset_token"
+    t.datetime "password_reset_sent_at"
   end
 
   add_index "users", ["contact_id"], :name => "indexusers_on_contact_id"
