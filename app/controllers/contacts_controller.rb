@@ -42,7 +42,10 @@ class ContactsController < ApplicationController
   # POST /contacts
   # POST /contacts.json
   def create
-    @contact = Contact.new(params[:contact])
+    whitelist = params[:contact].slice(:first, :last, :company, :email, :phone)
+
+    @contact = Contact.new(whitelist)
+    @contact.owner_id = @current_user.id
 
     respond_to do |format|
       if @contact.save

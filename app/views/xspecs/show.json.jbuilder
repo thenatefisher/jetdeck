@@ -39,13 +39,18 @@ if (@airframe.airport)
     json.location ({
         :icao => @airframe.airport.icao,
         :city => @airframe.airport.location.city,
-        :state => @airframe.airport.location.stateAbbreviation,    
+        :state => @airframe.airport.location.stateAbbreviation,
         :id => @airframe.airport.id
     })
 end
 
 if (@airframe.creator && @airframe.creator.contact)
-    json.agentName @airframe.creator.contact.first + " " + @airframe.creator.contact.last
+    if (@airframe.creator.contact.first &&
+        @airframe.creator.contact.last)
+        json.agentName @airframe.creator.contact.first + " " + @airframe.creator.contact.last
+    else
+      json.agentName ""
+    end
     json.agentPhone @airframe.creator.contact.phone
     json.agentWebsite @airframe.creator.contact.website
     json.agentCompany @airframe.creator.contact.company
@@ -58,7 +63,7 @@ json.(@spec, :message, :salutation, :show, :headline1, :headline2, :headline3)
 
 json.images @airframe.accessories do |json, i|
     json.preview "http://s3.amazonaws.com/jetdeck/images/#{i.id}/spec_monitor/#{i.image_file_name}" if i.image_file_name
-    json.original "http://s3.amazonaws.com/jetdeck/images/#{i.id}/original/#{i.image_file_name}" if i.image_file_name    
+    json.original "http://s3.amazonaws.com/jetdeck/images/#{i.id}/original/#{i.image_file_name}" if i.image_file_name
     json.thumbnail i.thumbnail
 end
 
@@ -66,4 +71,3 @@ end
 #json.damage (true)
 #json.listed (true)
 #json.tags ([{:name => "April Research", :id => "1"}, {:name => "Previously Held", :id => "1"}])
-
