@@ -3,7 +3,7 @@
 <script type="text/javascript">
   $(function() {
     window.router = new Jetdeck.Routers.ProfileRouter(
-      { profile: <%= render( template: 'users/show.json.jbuilder', locals: { user: @user}).html_safe %> }
+      { profile: <%= render( template: 'profile/index.json.jbuilder').html_safe %> }
     );
     Backbone.history.start();
   });

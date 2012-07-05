@@ -46,8 +46,8 @@ class Contact < ActiveRecord::Base
   has_many :credits, :as => :creditable
 
   validates_presence_of :email
-  validates_presence_of :email_confirmation, :message => "Confirm email address" if :email_changed?
-  validates_confirmation_of :email, :message => "should match confirmation"
+  validates_presence_of :email_confirmation, :message => "Confirm email address", :if => :email_changed?
+  validates_confirmation_of :email, :message => "should match confirmation", :if => :email_changed?
   
   # todo uniqueness is also specific to an owner
   #validates_uniqueness_of :email

@@ -25,8 +25,10 @@ Jetdeck::Application.routes.draw do
   match "/authenticate" => "sessions#create"
 
   match "/logout" => "sessions#destroy"
+ 
+  match "/profile" => "profile#index", :via => "get"
 
-  match "/profile" => "users#show"
+  match "/profile" => "profile#update", :via => "put"
 
   match "/s/:code" => "xspecs#show"
 
