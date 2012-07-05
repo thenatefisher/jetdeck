@@ -22,7 +22,12 @@ class Jetdeck.Views.Contacts.NewView extends Backbone.View
         modalClose()
 
       error: (c, jqXHR) =>
-        @model.set({errors: $.parseJSON(jqXHR.responseText)})
+        errObj = $.parseJSON(jqXHR.responseText)
+        if (errObj.email)
+            @$(".email_group").addClass("error")
+            @$(".email_group").children(".help-block").removeClass("hide")
+            if errObj.email[0]
+                @$(".email_group").children(".help-block").html(errObj.email[0])
     )
 
   render: ->

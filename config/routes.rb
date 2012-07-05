@@ -16,6 +16,8 @@ Jetdeck::Application.routes.draw do
 
   resources :password_resets
 
+  resources :users, :only => [:update]
+
   resources :accessories, :only => [:index, :create, :destroy, :update]
 
   match "/login" => "sessions#new"

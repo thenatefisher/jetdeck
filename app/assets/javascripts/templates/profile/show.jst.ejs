@@ -4,114 +4,214 @@
       <div><img src="/assets/missing.png" /></div>
     </div>
 
-      <table class="profile-stats table table-bordered table-condensed">
+      <table class="profile-stats">
+          <thead>
+            <tr>
+                <th></th>
+            </tr>
+          </thead>
+          <tbody>
           <tr>
-            <td><h3><%= airframes %></h3></td>
-            <td><h3><small><i class="icon-plane"></i> </small></h3></td>
+            <td style="border-top: 0px; padding: 25px 0">
+                <h2 style="color: #aaa"><%= airframes %></h2>
+                <small style="color: #aaa">Aircraft </small>
+            </td>
           </tr>
           <tr>
-            <td><h3><%= contacts %></h3></td>
-            <td><h3><small><i class="icon-user"></i> </small></h3></td>
+            <td style="padding: 25px 0">
+                <h2 style="color: #aaa"><%= contacts %></h2>
+                <small style="color: #aaa">Contacts </small>          
+            </td>
           </tr>
           <tr>
-            <td><h3><%= sent %></h3></td>
-            <td><h3><small><i class="icon-envelope"></i> </small></h3></td>
+            <td style="padding: 25px 0">
+                <h2 style="color: #aaa"><%= sent %></h2>
+                <small style="color: #aaa">Specs Sent </small>          
+            </td>          
           </tr>
           <tr>
-            <td><h3><%= views %></h3></td>
-            <td><h3><small><i class="icon-eye-open"></i> </small></h3></td>
+            <td style="padding: 25px 0">
+                <h2 style="color: #aaa"><%= views %></h2>
+                <small style="color: #aaa">Spec Views </small>          
+            </td>           
           </tr>
+          </tbody>
       </table>
 
   </div>
   <div class="offset2">
 
-       <div id="profile_name_edit" class="">
+       <div id="profile_name_edit">
            <input type="text"
-                    class="inline-edit profile_field span3"
-                    name="first"
-                    value="<%= contact.first %>"
-                    placeholder="[First Name]">
+                  class="inline-edit profile_field span3"
+                  name="first"
+                  value="<%= contact.first %>"
+                  placeholder="[First Name]">
            </input>
            <input type="text"
-                    class="inline-edit profile_field span3"
-                    name="last"
-                    value="<%= contact.last %>"
-                    placeholder="[Last Name]">
+                  class="inline-edit profile_field span3"
+                  name="last"
+                  value="<%= contact.last %>"
+                  placeholder="[Last Name]">
            </input>
        </div>
 
        <input type="text"
-                class="inline-edit profile_field span6"
-                value="<%= contact.company %>"
-                name="company"
-                placeholder="[Enter Company Name]">
+              class="inline-edit profile_field span6"
+              value="<%= contact.company %>"
+              name="company"
+              placeholder="[Enter Company Name]">
        </input>
 
       <div class="row">
+      
         <div class="span8">
-          <table class="profile-header-details table-condensed">
-              <tbody>
-                  <tr>
-                      <td>
-                          <div class="profile-header-label span3">Account Type</div>
-                      </td>
-                      <td>
-                          Beta / Trial <small class="hide"><a style="margin-left: 20px;" href="#">Upgrade</a></small>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <div class="profile-header-label span3">Email Address</div>
-                      </td>
-                      <td>
-                          <input  type="text"
-                                  class="inline-edit profile_field span4"
-                                  value="<%= contact.email %>"
-                                  name="email"
-                                  placeholder="[Enter Email Address]">
-                          </input>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <div class="profile-header-label span3">Email Settings</div>
-                      </td>
-                      <td>
-                          <span><input type="checkbox"></input> Receive New Feature Announcements </span><br>
-                          <span><input type="checkbox"></input> Receive Messages from Other Users </span><br>
-                          <span><input type="checkbox"></input> Receive JetDeck Newsletter </span>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <div class="profile-header-label span3">Change Password</div>
-                      </td>
-                      <td>
-                          <input  type="text"
-                                  class="profile_field span4"
-                                  value=""
-                                  name=""
-                                  placeholder="[Old Password]">
-                          </input>
-                          <input  type="text"
-                                  class="profile_field span4"
-                                  value=""
-                                  name=""
-                                  placeholder="[New Password]">
-                          </input>
-                          <input  type="text"
-                                  class="profile_field span4"
-                                  value=""
-                                  name=""
-                                  placeholder="[Confirm New Password]">
-                          </input>
-                          <br><input style="margin-left: 178px" type="submit" class="btn btn-warning" value="Reset Password"></input>
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
+            <ul class="nav nav-tabs span7" style="margin-top: 60px;">
+              <li class="pull-right">
+                <a href="#billing" data-toggle="tab">Billing</a>
+              </li>
+              <li class="active pull-right">
+                <a href="#profile_settings" data-toggle="tab">Profile Settings</a>
+              </li>
+            </ul>  
+            <div style="clear: both"></div>
+            <div class="profile-header-details tab-content">
+              <div id="billing" class="tab-pane span7">
+              
+                  <h3>Your Next Payment, of $35.00, Will be <br>Processed on July 30, 2012</h3>
+                  
+                  <br><br>
+                  
+                  <button class="btn-warning btn">Update Payment Method</button>
+                  
+                  <br><br><br>
+                  
+                  <table class="table-condensed table">
+                      <thead>
+                          <tr>
+                              <th colspan=4>
+                                  Payment History
+                              </th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                            <td>April 30, 2012</td>
+                            <td>Amex ...4432</td>
+                            <td>$35.00</td>
+                            <td><a href="#">Receipt</a></td>                                                        
+                          </tr>                      
+                          <tr>
+                            <td>April 30, 2012</td>
+                            <td>Amex ...4432</td>
+                            <td>$35.00</td>
+                            <td><a href="#">Receipt</a></td>                                                        
+                          </tr>   
+                          <tr>
+                            <td>April 30, 2012</td>
+                            <td>Amex ...4432</td>
+                            <td>$35.00</td>
+                            <td><a href="#">Receipt</a></td>                                                        
+                          </tr>   
+                          <tr>
+                            <td>April 30, 2012</td>
+                            <td>Amex ...4432</td>
+                            <td>$35.00</td>
+                            <td><a href="#">Receipt</a></td>                                                        
+                          </tr>   
+                                                                                                    
+                      </tbody>
+                  </table>                                                    
+              
+              </div>
+              <div id="profile_settings" class="tab-pane active">
+              <table class="table-condensed">
+                  <tbody>
+                      <tr>
+                          <td>
+                              <div class="profile-header-label span3">Account Type</div>
+                          </td>
+                          <td>
+                              Beta / Trial <small class="hide"><a style="margin-left: 20px;" href="#">Upgrade</a></small>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                              <div class="profile-header-label span3">Email Address</div>
+                          </td>
+                          <td>
+                              <input  type="text"
+                                      class="profile_field span4"
+                                      value="<%= contact.email %>"
+                                      name="email"
+                                      placeholder="[Enter Email Address]">
+                              </input>
+                              <input  type="text"
+                                      class="profile_field span4"
+                                      name="email_confirmation"
+                                      placeholder="[Confirm New Email]">
+                              </input>
+                              <br><input style="margin-left: 192px" 
+                                         type="submit" 
+                                         class="btn btn-warning"
+                                         id="update_email" 
+                                         value="Update Email"></input>                          
+                          </td>
+                      </tr>                  
+                      <tr>
+                          <td>
+                              <div class="profile-header-label span3">Password</div>
+                          </td>
+                          <td>
+                              <input  type="password"
+                                      class="profile_field span4"
+                                      name="password"
+                                      placeholder="[Old Password]">
+                              </input>
+                              <input  type="password"
+                                      class="profile_field span4"
+                                      name="new_password"
+                                      placeholder="[New Password]">
+                              </input>
+                              <input  type="password"
+                                      class="profile_field span4"
+                                      name="new_password_confirmation"
+                                      placeholder="[Confirm New Password]">
+                              </input>
+                              <br><input style="margin-left: 178px" 
+                                         type="submit" 
+                                         class="btn btn-warning" 
+                                         id="update_password"
+                                         value="Reset Password"></input>
+                          </td>
+                      </tr>                  
+                      <tr>
+                          <td>
+                              <div class="profile-header-label span3">Email Settings</div>
+                          </td>
+                          <td>
+                              <span><input type="checkbox"></input> Receive New Feature Announcements </span><br>
+                              <span><input type="checkbox"></input> Receive Messages from Other Users </span><br>
+                              <span><input type="checkbox"></input> Receive JetDeck Newsletter </span>
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>
+                              <div class="profile-header-label span3">Logo</div>
+                          </td>
+                          <td>
+
+                              <img class="span4" src="/assets/generic.jpg"><br><br>
+                              <input style="margin-left: 20px" type="submit" class="btn span2" value="Select Logo"></input>                    
+                              <input style="margin-left: 20px" type="submit" class="btn btn-warning span2" value="Upload"></input>                                                                                   
+                          </td>
+                      </tr>                  
+                  </tbody>
+              </table>
+              </div>
+            </div>
         </div>
+        
       </div>
 
   </div> <!-- offset2 -->

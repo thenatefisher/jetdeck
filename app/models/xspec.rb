@@ -28,6 +28,8 @@ class Xspec < ActiveRecord::Base
 
   before_create :generate_url_code
 
+  belongs_to :xspec_background, :foreign_key => "background_id"
+
   validates_associated :airframe
   validates_associated :recipient
   validates_associated :sender

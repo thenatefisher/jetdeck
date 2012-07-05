@@ -68,7 +68,8 @@ class ContactsController < ApplicationController
         :last,
         :company,
         :phone,
-        :email
+        :email, 
+        :email_confirmation
       )
 
     respond_to do |format|

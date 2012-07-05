@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120626031407) do
+ActiveRecord::Schema.define(:version => 20120705014455) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -230,6 +230,15 @@ ActiveRecord::Schema.define(:version => 20120626031407) do
 
   add_index "users", ["contact_id"], :name => "indexusers_on_contact_id"
 
+  create_table "xspec_backgrounds", :force => true do |t|
+    t.string   "image_file_name"
+    t.string   "image_content_type"
+    t.integer  "image_file_size"
+    t.datetime "image_updated_at"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
   create_table "xspecs", :force => true do |t|
     t.integer  "airframe_id"
     t.integer  "recipient"
@@ -238,14 +247,19 @@ ActiveRecord::Schema.define(:version => 20120626031407) do
     t.string   "format"
     t.text     "message"
     t.boolean  "published"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
     t.string   "urlCode"
     t.string   "salutation"
     t.boolean  "show"
     t.string   "headline1"
     t.string   "headline2"
     t.string   "headline3"
+    t.string   "background_file_name"
+    t.string   "background_content_type"
+    t.integer  "background_file_size"
+    t.datetime "background_updated_at"
+    t.integer  "background_id"
   end
 
 end

@@ -40,8 +40,9 @@ class User < ActiveRecord::Base
   #force_ssl
 
   validates_uniqueness_of :contact_id
-  validates_presence_of :contact_id, :on => :create
+  validates_presence_of :contact_id
   validates_presence_of :password, :on => :create
+  validates_presence_of :password_confirmation if :password_changed?
   validates_confirmation_of :password
 
   def set_defaults(paramName)
