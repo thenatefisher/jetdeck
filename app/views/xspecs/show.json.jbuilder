@@ -17,7 +17,7 @@ json.engines @airframe.engines do |json, e|
     json.year e.year
 end
 
-json.avionics @airframe.equipment.where("etype == 'avionics'") do |json, i|
+json.avionics @airframe.equipment.where("etype = 'avionics'") do |json, i|
     json.model i.modelNumber
     json.label i.abbreviation
     json.name i.name
