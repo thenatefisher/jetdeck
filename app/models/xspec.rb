@@ -39,12 +39,12 @@ class Xspec < ActiveRecord::Base
   def unique_recipients_per_airframe
 
     if self.id.nil?
-      if Xspec.where("recipient == ? AND airframe_id == ?", self.recipient, self.airframe).length > 0
+      if Xspec.where("recipient = ? AND airframe_id = ?", self.recipient, self.airframe).length > 0
         self.errors.add(:recipient, "Contact is already on the lead list for this airframe")
         false
       end
     else
-      if Xspec.where("recipient == ? AND airframe_id == ? AND id != ?", self.recipient, self.airframe, self.id).length > 0
+      if Xspec.where("recipient = ? AND airframe_id = ? AND id != ?", self.recipient, self.airframe, self.id).length > 0
         self.errors.add(:recipient, "Contact is already on the lead list for this airframe")
         false
       end
