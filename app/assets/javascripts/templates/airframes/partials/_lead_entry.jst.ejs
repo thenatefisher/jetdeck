@@ -17,10 +17,14 @@
 </td>
 
 <td>
-    <div class="btn-group pull-right">
-      <button class="btn btn-mini open_xspec" data-xspecId="<%= xspecId %>">
-        <i data-xspecId="<%= xspecId %>" class="icon-folder-open open_xspec"></i> Open
+    <div class="lead_buttons btn-group pull-right">
+      <button class="btn btn-mini xspec_settings" data-xspecid="<%= xspecId %>">
+        <i data-xspecid="<%= xspecId %>" class="icon-tasks xspec_settings"></i> 
       </button>
-      <a class="btn btn-mini" href="<%= url %>"><i class="icon-eye-open view"></i> View</a>
+      <a class="btn btn-mini" href="<%= url %>"><i class="icon-folder-open view"></i> </a>
+      <button class="btn btn-mini remove_xspec" data-xspecid="<%= xspecId %>">
+        <i data-xspecid="<%= xspecId %>" class="icon-trash remove_xspec"></i>
+      </button>      
     </div>
 </td>
+

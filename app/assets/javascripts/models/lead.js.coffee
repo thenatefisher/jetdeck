@@ -13,7 +13,7 @@ class Jetdeck.Models.Lead extends Backbone.Model
 
 class Jetdeck.Collections.LeadsCollection extends Backbone.CollectionBook
   model: Jetdeck.Models.Lead
-  url: '/leads'
+  url: '/xspecs'
 
   initialize : () =>
     @on('change', @updateAirframe, this)

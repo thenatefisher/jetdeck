@@ -194,11 +194,26 @@ class Jetdeck.Views.Airframes.ShowSpecView extends Backbone.View
 
   events:
     "click .addEquipment"       : "add"
+    "change .inline-edit"     : "edit"
 
   add: () =>
     newEquipment = new Jetdeck.Views.Airframes.AddEquipmentModal(model: @model, parent: this)
     newEquipment.modal()
+    
+  edit: (event) ->
+    e = event.target || event.currentTarget
+    
+    if $(e).hasClass('number')
+      value = parseInt($(e).val().replace(/[^0-9]/g,""), 10)
+      $(e).val(value.formatMoney(0, ".", ","))
+    else
+      value = $(e).val()
 
+    name = $(e).attr('name')
+    
+    @model.set(name, value)
+    @model.save()
+    
   render: ->
     # load the tabs container
     $(@el).html(@template(@model.toJSON() ))
@@ -338,7 +353,9 @@ class Jetdeck.Views.Airframes.ShowSendView extends Backbone.View
       if (m.recipient.id)
         new_lead = {
           email : m.recipient.email
-          recipient_id : m.recipient.id
+          id : m.recipient.id
+          xspecId: m.id
+          url: "/s/" + m.urlCode
         }
 
         if m.recipient.first && m.recipient.last
@@ -359,11 +376,14 @@ class Jetdeck.Views.Airframes.ShowSendView extends Backbone.View
 class Jetdeck.Views.Airframes.ShowLeadsView extends Backbone.View
   template: JST["templates/airframes/partials/_leads"]
 
+  initialize: () ->
+    @on('add', @addAll, @model.leads)
+
   events : 
     "click a.next" : "next"
     "click a.prev" : "prev"
     "click a.page" : "page"
-    "click .sort" : "sort"
+    "click .sort"  : "sort"
   
   sort : (event) ->
     # capture the click and get the parameters
@@ -438,19 +458,41 @@ class Jetdeck.Views.Airframes.ShowLeadsView extends Backbone.View
     @$('.page[rel=1]').parent('li').addClass('active')  
     return this
 
+class Jetdeck.Views.Airframes.EntryDestroy extends Backbone.View
+  template : JST["templates/spec/_confirm_delete"]
+  
+  tagName: "div"
+  
+  events:
+    "click .confirm_remove_lead"    : "confirmRemoveLead"
+    
+  confirmRemoveLead: () =>
+    xid = @model.get('xspecId')
+    @model.url = "/xspecs/" + xid
+    @model.destroy()
+    window.router.view.render()
+    modalClose()
+    return this
+    
+  render : ->
+    $(@el).html(@template(@model.toJSON() ))
+    return this     
+      
 class Jetdeck.Views.Airframes.EntryView extends Backbone.View
   template : JST["templates/airframes/partials/_lead_entry"]
   
   tagName : "tr"
   
   events:
-    "click .open_xspec" : "openSpec"
-    
-  openSpec: (event) ->
-    e = event.target || event.currentTarget
-    n = $(e).attr('xspecId')
+    "click .xspec_settings"             : "xspecSettings"
+    "click .remove_xspec"           : "removeSpec"
 
+  removeSpec: () =>
+    confirmDelete = new Jetdeck.Views.Airframes.EntryDestroy(model: @model)
+    modal(confirmDelete.render().el)
+    return this  
     
+  xspecSettings: () ->
     specModel = new Jetdeck.Models.Spec(id: n)
     specModel.fetch(
         success: () ->

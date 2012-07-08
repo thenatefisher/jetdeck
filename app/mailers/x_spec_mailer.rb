@@ -1,5 +1,5 @@
 class XSpecMailer < ActionMailer::Base
-  default from: "from@jetdeck.co"
+  default from: "JetDeck.co <noreply@jetdeck.co>"
   layout "retailMailer"
 
   def sendRetail(xspec, contact)
@@ -8,7 +8,7 @@ class XSpecMailer < ActionMailer::Base
     @url  = xspec.urlCode
 
     mail(:to => contact.email,
-         :subject => "Spec For You") do |format|
+         :subject => xspec.airframe.to_s) do |format|
       format.html
       format.text
     end
