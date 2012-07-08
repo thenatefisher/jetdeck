@@ -359,17 +359,106 @@ class Jetdeck.Views.Airframes.ShowSendView extends Backbone.View
 class Jetdeck.Views.Airframes.ShowLeadsView extends Backbone.View
   template: JST["templates/airframes/partials/_leads"]
 
+  events : 
+    "click a.next" : "next"
+    "click a.prev" : "prev"
+    "click a.page" : "page"
+    "click .sort" : "sort"
+  
+  sort : (event) ->
+    # capture the click and get the parameters
+    e = event.target || event.currentTarget
+    sort = $(e).data('sort')  
+    direction = $(e).data('dir')  
+    
+    # perform the sort
+    @model.leads.orderBy(sort)
+    @model.leads.direction(direction)
+    @model.leads.sort()  
+    
+    # set the sort button styles
+    #@$('.sort').parent("li").removeClass('active')
+    #@$(e).parent("li").addClass('active')
+    @$(".sort_dir_icon").remove()
+    if direction == "asc"
+        @$(e).append("<i class='icon-chevron-down sort_dir_icon'></i>")    
+    if direction == "desc"
+        @$(e).append("<i class='icon-chevron-up sort_dir_icon'></i>")  
+           
+    # toggle sort button direction
+    $(e).data('dir', 'desc') if direction == "asc"
+    $(e).data('dir', 'asc') if direction == "desc"    
+        
+    # go back to first page  
+    @model.leads.turnTo(1)
+    @addAll()
+    @$('a.page').parent('li').removeClass('active')
+    @$('.page[rel=1]').parent('li').addClass('active')
+    
+  page : (event) ->
+    e = event.target || event.currentTarget
+    n = $(e).attr('rel')
+    @model.leads.turnTo(n)
+    @addAll()
+    @$('a.page').parent('li').removeClass('active')
+    $(e).parent('li').addClass('active')
+    
+  next : ->
+    @model.leads.next()
+    @addAll()
+    @$('a.page').parent('li').removeClass('active')
+    p = @model.leads.currentPage()
+    @$('.page[rel='+p+']').parent('li').addClass('active')    
+
+  prev : ->
+    @model.leads.prev()
+    @addAll()
+    @$('a.page').parent('li').removeClass('active')
+    p = @model.leads.currentPage()
+    @$('.page[rel='+p+']').parent('li').addClass('active')    
+
+  addAll: =>
+    @clear()
+    @model.leads.eachOnPage(@addOne)
+
+  clear : ->
+    @$("tbody").html('')
+    
+  addOne: (lead) => 
+    if lead
+        view = new Jetdeck.Views.Airframes.EntryView({model : lead})
+        @$("tbody").append(view.render().el)
+        
   render : ->
-    $(@el).html(@template(@model.toJSON() ))
-    @model.leads.each((lead) =>
-        v = new Jetdeck.Views.Airframes.EntryView(model: lead)
-        @$("tbody").append(v.render().el)
-    )
+    params =
+        count : @model.leads.length
+        pages : @model.leads.pages()
+    $(@el).html(@template(params))
+    @addAll()    
+    @$('.page[rel=1]').parent('li').addClass('active')  
     return this
 
 class Jetdeck.Views.Airframes.EntryView extends Backbone.View
   template : JST["templates/airframes/partials/_lead_entry"]
+  
   tagName : "tr"
+  
+  events:
+    "click .open_xspec" : "openSpec"
+    
+  openSpec: (event) ->
+    e = event.target || event.currentTarget
+    n = $(e).attr('xspecId')
+
+    
+    specModel = new Jetdeck.Models.Spec(id: n)
+    specModel.fetch(
+        success: () ->
+            specView = new Jetdeck.Views.Spec.EditView(model: this)
+            modal(specView.render())    
+    )
+    return this
+      
   render : ->
     $(@el).html(@template(@model.toJSON() ))
     return this                  
