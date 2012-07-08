@@ -1,43 +1,51 @@
 <div>
 
-    <h3>Leads</h2>
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#" onclick="return false;">Leads</a>
+      </li>
+    </ul>
 
       <table style="font-size:90%" class="table table-condensed">
         <thead>
 
-          <th>Email</th>
-          <th style="text-align:center;">Views</th>
-          <th style="text-align:center;">Last Viewed</th>
+          <th>
+            <a class="sort" data-sort="email" data-dir="asc" onclick="return false;" href="#">
+            Contact
+            </a>
+          </th>
+          <th style="text-align:center;">
+            <a class="sort" data-sort="hits" data-dir="asc" onclick="return false;" href="#">
+            Views
+            </a>          
+          </th>
+          <th style="text-align:center;">
+            <a class="sort" data-sort="last_viewed" data-dir="asc" onclick="return false;" href="#">
+            Last Viewed
+            </a>          
+          </th>
           <th></th>
         </thead>
-        <tbody>
-          <!-- <tr>
-
-            <td>nate@honeywell.com <i class="icon-fire"></td></td>
-            <td>17</td>
-            <td>June 3 @ 2:32pm</td>
-            <td>
-              <i class="icon-envelope"></i>
-
-            </td>
-          </tr> -->
-        </tbody>
+        <tbody></tbody>
       </table>
 
-      <!-- TODO leads pagination
-      <div class="pull-right">
-        <div class="pagination" style="margin-top: 0px;">
-          <ul>
-            <li><a href="#">Prev</a></li>
-            <li class="active">
-              <a href="#">1</a>
-            </li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">Next</a></li>
-          </ul>
-        </div>
-      </div>
-      -->
+    <% if (pages > 1) { %>
+    <div class="row"  style="margin-left: 20px;">
+    
+            <div class="pagination pull-right">
+              <ul>
+                <li><a class="prev" onclick="return false;" href="#">Prev</a></li>
 
+                <% if (pages > 2) { %>
+                <% for (var i = 1; i < pages + 1; i++) { %>
+                <li><a class="page" rel="<%= i %>" onclick="return false;" href="#"><%= i %></a></li>
+                <% } } %>
+
+                <li><a class="next" onclick="return false;" href="#">Next</a></li>
+              </ul>
+            </div>
+      
+    </div>
+    <% } %> 
+      
   </div> <!-- leads -->

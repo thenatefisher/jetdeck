@@ -47,6 +47,8 @@ end
 
 json.leads @airframe.xspecs do |json, x|
 
+    json.id x.recipient.id
+
     json.email x.recipient.email
 
     if x.recipient.first && x.recipient.last
@@ -70,6 +72,8 @@ json.leads @airframe.xspecs do |json, x|
     json.fire x.fire || false
 
     json.url "/s/" + x.urlCode
+    
+    json.xspecId x.id
 
 end
 

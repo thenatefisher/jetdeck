@@ -1,5 +1,7 @@
 <td>
-<%= (name != "") ? name : email %>
+<a href="/contacts#/<%= id %>">
+    <%= (name != "") ? name : email %>
+</a>
 <% if (fire) { %><i class="icon-fire"></i><% } %>
 </td>
 
@@ -16,7 +18,9 @@
 
 <td>
     <div class="btn-group pull-right">
-      <button class="btn btn-mini" data-recip_id="<%= recipient_id %>"><i class="icon-folder-open resend"></i> Open</button>
+      <button class="btn btn-mini open_xspec" data-xspecId="<%= xspecId %>">
+        <i data-xspecId="<%= xspecId %>" class="icon-folder-open open_xspec"></i> Open
+      </button>
       <a class="btn btn-mini" href="<%= url %>"><i class="icon-eye-open view"></i> View</a>
     </div>
 </td>

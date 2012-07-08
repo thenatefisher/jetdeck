@@ -13,7 +13,7 @@ class Jetdeck.Models.Airframe extends Backbone.Model
 
   initialize : () =>
     ## leads collection
-    @leads = new Jetdeck.Collections.LeadsCollection()
+    @leads = new Jetdeck.Collections.LeadsCollection(page_size: 5)
     @leads.airframe = this
     @updateLeads()
     @on('change', @updateLeads)
