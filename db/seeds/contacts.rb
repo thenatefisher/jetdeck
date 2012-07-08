@@ -101,8 +101,11 @@ titles = [
     UIdMax = User.maximum(:id)
     UIdMin = User.minimum(:id)
     UIdRange = UIdMax - UIdMin
-    contact.user = User.find(rand(UIdRange).floor+UIdMin)
-    contact.save
+    u = User.find(rand(UIdRange).floor+UIdMin)
+    if u 
+      contact.user_id = u.id
+      contact.save
+    end
   end
 
 end
