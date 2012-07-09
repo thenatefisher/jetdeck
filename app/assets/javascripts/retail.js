@@ -17,7 +17,8 @@
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
-//= require collection_book
+//= require lib/collection_book
+//= require lib/view_book
 //= require jetdeck
 
 Number.prototype.formatMoney = function(c, d, t) {

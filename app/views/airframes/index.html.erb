@@ -1,10 +1,11 @@
-<div id="airframes"></div>
+<div id="html_top"></div>
 
 <script type="text/javascript">
   $(function() {
-    window.router = new Jetdeck.Routers.AirframesRouter({
-      airframes: <%= @airframes.to_json.html_safe -%>
-    });
+    window.router = new Jetdeck.Routers.AirframesRouter(
+      { airframes: <%= render(   template: 'airframes/index.json.jbuilder', 
+                                 locals: { airframes: @airframes}).html_safe %> }
+    );
     Backbone.history.start();
   });
 </script>

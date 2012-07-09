@@ -10,6 +10,7 @@ class Jetdeck.Models.Airframe extends Backbone.Model
     tags: []
     location: null
     string: null
+    to_s: ""
 
   initialize : () =>
     ## leads collection

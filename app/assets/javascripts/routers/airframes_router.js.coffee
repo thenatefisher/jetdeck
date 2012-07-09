@@ -1,8 +1,8 @@
 class Jetdeck.Routers.AirframesRouter extends Backbone.Router
-  initialize: (options) ->
-    @airframes = new Jetdeck.Collections.AirframesCollection()
-    @airframes.reset options.airframes
 
+  initialize: (options) ->
+    @options = options
+  
   routes:
     "new"      : "newAirframe"
     "index"    : "index"
@@ -16,19 +16,16 @@ class Jetdeck.Routers.AirframesRouter extends Backbone.Router
 
   index: ->
     airframes = new Jetdeck.Collections.AirframesCollection()
-    airframes.fetch ( success: =>
-        @view = new Jetdeck.Views.Airframes.IndexView(airframes: airframes)
-        $("#airframes").html(@view.render().el)
-    )
-    
-  show: (id) ->
-    airframe = @airframes.get(id)
+    airframes.reset @options.airframes  
+    @view = new Jetdeck.Views.Airframes.IndexView(airframes: airframes)
+    $("#html_top").html(@view.render().el)
 
+  show: (id) ->
+    airframe = new Jetdeck.Models.Airframe(@options.airframe)
     @view = new Jetdeck.Views.Airframes.ShowView(model: airframe)
-    $("#airframes").html(@view.render().el)
+    $("#html_top").html(@view.render().el)
 
   edit: (id) ->
     airframe = @airframes.get(id)
-
     @view = new Jetdeck.Views.Airframes.EditView(model: airframe)
-    $("#airframes").html(@view.render().el)
+    $("#html_top").html(@view.render().el)
