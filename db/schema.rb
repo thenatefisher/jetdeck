@@ -247,14 +247,18 @@ ActiveRecord::Schema.define(:version => 20120705014455) do
     t.string   "format"
     t.text     "message"
     t.boolean  "published"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
     t.string   "urlCode"
     t.string   "salutation"
     t.boolean  "show"
     t.string   "headline1"
     t.string   "headline2"
     t.string   "headline3"
+    t.string   "background_file_name"
+    t.string   "background_content_type"
+    t.integer  "background_file_size"
+    t.datetime "background_updated_at"
     t.integer  "background_id"
   end
 
