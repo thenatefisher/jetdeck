@@ -6,13 +6,12 @@ class AirframesController < ApplicationController
 
     if params[:q]
       @airframes = Airframe.find(:all,
-        :joins => [:m => [:make]],
-        :conditions => ["(manufacturers.name || ' ' || equipment.name) LIKE ?
+        :conditions => ["(make || ' ' || modelName) LIKE ?
                              AND (baseline = 't' OR user_id = ?)",
                           "%#{params[:q]}%",
                           @current_user.id
                        ],
-        :group => "model_id"
+        :group => "modelName"
       ).first(4)
     end
 
@@ -71,10 +70,30 @@ class AirframesController < ApplicationController
   # POST /airframes
   # POST /airframes.json
   def create
-    whitelist = params[:airframe].slice(:registration, :serial, :model_id, :year)
+    whitelist = params[:airframe].slice(:registration, :serial, :baseline_id, :year)
     whitelist[:user_id] = @current_user.id
     @airframe = Airframe.new(whitelist)
 
+    if params[:airframe][:baseline].present?
+        baseline = Airframe.find_by_baseline_id(params[:airframe][:baseline])
+        if baseline
+            @airframe.modelName = base.modelName
+            @airframe.make = base.make
+        end
+    end
+
+    if params[:airframe][:headline].present? && params[:airframe][:baseline].nil?
+        headline = params[:airframe][:headline]
+        headline = headline.split
+        if headline.length == 1
+            @airframe.make = ""
+            @airframe.modelName = headline.first
+        else
+            @airframe.make = headline.first
+            @airframe.modelName = headline.last(headline.length - 1).join(" ")
+        end      
+    end
+    
     respond_to do |format|
       if @airframe.save
         format.html { redirect_to @airframe, :notice => 'Airframe was successfully created.' }
@@ -90,7 +109,8 @@ class AirframesController < ApplicationController
   # PUT /airframes/1.json
   def update
     @airframe = Airframe.find(params[:id])
-    whitelist = params[:airframe].slice(:askingPrice, :serial, :registration, :totalTime, :totalCycles)
+    whitelist = params[:airframe].slice(:askingPrice, 
+        :serial, :registration, :tt, :tc, :year, :make, :modelName)
 
     @equipment = []
     params[:airframe][:equipment].each do |a|

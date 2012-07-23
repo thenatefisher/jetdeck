@@ -9,17 +9,29 @@
 
     <div class="control-group">
       <label for="year" style="clear: both; color: #000">Either Select a Model:</label>
-      <input type="text" name="year" id="airframe_year" class="input-mini" placeholder="Year">
-      <input type="hidden" name="model_id" id="airframe_model" class="span3 airframe-model">
-      <input type="text" name="serial" id="airframe_serial" class="input-small airframe-serial"  placeholder="Serial No.">
+      <input type="text" name="year" 
+                         id="airframe_year" 
+                         class="input-mini" 
+                         placeholder="Year">
+      <input type="hidden" name="headline" 
+                         id="airframe_headline" 
+                         class="span3 airframe-headline">
+      <input type="text" name="serial" 
+                         id="airframe_serial" 
+                         class="input-small airframe-serial" 
+                         placeholder="Serial No.">
       <span class="help-block hide">Invalid Aircraft Model</span>
     </div>
 
     <hr/>
 
     <div class="control-group registration_group">
-      <label for="registration" style="clear: both; color: #000"><h5><i class="icon-search"></i> Or Find Details By Registration Number:</h5></label>
-      <input class="pull-left" type="text" name="registration" id="airframe_registration" placeholder="N123XX, VP-XXX, etc.">
+      <label for="registration" style="clear: both; color: #000">
+        <h5><i class="icon-search"></i> Or Find Details By Registration Number:</h5></label>
+      <input class="pull-left" type="text" 
+                               name="registration" 
+                               id="airframe_registration" 
+                               placeholder="N123XX, VP-XXX, etc.">
     </div>
 
   </form>

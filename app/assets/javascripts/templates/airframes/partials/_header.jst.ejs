@@ -9,7 +9,7 @@
 
 <div class="offset3">
 
-    <h1><%= title %></h1>
+    <h1 id="spec_headline"><%= year %> <%= make %> <%= modelName %></h1>
 
     <div style="height: 5px;"></div>
 
@@ -34,12 +34,18 @@
     <div style="margin: 20px 0px 0px 0px; font-size: 110%">
 
         <div style="margin: 5px 0px;"><strong>Serial Number</strong>
-        <input type="text" class="inline-edit airframe_field" value="<%= serial ? serial : '--' %>"
-          name="serial"></input></div>
+        <input type="text" 
+            class="inline-edit airframe_field" 
+            value="<%= serial %>"
+            placeholder="<%= serial ? serial : '--' %>"
+            name="serial"></input></div>
 
         <div style="margin: 5px 0px"><strong>Registration</strong>
-        <input type="text" class="inline-edit airframe_field"  value="<%= registration ? registration : '--' %>"
-          name="registration"></input></div>
+        <input type="text" 
+            class="inline-edit airframe_field" 
+            value="<%= registration %>"
+            placeholder="<%= registration ? registration : '--' %>"
+            name="registration"></input></div>
 
         <% if (location) { %>
         <div style="margin: 5px 0px"><strong>Location</strong>

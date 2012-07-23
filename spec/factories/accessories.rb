@@ -2,8 +2,6 @@
 
 FactoryGirl.define do
   factory :accessory do
-    name "MyString"
-    type ""
-    airframe_id 1
+    image File.new("spec/factories/image.png")
   end
 end

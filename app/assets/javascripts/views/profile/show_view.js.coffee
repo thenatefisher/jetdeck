@@ -13,21 +13,21 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
     @model.attributes.contact[name] = value
     @model.save(null)
 
-  updateEmail: () ->
-    profile = new Backbone.Model()
-    
+  updateEmail: () ->    
     email = @$("input[name='email']").val()
     email_confirmation = @$("input[name='email_confirmation']").val()  
-
     @model.attributes.contact.email = email
     @model.attributes.contact.email_confirmation = email_confirmation    
-    window.m = @model
 
-    @model.save(
+    @model.save(null,
       success: () ->
-        console.log "test"
+            $('.email-failure').hide()   
+            $('.email-confirmation').val('')
+            alertSuccess("Email Address Updated!") 
       error: (c, jqXHR) =>
-        errObj = $.parseJSON(jqXHR.responseText)            
+            errObj = $.parseJSON(jqXHR.responseText)  
+            if errObj.email[0]  
+                alertFailure("Email " + errObj.email[0])       
     )
     return this
     

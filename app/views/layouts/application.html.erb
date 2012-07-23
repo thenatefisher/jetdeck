@@ -20,7 +20,7 @@
     <link href='http://fonts.googleapis.com/css?family=Condiment' rel='stylesheet' type='text/css'>
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-    -->
+   
     <script type="text/javascript">
 
       var _gaq = _gaq || [];
@@ -34,6 +34,7 @@
       })();
 
     </script>
+    -->
     </head>
 
     <body>
@@ -50,7 +51,7 @@
                   <ul class="nav pull-right" style="margin-right: 15px;">
                     <!--<li><a href="#">Help</a></li>-->
                     <li class="divider-vertical"></li>
-                    <li class="dropdown">
+                    <li class="dropdown id="nav-username">
 
                       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 
@@ -108,7 +109,11 @@
             <button class="close" data-dismiss="alert">×</button>
             <div class="notification-content"></div>
           </div>
-
+          <div class="alert alert-error span5" id="jetdeck-notification-error">
+            <button class="close" data-dismiss="alert">×</button>
+            <div class="notification-content"></div>
+          </div>
+          
           <div class="span2">
             <br/>
             <ul class="nav nav-list">

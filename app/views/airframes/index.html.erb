@@ -3,7 +3,9 @@
 <script type="text/javascript">
   $(function() {
     window.router = new Jetdeck.Routers.AirframesRouter(
-      { airframes: <%= render(   template: 'airframes/index.json.jbuilder', 
+      { airframes: <%= render(   template: 'airframes/index',
+                                 handlers: [:jbuilder],
+                                 formats: [:json],  
                                  locals: { airframes: @airframes}).html_safe %> }
     );
     Backbone.history.start();

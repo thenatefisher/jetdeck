@@ -1,28 +1,9 @@
-# == Schema Information
-# Schema version: 20120429080558
-#
-# Table name: xspecs
-#
-#  id          :integer         not null, primary key
-#  airframe_id :integer
-#  recipient   :integer
-#  sender      :integer
-#  sent        :datetime
-#  format      :string(255)
-#  message     :text
-#  published   :boolean
-#  created_at  :datetime        not null
-#  updated_at  :datetime        not null
-#  urlCode     :string(255)
-#
-
 class Xspec < ActiveRecord::Base
 
   has_many :views, :foreign_key => :spec_id, :class_name => "SpecView", :dependent => :destroy
-  #has_many :spec_permissions, :dependent => :destroy
   belongs_to :airframe
-  belongs_to :recipient, :class_name => "Contact", :foreign_key => "recipient"
-  belongs_to :sender, :class_name => "Contact", :foreign_key => "sender"
+  belongs_to :recipient, :class_name => "Contact", :foreign_key => "recipient_id"
+  belongs_to :sender, :class_name => "Contact", :foreign_key => "sender_id"
 
   before_save :unique_recipients_per_airframe
 
@@ -39,12 +20,12 @@ class Xspec < ActiveRecord::Base
   def unique_recipients_per_airframe
 
     if self.id.nil?
-      if Xspec.where("recipient = ? AND airframe_id = ?", self.recipient, self.airframe).length > 0
+      if Xspec.where("recipient_id = ? AND airframe_id = ?", self.recipient, self.airframe).length > 0
         self.errors.add(:recipient, "Contact is already on the lead list for this airframe")
         false
       end
     else
-      if Xspec.where("recipient = ? AND airframe_id = ? AND id != ?", self.recipient, self.airframe, self.id).length > 0
+      if Xspec.where("recipient_id = ? AND airframe_id = ? AND id != ?", self.recipient, self.airframe, self.id).length > 0
         self.errors.add(:recipient, "Contact is already on the lead list for this airframe")
         false
       end
@@ -88,6 +69,5 @@ class Xspec < ActiveRecord::Base
   def create_code
     BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, '').last(7)
   end
-
 
 end

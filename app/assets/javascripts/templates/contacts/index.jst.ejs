@@ -6,6 +6,8 @@
         </div>
     </div>
 
+ 
+    <% if (count > 0) { %>
     <div class="span9">
     <table id="contacts" class="table table-condensed">       
         <thead>
@@ -19,7 +21,15 @@
         <tbody></tbody>
     </table>
     </div>
-    
+ 
+    <% } else { %>
+    <div class="span8 alert alert-info">
+        <br/><strong>Welcome to JetDeck!</strong><br/>
+        You don't have any contacts yet. Create a new contact by clicking the 'New Contact' button.
+        <br/><br/>
+    </div> 
+    <% } %>   
+       
 </div>
 
 <% if (pages > 1) { %>

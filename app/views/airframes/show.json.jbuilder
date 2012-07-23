@@ -1,17 +1,17 @@
-json.(@airframe, :id, :avatar, :totalTime, :totalCycles, :serial, :askingPrice)
+json.(@airframe, :id, :avatar, :tt, :tc, :serial, :askingPrice, :registration, :make, :modelName, :year)
 
 json.title (@airframe.to_s)
 
-json.model (@airframe.m.name)
+json.model (@airframe.modelName)
 
 json.engines @airframe.engines do |json, e|
     json.id e.id
-    json.model (e.m) ? e.m.modelNumber : e.modelName
-    json.make e.m.make if e.m.present?
+    json.modelName e.modelName
+    json.make e.make
     json.label e.label
     json.serial e.serial
-    json.totalTime e.totalTime
-    json.totalCycles e.totalCycles
+    json.tt e.tt
+    json.tc e.tc
     json.shsi e.shsi
     json.smoh e.smoh
     json.tbo e.tbo
@@ -20,10 +20,10 @@ json.engines @airframe.engines do |json, e|
 end
 
 json.equipment @airframe.equipment do |json, i|
-    json.model i.modelNumber
-    json.label i.abbreviation
-    json.name i.name
-    json.make i.make.name
+    #json.model i.modelNumber
+    #json.label i.abbreviation
+    #json.name i.name
+    #json.make i.make.name
     json.type i.etype
     json.id i.id
 end

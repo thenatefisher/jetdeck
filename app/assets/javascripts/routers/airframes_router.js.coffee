@@ -22,6 +22,7 @@ class Jetdeck.Routers.AirframesRouter extends Backbone.Router
 
   show: (id) ->
     airframe = new Jetdeck.Models.Airframe(@options.airframe)
+    airframe.url = "/airframes/" + airframe.id
     @view = new Jetdeck.Views.Airframes.ShowView(model: airframe)
     $("#html_top").html(@view.render().el)
 

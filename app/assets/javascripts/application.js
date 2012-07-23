@@ -63,6 +63,19 @@ function modalClose() {
   $("#jetdeckModal").modal('hide');
 }
 
+var alertFailureTimeout;
+function alertFailure(content) {
+    if (content != "" && content != null) {
+        $("#jetdeck-notification-error div.notification-content").html(content)
+        $("#jetdeck-notification-error").fadeIn('fast');
+        alertSuccessTimeout = setTimeout("alertFailureClose()", 2500);
+    }
+}
+
+function alertFailureClose() {
+    $("#jetdeck-notification-error").fadeOut('fast');
+}
+
 var alertSuccessTimeout;
 function alertSuccess(content) {
     if (content != "" && content != null) {

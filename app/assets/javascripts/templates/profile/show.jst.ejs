@@ -141,7 +141,8 @@
                           </td>
                           <td>
                               <input  type="text"
-                                      class="profile_field span4"
+                                      class="inline-edit profile_field span4"
+                                      value="<%= contact.phone %>"
                                       name="phone"
                                       placeholder="[Phone Number]">
                               </input>                                                                                  
@@ -159,15 +160,19 @@
                                       placeholder="[Enter Email Address]">
                               </input>
                               <input  type="text"
-                                      class="profile_field span4"
+                                      class="profile_field span4 email-confirmation"
                                       name="email_confirmation"
                                       placeholder="[Confirm New Email]">
                               </input>
+                              <span class="help-inline email-failure hide">
+                                     <span>Could Not Update Email</span>
+                              </span>                                  
                               <br><input style="margin-left: 192px" 
                                          type="submit" 
-                                         class="btn btn-warning"
+                                         class="btn btn-warning email-btn"
                                          id="update_email" 
-                                         value="Update Email"></input>                          
+                                         value="Update Email"></input>   
+                                                                               
                           </td>
                       </tr>                  
                       <tr>

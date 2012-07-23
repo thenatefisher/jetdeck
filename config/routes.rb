@@ -1,7 +1,5 @@
 Jetdeck::Application.routes.draw do
 
-  get "password_resets/new"
-
   resources :contacts
 
   match "/airframes/models" => "airframes#models"

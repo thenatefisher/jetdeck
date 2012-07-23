@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120705014455) do
+ActiveRecord::Schema.define(:version => 20120722175738) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -43,53 +43,24 @@ ActiveRecord::Schema.define(:version => 20120705014455) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "airframe_contacts", :force => true do |t|
-    t.integer  "airframe_id"
-    t.integer  "contact_id"
-    t.string   "relation"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "airframe_equipments", :force => true do |t|
-    t.integer  "airframe_id"
-    t.integer  "equipment_id"
-    t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.integer  "engine_id"
-  end
-
-  create_table "airframe_histories", :force => true do |t|
-    t.integer  "airframe_id"
-    t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.text     "description"
-    t.text     "oldValue"
-    t.text     "newValue"
-    t.string   "changeField"
-  end
-
-  add_index "airframe_histories", ["user_id"], :name => "index_airframe_histories_on_user_id"
-
   create_table "airframes", :force => true do |t|
     t.string   "serial"
     t.string   "registration"
-    t.integer  "model_id"
+    t.string   "make"
+    t.string   "modelName"
     t.integer  "year"
+    t.integer  "tt"
+    t.integer  "tc"
+    t.integer  "recipient_id"
+    t.integer  "sender_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.integer  "airport_id"
     t.integer  "user_id"
     t.integer  "baseline_id"
     t.boolean  "baseline"
-    t.integer  "totalTime"
-    t.integer  "totalCycles"
     t.integer  "askingPrice"
   end
-
-  add_index "airframes", ["model_id"], :name => "index_airframes_on_model_id"
 
   create_table "airports", :force => true do |t|
     t.string   "icao"
@@ -119,57 +90,33 @@ ActiveRecord::Schema.define(:version => 20120705014455) do
     t.string   "website"
   end
 
-  create_table "credits", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "creditable_type"
-    t.integer  "creditable_id"
-    t.decimal  "amount"
-    t.boolean  "direction"
-    t.text     "description"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  add_index "credits", ["user_id"], :name => "index_credits_on_user_id"
-
   create_table "engines", :force => true do |t|
+    t.string   "name"
     t.string   "serial"
-    t.integer  "totalTime"
-    t.integer  "totalCycles"
     t.integer  "year"
-    t.integer  "smoh"
-    t.integer  "tbo"
-    t.integer  "hsi"
-    t.integer  "shsi"
-    t.integer  "model_id"
-    t.boolean  "baseline"
-    t.integer  "baseline_id"
+    t.string   "make"
+    t.string   "modelName"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.string   "label"
-    t.integer  "owner_id"
-    t.string   "modelName"
+    t.integer  "user_id"
+    t.integer  "baseline_id"
+    t.boolean  "baseline"
+    t.integer  "ttsn"
+    t.integer  "tcsn"
+    t.integer  "smoh"
+    t.integer  "shsi"
+    t.integer  "tbo"
+    t.integer  "hsi"
+    t.integer  "airframe_id"
   end
 
   create_table "equipment", :force => true do |t|
-    t.integer  "manufacturer_id"
-    t.string   "abbreviation"
-    t.string   "modelNumber"
+    t.string   "type"
+    t.string   "title"
     t.string   "name"
-    t.text     "description"
-    t.string   "etype"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  add_index "equipment", ["manufacturer_id"], :name => "index_equipment_on_manufacturer_id"
-
-  create_table "equipment_details", :force => true do |t|
-    t.string   "value"
-    t.string   "parameter"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
-    t.integer  "airframeEquipment_id"
+    t.integer  "airframe_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "locations", :force => true do |t|
@@ -187,21 +134,6 @@ ActiveRecord::Schema.define(:version => 20120705014455) do
     t.integer  "user_id"
     t.string   "agent"
     t.string   "ip"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "manufacturers", :force => true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "spec_permissions", :force => true do |t|
-    t.integer  "spec_id"
-    t.string   "field"
-    t.boolean  "allowed"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -247,18 +179,14 @@ ActiveRecord::Schema.define(:version => 20120705014455) do
     t.string   "format"
     t.text     "message"
     t.boolean  "published"
-    t.datetime "created_at",              :null => false
-    t.datetime "updated_at",              :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
     t.string   "urlCode"
     t.string   "salutation"
     t.boolean  "show"
     t.string   "headline1"
     t.string   "headline2"
     t.string   "headline3"
-    t.string   "background_file_name"
-    t.string   "background_content_type"
-    t.integer  "background_file_size"
-    t.datetime "background_updated_at"
     t.integer  "background_id"
   end
 

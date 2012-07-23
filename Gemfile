@@ -19,19 +19,19 @@ gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'jbuilder'
 gem 'paperclip'
 gem 'thin'
-gem 'newrelic_rpm'
 gem 'aws-sdk', '~> 1.3.4'
 
+#gem 'newrelic_rpm'
 #gem 'delayed_job_active_record'
 #gem 'nokogiri'
-#gem 'capybara'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'
   gem 'mysql2'
   gem 'sqlite3'
-  #gem 'factory_girl_rails'
-  #gem 'annotate', '>= 2.4.1.beta'
+  gem 'factory_girl_rails'
+  gem 'capybara'
+  gem 'guard-rspec'
 end
 
 group :production do

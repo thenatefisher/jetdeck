@@ -18,6 +18,7 @@ class ProfileController < ApplicationController
           :email_confirmation,
           :first,
           :last,
+          :phone,
           :company)
 
         respond_to do |format|

@@ -1,0 +1,41 @@
+
+<div style="padding: 20px;">
+
+    <h2>Reset Password</h2>
+    <form class="form-horizontal" 
+            style="margin: 20px 0px;" 
+            method="POST" 
+            action="/password_resets">
+
+          <div class="control-group <% if flash[:notice] %> error <% end%>">
+
+              <label class="control-label pull-left span" 
+                        style="width: 50px" 
+                        for="email">Email</label>
+                        
+              <div class="controls">
+                <input
+                  class="input-xlarge focused"
+                  id="email"
+                  name="email"
+                  type="text"
+                  value="" />
+
+                <% if flash[:notice] %>
+                <span class="help-inline"><%= flash[:notice] %></span>
+                <% end %>             
+              </div>
+
+          </div>
+
+          <div class="offset2 pull-right login">
+              <span><a href="/login">Log In!</a></span>
+              <input style="margin-top: -5px; margin-left: 10px;" 
+                        type="submit" 
+                        class="btn btn-primary" 
+                        value="Reset Password" />
+          </div>
+
+    </form>
+
+</div>

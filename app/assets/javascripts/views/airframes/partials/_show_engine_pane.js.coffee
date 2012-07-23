@@ -56,10 +56,6 @@ class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
   render: =>
     $(@el).html(@template(engineItems: @model.engines.toJSON() ))
 
-    @$(".number").each(->
-        if $(this).val() != null
-          intPrice = parseInt($(this).val().replace(/[^0-9]/g,""), 10)
-          $(this).val(intPrice.formatMoney(0, ".", ","))
-    )    
+
     
     return this

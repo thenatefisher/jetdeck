@@ -5,25 +5,10 @@ class Jetdeck.Views.Airframes.ShowSpec extends Backbone.View
 
   events:
     "click .addEquipment"       : "add"
-    "change .inline-edit"       : "edit"
 
   add: () =>
     newEquipment = new Jetdeck.Views.Airframes.AddEquipmentModal(model: @model, parent: this)
     newEquipment.modal()
-    
-  edit: (event) ->
-    e = event.target || event.currentTarget
-    
-    if $(e).hasClass('number')
-      value = parseInt($(e).val().replace(/[^0-9]/g,""), 10)
-      $(e).val(value.formatMoney(0, ".", ","))
-    else
-      value = $(e).val()
-
-    name = $(e).attr('name')
-    
-    @model.set(name, value)
-    @model.save()
     
   render: ->
     # load the tabs container

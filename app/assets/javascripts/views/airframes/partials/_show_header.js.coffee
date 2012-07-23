@@ -3,6 +3,17 @@ Jetdeck.Views.Airframes ||= {}
 class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
   template: JST["templates/airframes/partials/_header"]
 
+  initialize: () ->
+    @model.on("change", @updateHeadline)
+    return this
+
+  updateHeadline: () =>
+    headline = @model.get('year')
+    headline += " " + @model.get('make')
+    headline += " " + @model.get('modelName')
+    $("#spec_headline").html(headline)
+    return this
+
   events:
     "click .set-thumbnail" : "setThumbnail"
 
