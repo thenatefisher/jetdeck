@@ -1,15 +1,15 @@
-json.(@airframe, :totalTime, :registration, :totalCycles, :serial, :askingPrice)
+json.(@airframe, :tt, :registration, :tc, :serial, :askingPrice)
 
 json.title (@airframe.to_s)
 
-json.model (@airframe.m.name)
+json.model (@airframe.modelName)
 
 json.engines @airframe.engines do |json, e|
-    json.model (e.m) ? e.m.modelNumber : e.modelName
+    json.model e.modelName
     json.label e.label
     json.serial e.serial
-    json.totalTime e.totalTime
-    json.totalCycles e.totalCycles
+    json.tt e.totalTime
+    json.tc e.totalCycles
     json.shsi e.shsi
     json.smoh e.smoh
     json.tbo e.tbo
@@ -67,7 +67,3 @@ json.images @airframe.accessories do |json, i|
     json.thumbnail i.thumbnail
 end
 
-# TODO create model methods for these
-#json.damage (true)
-#json.listed (true)
-#json.tags ([{:name => "April Research", :id => "1"}, {:name => "Previously Held", :id => "1"}])

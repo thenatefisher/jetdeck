@@ -70,15 +70,15 @@ class AirframesController < ApplicationController
   # POST /airframes
   # POST /airframes.json
   def create
-    whitelist = params[:airframe].slice(:registration, :serial, :baseline_id, :year)
+    whitelist = params[:airframe].slice(:registration, :serial, :year)
     whitelist[:user_id] = @current_user.id
     @airframe = Airframe.new(whitelist)
 
-    if params[:airframe][:baseline].present?
-        baseline = Airframe.find_by_baseline_id(params[:airframe][:baseline])
+    if params[:airframe][:baseline_id].present?
+        baseline = Airframe.find(params[:airframe][:baseline_id])
         if baseline
-            @airframe.modelName = base.modelName
-            @airframe.make = base.make
+            @airframe.modelName = baseline.modelName
+            @airframe.make = baseline.make
         end
     end
 

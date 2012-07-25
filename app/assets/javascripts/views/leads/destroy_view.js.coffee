@@ -1,6 +1,6 @@
 Jetdeck.Views.Leads ||= {}
 
-class Jetdeck.Views.Leads.EntryDestroy extends Backbone.View
+class Jetdeck.Views.Leads.DestroyView extends Backbone.View
   template : JST["templates/spec/_confirm_delete"]
   
   tagName: "div"
@@ -12,7 +12,7 @@ class Jetdeck.Views.Leads.EntryDestroy extends Backbone.View
     xid = @model.get('xspecId')
     @model.url = "/xspecs/" + xid
     @model.destroy()
-    window.router.view.render()
+    window.router.view.widgets.leads.render()
     modalClose()
     return this
     

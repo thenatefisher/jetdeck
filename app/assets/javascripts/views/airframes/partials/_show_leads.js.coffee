@@ -81,7 +81,9 @@ class Jetdeck.Views.Airframes.ShowLeads extends Backbone.View
         count : @model.leads.length
         pages : @model.leads.pages()
     $(@el).html(@template(params))
+    @model.leads.turnTo(1)
     @addAll()    
-    @$('.page[rel=1]').parent('li').addClass('active')  
+    @$('.page[rel=1]').parent('li').addClass('active')
+    
     return this
 

@@ -91,7 +91,7 @@ class XspecsController < ApplicationController
         # todo @spec.send_spec()
         XSpecMailer.sendRetail(@spec, @spec.recipient).deliver
         #format.html { redirect_to "#{root_url}s/#{CGI.escape(@spec.urlCode)}" }
-        format.json { render :json => @spec, :status => :created, :location => @spec }
+        format.json { render :json => @spec.to_json(:include => 'recipient'), :status => :created, :location => @spec }
       else
         format.json { render :json => @spec.errors, :status => :unprocessable_entity }
       end

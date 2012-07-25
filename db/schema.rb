@@ -173,8 +173,8 @@ ActiveRecord::Schema.define(:version => 20120722175738) do
 
   create_table "xspecs", :force => true do |t|
     t.integer  "airframe_id"
-    t.integer  "recipient"
-    t.integer  "sender"
+    t.integer  "recipient_id"
+    t.integer  "sender_id"
     t.datetime "sent"
     t.string   "format"
     t.text     "message"

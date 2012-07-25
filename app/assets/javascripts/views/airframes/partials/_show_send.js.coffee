@@ -24,7 +24,7 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
           new_lead.name = m.recipient.first + " " + m.recipient.last
 
         @model.leads.add(new_lead)
-        @model.parentView.show_leads()
+        window.router.view.widgets.leads.render()
     )
     .error( (m) =>
       @$(".control-group").addClass("error")
