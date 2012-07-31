@@ -6,18 +6,23 @@ class Jetdeck.Views.Airframes.ShowSpecPane extends Backbone.View
   template: JST["templates/equipment/spec_pane"]
 
   events:
-    "click .removeEquipment"    : "destroy"
-
-  destroy: (event) ->
-    e = event.target || event.currentTarget
-    equipmentId = $(e).data('eid')
-
-    @model.equipment.remove(equipmentId)
+    "click .removeEquipment"    : "removeEquipment"
+    "click .addEquipment"       : "addEquipment"
+    
+  removeEquipment : (e) =>
+    @model.equipment.remove(e)
     @model.save(null,
         success: =>
-            @render()
+            @model.fetch( success: => @render())
     )
-
+        
+  addEquipment : (e) =>
+    @model.equipment.push({id: e})    
+    @model.save(null,
+        success: =>
+            @model.fetch( success: => @render())
+    )
+        
   render: =>
     data = Array()
     @model.equipment.forEach((i) =>

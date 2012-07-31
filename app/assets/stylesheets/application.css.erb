@@ -31,7 +31,7 @@ body {
 
 .navbar .brand strong { }
 
-.inline-edit {
+.inline-edit, .engine_inline_edit {
   border: 0px;
   box-shadow: none;
   outline: 0px;
@@ -42,13 +42,13 @@ body {
   background: transparent;
 }
 
-.inline-edit :focus {
+.inline-edit :focus, .engine_inline_edit :focus {
   border: 0px;
   outline: 0px;
 }
 
-#pane_engines .inline-edit {
-    width: 80px;
+.engine_inline_edit {
+    width: auto;
 }
 
 .main-thumbnail {
@@ -129,6 +129,6 @@ form[name='airframe'] .control-group {
   margin-bottom: 40px;
 }
 
-.engine-table .inline-edit, .engine-fields {
+.engine_inline_edit{
     text-align: center;
 }

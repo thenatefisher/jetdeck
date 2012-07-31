@@ -120,11 +120,11 @@ class AirframesController < ApplicationController
     
     @engines = []
     params[:airframe][:engines].each do |a|
-         @baseline = Engine.find(:first, :conditions => ["id = ? AND (baseline = 't' OR owner_id = ?)", a[:id], @current_user.id])
+         @baseline = Engine.find(:first, :conditions => ["id = ? AND (baseline = 't' OR user_id = ?)", a[:id], @current_user.id])
          if @baseline
              newItem = @baseline.dup
              newItem.baseline = false
-             newItem.owner = @current_user
+             newItem.user_id = @current_user
              newItem.baseline_id = a[:id]
              @engines << newItem
          end

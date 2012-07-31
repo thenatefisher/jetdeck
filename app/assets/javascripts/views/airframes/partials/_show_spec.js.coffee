@@ -3,13 +3,6 @@ Jetdeck.Views.Airframes ||= {}
 class Jetdeck.Views.Airframes.ShowSpec extends Backbone.View
   template: JST["templates/airframes/partials/_specDetails"]
 
-  events:
-    "click .addEquipment"       : "add"
-
-  add: () =>
-    newEquipment = new Jetdeck.Views.Airframes.AddEquipmentModal(model: @model, parent: this)
-    newEquipment.modal()
-    
   render: ->
     # load the tabs container
     $(@el).html(@template(@model.toJSON() ))

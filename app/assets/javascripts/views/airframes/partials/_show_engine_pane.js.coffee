@@ -3,13 +3,13 @@ Jetdeck.Views.Airframes ||= {}
 # This is a pane inside the specification tab container
 # and only displays engines
 class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
-  template: JST["templates/equipment/engine_pane"]
+  template: JST["templates/engines/pane"]
 
   events:
-    "click .remove_engine"    : "destroy"
-    "change .inline-edit"     : "edit"
-    "click .copy_engine"      : "copy"
-    "click .add_engine"       : "add"
+    "click .remove_engine"            : "destroy"
+    "change .engine_inline_edit"      : "edit"
+    "click .copy_engine"              : "copy"
+    "click .add_engine"               : "add"
 
   edit: (event) ->
     e = event.target || event.currentTarget
@@ -40,7 +40,7 @@ class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
     return
   
   add: () =>
-    newEquipment = new Jetdeck.Views.Airframes.AddEquipmentModal(type: "engines", model: @model, parent: this)
+    newEquipment = new Jetdeck.Views.Engines.AddModal(model: @model, parent: this)
     newEquipment.modal()
     return
 
@@ -56,6 +56,4 @@ class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
   render: =>
     $(@el).html(@template(engineItems: @model.engines.toJSON() ))
 
-
-    
     return this

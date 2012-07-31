@@ -2,15 +2,23 @@
 <thead>
   <th></th>
   <% for (var i = 0; i < engineItems.length; i++) { %>
-  <th style="text-align: center"><input type="text" class="inline-edit" style="font-weight: bold;" value="<%= engineItems[i].label %>" name="label" placeholder="Eng Label"></input></th>
+  <th style="text-align: center"><input type="text" class="engine_inline_edit" style="font-weight: bold;" value="<%= engineItems[i].name %>" data-eid="<%= engineItems[i].id %>" name="name" placeholder="Engine XX"></input></th>
   <% } %>
 </thead>
 <tbody>
   <tr>
+    <td style="border-top: 0px;"><h4><small>Make</small></h4></td>
+    <% for (var i = 0; i < engineItems.length; i++) { %>
+        <td style="text-align: center; border-top: 0px;">
+        <input type="text" class="engine_inline_edit" value="<%= engineItems[i].make %>" data-eid="<%= engineItems[i].id %>" name="make"></input>
+        </td>
+    <% } %>
+  </tr>
+  <tr>
     <td style="border-top: 0px;"><h4><small>Model</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center; border-top: 0px;">
-        <input type="text" class="inline-edit" value="<%= engineItems[i].model %>" data-eid="<%= engineItems[i].id %>" name="modelName"></input>
+        <input type="text" class="engine_inline_edit" value="<%= engineItems[i].modelName %>" data-eid="<%= engineItems[i].id %>" name="modelName"></input>
         </td>
     <% } %>
   </tr>
@@ -18,7 +26,7 @@
     <td><h4><small>MSN</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center">
-        <input type="text" class="inline-edit" value="<%= engineItems[i].serial %>" data-eid="<%= engineItems[i].id %>" name="serial"></input>
+        <input type="text" class="engine_inline_edit" value="<%= engineItems[i].serial %>" data-eid="<%= engineItems[i].id %>" name="serial"></input>
         </td>
     <% } %> 
   </tr>
@@ -26,7 +34,7 @@
     <td><h4><small>Year</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center">
-        <input type="text" class="inline-edit" value="<%= engineItems[i].year %>" data-eid="<%= engineItems[i].id %>" name="year"></input>
+        <input type="text" class="engine_inline_edit" value="<%= engineItems[i].year %>" data-eid="<%= engineItems[i].id %>" name="year"></input>
         </td>
     <% } %> 
   </tr>  
@@ -34,7 +42,7 @@
     <td><h4><small>TT</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center">
-        <input type="text" class="inline-edit number" value="<%= engineItems[i].totalTime %>" data-eid="<%= engineItems[i].id %>" name="totalTime"></input>
+        <input type="text" class="engine_inline_edit number" value="<%= engineItems[i].ttsn %>" data-eid="<%= engineItems[i].id %>" name="ttsn"></input>
         </td>
     <% } %> 
   </tr>
@@ -42,7 +50,7 @@
     <td><h4><small>Cycles</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center">
-        <input type="text" class="inline-edit number" value="<%= engineItems[i].totalCycles %>" data-eid="<%= engineItems[i].id %>" name="totalCycles"></input>
+        <input type="text" class="engine_inline_edit number" value="<%= engineItems[i].tcsn %>" data-eid="<%= engineItems[i].id %>" name="tcsn"></input>
         </td>
     <% } %> 
   </tr>    
@@ -50,7 +58,7 @@
     <td><h4><small>SMOH</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center">
-        <input type="text" class="inline-edit number" value="<%= engineItems[i].smoh %>" data-eid="<%= engineItems[i].id %>" name="smoh"></input>
+        <input type="text" class="engine_inline_edit number" value="<%= engineItems[i].smoh %>" data-eid="<%= engineItems[i].id %>" name="smoh"></input>
         </td>
     <% } %> 
   </tr>  
@@ -58,7 +66,7 @@
     <td><h4><small>TBO</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center">
-        <input type="text" class="inline-edit number" value="<%= engineItems[i].tbo %>" data-eid="<%= engineItems[i].id %>" name="tbo"></input>
+        <input type="text" class="engine_inline_edit number" value="<%= engineItems[i].tbo %>" data-eid="<%= engineItems[i].id %>" name="tbo"></input>
         </td>
     <% } %> 
   </tr>   
@@ -66,7 +74,7 @@
     <td><h4><small>SHSI</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center">
-        <input type="text" class="inline-edit number" value="<%= engineItems[i].shsi %>" data-eid="<%= engineItems[i].id %>" name="shsi"></input>
+        <input type="text" class="engine_inline_edit number" value="<%= engineItems[i].shsi %>" data-eid="<%= engineItems[i].id %>" name="shsi"></input>
         </td>
     <% } %> 
   </tr>  
@@ -74,7 +82,7 @@
     <td><h4><small>HSI</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center">
-        <input type="text" class="inline-edit number" value="<%= engineItems[i].hsi %>" data-eid="<%= engineItems[i].id %>" name="hsi"></input>
+        <input type="text" class="engine_inline_edit number" value="<%= engineItems[i].hsi %>" data-eid="<%= engineItems[i].id %>" name="hsi"></input>
         </td>
     <% } %> 
   </tr>    

@@ -6,8 +6,6 @@ Jetdeck::Application.routes.draw do
 
   resources :airframes
 
-  resources :equipment
-
   resources :xspecs
   
   resources :engines

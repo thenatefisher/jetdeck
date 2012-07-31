@@ -8,7 +8,16 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
 
   events:
     "change .inline-edit"       : "edit"
-    
+    "click .manage_images"      : "manageImages"
+
+  manageImages: () ->
+    if $("#uploader").is(":visible")
+      $("#uploader").hide()
+      $(".manage_images a").html("Manage Images")
+    else
+      $("#uploader").show()
+      $(".manage_images a").html("Hide Images")
+      
   edit: (event) ->
     e = event.target || event.currentTarget
     
@@ -34,7 +43,7 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     
     @widgets.header = new Jetdeck.Views.Airframes.ShowHeader(model: @model)
     @$("#airframe_show_header").html(@widgets.header.render().el)
-
+    
     @widgets.spec = new Jetdeck.Views.Airframes.ShowSpec(model: @model)
     @$("#airframe_spec_details").html(@widgets.spec.render().el)
     
