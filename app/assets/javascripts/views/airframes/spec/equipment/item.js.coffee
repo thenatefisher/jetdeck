@@ -33,10 +33,4 @@ class Jetdeck.Views.Equipment.Item extends Backbone.View
       -> $(this).removeClass("dark_color")
     )    
     return this
-    
-class Jetdeck.Views.Equipment.New extends Backbone.View
-  template: JST["templates/airframes/spec/equipment/new"]   
-  
-  render: =>
-    $(@el).html(@template())
-    return this  
+

@@ -7,6 +7,10 @@ class Jetdeck.Views.Airframes.ShowSpec extends Backbone.View
     # load the tabs container
     $(@el).html(@template(@model.toJSON() ))
 
+    # populate airframe tab
+    @airframe = new Jetdeck.Views.Airframes.ShowAirframePane(model: @model)
+    @$("#pane_airframe").html(@airframe.render().el)
+    
     # populate engines tab
     @engines = new Jetdeck.Views.Airframes.ShowEnginePane(model: @model)
     @$("#pane_engines").html(@engines.render().el)
@@ -16,8 +20,8 @@ class Jetdeck.Views.Airframes.ShowSpec extends Backbone.View
     @$("#pane_avionics").html(@avionics.render().el)
 
     # populate description tab
-    #@description = new Jetdeck.Views.Airframes.ShowDescriptionPane(model: @model)
-    #@$("#pane_description").html(@description.render().el)
+    @description = new Jetdeck.Views.Airframes.ShowDescriptionPane(model: @model)
+    @$("#pane_description").html(@description.render().el)
 
     # populate the equipment tab
     @equipment = new Jetdeck.Views.Airframes.ShowEquipmentPane(model: @model)
