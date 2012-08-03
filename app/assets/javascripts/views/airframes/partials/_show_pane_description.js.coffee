@@ -1,0 +1,1 @@
+Jetdeck.Views.Airframes ||= {}

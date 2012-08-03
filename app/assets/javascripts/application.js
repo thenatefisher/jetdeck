@@ -36,6 +36,7 @@
 //= require uploader/jquery.fileupload-fp
 //= require uploader/jquery.fileupload-ui
 //= require uploader/locale
+//= require highcharts
 //= require_tree .
 
 
@@ -198,3 +199,5 @@ $(function() {
       } );
 
 });*/
+
+

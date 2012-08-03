@@ -1,7 +1,7 @@
 Jetdeck.Views.Leads ||= {}
 
 class Jetdeck.Views.Leads.DestroyView extends Backbone.View
-  template : JST["templates/spec/_confirm_delete"]
+  template : JST["templates/airframes/leads/confirm_delete"]
   
   tagName: "div"
   

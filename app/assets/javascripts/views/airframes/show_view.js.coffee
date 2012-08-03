@@ -38,21 +38,19 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   render: =>
   
     $(@el).html(@template(@model.toJSON() ))
+    
+    @header = new Jetdeck.Views.Airframes.ShowHeader(model: @model)
+    @$("#airframe_show_header").html(@header.render().el)
+    
+    @spec = new Jetdeck.Views.Airframes.ShowSpec(model: @model)
+    @$("#airframe_spec_details").html(@spec.render().el)
+    
+    @send = new Jetdeck.Views.Airframes.ShowSend(model: @model)
+    @$("#airframe_send").html(@send.render().el)
 
-    @widgets ||= {}
-    
-    @widgets.header = new Jetdeck.Views.Airframes.ShowHeader(model: @model)
-    @$("#airframe_show_header").html(@widgets.header.render().el)
-    
-    @widgets.spec = new Jetdeck.Views.Airframes.ShowSpec(model: @model)
-    @$("#airframe_spec_details").html(@widgets.spec.render().el)
-    
-    @widgets.send = new Jetdeck.Views.Airframes.ShowSend(model: @model)
-    @$("#airframe_send").html(@widgets.send.render().el)
-
-    @widgets.leads = new Jetdeck.Views.Airframes.ShowLeads(model: @model)
+    @leads = new Jetdeck.Views.Airframes.ShowLeads(model: @model)
     if @model.leads.length > 0
-      @$("#airframe_leads").html(@widgets.leads.render().el)
+      @$("#airframe_leads").html(@leads.render().el)
 
     @$(".number").each(->
         if $(this).val() != null

@@ -1,7 +1,7 @@
 Jetdeck.Views.Airframes ||= {}
 
 class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
-  template: JST["templates/airframes/partials/_header"]
+  template: JST["templates/airframes/partials/header"]
 
   events:
     "click .set-thumbnail" : "setThumbnail"

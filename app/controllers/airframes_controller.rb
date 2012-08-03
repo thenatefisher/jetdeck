@@ -112,12 +112,6 @@ class AirframesController < ApplicationController
     whitelist = params[:airframe].slice(:askingPrice, 
         :serial, :registration, :tt, :tc, :year, :make, :modelName)
 
-    @equipment = []
-    params[:airframe][:equipment].each do |a|
-         @equipment << Equipment.find(a[:id])
-    end
-    whitelist[:equipment] = @equipment
-    
     @engines = []
     params[:airframe][:engines].each do |a|
          @baseline = Engine.find(:first, :conditions => ["id = ? AND (baseline = 't' OR user_id = ?)", a[:id], @current_user.id])

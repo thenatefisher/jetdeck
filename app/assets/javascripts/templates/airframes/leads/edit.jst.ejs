@@ -1,0 +1,183 @@
+<div class="modal">
+
+    <div style="margin-top: 20px;">
+
+      <h2 class="pull-left" style="margin-left: 20px; line-height: 18px;">
+          <small>jimt@bellsouth.net</small>
+      </h2>
+      
+      <div class="tabbable">
+        <ul class="nav nav-tabs">
+          <li class="pull-right" style="margin-right: 20px;"><a href="#settings_tab" data-toggle="tab">Settings</a></li>
+          <li class="pull-right"><a href="#content_tab" data-toggle="tab">Content</a></li>
+          <li class="pull-right active"><a href="#summary_tab" data-toggle="tab">Summary</a></li>
+        </ul>
+      </div>
+      
+    </div>
+    
+
+        <div class="tab-content">
+          <div class="tab-pane" id="content_tab">
+            
+              <div style="margin: 0 20px 20px;">
+                <h3>Personalized Message</h3>
+                <p>Include a personalized message for the recipient to make the spec stand out. </p>
+              </div>
+              
+              <div class="modal-section">
+                <dl class="dl-horizontal"  style="margin-bottom: 13px;">
+                  <dt class="large-line-height">Salutation</dt>
+                  <dd><input type="text" class="span5" placeholder="Address the customer here. I.e., 'Hi Debra,'"></dd>
+                  <dt class="large-line-height">Body</dt>
+                  <dd><textarea rows="4" class="span5"  style="margin-bottom: 0px;"></textarea></dd>
+                </dl>  
+              </div>
+               
+              <div style="margin: 20px;">
+                <h3>Tag Lines</h3>
+                <p>Highlight specific sale points which cator most to this customer's needs. </p>
+              </div>
+                            
+              <div class="modal-section">
+                <dl class="dl-horizontal" style="margin-bottom: 13px;">
+                  <dt class="large-line-height">First Line</dt>
+                  <dd><input type="text" 
+                              class="span5" 
+                              placeholder="i.e., New Paint and Interior"></dd>
+                  <dt class="large-line-height">Second Line</dt>
+                  <dd><input type="text" 
+                              class="span5" 
+                              placeholder="i.e., Fresh Phase Inspection"></dd>
+                  <dt class="large-line-height">Third Line</dt>
+                  <dd><input type="text" 
+                              class="span5" 
+                              style="margin-bottom: 0px;"
+                              placeholder="i.e., Lowest Time Airframe On Market"></dd>
+                </dl>
+              </div>
+              
+              <div style="margin: 20px;">
+                <p> </p>
+              </div>              
+
+          </div>
+          
+          <div class="tab-pane active" id="summary_tab">
+          
+              
+              <div class="span6" style="margin: 0px auto; float: none;">
+                <h3>View History</h3>
+                <div id="chartContainer"></div>
+              </div>
+          
+              <div style="clear: both; height: 20px;">&nbsp;</div>
+          
+              <hr>
+              
+                <div class="span">
+                  
+                  <div style="text-align: center;" class="span2 pull-left">
+                    <h2>13</h2>
+                    <h3>Total Views</h3>
+                  </div>   
+                        
+                  <div style="text-align: center;" class="span2 pull-left">
+                    <h2>2:14</h2>
+                    <h3>Avg View Time</h3>
+                  </div>  
+                    
+                  <div style="text-align: center;" class="span2 pull-left">
+                    <h2>6</h2>
+                    <h3>Days Old</h3>
+                  </div>   
+                                                                            
+                </div>
+              
+                <div style="clear: both; height: 20px;">&nbsp;</div>
+              
+                <div class="pull-left">
+                  <dl class="dl-horizontal" style="margin-bottom: 13px;">
+                    <dt>First Sent</dt>
+                    <dd>Aug 14 (3:45p est)</dd>
+                    <dt>Last Sent</dt>
+                    <dd>Aug 14 (3:45p est)</dd>
+                      
+                  </dl>        
+                </div>
+                
+                <div class="pull-left">   
+                  <dl class="dl-horizontal" style="margin-bottom: 13px;">
+                    <dt>Last Viewed</dt>
+                    <dd>Aug 14 (3:45p est)</dd>                     
+                    <dt>Total Sent</dt>
+                    <dd>2 Times</dd>                 
+                                                  
+                  </dl>   
+                </div>  
+          </div>
+          
+          <div class="tab-pane" id="settings_tab">
+            
+              <div style="margin: 0 20px 20px;">
+                <h3>Field Override</h3>
+                <p>Change spec values for this recipient </p>
+              </div>
+              
+              <div class="modal-section">
+                <dl class="dl-horizontal"  style="margin-bottom: 13px;">
+                  <dt class="large-line-height">Price</dt>
+                  <dd>
+                    <input type="text" class="span3" value="$23,500,000">
+                    <span style="margin-left: 20px;"><input type="checkbox"> Hide Price </span>  
+                  </dd>
+                  <dt class="large-line-height">Description</dt>
+                  <dd><textarea rows="4" class="span5"  style="margin-bottom: 0px;"></textarea></dd>
+                </dl>  
+                <dl class="dl-horizontal" style="margin-bottom: 13px;">
+                  <hr>
+                  <dt>Field Visibility</dt>
+                  <dd>
+                    <span style="margin-left: 20px;"><input type="checkbox"> Hide Serial </span>
+                    <span style="margin-left: 20px;""><input type="checkbox"> Hide Registration </span>                  
+                    <span style="margin-left: 20px;"><input type="checkbox"> Hide Location </span>                  
+                  </dd>
+                                   
+                </dl>                  
+              </div>
+              
+              <div style="margin: 20px;">
+                <h3>Appearance Options</h3>
+                <p>Set the background color of the spec </p>
+              </div>
+              
+              <div class="modal-section">
+                <dl class="dl-horizontal" style="margin-bottom: 13px;">
+                  <dt class="large-line-height">Select Color</dt>
+                  <dd>
+                    <% for (var i = 0; i < 10; i++) { %>
+                    <div class="swatch"></div>
+                    <% } %><div style="clear: both"></div>
+                  </dd>
+                  <dt class="large-line-height" style="margin-top: 15px;">Select Image</dt>
+                  <dd style="margin-top: 15px;">
+                    <% for (var i = 0; i < 6; i++) { %>
+                    <div class="swatch"></div>
+                    <% } %><div style="clear: both"></div>          
+                  </dd>                                  
+                </dl>  
+              </div>
+                    
+              <div style="margin: 20px;">
+                <p> </p>
+              </div>                         
+                                
+          </div>        
+      </div>
+      
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Close</button>
+    <button class="btn btn-primary">Send</button>    
+  </div>
+  
+</div>

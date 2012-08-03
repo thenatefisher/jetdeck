@@ -1,7 +1,7 @@
 Jetdeck.Views.Leads ||= {}
 
 class Jetdeck.Views.Leads.LeadView extends Backbone.View
-  template : JST["templates/airframes/partials/_lead_entry"]
+  template : JST["templates/airframes/leads/item"]
   
   tagName : "tr"
   
@@ -9,13 +9,18 @@ class Jetdeck.Views.Leads.LeadView extends Backbone.View
     "click .xspec_settings"         : "xspecSettings"
     "click .remove_xspec"           : "removeSpec"
 
-  removeSpec: () =>
+  initialize: =>
+    $(@el).hover(
+      => $(".lead_buttons", @el).children().show(),
+      => $(".lead_buttons", @el).children().hide(),
+    )
+
+  removeSpec: =>
     confirmDelete = new Jetdeck.Views.Leads.DestroyView(model: @model)
     modal(confirmDelete.render().el)
     return this  
     
-  xspecSettings: () =>
-    window.test = @model
+  xspecSettings: =>
     specModel = new Jetdeck.Models.Spec()
     specModel.url = "/xspecs/" + @model.get('xspecId') + "/edit"
     specModel.fetch(

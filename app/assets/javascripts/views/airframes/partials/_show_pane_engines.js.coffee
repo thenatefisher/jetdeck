@@ -3,7 +3,7 @@ Jetdeck.Views.Airframes ||= {}
 # This is a pane inside the specification tab container
 # and only displays engines
 class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
-  template: JST["templates/engines/pane"]
+  template: JST["templates/airframes/spec/engines/pane"]
 
   events:
     "click .remove_engine"            : "destroy"

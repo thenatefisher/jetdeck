@@ -13,6 +13,8 @@ Jetdeck::Application.routes.draw do
   resources :password_resets
 
   resources :users, :only => [:update]
+  
+  resources :equipment
 
   resources :accessories, :only => [:index, :create, :destroy, :update]
 

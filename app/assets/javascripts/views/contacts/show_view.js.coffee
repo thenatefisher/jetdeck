@@ -23,7 +23,7 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
 
 
 class Jetdeck.Views.Contacts.ShowHeaderView extends Backbone.View
-  template: JST["templates/contacts/partials/_header"]
+  template: JST["templates/contacts/partials/header"]
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))

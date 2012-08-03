@@ -1,7 +1,7 @@
 Jetdeck.Views.Airframes ||= {}
 
 class Jetdeck.Views.Airframes.ShowLeads extends Backbone.View
-  template: JST["templates/airframes/partials/_leads"]
+  template: JST["templates/airframes/partials/leads"]
 
   initialize: () ->
     @on('add', @addAll, @model.leads)

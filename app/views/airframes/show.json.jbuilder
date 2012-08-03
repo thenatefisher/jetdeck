@@ -22,7 +22,7 @@ end
 json.equipment @airframe.equipment do |json, i|
     json.name i.name
     json.title i.title
-    json.type i.etype
+    json.etype i.etype
     json.id i.id
 end
 

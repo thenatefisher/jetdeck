@@ -1,7 +1,7 @@
 Jetdeck.Views.Airframes ||= {}
 
 class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
-  template: JST["templates/airframes/partials/_send"]
+  template: JST["templates/airframes/partials/send"]
 
   events :
     "click #send_spec" : "send"
@@ -24,7 +24,7 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
           new_lead.name = m.recipient.first + " " + m.recipient.last
 
         @model.leads.add(new_lead)
-        window.router.view.widgets.leads.render()
+        window.router.view.render()
     )
     .error( (m) =>
       @$(".control-group").addClass("error")

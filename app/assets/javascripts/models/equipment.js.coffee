@@ -1,6 +1,10 @@
 class Jetdeck.Models.EquipmentModel extends Backbone.Model
     paramRoot: "equipment"
-
+    url: =>
+      if (@isNew()) 
+        return '/equipment'
+      return '/equipment/' + @id
+    
 class Jetdeck.Collections.EquipmentCollection extends Backbone.Collection
     model: Jetdeck.Models.EquipmentModel
     url: "/equipment"
