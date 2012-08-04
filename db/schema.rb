@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120730070026) do
+ActiveRecord::Schema.define(:version => 20120804185229) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -60,6 +60,8 @@ ActiveRecord::Schema.define(:version => 20120730070026) do
     t.integer  "baseline_id"
     t.boolean  "baseline"
     t.integer  "askingPrice"
+    t.string   "Airframe"
+    t.text     "description"
   end
 
   create_table "airports", :force => true do |t|
