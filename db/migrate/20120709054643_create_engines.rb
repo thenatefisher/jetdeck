@@ -6,7 +6,7 @@ class CreateEngines < ActiveRecord::Migration
         t.string    :serial
         t.integer   :year
         t.string    :make
-        t.string    :modelName
+        t.string    :model_name
         t.datetime  :created_at,   :null => false
         t.datetime  :updated_at,   :null => false
 
@@ -14,8 +14,8 @@ class CreateEngines < ActiveRecord::Migration
         t.integer   :baseline_id
         t.boolean   :baseline
         
-        t.integer   :ttsn
-        t.integer   :tcsn
+        t.integer   :tt
+        t.integer   :tc
         t.integer   :smoh
         t.integer   :shsi
         t.integer   :tbo

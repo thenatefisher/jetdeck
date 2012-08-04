@@ -4,6 +4,6 @@ class RemovePasswordFromUser < ActiveRecord::Migration
       end
 
   def down
-    add_column :users, :password, :string
+
   end
 end

@@ -4,7 +4,7 @@ class CreateLocations < ActiveRecord::Migration
       t.string :city
       t.string :country
       t.string :state
-      t.string :registrationPrefix
+      t.string :registration_prefix
       t.float :salesTax
 
       t.timestamps

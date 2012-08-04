@@ -4,26 +4,24 @@ json.(@airframe,
   :tt, 
   :tc, 
   :serial, 
-  :askingPrice, 
+  :asking_price, 
   :registration, 
   :make, 
-  :modelName, 
+  :model_name, 
   :year,
   :description
 )
 
 json.title (@airframe.to_s)
 
-json.model (@airframe.modelName)
-
 json.engines @airframe.engines do |json, e|
     json.id e.id
-    json.modelName e.modelName
+    json.model_name e.model_name
     json.make e.make
     json.name e.name
     json.serial e.serial
-    json.ttsn e.ttsn
-    json.tcsn e.tcsn
+    json.tt e.tt
+    json.tc e.tc
     json.shsi e.shsi
     json.smoh e.smoh
     json.tbo e.tbo
@@ -42,7 +40,7 @@ if (@airframe.airport)
     json.location ({
         :icao => @airframe.airport.icao,
         :city => @airframe.airport.location.city,
-        :state => @airframe.airport.location.stateAbbreviation,
+        :state => @airframe.airport.location.state_abbreviation,
         :id => @airframe.airport.id
     })
 end

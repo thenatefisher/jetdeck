@@ -5,7 +5,7 @@ class CreateAirports < ActiveRecord::Migration
       t.string :latitude
       t.string :longitude
       t.string :name
-      t.string :location_id
+      t.integer :location_id
 
       t.timestamps
     end

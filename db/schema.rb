@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120804185229) do
+ActiveRecord::Schema.define(:version => 20120804191740) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20120804185229) do
     t.string   "serial"
     t.string   "registration"
     t.string   "make"
-    t.string   "modelName"
+    t.string   "model_name"
     t.integer  "year"
     t.integer  "tt"
     t.integer  "tc"
@@ -59,8 +59,7 @@ ActiveRecord::Schema.define(:version => 20120804185229) do
     t.integer  "user_id"
     t.integer  "baseline_id"
     t.boolean  "baseline"
-    t.integer  "askingPrice"
-    t.string   "Airframe"
+    t.integer  "asking_price"
     t.text     "description"
   end
 
@@ -69,9 +68,9 @@ ActiveRecord::Schema.define(:version => 20120804185229) do
     t.string   "latitude"
     t.string   "longitude"
     t.string   "name"
+    t.integer  "location_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "location_id"
   end
 
   create_table "contacts", :force => true do |t|
@@ -97,14 +96,14 @@ ActiveRecord::Schema.define(:version => 20120804185229) do
     t.string   "serial"
     t.integer  "year"
     t.string   "make"
-    t.string   "modelName"
+    t.string   "model_name"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "user_id"
     t.integer  "baseline_id"
     t.boolean  "baseline"
-    t.integer  "ttsn"
-    t.integer  "tcsn"
+    t.integer  "tt"
+    t.integer  "tc"
     t.integer  "smoh"
     t.integer  "shsi"
     t.integer  "tbo"
@@ -125,11 +124,11 @@ ActiveRecord::Schema.define(:version => 20120804185229) do
     t.string   "city"
     t.string   "country"
     t.string   "state"
-    t.string   "registrationPrefix"
+    t.string   "registration_prefix"
     t.float    "salesTax"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
-    t.string   "stateAbbreviation"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.string   "state_abbreviation"
   end
 
   create_table "logins", :force => true do |t|
@@ -142,11 +141,11 @@ ActiveRecord::Schema.define(:version => 20120804185229) do
 
   create_table "spec_views", :force => true do |t|
     t.integer  "spec_id"
-    t.integer  "timeOnPage"
+    t.integer  "time_on_page"
     t.string   "agent"
     t.string   "ip"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   create_table "users", :force => true do |t|
@@ -180,16 +179,21 @@ ActiveRecord::Schema.define(:version => 20120804185229) do
     t.datetime "sent"
     t.string   "format"
     t.text     "message"
-    t.boolean  "published"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
-    t.string   "urlCode"
+    t.datetime "created_at",           :null => false
+    t.datetime "updated_at",           :null => false
+    t.string   "url_code"
     t.string   "salutation"
-    t.boolean  "show"
     t.string   "headline1"
     t.string   "headline2"
     t.string   "headline3"
     t.integer  "background_id"
+    t.string   "override_price"
+    t.text     "override_description"
+    t.boolean  "show_message"
+    t.boolean  "hide_price"
+    t.boolean  "hide_serial"
+    t.boolean  "hide_registration"
+    t.boolean  "hide_location"
   end
 
 end

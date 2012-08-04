@@ -4,7 +4,7 @@ class CreateAirframes < ActiveRecord::Migration
       t.string      :serial
       t.string      :registration
       t.string      :make
-      t.string      :modelName
+      t.string      :model_name
       t.integer     :year
       t.integer     :tt
       t.integer     :tc

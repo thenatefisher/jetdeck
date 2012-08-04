@@ -39,7 +39,7 @@ class Airframe < ActiveRecord::Base
     retval =   ''
     retval +=  self.year.to_s + " " if self.year
     retval +=  self.make + " " if self.make
-    retval +=  self.modelName + " " if self.modelName
+    retval +=  self.model_name + " " if self.model_name
     retval
   end
 

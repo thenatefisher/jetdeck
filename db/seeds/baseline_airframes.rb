@@ -30,7 +30,7 @@ open("#{Rails.root}/db/seeds/data/aircraft_data.csv") do |infile|
             :year => aircraft[5],
             :serial => aircraft[3],
             :registration => aircraft[4],
-            :modelName => aircraft[2],
+            :model_name => aircraft[2],
             :make => aircraft[1],
             :baseline => true
         )
