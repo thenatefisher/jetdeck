@@ -3,7 +3,13 @@
 <% if (typeof(avatar) != "undefined" && avatar != null && typeof(avatar.thumb) != "undefined") { %>
   <a class="manage_images" href="#" onclick="return false;"><img src="<%= avatar.thumb %>"></a>
   <% } else { %>
-  <a class="manage_images" href="#" onclick="return false;"><img src="/assets/aircraft_default_avatar.gif"></a>
+  <a class="manage_images" href="#" onclick="return false;">
+    <span style="position: absolute; margin-top: 70px; width: 220px; text-align: center">
+      <h1>Upload Image</h1>
+      <h3>Drag Files Here</h3>
+    </span>
+    <img src="/assets/aircraft_default_avatar.png">
+  </a>
   <% } %>
 </div>
 

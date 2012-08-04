@@ -12,7 +12,7 @@ class Jetdeck.Views.Leads.DestroyView extends Backbone.View
     xid = @model.get('xspecId')
     @model.url = "/xspecs/" + xid
     @model.destroy()
-    window.router.view.widgets.leads.render()
+    window.router.view.leads.render()
     modalClose()
     return this
     

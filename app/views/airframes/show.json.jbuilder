@@ -1,4 +1,16 @@
-json.(@airframe, :id, :avatar, :tt, :tc, :serial, :askingPrice, :registration, :make, :modelName, :year)
+json.(@airframe, 
+  :id, 
+  :avatar, 
+  :tt, 
+  :tc, 
+  :serial, 
+  :askingPrice, 
+  :registration, 
+  :make, 
+  :modelName, 
+  :year,
+  :description
+)
 
 json.title (@airframe.to_s)
 

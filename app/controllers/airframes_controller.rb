@@ -109,7 +109,7 @@ class AirframesController < ApplicationController
   # PUT /airframes/1.json
   def update
     @airframe = Airframe.find(params[:id])
-    whitelist = params[:airframe].slice(:askingPrice, 
+    whitelist = params[:airframe].slice(:askingPrice, :description,
         :serial, :registration, :tt, :tc, :year, :make, :modelName)
 
     @engines = []
