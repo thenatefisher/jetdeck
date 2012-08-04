@@ -27,9 +27,10 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
 
   render: =>
     $(@el).html(@template(@model.toJSON() ))
+    
     @$("#airframe_headline").select2({
       placeholder: "Enter a Model",
-      minimumInputLength: 3
+      minimumInputLength: 3,
       createSearchChoice: (term) ->
         return { id: term, text: term }
       ajax: {
@@ -46,6 +47,17 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
 
     @$("#airframe_registration").autocomplete({
        minLength: 2,
+       autofocus: true,
+       focus: (event, ui) ->
+          $("#airframe_registration").val(ui.item.registration) if ui.item.registration
+          $("#airframe_year").val(ui.item.year) if ui.item.year
+          $("#airframe_serial").val(ui.item.serial) if ui.item.serial
+          @model.set("baseline_id", ui.item.id)
+          @model.set("registration", ui.item.registration)
+          @model.set("year", ui.item.year)
+          @model.set("serial", ui.item.serial)
+          $(".select2-choice").children("span").html(ui.item.make + " " + ui.item.modelName)
+          event.preventDefault(); # Prevent the default focus behavior.
        source: "/airframes",
        select: ( event, ui ) =>
           $("#airframe_registration").val(ui.item.registration) if ui.item.registration

@@ -123,6 +123,7 @@ end
 # test account
 k = User.first.contact
 k.email = "test@test.com"
+k.email_confirmation = "test@test.com"
 k.save
 
 puts "Finished Creating Contact Data"
