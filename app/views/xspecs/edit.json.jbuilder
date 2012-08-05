@@ -1,1 +1,1 @@
-json.(@spec, :message, :salutation, :show, :headline1, :headline2, :headline3)
+json.(@spec, :message, :salutation, :show_message, :headline1, :headline2, :headline3)

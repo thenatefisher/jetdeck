@@ -9,11 +9,9 @@ class Jetdeck.Models.Airframe extends Backbone.Model
     damage: false
     tags: []
     location: null
-    string: null
-    headline: ""
     make: ""
-    modelName: ""
-    askingPrice: 0
+    model_name: ""
+    asking_price: 0
     description: ""
 
   initialize : () =>

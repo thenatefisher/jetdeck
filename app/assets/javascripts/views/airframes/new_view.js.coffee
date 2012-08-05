@@ -56,7 +56,7 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
           @model.set("registration", ui.item.registration)
           @model.set("year", ui.item.year)
           @model.set("serial", ui.item.serial)
-          $(".select2-choice").children("span").html(ui.item.make + " " + ui.item.modelName)
+          $(".select2-choice").children("span").html(ui.item.make + " " + ui.item.model_name)
           event.preventDefault(); # Prevent the default focus behavior.
        source: "/airframes",
        select: ( event, ui ) =>
@@ -67,7 +67,7 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
           @model.set("registration", ui.item.registration)
           @model.set("year", ui.item.year)
           @model.set("serial", ui.item.serial)
-          $(".select2-choice").children("span").html(ui.item.make + " " + ui.item.modelName)
+          $(".select2-choice").children("span").html(ui.item.make + " " + ui.item.model_name)
           return false
     })
     .data("autocomplete" )._renderItem = ( ul, item ) ->

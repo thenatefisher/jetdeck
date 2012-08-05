@@ -56,13 +56,13 @@ class Xspec < ActiveRecord::Base
   # creates unique code for use as spec url
   def generate_url_code
 
-    self.urlCode = create_code
+    self.url_code = create_code
     while (Xspec.where(:url_code => self.url_code).length > 0)
         self.url_code = create_code
     end
 
     # show the message by default
-    self.show = true
+    self.show_message = true
 
   end
 

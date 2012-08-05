@@ -19,7 +19,7 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
           email : m.recipient.email
           id : m.recipient.id
           xspecId: m.id
-          url: "/s/" + m.urlCode
+          url: "/s/" + m.url_code
         }
 
         if m.recipient.first && m.recipient.last

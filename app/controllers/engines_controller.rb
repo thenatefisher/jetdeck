@@ -4,7 +4,7 @@ class EnginesController < ApplicationController
   # GET /engines
   # GET /engines.json
   def index
-    @engines = Engine.where("baseline = 't' OR user_id = '?'", @current_user.id).group(:modelName)
+    @engines = Engine.where("baseline = 't' OR user_id = '?'", @current_user.id).group(:model_name)
   end
   
   # PUT /engines/1
@@ -12,7 +12,7 @@ class EnginesController < ApplicationController
   def update
     @engine = Engine.find(:first, :conditions => ["id = ? AND user_id = ?", params[:id], @current_user.id])
     whitelist = Hash.new
-    whitelist = params[:engine].slice(:year, :make, :modelName, :serial, :smoh, :shsi, :hsi, :tbo, :ttsn, :tcsn, :name)
+    whitelist = params[:engine].slice(:year, :make, :model_name, :serial, :smoh, :shsi, :hsi, :tbo, :tt, :tc, :name)
 
     respond_to do |format|
       if @engine.update_attributes(whitelist)

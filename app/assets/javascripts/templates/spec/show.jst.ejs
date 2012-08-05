@@ -3,12 +3,12 @@
   <div class="row company-banner">
     <div class="span12 whitebox">
       <img class="company-logo" src="/assets/generic.jpg">
-      <!--<h2 class="company-name"><%= agentCompany %></h2> -->
+      <!--<h2 class="company-name"><%= agent_company %></h2> -->
       <div class="pull-right" style="margin: 10px 20px; text-align: right">
-        <h1>&nbsp;<%= agentPhone %> </h1>
+        <h1>&nbsp;<%= agent_phone %> </h1>
         <h4>&nbsp;</h4>
-        <h4><%= agentName %></h4>
-        <h4><a href="http://<%= agentWebsite %>"><%= agentWebsite %></a></h4>
+        <h4><%= agent_name %></h4>
+        <h4><a href="http://<%= agent_website %>"><%= agent_website %></a></h4>
       </div>
       <div style="clear: both"></div>
     </div>
@@ -16,7 +16,7 @@
 
   <div class="hero-unit" style="background: white; padding: 30px;">
 
-    <% if (show) { %>
+    <% if (show_message) { %>
     <% if (message != "" && message != null) { %>
     <div class="alert alert-info broker-message">
       <a class="close" data-dismiss="alert" href="#">×</a>
@@ -29,13 +29,13 @@
 
     <div class="span5 hero-text-data">
       <h1><%= title %></h1>
-      <% if (askingPrice != null) { %>
-      <p>Asking $<%= askingPrice.formatMoney(0, ".", ",") %> </p>
+      <% if (asking_price != null) { %>
+      <p>Asking $<%= asking_price.formatMoney(0, ".", ",") %> </p>
       <% } else { %> <p> &nbsp;</p> <% } %>
       <br>
       <p>
         <a class="btn btn-primary btn-large" id="message-seller">
-          <i class="icon-envelope icon-white" style="margin: 2px"></i> <%= agentName %>
+          <i class="icon-envelope icon-white" style="margin: 2px"></i> <%= agent_name %>
         </a>
       </p>
 
@@ -102,16 +102,16 @@
             <td><%= location.city %>, <%= location.state %></td>
           </tr>
           <% } %>   
-          <% if (totalTime != null && totalTime != "") { %>
+          <% if (tt != null && tt != "") { %>
           <tr>
             <td><strong>Total Time</strong></td>
-            <td><%= totalTime.formatMoney(0, ".", ",") %></td>
+            <td><%= tt.formatMoney(0, ".", ",") %></td>
           </tr>
           <% } %>                   
-          <% if (totalCycles != null && totalCycles != "") { %>
+          <% if (tc != null && tc != "") { %>
           <tr>
             <td><strong>Landings</strong></td>
-            <td><%= totalCycles.formatMoney(0, ".", ",") %></td>
+            <td><%= tc.formatMoney(0, ".", ",") %></td>
           </tr>
           <% } %>          
         </table>
@@ -142,8 +142,8 @@
             <td><strong>TTSN</strong></td>
             <% for (i in engines) { %>
                 <td>
-                    <% if (typeof(engines[i].totalTime) != "undefined") { %> 
-                        <%= engines[i].totalTime.formatMoney(0, ".", ",") %> 
+                    <% if (typeof(engines[i].tt) != "undefined") { %> 
+                        <%= engines[i].tt.formatMoney(0, ".", ",") %> 
                     <% } %>
                 </td>
             <% } %>

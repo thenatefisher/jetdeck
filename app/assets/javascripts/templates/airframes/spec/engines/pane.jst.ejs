@@ -18,7 +18,7 @@
     <td style="border-top: 0px;"><h4><small>Model</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center; border-top: 0px;">
-        <input type="text" class="engine_inline_edit" value="<%= engineItems[i].modelName %>" data-eid="<%= engineItems[i].id %>" name="modelName"></input>
+        <input type="text" class="engine_inline_edit" value="<%= engineItems[i].model_name %>" data-eid="<%= engineItems[i].id %>" name="model_name"></input>
         </td>
     <% } %>
   </tr>
@@ -42,7 +42,7 @@
     <td><h4><small>TT</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center">
-        <input type="text" class="engine_inline_edit number" value="<%= engineItems[i].ttsn %>" data-eid="<%= engineItems[i].id %>" name="ttsn"></input>
+        <input type="text" class="engine_inline_edit number" value="<%= engineItems[i].tt %>" data-eid="<%= engineItems[i].id %>" name="tt"></input>
         </td>
     <% } %> 
   </tr>
@@ -50,7 +50,7 @@
     <td><h4><small>Cycles</small></h4></td>
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center">
-        <input type="text" class="engine_inline_edit number" value="<%= engineItems[i].tcsn %>" data-eid="<%= engineItems[i].id %>" name="tcsn"></input>
+        <input type="text" class="engine_inline_edit number" value="<%= engineItems[i].tc %>" data-eid="<%= engineItems[i].id %>" name="tc"></input>
         </td>
     <% } %> 
   </tr>    

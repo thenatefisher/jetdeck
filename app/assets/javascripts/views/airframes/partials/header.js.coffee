@@ -13,7 +13,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
   updateHeadline: () =>
     headline = @model.get('year')
     headline += " " + @model.get('make')
-    headline += " " + @model.get('modelName')
+    headline += " " + @model.get('model_name')
     $("#spec_headline").html(headline)
     return this
       

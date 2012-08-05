@@ -6,12 +6,12 @@ class AirframesController < ApplicationController
 
     if params[:q]
       @airframes = Airframe.find(:all,
-        :conditions => ["(make || ' ' || modelName) LIKE ?
+        :conditions => ["(make || ' ' || model_name) LIKE ?
                              AND (baseline = 't' OR user_id = ?)",
                           "%#{params[:q]}%",
                           @current_user.id
                        ],
-        :group => "modelName"
+        :group => "model_name"
       ).first(4)
     end
 
@@ -77,7 +77,7 @@ class AirframesController < ApplicationController
     if params[:airframe][:baseline_id].present?
         baseline = Airframe.find(params[:airframe][:baseline_id])
         if baseline
-            @airframe.modelName = baseline.modelName
+            @airframe.model_name = baseline.model_name
             @airframe.make = baseline.make
         end
     end
@@ -87,10 +87,10 @@ class AirframesController < ApplicationController
         headline = headline.split
         if headline.length == 1
             @airframe.make = ""
-            @airframe.modelName = headline.first
+            @airframe.model_name = headline.first
         else
             @airframe.make = headline.first
-            @airframe.modelName = headline.last(headline.length - 1).join(" ")
+            @airframe.model_name = headline.last(headline.length - 1).join(" ")
         end      
     end
     
@@ -109,8 +109,8 @@ class AirframesController < ApplicationController
   # PUT /airframes/1.json
   def update
     @airframe = Airframe.find(params[:id])
-    whitelist = params[:airframe].slice(:askingPrice, :description,
-        :serial, :registration, :tt, :tc, :year, :make, :modelName)
+    whitelist = params[:airframe].slice(:asking_price, :description,
+        :serial, :registration, :tt, :tc, :year, :make, :model_name)
 
     @engines = []
     params[:airframe][:engines].each do |a|

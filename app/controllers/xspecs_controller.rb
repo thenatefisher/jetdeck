@@ -12,7 +12,7 @@ class XspecsController < ApplicationController
 
   def recordTimeOnPage
 
-    xspec = Xspec.where(:urlCode => params[:code]).first
+    xspec = Xspec.where(:url_code => params[:code]).first
 
     if xspec.present?
         specView = xspec.views.where(
@@ -34,7 +34,7 @@ class XspecsController < ApplicationController
   # GET /specs/1.json
   def show
 
-    @spec = Xspec.where(:urlCode => params[:code]).first
+    @spec = Xspec.where(:url_code => params[:code]).first
     @airframe = @spec.airframe
 
     if @spec.nil? then
@@ -90,7 +90,7 @@ class XspecsController < ApplicationController
       if @spec.save
         # todo @spec.send_spec()
         XSpecMailer.sendRetail(@spec, @spec.recipient).deliver
-        #format.html { redirect_to "#{root_url}s/#{CGI.escape(@spec.urlCode)}" }
+        #format.html { redirect_to "#{root_url}s/#{CGI.escape(@spec.url_code)}" }
         format.json { render :json => @spec.to_json(:include => 'recipient'), :status => :created, :location => @spec }
       else
         format.json { render :json => @spec.errors, :status => :unprocessable_entity }

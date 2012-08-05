@@ -79,7 +79,7 @@ json.leads @airframe.xspecs do |json, x|
 
     json.fire x.fire || false
 
-    json.url "/s/" + x.urlCode
+    json.url "/s/" + x.url_code
     
     json.xspecId x.id
 

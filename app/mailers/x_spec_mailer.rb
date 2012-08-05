@@ -5,7 +5,7 @@ class XSpecMailer < ActionMailer::Base
   def sendRetail(xspec, contact)
 
     @contact = contact
-    @url  = xspec.urlCode
+    @url  = xspec.url_code
 
     mail(:to => contact.email,
          :subject => xspec.airframe.to_s) do |format|
