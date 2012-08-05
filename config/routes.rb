@@ -28,7 +28,7 @@ Jetdeck::Application.routes.draw do
 
   match "/profile" => "profile#update", :via => "put"
 
-  match "/s/:code" => "xspecs#show"
+  match "/s/:code" => "xspecs#retail"
 
   match "/s" => "xspecs#recordTimeOnPage"
 

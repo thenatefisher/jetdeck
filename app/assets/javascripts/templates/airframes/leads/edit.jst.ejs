@@ -1,9 +1,10 @@
-<div class="modal">
 
+<div class="modal">
+    <form>
     <div style="margin-top: 20px;">
 
       <h2 class="pull-left" style="margin-left: 20px; line-height: 18px;">
-          <small>jimt@bellsouth.net</small>
+          <small><%= recipient %></small>
       </h2>
       
       <div class="tabbable">
@@ -28,9 +29,17 @@
               <div class="modal-section">
                 <dl class="dl-horizontal"  style="margin-bottom: 13px;">
                   <dt class="large-line-height">Salutation</dt>
-                  <dd><input type="text" class="span5" placeholder="Address the customer here. I.e., 'Hi Debra,'"></dd>
+                  <dd><input type="text" 
+                              class="span5" 
+                              name="salutation" 
+                              value="<%= salutation %>" 
+                              placeholder="Address the customer here. I.e., 'Hi Debra,'"></dd>
                   <dt class="large-line-height">Body</dt>
-                  <dd><textarea rows="4" class="span5"  style="margin-bottom: 0px;"></textarea></dd>
+                  <dd><textarea rows="4" 
+                              class="span5" 
+                              name="message" 
+                              style="margin-bottom: 0px;"><%= message %></textarea>
+                              </dd>
                 </dl>  
               </div>
                
@@ -44,14 +53,20 @@
                   <dt class="large-line-height">First Line</dt>
                   <dd><input type="text" 
                               class="span5" 
+                              name="headline1"
+                              value="<%= headline1 %>" 
                               placeholder="i.e., New Paint and Interior"></dd>
                   <dt class="large-line-height">Second Line</dt>
                   <dd><input type="text" 
                               class="span5" 
+                              name="headline2"
+                              value="<%= headline2 %>"                               
                               placeholder="i.e., Fresh Phase Inspection"></dd>
                   <dt class="large-line-height">Third Line</dt>
                   <dd><input type="text" 
                               class="span5" 
+                              name="headline3"
+                              value="<%= headline3 %>"                               
                               style="margin-bottom: 0px;"
                               placeholder="i.e., Lowest Time Airframe On Market"></dd>
                 </dl>
@@ -78,7 +93,7 @@
                 <div class="span">
                   
                   <div style="text-align: center;" class="span2 pull-left">
-                    <h2>13</h2>
+                    <h2><%= hits %></h2>
                     <h3>Total Views</h3>
                   </div>   
                         
@@ -109,7 +124,7 @@
                 <div class="pull-left">   
                   <dl class="dl-horizontal" style="margin-bottom: 13px;">
                     <dt>Last Viewed</dt>
-                    <dd>Aug 14 (3:45p est)</dd>                     
+                    <dd><%= last_viewed %></dd>                     
                     <dt>Total Sent</dt>
                     <dd>2 Times</dd>                 
                                                   
@@ -128,19 +143,39 @@
                 <dl class="dl-horizontal"  style="margin-bottom: 13px;">
                   <dt class="large-line-height">Price</dt>
                   <dd>
-                    <input type="text" class="span3" value="$23,500,000">
-                    <span style="margin-left: 20px;"><input type="checkbox"> Hide Price </span>  
+                    <input type="text" 
+                            class="span3 money" 
+                            name="override_price" 
+                            placeholder="<%= asking_price %>"
+                            value="<%= displayed_price %>">
+                    <span style="margin-left: 20px;">
+                    <input name="hide_price" 
+                            <%= (hide_price) ? 'checked' : '' %> 
+                            type="checkbox"> Hide Price </span>  
                   </dd>
                   <dt class="large-line-height">Description</dt>
-                  <dd><textarea rows="4" class="span5"  style="margin-bottom: 0px;"></textarea></dd>
+                  <dd><textarea rows="4" 
+                          class="span5"
+                          name="override_description"  
+                          style="margin-bottom: 0px;"><%= description %></textarea>
+                  </dd>
                 </dl>  
                 <dl class="dl-horizontal" style="margin-bottom: 13px;">
                   <hr>
                   <dt>Field Visibility</dt>
                   <dd>
-                    <span style="margin-left: 20px;"><input type="checkbox"> Hide Serial </span>
-                    <span style="margin-left: 20px;"><input type="checkbox"> Hide Registration </span>                  
-                    <span style="margin-left: 20px;"><input type="checkbox"> Hide Location </span>  
+                    <span style="margin-left: 20px;">
+                    <input name="hide_serial" 
+                            <%= (hide_serial) ? 'checked' : '' %> 
+                            type="checkbox"> Hide Serial </span>
+                    <span style="margin-left: 20px;">
+                    <input name="hide_registration" 
+                            <%= (hide_registration) ? 'checked' : '' %> 
+                            type="checkbox"> Hide Registration </span>                  
+                    <span style="margin-left: 20px;">
+                    <input name="hide_location" 
+                            <%= (hide_location) ? 'checked' : '' %> 
+                            type="checkbox"> Hide Location </span>  
                   </dd>
                                    
                 </dl>                  
@@ -152,19 +187,13 @@
               </div>
               
               <div class="modal-section">
-                <dl class="dl-horizontal" style="margin-bottom: 13px;">
+                <dl class="dl-horizontal" style="margin-bottom: 0px;">
                   <dt class="large-line-height">Select Color</dt>
                   <dd>
-                    <% for (var i = 0; i < 10; i++) { %>
-                    <div class="swatch"></div>
+                    <% for (var i = 0; i < 18; i++) { %>
+                    <div class="swatch" style="margin-bottom: 13px;"></div>
                     <% } %><div style="clear: both"></div>
-                  </dd>
-                  <dt class="large-line-height" style="margin-top: 15px;">Select Image</dt>
-                  <dd style="margin-top: 15px;">
-                    <% for (var i = 0; i < 6; i++) { %>
-                    <div class="swatch"></div>
-                    <% } %><div style="clear: both"></div>          
-                  </dd>                                  
+                  </dd>                                 
                 </dl>  
               </div>
                     
@@ -174,10 +203,11 @@
                                 
           </div>        
       </div>
-      
+  </form>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal">Close</button>
-    <button class="btn btn-primary">Send</button>    
+    <button class="btn btn-primary" id="xspec_save">Save</button>    
   </div>
   
 </div>
+

@@ -3,7 +3,7 @@
 <script type="text/javascript">
   $(function() {
     window.router = new Jetdeck.Routers.SpecRouter(
-      { spec: <%= render( template: 'xspecs/show.json.jbuilder', locals: { spec: @spec}).html_safe %> }
+      { spec: <%= render( template: 'xspecs/retail.json.jbuilder', locals: { spec: @xspec}).html_safe %> }
     );
     Backbone.history.start();
   });

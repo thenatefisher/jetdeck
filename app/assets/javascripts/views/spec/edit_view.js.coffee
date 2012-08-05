@@ -3,6 +3,26 @@ Jetdeck.Views.Spec ||= {}
 class Jetdeck.Views.Spec.EditView extends Backbone.View
   template: JST["templates/airframes/leads/edit"]
 
+  events:
+    "click #xspec_save" : "update"
+
+  update : (e) ->
+    e.preventDefault()
+    e.stopPropagation()
+    
+    @$("input@[type='checkbox']").each( (i, element) =>
+      if $(element).is(":checked") 
+        @model.set($(element).attr("name"), "true")
+      else 
+        @model.set($(element).attr("name"), "false")
+    )
+    
+    @model.save(null,
+      success : (xspec) =>
+        @model = xspec
+        modalClose()
+    )
+
   render: ->
     $(@el).html(@template(@model.toJSON() ))
     element = @$('#chartContainer')
@@ -21,7 +41,10 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
       legend:
         enabled: false
       series: [{
-        data: [2,15,7,0,3,5,0,2,1]
+        data: [222]
       }]
     )
+    
+    @$("form").backboneLink(@model)
+    
     return this

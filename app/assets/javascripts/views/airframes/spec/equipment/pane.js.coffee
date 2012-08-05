@@ -28,10 +28,9 @@ class Jetdeck.Views.Airframes.ShowEquipmentPane extends Backbone.View
       n = new Jetdeck.Views.Equipment.New(model: @model)
       $(@el).html(n.render().el)
     
-    @model.equipment.where({etype: 'equipment'}).forEach((item) =>
+    for item in @model.equipment.where({etype: 'equipment'})
       v = new Jetdeck.Views.Equipment.Item(model: item)
       $(@el).append(v.render().el)
-    )
-    
+      
     return this
 

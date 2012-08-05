@@ -29,12 +29,12 @@ class Jetdeck.Views.Airframes.ShowAvionicsPane extends Backbone.View
       $(@el).html(n.render().el)
     
     n = 0
-    @model.equipment.where({etype: 'avionics'}).forEach((item) =>
+    for item in @model.equipment.where({etype: 'avionics'})
       n = n + 1
       margin = if (n % 2 == 0) then "30px" else "0px"
       v = new Jetdeck.Views.Avionics.Item(margin: margin, model: item)
       $(@el).append(v.render().el)
-    )
+    
     
     return this
 

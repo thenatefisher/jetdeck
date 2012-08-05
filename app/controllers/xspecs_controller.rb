@@ -1,4 +1,7 @@
 class XspecsController < ApplicationController
+  before_filter :authorize
+  include ActionView::Helpers::NumberHelper
+  
   # GET /specs
   # GET /specs.json
   def index
@@ -30,18 +33,17 @@ class XspecsController < ApplicationController
 
   end
 
-  # GET /specs/1
-  # GET /specs/1.json
-  def show
+  # GET /s/:code
+  def retail
 
-    @spec = Xspec.where(:url_code => params[:code]).first
-    @airframe = @spec.airframe
+    @xspec = Xspec.where(:url_code => params[:code]).first
+    @airframe = @xspec.airframe
 
-    if @spec.nil? then
+    if @xspec.nil? then
         redirect_to "/"
         return
     else
-        @spec.views << SpecView.create(:agent => request.user_agent, :ip => request.remote_ip)
+        @xspec.views << SpecView.create(:agent => request.user_agent, :ip => request.remote_ip)
     end
 
     render :layout => 'retail'
@@ -59,9 +61,12 @@ class XspecsController < ApplicationController
     end
   end
 
-  # GET /specs/1/edit
-  def edit
-    @spec = Xspec.find(params[:id])
+  # GET /specs/1
+  def show
+  
+    @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
+    @airframe = @xspec.airframe
+    
   end
 
   # POST /specs
@@ -101,10 +106,26 @@ class XspecsController < ApplicationController
   # PUT /specs/1
   # PUT /specs/1.json
   def update
-    @spec = Xspec.find(params[:id])
-
+   @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
+   
+   whitelist = params[:spec].slice(
+      :message, 
+      :salutation, 
+      :headline1, 
+      :headline2, 
+      :headline3,
+      :show_message, 
+      :override_description,
+      :override_price,
+      :hide_price,
+      :hide_registration, 
+      :hide_serial, 
+      :hide_location,
+      :background_id   
+    )
+    
     respond_to do |format|
-      if @spec.update_attributes(params[:spec])
+      if @xspec.update_attributes(whitelist)
         format.html { redirect_to @spec, :notice => 'Spec was successfully updated.' }
         format.json { head :no_content }
       else

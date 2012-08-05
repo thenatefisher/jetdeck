@@ -22,7 +22,7 @@ class Jetdeck.Views.Leads.LeadView extends Backbone.View
     
   xspecSettings: =>
     specModel = new Jetdeck.Models.Spec()
-    specModel.url = "/xspecs/" + @model.get('xspecId') + "/edit"
+    specModel.url = "/xspecs/" + @model.get('xspec_id')
     specModel.fetch(
         success: (xspecModel) ->
             specView = new Jetdeck.Views.Spec.EditView(model: xspecModel)

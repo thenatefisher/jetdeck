@@ -81,7 +81,7 @@ json.leads @airframe.xspecs do |json, x|
 
     json.url "/s/" + x.url_code
     
-    json.xspecId x.id
+    json.xspec_id x.id
 
 end
 

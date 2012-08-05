@@ -10,6 +10,7 @@ class Jetdeck.Models.Lead extends Backbone.Model
     last_viewed: ""
     recipient_id: 0
     url: "/"
+    xspec_id: null
 
 class Jetdeck.Collections.LeadsCollection extends Backbone.CollectionBook
   model: Jetdeck.Models.Lead

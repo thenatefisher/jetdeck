@@ -28,9 +28,9 @@
     <% } } %>
 
     <div class="span5 hero-text-data">
-      <h1><%= title %></h1>
+      <h1><%= year %> <%= make %> <%= model_name %></h1>
       <% if (asking_price != null) { %>
-      <p>Asking $<%= asking_price.formatMoney(0, ".", ",") %> </p>
+      <p>Asking <%= asking_price %> </p>
       <% } else { %> <p> &nbsp;</p> <% } %>
       <br>
       <p>
@@ -88,14 +88,18 @@
       <div class="span4 spec-data">
         <table class="table table-striped table-bordered ">
           <tr><th colspan=2>General Information</th></tr>
+          <% if (serial != null ) { %>
           <tr>
             <td><strong>Serial Number</strong></td>
             <td><%= serial %></td>
           </tr>
+          <% } %>
+          <% if (registration != null ) { %>
           <tr>
             <td><strong>Registration</strong></td>
             <td><%= registration %></td>
           </tr>
+          <% } %>
           <% if (location != null && location != "") { %>
           <tr>
             <td><strong>Location</strong></td>
@@ -122,14 +126,14 @@
           <tr>
             <th>Engine Information</strong></th>
             <% for (i in engines) { %>
-                <td><% if (engines[i].label != null) { %> <%= engines[i].label %> <% } %></td>
+                <td><% if (engines[i].name != null) { %> <%= engines[i].name %> <% } %></td>
             <% } %>
           </tr>
           
           <tr>
             <td><strong>Model Number</strong></td>
             <% for (i in engines) { %>
-                <td><% if (engines[i].model != null) { %> <%= engines[i].model %> <% } %></td>
+                <td><% if (engines[i].model_name != null) { %> <%= engines[i].model_name %> <% } %></td>
             <% } %>
           </tr>
           <tr>
@@ -171,6 +175,7 @@
         </table>
       </div> <!-- end table wrapper div -->
 
+      <% if (avionics.length > 0) { %>
       <div class="span6 spec-data">
         <table class="table table-striped table-bordered ">
           <tr><th colspan=4>Avionics</th></tr>
@@ -179,15 +184,14 @@
                     <tr>
                 <% } %>              
                 <td>
-                    <% if (typeof(avionics[i].label) != "undefined") { %> 
-                        <strong><%= avionics[i].label %></strong>
+                    <% if (typeof(avionics[i].title) != "undefined") { %> 
+                        <strong><%= avionics[i].title %></strong>
                     <% } %>
                 </td>
                 <td>
-                    <% if (typeof(avionics[i].model) != "undefined") { %> 
-                    <% if (typeof(avionics[i].make) != "undefined") { %> 
-                        <%= avionics[i].make %> <%= avionics[i].model %>
-                    <% } } %>
+                    <% if (typeof(avionics[i].name) != "undefined") { %> 
+                        <%= avionics[i].name %>
+                    <% } %>
                 </td>    
                 <% if (i % 2 == 1) { %>
                     </tr>
@@ -199,46 +203,52 @@
             <% } %>
         </table>
       </div> <!-- end table wrapper div -->
+      <% } %>
       
+      <% if (equipment.length > 0) { %>
+      
+      <% if (avionics.length == 0) { %>
+      <div class="spec-data" style="margin-left: 30px; margin-right: 20px;">
+      <% } else { %>
       <div class="offset6 spec-data" style="margin-right: 20px;">
+      <% } %>
+      
         <table class="table table-striped table-bordered ">
           <tr><th colspan=4>Other Features</th></tr>
-          <tr>
-            <td>SATELLITE ELT</td>
-            <td>FREON COOLING SYSTEM</td>
-          </tr>
-          <tr>
-            <td>2011 PAINT</td>
-            <td>SINGLE POINT REFUELING</td>
-          </tr>
-          <tr>
-            <td>ENGINE FIRE EXTIGUISHER</td>
-            <td>8.33 MHz RADIOS</td>
-          </tr>
-          <tr>
-            <td>RNP-10</td>
-            <td>RVSM</td>
-          </tr>
+            <% for (i in equipment) { %>
+                <% if (i % 2 == 0) { %>
+                    <tr>
+                <% } %>              
+                <td>
+                    <% if (typeof(equipment[i].name) != "undefined") { %> 
+                        <%= equipment[i].name %>
+                    <% } %>
+                </td>    
+                <% if (i % 2 == 1) { %>
+                    </tr>
+                <% } %>                            
+            <% } %>                
+
+            <% if (equipment.length % 2 == 1) { %>
+                <td></td></tr>
+            <% } %>
         </table>
       </div> <!-- end table wrapper div -->
-      
-      <div class="span spec-data" style="margin-right: 20px;">
-        <table class="table table-striped table-bordered ">
-          <tr><th>Notes</th></tr>
+      <% } %>
+     
+      <% if (description != null && description != "") { %>
+      <div style="margin-left: 30px; margin-right: 20px;">
+        <table class="table table-striped table-bordered">
+          <tr><th>Description</th></tr>
           <tr>
             <td>
-              INTERIOR: 2004. FOUR SINGLE PASSENDER SEATS IN CLUB ARRANGEMENT. A FORWARD
-              TWO- PLACE SIDE FACING DIVAN AND A SINGLE SIDE FACING SEAT AFT OF
-              CABIN DOOR. A FULLY ENCLOSED AFT LAVATORY WITH BELTED FLSHING
-              POTTY AND COAT CLOSET.
-
-              <br><br>INSPECTION STATUS:
-              FRESH C CHECK WITH MAINTENANCE DONE AT FACTORY APPROVED SERVICE
-              CENTERS. 12,100 LBS HIGH GROSS WEIGHT MOD, CAMP, ESP GOLD.
+              <%= description %>
             </td>
           </tr>
         </table>
-      </div> <!-- end table wrapper div -->
+      </div>
+      <% } %>
+      
       <div style="clear: both"></div>
 
     </div>  <!-- end .whitebox -->
@@ -267,7 +277,7 @@
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal">×</button>
     <h3>
-        Re: <%= title %> 
+        Re: <%= year %> <%= make %> <%= model_name %> 
         <% if (serial != null && serial != "") { %> S/N <%= serial %> <% } %>
     </h3>
   </div>
@@ -288,7 +298,7 @@
                    id="from-field" 
                    style="width: 100%" 
                    disabled 
-                   placeholder="<%= agentName %> <<%= agentEmail %>>">
+                   placeholder="<%= agent_name %> <<%= agent_email %>>">
           </div>
           
           <div class="span5">
