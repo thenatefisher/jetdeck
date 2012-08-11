@@ -9,10 +9,7 @@
       
       <div class="tabbable">
         <ul class="nav nav-tabs">
-
-
-          <li class="pull-right" style="margin-right: 20px;"><a href="#appearance_tab" data-toggle="tab">Appearance</a></li>
-          <li class="pull-right"><a href="#fields_tab" data-toggle="tab">Fields</a></li>
+          <li class="pull-right" style="margin-right: 20px;"><a href="#fields_tab" data-toggle="tab">Fields</a></li>
           <li class="pull-right"><a href="#message_tab" data-toggle="tab">Message</a></li>
           <li class="pull-right"><a href="#taglines_tab" data-toggle="tab">Taglines</a></li>          
           <li class="pull-right active"><a href="#stats_tab" data-toggle="tab">Stats</a></li>
@@ -136,32 +133,6 @@
                   </dl>   
                 </div>  
           </div>
-          
-          <div class="tab-pane" id="appearance_tab">
-            
-              <div style="margin: 0 20px 20px;">
-                <h3>Appearance Options</h3>
-                <p>Set the background color of the spec </p>
-              </div>
-              
-              <div class="modal-section">
-                <dl class="dl-horizontal" style="margin-bottom: 0px;">
-                  <dt class="large-line-height"> Spec Background </dt>
-                  <dd>
-                    <% for (var i = 0; i < backgrounds.length; i++) { %>
-                    <div class="swatch" style="margin-bottom: 13px;">
-                      <img src="<%= backgrounds[i].thumbnail %>">
-                    </div>
-                    <% } %><div style="clear: both"></div>
-                  </dd>                                 
-                </dl>  
-              </div>
-                    
-              <div style="margin: 20px;">
-                <p> </p>
-              </div>                         
-                                
-          </div>      
                     
           <div class="tab-pane" id="fields_tab">
             
