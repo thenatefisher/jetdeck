@@ -9,7 +9,11 @@
 
 body {
   padding-top: 60px;
-  background: url(<%= asset_path 'cork_1.png' %>) repeat;
+  background: url(<%= asset_path 'bg/bg1.jpg' %>) repeat;
+}
+
+.navbar-inner {
+  background: url(<%= asset_path 'bg/denim.png' %>) repeat;
 }
 
 .swatch {
@@ -24,6 +28,13 @@ body {
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);  
+  cursor: pointer;
+}
+
+.swatch:hover {
+  -webkit-box-shadow: 0 1px 2px rgba(50, 50, 200, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 2px rgba(50, 50, 200, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(50, 50, 200, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);    
 }
 
 .large-line-height { line-height: 27px; }
@@ -46,19 +57,11 @@ body {
 }
 
 .navbar .brand {
-  font-family: 'Condiment', cursive;
-  position: left;
   display: block;
-  padding: 12px 20px 0px 0px;
+  padding: 10px 20px 5px 0px;
   margin-left: 0px;
-  font-size: 35px;
-  font-weight: 200;
-  line-height: 1;
-  color: #ffffff;
-  width: 140px;
+  width: 130px;
 }
-
-.navbar .brand strong { }
 
 .engine_inline_edit {
   border: 0px;
@@ -147,7 +150,11 @@ input#equipment-search {
 }
 
 .footer {
-text-align: center; margin: 20px; color: #555
+  font-size: 14px;
+  color: #9999aa;
+  line-height: 20px;
+  text-align: center; 
+  margin: 20px;
 }
 
 input[type='checkbox'] {
@@ -171,3 +178,5 @@ form[name='airframe'] .control-group {
 .engine_inline_edit{
     text-align: center;
 }
+
+

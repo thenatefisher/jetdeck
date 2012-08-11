@@ -9,7 +9,7 @@ class Jetdeck.Views.Leads.DestroyView extends Backbone.View
     "click .confirm_remove_lead"    : "confirmRemoveLead"
     
   confirmRemoveLead: () =>
-    xid = @model.get('xspecId')
+    xid = @model.get('xspec_id')
     @model.url = "/xspecs/" + xid
     @model.destroy()
     window.router.view.leads.render()

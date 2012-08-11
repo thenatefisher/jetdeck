@@ -3,15 +3,19 @@
     <form>
     <div style="margin-top: 20px;">
 
-      <h2 class="pull-left" style="margin-left: 20px; line-height: 18px;">
+      <h2 style="margin-left: 20px; line-height: 18px;">
           <small><%= recipient %></small>
       </h2>
       
       <div class="tabbable">
         <ul class="nav nav-tabs">
-          <li class="pull-right" style="margin-right: 20px;"><a href="#settings_tab" data-toggle="tab">Settings</a></li>
-          <li class="pull-right"><a href="#content_tab" data-toggle="tab">Content</a></li>
-          <li class="pull-right active"><a href="#summary_tab" data-toggle="tab">Summary</a></li>
+
+
+          <li class="pull-right" style="margin-right: 20px;"><a href="#appearance_tab" data-toggle="tab">Appearance</a></li>
+          <li class="pull-right"><a href="#fields_tab" data-toggle="tab">Fields</a></li>
+          <li class="pull-right"><a href="#message_tab" data-toggle="tab">Message</a></li>
+          <li class="pull-right"><a href="#taglines_tab" data-toggle="tab">Taglines</a></li>          
+          <li class="pull-right active"><a href="#stats_tab" data-toggle="tab">Stats</a></li>
         </ul>
       </div>
       
@@ -19,31 +23,10 @@
     
 
         <div class="tab-content">
-          <div class="tab-pane" id="content_tab">
+        
+          <div class="tab-pane" id="taglines_tab">
             
               <div style="margin: 0 20px 20px;">
-                <h3>Personalized Message</h3>
-                <p>Include a personalized message for the recipient to make the spec stand out. </p>
-              </div>
-              
-              <div class="modal-section">
-                <dl class="dl-horizontal"  style="margin-bottom: 13px;">
-                  <dt class="large-line-height">Salutation</dt>
-                  <dd><input type="text" 
-                              class="span5" 
-                              name="salutation" 
-                              value="<%= salutation %>" 
-                              placeholder="Address the customer here. I.e., 'Hi Debra,'"></dd>
-                  <dt class="large-line-height">Body</dt>
-                  <dd><textarea rows="4" 
-                              class="span5" 
-                              name="message" 
-                              style="margin-bottom: 0px;"><%= message %></textarea>
-                              </dd>
-                </dl>  
-              </div>
-               
-              <div style="margin: 20px;">
                 <h3>Tag Lines</h3>
                 <p>Highlight specific sale points which cator most to this customer's needs. </p>
               </div>
@@ -78,7 +61,37 @@
 
           </div>
           
-          <div class="tab-pane active" id="summary_tab">
+          <div class="tab-pane" id="message_tab">
+            
+              <div style="margin: 0 20px 20px;">
+                <h3>Personalized Message</h3>
+                <p>Include a personalized message for the recipient to make the spec stand out. </p>
+              </div>
+              
+              <div class="modal-section">
+                <dl class="dl-horizontal"  style="margin-bottom: 13px;">
+                  <dt class="large-line-height">Salutation</dt>
+                  <dd><input type="text" 
+                              class="span5" 
+                              name="salutation" 
+                              value="<%= salutation %>" 
+                              placeholder="Address the customer here. I.e., 'Hi Debra,'"></dd>
+                  <dt class="large-line-height">Body</dt>
+                  <dd><textarea rows="4" 
+                              class="span5" 
+                              name="message" 
+                              style="margin-bottom: 0px;"><%= message %></textarea>
+                              </dd>
+                </dl>  
+              </div>
+              
+              <div style="margin: 20px;">
+                <p> </p>
+              </div>              
+
+          </div>
+          
+          <div class="tab-pane active" id="stats_tab">
           
               
               <div class="span6" style="margin: 0px auto; float: none;">
@@ -92,20 +105,15 @@
               
                 <div class="span">
                   
-                  <div style="text-align: center;" class="span2 pull-left">
+                  <div style="text-align: center;" class="span3 pull-left">
                     <h2><%= hits %></h2>
                     <h3>Total Views</h3>
                   </div>   
                         
-                  <div style="text-align: center;" class="span2 pull-left">
-                    <h2>2:14</h2>
+                  <div style="text-align: center;" class="span3 pull-left">
+                    <h2><%= top_average %></h2>
                     <h3>Avg View Time</h3>
                   </div>  
-                    
-                  <div style="text-align: center;" class="span2 pull-left">
-                    <h2>6</h2>
-                    <h3>Days Old</h3>
-                  </div>   
                                                                             
                 </div>
               
@@ -113,26 +121,49 @@
               
                 <div class="pull-left">
                   <dl class="dl-horizontal" style="margin-bottom: 13px;">
-                    <dt>First Sent</dt>
-                    <dd>Aug 14 (3:45p est)</dd>
-                    <dt>Last Sent</dt>
-                    <dd>Aug 14 (3:45p est)</dd>
+                    <dt>Sent To Client</dt>
+                    <dd><%= sent %></dd>
+                    <dt>Last Viewed</dt>
+                    <dd><%= last_viewed %></dd>                      
                       
                   </dl>        
                 </div>
                 
                 <div class="pull-left">   
                   <dl class="dl-horizontal" style="margin-bottom: 13px;">
-                    <dt>Last Viewed</dt>
-                    <dd><%= last_viewed %></dd>                     
-                    <dt>Total Sent</dt>
-                    <dd>2 Times</dd>                 
+                               
                                                   
                   </dl>   
                 </div>  
           </div>
           
-          <div class="tab-pane" id="settings_tab">
+          <div class="tab-pane" id="appearance_tab">
+            
+              <div style="margin: 0 20px 20px;">
+                <h3>Appearance Options</h3>
+                <p>Set the background color of the spec </p>
+              </div>
+              
+              <div class="modal-section">
+                <dl class="dl-horizontal" style="margin-bottom: 0px;">
+                  <dt class="large-line-height"> Spec Background </dt>
+                  <dd>
+                    <% for (var i = 0; i < backgrounds.length; i++) { %>
+                    <div class="swatch" style="margin-bottom: 13px;">
+                      <img src="<%= backgrounds[i].thumbnail %>">
+                    </div>
+                    <% } %><div style="clear: both"></div>
+                  </dd>                                 
+                </dl>  
+              </div>
+                    
+              <div style="margin: 20px;">
+                <p> </p>
+              </div>                         
+                                
+          </div>      
+                    
+          <div class="tab-pane" id="fields_tab">
             
               <div style="margin: 0 20px 20px;">
                 <h3>Field Override</h3>
@@ -179,22 +210,6 @@
                   </dd>
                                    
                 </dl>                  
-              </div>
-              
-              <div style="margin: 20px;">
-                <h3>Appearance Options</h3>
-                <p>Set the background color of the spec </p>
-              </div>
-              
-              <div class="modal-section">
-                <dl class="dl-horizontal" style="margin-bottom: 0px;">
-                  <dt class="large-line-height">Select Color</dt>
-                  <dd>
-                    <% for (var i = 0; i < 18; i++) { %>
-                    <div class="swatch" style="margin-bottom: 13px;"></div>
-                    <% } %><div style="clear: both"></div>
-                  </dd>                                 
-                </dl>  
               </div>
                     
               <div style="margin: 20px;">

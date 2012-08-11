@@ -13,7 +13,7 @@
       <![endif]-->
 
       <!-- Le styles -->
-      <%= stylesheet_link_tag "application", :media => "all" %>
+      <%= stylesheet_link_tag "login", :media => "all" %>
       <!-- Le javascript -->
       <%= javascript_include_tag "application" %>
       <script type="text/javascript">
@@ -32,23 +32,37 @@
   </head>
 
   <body>
-
+  
+      <div class="sweatband"></div>
+      
       <div class="container">
 
-          <div class="span6 offset3 login-header">
-              <div style="width: 150px; margin: 0px auto; padding: 10px;">
-              <a class="brand" href="/">
-                <img src="/assets/logo.png">
+          <div style="height: 150px;"></div>
+
+          <div class="row-fluid">
+            <div class="span1"></div>
+            <div class="span7">
+              <a href="http://www.jetdeck.co">
+              <img class="logo" src="<%= asset_path 'logo_black_no_tag.png' %>" />
               </a>
-              </div>
+            </div>          
           </div>
 
-          <div class="span6 offset3 login-box">
-              <%= yield %>
-          </div> <!-- yield box (White background) -->
-
-          <div class="span12 footer">
-            <p>Copyright JetDeck <%=  Time.now.year %></p>
+          <div class="row-fluid">
+              <div class="span1"></div>
+              
+              <div class="span7">
+                
+                <div class="login-box"><%= yield %></div>
+                
+              </div>
+              
+              <div class="clearfix"></div>
+              <div class="span1"></div>
+              <div class="span7 footer">
+                <p>© <%=  Time.now.year %>, JetDeck Services, LLC </p>
+              </div>
+              
           </div>
 
       </div> <!-- end container class -->

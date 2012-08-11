@@ -19,12 +19,11 @@ class XspecsController < ApplicationController
 
     if xspec.present?
         specView = xspec.views.where(
-            :agent => request.user_agent,
             :ip => request.remote_ip
-        ).first
+        ).last
 
         if specView.present?
-            specView.timeOnPage = params[:time] if params[:time].present?
+            specView.time_on_page = params[:time] if params[:time].present?
             specView.save()
         end
     end
@@ -65,6 +64,7 @@ class XspecsController < ApplicationController
   def show
   
     @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
+    @backgrounds = XspecBackground.all
     @airframe = @xspec.airframe
     
   end

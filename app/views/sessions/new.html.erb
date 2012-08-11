@@ -1,12 +1,12 @@
 <% if flash[:notice] %>
-  <div class="alert alert-success span5" id="jetdeck-notification">
+  <div class="alert alert-success" id="jetdeck-notification" style="margin: 10px;">
     <button class="close" data-dismiss="alert">×</button>
     <div class="notification-content"></div>
   </div>
   <script type="text/javascript">$(function() { alertSuccess("<%= flash[:notice] %>"); });</script>
 <% end %>   
 
-<div style="padding: 20px;">
+<div style="padding: 20px; padding-bottom: 0px">
 
     <form class="form-horizontal login" method="POST" action="/authenticate">
 
@@ -28,7 +28,7 @@
                         name="password" type="password" value="" />
 
                 <% if flash[:error] %>
-                <span class="help-inline">
+                <span class="help-inline" style="margin-top: 10px">
 
                         <%= flash[:error] %>
                         <a href="/password_resets">
@@ -37,7 +37,7 @@
                 </span>
                 <% else %>
 
-                <span class="help-inline">
+                <span class="help-inline" style="margin-top: 10px">
                    <input type="checkbox" name="remember_me" checked /> 
                    <span>Remember Login</span>
                 </span>  
@@ -48,13 +48,15 @@
 
           </div>
 
-          <div class="offset2 pull-right login">
-              <span><a href="http://www.jetdeck.co/index.php#features">Learn More!</a></span>
-              <input style="margin-top: -5px; margin-left: 10px;" 
+          <div class="pull-right login">
+              <span><a href="http://www.jetdeck.co/#features">Learn More!</a></span>
+              <input style="margin-right: 20px; margin-top: -5px; margin-left: 10px;" 
                         type="submit" 
                         class="btn btn-primary" 
                         value="Log In" />
           </div>
+
+          <div class="clearfix"></div>
 
     </form>
 

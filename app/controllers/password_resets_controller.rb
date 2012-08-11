@@ -12,10 +12,10 @@ class PasswordResetsController < ApplicationController
             user_record.send_password_reset 
             redirect_to login_url, :notice => "Email sent with password reset instructions."
           else
-            redirect_to password_resets_url, :notice => "User not found"
+            redirect_to password_resets_url, :notice => "User not found."
           end
       else
-        redirect_to password_resets_url, :notice => "User not found"
+        redirect_to password_resets_url, :notice => "User not found."
       end
     end
 

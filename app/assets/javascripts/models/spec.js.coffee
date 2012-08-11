@@ -38,3 +38,6 @@ class Jetdeck.Models.Spec extends Backbone.Model
     engines: []    
     avionics: []
     equipment: []
+    top_average: "0:00"
+    hits: 0
+    

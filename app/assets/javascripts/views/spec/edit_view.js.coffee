@@ -28,20 +28,32 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
     element = @$('#chartContainer')
     chart = new Highcharts.Chart(
       chart: 
-        renderTo: element[0],
-        type: 'line',
-        width: 450,
+        renderTo: element[0]
+        type: 'line'
+        width: 450
         height: 130
       title:
         text: null
+      tooltip: 
+        formatter: ->
+           d = new Date(this.x)
+           dateString = d.getMonth() + "-" + d.getDate() + "-" + d.getFullYear()
+           return "<strong>" + this.y + " views </strong><br>" + dateString
       yAxis:
         title:
           text: null
         min: 0
+      xAxis:
+        type: 'datetime'
+        maxZoom: 48 * 3600 * 1000
+        labels:
+          step: Math.floor(@model.get('history').data.length / 4)
       legend:
         enabled: false
       series: [{
-        data: [222]
+        data: @model.get('history').data
+        pointStart: parseInt(@model.get('history').start)*1000
+        pointInterval: 24 * 3600 * 1000        
       }]
     )
     

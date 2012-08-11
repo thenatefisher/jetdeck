@@ -28,6 +28,8 @@ json.registration (!@xspec.hide_registration) ? @airframe.registration : nil
 
 json.location @airframe.airport.location if @airframe.airport && !@xspec.hide_location
 
+json.background @xspec.background if @xspec.background
+
 json.engines @airframe.engines do |json, e|
     json.id e.id
     json.model_name e.model_name
@@ -80,7 +82,7 @@ end
 
 json.recipient @xspec.recipient.email
 
-json.(@xspec, :message, :salutation, :show_message, :headline1, :headline2, :headline3)
+json.(@xspec, :url_code, :message, :salutation, :show_message, :headline1, :headline2, :headline3)
 
 json.images @airframe.accessories do |json, i|
     json.preview "http://s3.amazonaws.com/jetdeck/images/#{i.id}/spec_monitor/#{i.image_file_name}" if i.image_file_name

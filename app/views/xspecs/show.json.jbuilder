@@ -1,20 +1,32 @@
 json.(@xspec, 
-        :id,
-        :message, 
-        :salutation, 
-        :show_message, 
-        :headline1, 
-        :headline2, 
-        :headline3,
-        :override_description,
-        :override_price,
-        :hide_price,
-        :hide_registration, 
-        :hide_serial, 
-        :hide_location,
-        :background_id,
-        :sent
+  :id,
+  :message, 
+  :salutation, 
+  :show_message, 
+  :headline1, 
+  :headline2, 
+  :headline3,
+  :override_description,
+  :override_price,
+  :hide_price,
+  :hide_registration, 
+  :hide_serial, 
+  :hide_location,
+  :background_id,
+  :sent,
+  :created_at
 )
+
+json.created_at @xspec.created_at.strftime("%b %e (%l:%M%p %Z)") 
+
+json.history @xspec.history
+
+json.backgrounds @backgrounds do |json, b|
+  json.url b.url
+  json.thumbnail b.thumbnail
+end
+
+json.sent @xspec.sent.strftime("%b %e (%l:%M%p %Z)") if @xspec.sent
 
 if @xspec.override_price.present?
   json.displayed_price @xspec.override_price 
@@ -29,7 +41,10 @@ json.recipient @xspec.recipient.email
 json.hits @xspec.hits
 
 if @xspec.hits > 0
-    json.last_viewed @xspec.views.last.created_at
+    json.last_viewed @xspec.views.last.created_at.strftime("%b %e (%l:%M%p %Z)") 
 else
     json.last_viewed ""
 end
+
+json.top_average @xspec.top_average
+

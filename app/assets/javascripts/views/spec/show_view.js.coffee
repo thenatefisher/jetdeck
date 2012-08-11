@@ -19,4 +19,17 @@ class Jetdeck.Views.Spec.ShowView extends Backbone.View
     @$('#message-seller').click(() ->
       $("#message-modal").modal("show")
     )
+
+    urlCode = @model.get('url_code')
+    
+    window.onbeforeunload = () ->
+    
+        endTime = new Date().getTime()
+        
+        timeOnPage = (endTime - window.startTime) / 1000
+        
+        $.post("/s", {code: urlCode, time: timeOnPage})
+        
+        return null
+    
     return this

@@ -46,16 +46,16 @@
             <div class="navbar-inner">
               <div class="container">
 
-                <a class="brand" style="margin-left: 15px; margin-top: -9px; position: absolute;" href="/"><img src="/assets/logo.png"></a>
+                <a class="brand" style="" href="/"><img src="/assets/logo_white.png"></a>
 
                 <div class="nav-collapse">
 
-                  <ul class="nav pull-right" style="margin-right: 15px;">
+                  <ul class="nav pull-right" style="margin-right: 15px; margin-top: 5px;">
                     <!--<li><a href="#">Help</a></li>-->
-                    <li class="divider-vertical"></li>
+                    <!--<li class="divider-vertical"></li>-->
                     <li class="dropdown id="nav-username">
 
-                      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <a href="#"  class="dropdown-toggle" data-toggle="dropdown">
 
                           <% if current_user %>
                             <%= current_user.contact.first %> <%= current_user.contact.last %> <b class="caret"></b>
@@ -143,7 +143,7 @@
       </div> <!-- end main row -->
 
 
-        <div class="span12" style="text-align: center; margin: 20px; color: #555"><p>Copyright JetDeck <%=  Time.now.year %></p></div>
+        <div class="span12 footer"><p>© <%=  Time.now.year %>, JetDeck Services, LLC </p></div>
 
 
       </div> <!-- end container class -->

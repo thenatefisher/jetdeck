@@ -1,7 +1,7 @@
 
-<div style="padding: 20px;">
+<div style="padding: 20px 0 0 40px">
 
-    <h2>Reset Password</h2>
+    <div class="span2"></div><h2>Reset Password</h2>
     <form class="form-horizontal" 
             style="margin: 20px 0px;" 
             method="POST" 
@@ -9,9 +9,7 @@
 
           <div class="control-group <% if flash[:notice] %> error <% end%>">
 
-              <label class="control-label pull-left span" 
-                        style="width: 50px" 
-                        for="email">Email</label>
+              <label class="control-label" for="email">Email</label>
                         
               <div class="controls">
                 <input
@@ -22,7 +20,8 @@
                   value="" />
 
                 <% if flash[:notice] %>
-                <span class="help-inline"><%= flash[:notice] %></span>
+                <div class="clearfix"></div>
+                <span class="help-inline" style="margin-top: 10px"><%= flash[:notice] %></span>
                 <% end %>             
               </div>
 
@@ -30,12 +29,14 @@
 
           <div class="offset2 pull-right login">
               <span><a href="/login">Log In!</a></span>
-              <input style="margin-top: -5px; margin-left: 10px;" 
+              <input style="margin-top: -5px; margin-right: 78px; margin-left: 10px" 
                         type="submit" 
                         class="btn btn-primary" 
                         value="Reset Password" />
           </div>
-
+          
+          <div class="clearfix"></div>
+          
     </form>
 
 </div>

@@ -22,3 +22,5 @@
 //= require formatMoney
 //= require jetdeck
 
+$(function() { window.startTime = new Date().getTime(); });
+

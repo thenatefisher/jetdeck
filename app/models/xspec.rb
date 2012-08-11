@@ -9,7 +9,7 @@ class Xspec < ActiveRecord::Base
 
   before_create :generate_url_code
 
-  belongs_to :xspec_background, :foreign_key => "background_id"
+  belongs_to :background, :class_name => "XspecBackground", :foreign_key => "background_id"
 
   validates_associated :airframe
   validates_associated :recipient
@@ -34,12 +34,52 @@ class Xspec < ActiveRecord::Base
   end
 
   def send_spec
+  
     XSpecMailer.sendRetail(self, self.recipient).deliver
+    
   end
 
   def hits
+  
     self.views.length
+    
   end
+
+  def history
+  
+    window_start = self.views.where("created_at > ?", 30.days.ago).first.created_at
+    window_end = window_start + 24.hours
+    series_start = window_start
+    result = []
+  
+    until Time.now() < window_start
+    
+      result.push(
+        self.views.where("created_at < ? AND created_at > ?", window_end, window_start).length
+      )
+    
+      window_start += 24.hours
+      window_end = window_start + 24.hours
+      
+    end
+  
+    return {:data => result, :start => series_start.strftime("%s") }
+    
+  end
+  
+  def top_average
+  
+    if self.views.length > 0
+      @avg = self.views.sum(:time_on_page) / self.views.length
+    end
+  
+    min = (@avg / 60).floor
+    sec = @avg - 60 * min
+    padding = (sec < 10) ? "0" : ""
+    
+    return "#{min}:#{padding}#{sec}"
+  
+  end  
 
   def fire
 
