@@ -1,5 +1,0 @@
-# Logfile created on 2012-07-11 21:51:09 -0700 by logger.rb/31641
-REQUESTING PAGE: POST /authenticate with {"email"=>"", "password"=>"", "remember_me"=>"on"} and HTTP headers {}
-REQUESTING PAGE: GET http://www.example.com/login with {} and HTTP headers {"HTTP_REFERER"=>"/authenticate"}
-REQUESTING PAGE: POST /authenticate with {"email"=>"", "password"=>"", "remember_me"=>"on"} and HTTP headers {}
-REQUESTING PAGE: GET http://www.example.com/login with {} and HTTP headers {"HTTP_REFERER"=>"/authenticate"}

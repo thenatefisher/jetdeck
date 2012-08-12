@@ -2,8 +2,25 @@
 
   <div class="row company-banner">
     <div class="span12 whitebox">
-      <img class="company-logo" src="/assets/generic.jpg">
-      <!--<h2 class="company-name"><%= agent_company %></h2> -->
+    
+      <% if (logo) { %>
+      
+        <% if (agent_website) { %>
+        
+          <a href="http://<%= agent_website %>"><img class="company-logo" src="<%= logo %>"></a>
+          
+        <% } else { %>
+        
+          <img class="company-logo" src="<%= logo %>">
+          
+        <% } %>
+        
+      <% } else { %>
+      
+      <h2 class="company-name"><%= agent_company %></h2>
+      
+      <% } %>
+      
       <div class="pull-right" style="margin: 10px 20px; text-align: right">
         <h1>&nbsp;<%= agent_phone %> </h1>
         <h4>&nbsp;</h4>
@@ -14,16 +31,28 @@
     </div>
   </div>
 
-  <div class="hero-unit" style="background: white; padding: 30px;">
+  <div class="hero-unit" style="background: white; padding: 30px; padding-bottom: 0px">
 
     <% if (show_message) { %>
     <% if (message != "" && message != null) { %>
     <div class="alert alert-info broker-message">
+    
       <a class="close" data-dismiss="alert" href="#">×</a>
+      
       <h2 class="alert-heading"><%= salutation %></h2>
+      
       <p><%= message %></p>
-      <span class="pull-right" style="margin-top: 7px; margin-right: 20px;"> <input type="checkbox" id="show-message" style="margin-top: -3px"></input> Don't Show Again</span>
+   
+      <span style="float: right; margin-top: 7px; margin-right: -15px;"> 
+      
+          <input type="checkbox" 
+                  id="show-message" 
+                  style="margin-right: 5px; margin-top: 0px"></input>   
+                  
+          Don't Show Again</span> 
+      
       <div style="clear: both"></div>
+      
     </div>
     <% } } %>
 
@@ -35,19 +64,19 @@
       <br>
       <p>
         <a class="btn btn-primary btn-large" id="message-seller">
-          <i class="icon-envelope icon-white" style="margin: 2px"></i> <%= agent_name %>
+          <strong><i class="icon-envelope icon-white" style="margin: 4px 10px 0 0"></i> <%= agent_name %></strong>
         </a>
       </p>
 
       <ul class="hero-list">
         <% if (headline1 != null) { %>
-            <li><h3><%= headline1 %></h3></li>
+            <li><h3><i class="icon-caret-right" style="margin: 4px 5px 0 0"></i> <%= headline1 %></h3></li>
         <% } %>
         <% if (headline2 != null) { %>
-            <li><h3><%= headline2 %></h3></li>
+            <li><h3><i class="icon-caret-right" style="margin: 4px 5px 0 0"></i> <%= headline2 %></h3></li>
         <% } %>
         <% if (headline3 != null) { %>
-            <li><h3><%= headline3 %></h3></li>
+            <li><h3><i class="icon-caret-right" style="margin: 4px 5px 0 0"></i> <%= headline3 %></h3></li>
         <% } %>        
       </ul>
 

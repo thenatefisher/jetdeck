@@ -13,8 +13,7 @@ json.(@xspec,
   :hide_serial, 
   :hide_location,
   :background_id,
-  :sent,
-  :created_at
+  :sent
 )
 
 json.created_at @xspec.created_at.strftime("%b %e (%l:%M%p %Z)") 
@@ -40,7 +39,7 @@ json.recipient @xspec.recipient.email
 
 json.hits @xspec.hits
 
-if @xspec.hits > 0
+if @xspec.hits > 0 && @xspec.views.last
     json.last_viewed @xspec.views.last.created_at.strftime("%b %e (%l:%M%p %Z)") 
 else
     json.last_viewed ""

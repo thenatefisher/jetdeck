@@ -4,8 +4,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>Jetdeck</title>
+    
     <%= csrf_meta_tags %>
+    
     <link rel="shortcut icon" href="/assets/favicon.png" />
     
     <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
@@ -17,13 +20,9 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
     <!-- Le javascript -->
     <%= javascript_include_tag "application" %>
-    <!--
-    <link href='http://fonts.googleapis.com/css?family=Condiment' rel='stylesheet' type='text/css'>
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-   
-    <script type="text/javascript">
 
+    <script type="text/javascript">
+/*
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-32538435-2']);
       _gaq.push(['_trackPageview']);
@@ -33,56 +32,49 @@
         ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
       })();
-
+*/
     </script>
-    -->
+
 
     </head>
 
     <body>
+    
+      <div class="sweatband"></div>
+    
       <div class="container">
 
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-              <div class="container">
+        <div class="navbar row">
 
-                <a class="brand" style="" href="/"><img src="/assets/logo_white.png"></a>
+              
+                <div class="span12">
+                  <a class="brand" style="" href="/"><img src="/assets/logo_black_no_tag.png"></a>
+                  
+                  <div class="pull-right username">
 
-                <div class="nav-collapse">
+                        Welcome, 
+                        
+                        <a href="/profile">
 
-                  <ul class="nav pull-right" style="margin-right: 15px; margin-top: 5px;">
-                    <!--<li><a href="#">Help</a></li>-->
-                    <!--<li class="divider-vertical"></li>-->
-                    <li class="dropdown id="nav-username">
+                            <% if current_user %>
+                              <strong><%= current_user.contact.first %> <%= current_user.contact.last %></strong>
+                            <% end %>
 
-                      <a href="#"  class="dropdown-toggle" data-toggle="dropdown">
+                        </a>
+                    
+                        | <a href="/logout">Log Out</a>
 
-                          <% if current_user %>
-                            <%= current_user.contact.first %> <%= current_user.contact.last %> <b class="caret"></b>
-                          <% end %>
+                    </div>
+                  </div>
 
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li><a href="/profile">Edit Profile</a></li>
-                        <li class="divider"></li>
-                        <li><a href="/logout">Log Out</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-
-                </div><!-- /.nav-collapse -->
-
-              </div>
-
-            </div><!-- /navbar-inner -->
 
         </div> <!-- navbar navbar-fixed-top -->
 
         <div class="row" style="padding: 0px 0px 10px;">
 
                   <div class="btn-group pull-right" style="margin: 10px 20px 0 0;">
-                    <button class="btn btn-primary new-spec"><i class="icon-plane icon-white"></i> New Spec</a></button>
-                    <button class="btn btn-primary new-contact"><i class="icon-user icon-white"></i> New Contact</a></button>
+                    <button class="btn new-spec"><i class="icon-plane icon-white"></i> New Spec </button>
+                    <button class="btn new-contact"><i class="icon-user icon-white"></i> New Contact </button>
                   </div>
 
                   <!--<div class="btn-toolbar btn-group pull-right" style="margin: 10px 20px 0 0;">
@@ -117,19 +109,20 @@
           </div>
           
           <div class="span2">
+          
             <br/>
-            <ul class="nav nav-list">
-              <li class="">
-                <a href="/airframes"> <i class="icon-th-list"></i> My Deck <!-- TODO add badges to deck nav <span class="badge badge-info">8</span> --></a>
+            <ul class="left-nav nav nav-list">
+            
+              <li>
+                <a href="/airframes"> <h3> <i class="icon-th-list"></i> My Deck </h3> </a>
               </li>
-              <!--<li class="nav_searches_enabled">
-                <a href="#"> <i class="icon-search"></i> Searches</a>
-              </li>-->
-              <li class="nav_contacts_enabled">
-                <a href="/contacts"> <i class="icon-book"></i> Contacts</a>
+
+              <li>
+                <a href="/contacts"> <h3> <i class="icon-book"></i> Contacts </h3></a>
               </li>
 
             </ul>
+            
           </div> <!-- end MY DECK ... navigation -->
 
         <div class="span10" style="border: 1px solid #ccc; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; margin:0px; background: #fff;">

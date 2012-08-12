@@ -7,13 +7,16 @@
  *
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
- *= require retail_bootstrap_and_overrides
  *= require_self
 */
 
+@import "twitter/bootstrap/bootstrap";
+@import "twitter/bootstrap/responsive";
+@import "font-awesome.less";
+
 body {
   margin: 0px;
-  background: url(<%= asset_path 'purty_wood.png' %>) repeat;
+  background: url(<%= asset_path 'bg/bg1.jpg' %>) repeat;
 }
 
 .hero-unit h1 {
@@ -31,7 +34,9 @@ body {
 }
 
 .hero-list {
-  margin-top: 40px;
+  margin: 30px 0 0 0;
+  list-style: none;
+  
 }
 
 .item {
@@ -76,7 +81,8 @@ body {
 }
 
 .company-logo {
-  margin: 10px 20px; height: 90px;
+  margin: 10px 20px; 
+  max-height: 70px;
 }
 
 .company-name {

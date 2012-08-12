@@ -12,7 +12,7 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
     name = $(e.target).attr('name')
     @model.attributes.contact[name] = value
     @model.save(null)
-
+    
   updateEmail: () ->    
     email = @$("input[name='email']").val()
     email_confirmation = @$("input[name='email_confirmation']").val()  

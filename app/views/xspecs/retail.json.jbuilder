@@ -78,6 +78,9 @@ if (@airframe.creator && @airframe.creator.contact)
     json.agent_website @airframe.creator.contact.website
     json.agent_company @airframe.creator.contact.company
     json.agent_email @airframe.creator.contact.email
+    if @airframe.creator.logo
+      json.logo @airframe.creator.logo.url  
+    end    
 end
 
 json.recipient @xspec.recipient.email

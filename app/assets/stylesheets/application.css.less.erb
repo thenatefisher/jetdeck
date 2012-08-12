@@ -1,5 +1,4 @@
 /*
- *= require bootstrap_and_overrides
  *= require multi-select
  *= require jquery.fileupload-ui
  *= require select2
@@ -7,13 +6,47 @@
  *= require_self
 */
 
+@import "twitter/bootstrap/bootstrap";
+@import "font-awesome.less";
+
 body {
-  padding-top: 60px;
-  background: url(<%= asset_path 'bg/bg1.jpg' %>) repeat;
+  padding-top: 10px;
+  background: url(<%= asset_path 'bg/dots.png' %>) repeat;
 }
 
 .navbar-inner {
+  background: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border: none;
+}
+
+.username {
+  margin-right: 20px; 
+  margin-top: 10px;
+}
+
+.username a {
+  color: @grayLight;
+  text-decoration: none;
+}
+
+.username a:hover {
+  color: @infoText;
+}
+
+.sweatband { 
+  width: 100%; 
+  position: absolute; 
+  top: 0;
   background: url(<%= asset_path 'bg/denim.png' %>) repeat;
+  margin: 0;
+  padding: 0;
+  height: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
 }
 
 .swatch {
@@ -63,25 +96,21 @@ body {
   width: 130px;
 }
 
-.engine_inline_edit {
-  border: 0px;
-  box-shadow: none;
-  outline: 0px;
-  padding: 2px;
-  margin: 0px;
-  font-size: 15px;
-  vertical-align: baseline;
-  background: transparent;
-}
 
 .engine_inline_edit :focus {
   border: 0px;
   outline: 0px;
 }
 
-.engine_inline_edit {
+.engine-table input[type="text"] {
     width: auto;
+    margin-top: 4px;
+    margin-bottom: 4px;
 }
+
+.engine-table td { border: 0px; }
+
+.engine-table h4 { margin: 9px auto; }
 
 .main-thumbnail {
   overflow: hidden; -webkit-border-radius: 4px;
@@ -179,4 +208,41 @@ form[name='airframe'] .control-group {
     text-align: center;
 }
 
+h3 i {
+  margin-top: 4px;
+}
+
+h4 i {
+  margin-top: 2px;
+}
+
+.nav-list a {
+  color: @navbarSearchBackground
+}
+
+.left-nav > li > a:hover {
+  background-color: @infoText;
+  color: #eee;
+  .border-radius(4px 0 0 4px);
+  text-decoration: none;
+  text-shadow: none;
+}
+
+.btn i {
+  margin-top: 2px;
+}
+
+.btn-large i {
+  padding-top: 2px;
+  margin-right: 4px;
+}
+
+.partial-header {
+  background: @btnBackgroundHighlight;
+  .border-radius(4px);
+  padding: 5px;
+  margin: 10px 0;
+}
+
+#uploader { margin-top: 40px; }
 

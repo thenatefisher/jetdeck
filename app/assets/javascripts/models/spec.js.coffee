@@ -40,4 +40,6 @@ class Jetdeck.Models.Spec extends Backbone.Model
     equipment: []
     top_average: "0:00"
     hits: 0
+    last_viewed: ""
+    logo: null
     

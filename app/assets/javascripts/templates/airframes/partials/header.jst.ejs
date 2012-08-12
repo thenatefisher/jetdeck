@@ -8,7 +8,7 @@
       <h1>Upload Image</h1>
       <h3>Drag Files Here</h3>
     </span>
-    <img src="/assets/aircraft_default_avatar.png">
+    <img src="/assets/placeholder/aircraft_default_avatar.png">
   </a>
   <% } %>
 </div>
@@ -39,33 +39,41 @@
 
     <div style="margin: 20px 0px 0px 0px; font-size: 110%">
 
-        <div style="margin: 5px 0px;"><strong>Serial Number</strong>
-        <input type="text" 
-            class="inline-edit airframe_field" 
+        <div>
+        <strong class="span2" style="margin: 10px;">Serial Number</strong>
+        <input type="text"
+            style="height: 20px; padding: 5px 10px; font-size: 16px;" 
+            class="inline-edit airframe_field span2" 
             value="<%= serial %>"
             placeholder="<%= serial ? serial : '--' %>"
-            name="serial"></input></div>
+            name="serial"></input>
+        </div>
 
-        <div style="margin: 5px 0px"><strong>Registration</strong>
+        <div><div style="line-height: 5px;"><br></div>
+        <strong class="span2" style="margin: 10px;">Registration</strong>
         <input type="text" 
-            class="inline-edit airframe_field" 
+            style="height: 20px; padding: 5px 10px; font-size: 16px;"
+            class="inline-edit airframe_field span2" 
             value="<%= registration %>"
             placeholder="<%= registration ? registration : '--' %>"
-            name="registration"></input></div>
+            name="registration"></input>
+       </div>
 
         <% if (location) { %>
-        <div style="margin: 5px 0px"><strong>Location</strong>
+        <div><div style="line-height: 5px;"><br></div>
+          <strong class="span2" style="margin: 10px;">Location</strong>
           <a href="<%= location.id %>"><%= location.icao %></a>
           (<%= location.city %>, <%= location.state %>) </div>
         <% } %>
-
-        <div style="margin: 5px 0px;"><strong>Asking</strong>
-        <input type="text" class="inline-edit airframe_field money" value="<%= asking_price ? asking_price : '$--' %>" name="asking_price"></input></div>
-
-        <% if (location) { %>
-        <div style="margin: 5px 0px;"><strong>Agent</strong>
-          <a href="<%= agent.id %>"> <%= agent.name %> </a></div>
-        <% } %>
+        
+        <div><div style="line-height: 5px;"><br></div>
+        <strong class="span2" style="margin: 10px;">Asking Price</strong>
+        <input type="text" 
+                style="height: 20px; padding: 5px 10px; font-size: 16px;"
+                class="inline-edit airframe_field money span2" 
+                value="<%= asking_price ? asking_price : '$--' %>" 
+                name="asking_price"></input>
+        </div>
             
     </div>
     

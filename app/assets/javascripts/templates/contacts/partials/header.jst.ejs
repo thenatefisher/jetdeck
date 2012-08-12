@@ -1,67 +1,80 @@
 
   <div class="span2 main-thumbnail contact-main-thumbnail">
 
-   <img src="/assets/missing.png">
+      <img src="/assets/missing.png">
 
   </div>
 
   <div class="offset2">
+  
+      <div class="span7" id="profile_name_edit">
 
-       <div id="contact_name_edit" class="">
-           <input  type="text"
-                    class="inline-edit contact_field span3"
-                    name="first"
-                    value="<%= first %>"
-                    placeholder="[First Name]">
-           </input>
-           <input  type="text"
-                    class="inline-edit contact_field span3"
-                    name="last"
-                    value="<%= last %>"
-                    placeholder="[Last Name]">
-           </input>
-       </div>
-
-       <input  type="text"
-                class="inline-edit contact_field span6"
-                value="<%= company %>"
-                name="company"
-                placeholder="[Enter Company Name]">
-       </input>
-
-      <div class="row">
-        <div class="span7">
-          <table class="contact-header-details table table-condensed">
-              <tbody>
-                  <tr>
-                      <td>
-                          <div class="contact-header-label">Phone</div>
-                      </td>
-                      <td>
-                          <input  type="text"
-                                  class="inline-edit contact_field span4"
-                                  value="<%= phone %>"
-                                  name="phone"
-                                  placeholder="[Enter Phone Number]">
-                          </input>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td>
-                          <div class="contact-header-label">Email</div>
-                      </td>
-                      <td>
-                          <input  type="text"
-                                  class="inline-edit contact_field span4"
-                                  value="<%= email %>"
-                                  name="email"
-                                  placeholder="[Enter Email Address]">
-                          </input>
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
-        </div>
+         <input type="text"
+                class="inline-edit profile_field span3"
+                name="first"
+                value="<%= first %>"
+                placeholder="First Name">
+         </input>
+         
+         <input type="text"
+                class="inline-edit profile_field span4"
+                style="float: right;"
+                name="last"
+                value="<%= last %>"
+                placeholder="Last Name">
+         </input>
       </div>
+      
+      <table class="contact-header-details span7">
+          <tbody>
+          
+              <tr>
+                  <td>
+                      <div class="contact-header-label">Company</div>
+                  </td>
+                  <td>
+                      <input  type="text"
+                              style="float: right"
+                              class="inline-edit contact_field span5"
+                              value="<%= company %>"
+                              name="company"
+                              placeholder="Company Name">
+                      </input>
+                  </td>
+              </tr>
+                          
+              <tr>
+                  <td>
+                      <div class="contact-header-label">Phone</div>
+                  </td>
+                  <td>
+                      <input  type="text"
+                              style="float: right"
+                              class="inline-edit contact_field span5"
+                              value="<%= phone %>"
+                              name="phone"
+                              placeholder="Phone Number">
+                      </input>
+                  </td>
+              </tr>
+              
+              <tr>
+                  <td>
+                      <div class="contact-header-label">Email</div>
+                  </td>
+                  <td>
+                      <input  type="text"
+                              style="float: right"
+                              class="inline-edit contact_field span5"
+                              value="<%= email %>"
+                              name="email"
+                              placeholder="Email Address">
+                      </input>
+                  </td>
+              </tr>
+              
+          </tbody>
+      </table>   
 
   </div> <!-- offset2 -->
+

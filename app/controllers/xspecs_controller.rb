@@ -89,18 +89,30 @@ class XspecsController < ApplicationController
     
     af = Airframe.find(:first, :conditions => ["id = ? AND user_id = ?", params[:xspec]['airframe_id'], @current_user.id])
 
-    @spec = Xspec.new(:recipient => recipient, :sender => sender, :airframe => af )
+    @xspec = Xspec.new(:recipient => recipient, :sender => sender, :airframe => af )
 
     respond_to do |format|
-      if @spec.save
-        # todo @spec.send_spec()
-        XSpecMailer.sendRetail(@spec, @spec.recipient).deliver
-        #format.html { redirect_to "#{root_url}s/#{CGI.escape(@spec.url_code)}" }
-        format.json { render :json => @spec.to_json(:include => 'recipient'), :status => :created, :location => @spec }
+    
+      if @xspec.save
+
+        if params[:xspec]['send']
+        
+          XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
+          
+        end
+
+        format.json { render( template: 'xspecs/show',
+                              handlers: [:jbuilder],
+                              formats: [:json],  
+                              locals: { xspec: @xspec} ).html_safe }
       else
-        format.json { render :json => @spec.errors, :status => :unprocessable_entity }
+      
+        format.json { render :json => @xspec.errors, :status => :unprocessable_entity }
+        
       end
+      
     end
+    
   end
 
   # PUT /specs/1

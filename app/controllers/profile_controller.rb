@@ -11,7 +11,7 @@ class ProfileController < ApplicationController
   # PUT /profile/1
   # PUT /profile/1.json
   def update
-
+    
     if params[:profile][:contact]
         contact_whitelist = params[:profile][:contact].slice(
           :email,

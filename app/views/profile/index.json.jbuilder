@@ -14,3 +14,7 @@ json.sent @totalSent
     a.xspecs.each { |x| @totalViews += x.views.count }
 end
 json.views @totalViews
+
+if @user.logo
+  json.logo @user.logo.url  
+end

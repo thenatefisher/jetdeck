@@ -62,7 +62,7 @@ class UsersController < ApplicationController
         :password,
         :password_confirmation
       )
-    
+
     if params[:user][:contact]
         contact_whitelist = params[:user][:contact].slice(:email, :email_confirmation)
         @user.contact.update_attributes(contact_whitelist)
