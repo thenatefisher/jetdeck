@@ -4,11 +4,10 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
   template: JST["templates/airframes/partials/send"]
 
   events :
-  
     "click #send_spec" : "send"
 
   send : ->
-    
+
     @$("#send_spec").button('loading')
     email = $("#recipient_email").val()
     send = true
@@ -42,10 +41,12 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
       @model.leads.add(new_lead)
       window.router.view.render()
 
-      specModel = new Jetdeck.Models.Spec(m)
-      specView = new Jetdeck.Views.Spec.EditView(model: specModel)
-      modal(specView.render().el)
-      console.log specView.render().el
+      if !send
+        specModel = new Jetdeck.Models.Spec(m)
+        specModel.collection = new Jetdeck.Collections.SpecsCollection()
+        specView = new Jetdeck.Views.Spec.EditView(model: specModel)
+        modal(specView.render().el)
+        console.log specView.render().el
         
     ).error( (m) =>
     

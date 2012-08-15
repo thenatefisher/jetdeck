@@ -4,8 +4,49 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
   template: JST["templates/profile/show"]
 
   events:
-    "click #update_email" : "updateEmail"
-    "change .inline-edit" : "edit"
+    "click #update_password"  : "updatePassword"
+    "click #update_email"     : "updateEmail"
+    "click #upload"           : "chooseLogo"
+    "change .inline-edit"     : "edit"
+    "change #logo"            : "showSelectedFile"
+
+  updatePassword: =>
+    passwd = @$("input[name='new_password']").val()
+    passwd_confirmation = @$("input[name='new_password_confirmation']").val()  
+    @model.attributes.password = passwd
+    @model.attributes.password_confirmation = passwd_confirmation    
+
+    @model.save(null,
+      success: () =>
+            $('.password-failure').hide()   
+            @$("input[name='new_password']").val('')
+            @$("input[name='new_password_confirmation']").val('') 
+            alertSuccess("Password Updated!") 
+            delete @model.attributes.password
+            delete @model.attributes.password_confirmation
+            window.t = @model 
+      error: (c, jqXHR) =>
+            errObj = $.parseJSON(jqXHR.responseText)  
+            if errObj.password[0]  
+                alertFailure("Password " + errObj.password[0])  
+            delete @model.attributes.password
+            delete @model.attributes.password_confirmation
+            window.t = @model                      
+    )
+
+    return this
+      
+  showSelectedFile: (event) ->
+    e = event.target || event.currentTarget
+    fileString = $(e).val()
+    
+    if fileString.length > 15
+      fileString = "..." + fileString.substr(fileString.length - 15, 15)
+      
+    @$("#upload").html(fileString)
+  
+  chooseLogo: ->
+    @$("#logo").click()
 
   edit: (e) ->
     value = $(e.target).val()
@@ -13,7 +54,7 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
     @model.attributes.contact[name] = value
     @model.save(null)
     
-  updateEmail: () ->    
+  updateEmail: ->    
     email = @$("input[name='email']").val()
     email_confirmation = @$("input[name='email_confirmation']").val()  
     @model.attributes.contact.email = email

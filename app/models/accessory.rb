@@ -5,6 +5,7 @@ class Accessory < ActiveRecord::Base
     has_attached_file :image,
                       :styles => {  :thumb => "220x200#",
                                     :mini => "80x60#",
+                                    :spec_lightbox => "600",
                                     :spec_monitor => "400",
                                     :listing => "210x157#" },
                       :s3_credentials => "#{Rails.root}/config/aws_keys.yml",

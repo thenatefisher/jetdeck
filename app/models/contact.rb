@@ -24,7 +24,7 @@ class Contact < ActiveRecord::Base
   attr_accessible :phone, 
         :first, :last, :source, :email, 
         :email_confirmation, :company, 
-        :title, :description
+        :title, :description, :website
 
   has_many :credits, :as => :creditable
 
@@ -43,4 +43,13 @@ class Contact < ActiveRecord::Base
 
   validates_format_of :email, :with => /^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i
 
+  validates_format_of :website, 
+                      :with => URI::regexp(%w(http https)), 
+                      :allow_blank => true, :allow_nil => true,
+                      :message => "Invalid Website URL"
+                      
+  before_validation do
+    self.email.sub!(" ", "")
+  end                      
+  
 end

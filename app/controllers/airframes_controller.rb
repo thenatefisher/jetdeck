@@ -114,13 +114,19 @@ class AirframesController < ApplicationController
 
     @engines = []
     params[:airframe][:engines].each do |a|
-         @baseline = Engine.find(:first, :conditions => ["id = ? AND (baseline = 't' OR user_id = ?)", a[:id], @current_user.id])
-         if @baseline
-             newItem = @baseline.dup
-             newItem.baseline = false
-             newItem.user_id = @current_user
-             newItem.baseline_id = a[:id]
-             @engines << newItem
+         
+         if a[:id] == "0" && a[:model_name]
+            newItem = Engine.create(:model_name => a[:model_name])
+            @engines << newItem if newItem
+         else 
+            @baseline = Engine.find(:first, :conditions => ["id = ? AND (baseline = 't' OR user_id = ?)", a[:id], @current_user.id])
+            if @baseline
+               newItem = @baseline.dup
+               newItem.baseline = false
+               newItem.user_id = @current_user
+               newItem.baseline_id = a[:id]
+               @engines << newItem
+            end
          end
     end
     whitelist[:engines] = @engines    

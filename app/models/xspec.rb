@@ -47,6 +47,10 @@ class Xspec < ActiveRecord::Base
 
   def history
   
+    if self.views.where("created_at > ?", 30.days.ago).count == 0
+      return
+    end
+  
     window_start = self.views.where("created_at > ?", 30.days.ago).first.created_at
     window_end = window_start + 24.hours
     series_start = window_start
@@ -68,22 +72,27 @@ class Xspec < ActiveRecord::Base
   end
   
   def top_average
-  
-    if self.views.length > 0
-      @avg = self.views.sum(:time_on_page) / self.views.length
+    
+    min = "00"
+    sec = "00"
+    padding = ""  
+
+    if self.views.count > 0
+    
+      avg = self.views.sum(:time_on_page).to_i / self.views.count
+      min = (avg / 60).floor
+      sec = avg - 60 * min
+      padding = (sec < 10) ? "0" : ""  
+
     end
-  
-    min = (@avg / 60).floor
-    sec = @avg - 60 * min
-    padding = (sec < 10) ? "0" : ""
     
     return "#{min}:#{padding}#{sec}"
-  
+
   end  
 
   def fire
 
-    recent_views = views.where("created_at > ?", Time.now - 24.hours).length
+    recent_views = views.where("created_at > ?", Time.now - 24.hours).count
 
     false # return false if not on fire
 
@@ -97,7 +106,7 @@ class Xspec < ActiveRecord::Base
   def generate_url_code
 
     self.url_code = create_code
-    while (Xspec.where(:url_code => self.url_code).length > 0)
+    while (Xspec.where(:url_code => self.url_code).count > 0)
         self.url_code = create_code
     end
 

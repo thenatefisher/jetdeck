@@ -2,6 +2,20 @@ class XspecsController < ApplicationController
   before_filter :authorize
   include ActionView::Helpers::NumberHelper
   
+  def send_spec
+  
+      @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
+      
+      if @xspec
+
+        XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
+        
+        render :json => @spec.to_json()
+      
+      end
+      
+  end
+    
   # GET /specs
   # GET /specs.json
   def index
@@ -42,7 +56,9 @@ class XspecsController < ApplicationController
         redirect_to "/"
         return
     else
+      if @current_user.nil?
         @xspec.views << SpecView.create(:agent => request.user_agent, :ip => request.remote_ip)
+      end
     end
 
     render :layout => 'retail'
@@ -72,8 +88,6 @@ class XspecsController < ApplicationController
   # POST /specs
   # POST /specs.json
   def create
-
-    authorize()
     
     sender = @current_user.contact
 
@@ -104,7 +118,7 @@ class XspecsController < ApplicationController
         format.json { render( template: 'xspecs/show',
                               handlers: [:jbuilder],
                               formats: [:json],  
-                              locals: { xspec: @xspec} ).html_safe }
+                              locals: { xspec: @xspec} ) }
       else
       
         format.json { render :json => @xspec.errors, :status => :unprocessable_entity }
@@ -118,33 +132,46 @@ class XspecsController < ApplicationController
   # PUT /specs/1
   # PUT /specs/1.json
   def update
-   @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
-   
-   whitelist = params[:spec].slice(
-      :message, 
-      :salutation, 
-      :headline1, 
-      :headline2, 
-      :headline3,
-      :show_message, 
-      :override_description,
-      :override_price,
-      :hide_price,
-      :hide_registration, 
-      :hide_serial, 
-      :hide_location,
-      :background_id   
-    )
-    
-    respond_to do |format|
-      if @xspec.update_attributes(whitelist)
-        format.html { redirect_to @spec, :notice => 'Spec was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @spec.errors, :status => :unprocessable_entity }
+
+      @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
+      
+      if @xspec
+      
+        @whitelist = params[:spec].slice(
+          :message, 
+          :salutation, 
+          :headline1, 
+          :headline2, 
+          :headline3,
+          :show_message, 
+          :override_description,
+          :override_price,
+          :hide_price,
+          :hide_registration, 
+          :hide_serial, 
+          :hide_location,
+          :background_id   
+        )
+        
+      
+      elsif params[:spec][:url_code]
+      
+        @xspec = Xspec.where("url_code = ?", params[:spec][:url_code]).first
+        @whitelist = params[:spec].slice(:show_message)
+                
       end
-    end
+
+
+      respond_to do |format|
+        if @xspec.update_attributes(@whitelist)
+          format.html { redirect_to @spec, :notice => 'Spec was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render :action => "edit" }
+          format.json { render :json => @spec.errors, :status => :unprocessable_entity }
+        end
+      end
+      
   end
 
   # DELETE /specs/1

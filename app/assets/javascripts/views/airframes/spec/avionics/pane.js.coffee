@@ -12,7 +12,7 @@ class Jetdeck.Views.Airframes.ShowAvionicsPane extends Backbone.View
     c = new Jetdeck.Collections.EquipmentCollection()
     eq = c.create({
         airframe_id: @model.get("id")
-        title: $(".equipment-title", @el).val()
+        title: $(".equipment-title", @el).val().toUpperCase()
         name: $(".equipment-name", @el).val()
         etype: 'avionics'
       }, 

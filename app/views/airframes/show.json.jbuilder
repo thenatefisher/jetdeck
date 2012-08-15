@@ -55,34 +55,36 @@ end
 
 json.leads @airframe.xspecs do |json, x|
 
-    json.id x.recipient.id
+    if x.recipient.present?
+        json.id x.recipient.id
 
-    json.email x.recipient.email
+        json.email x.recipient.email
 
-    if x.recipient.first && x.recipient.last
-      json.name x.recipient.first + " " + x.recipient.last
+        if x.recipient.first && x.recipient.last
+          json.name x.recipient.first + " " + x.recipient.last
+        end
+
+        if x.recipient.company
+          json.company x.recipient.company
+        end
+
+        json.hits x.hits
+
+        json.recipient_id x.recipient.id
+
+        if x.hits > 0 && x.views
+            json.last_viewed x.views.last.created_at
+        else
+            json.last_viewed ""
+        end
+
+        json.fire x.fire || false
+
+        json.url "/s/" + x.url_code
+        
+        json.xspec_id x.id
     end
-
-    if x.recipient.company
-      json.company x.recipient.company
-    end
-
-    json.hits x.hits
-
-    json.recipient_id x.recipient.id
-
-    if x.hits > 0
-        json.last_viewed x.views.last.created_at
-    else
-        json.last_viewed ""
-    end
-
-    json.fire x.fire || false
-
-    json.url "/s/" + x.url_code
     
-    json.xspec_id x.id
-
 end
 
 # TODO create model methods for these

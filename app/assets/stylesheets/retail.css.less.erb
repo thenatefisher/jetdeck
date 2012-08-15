@@ -12,11 +12,18 @@
 
 @import "twitter/bootstrap/bootstrap";
 @import "twitter/bootstrap/responsive";
-@import "font-awesome.less";
+@iconSpritePath: asset-path('/assets/glyphicons-halflings.png');
+@iconWhiteSpritePath: asset-path('/assets/glyphicons-halflings-white.png');
+@fontAwesomeEotPath:  'font/fontawesome-webfont.eot';
+@fontAwesomeWoffPath: 'font/fontawesome-webfont.woff';
+@fontAwesomeTtfPath:  'font/fontawesome-webfont.ttf';
+@fontAwesomeSvgzPath: 'font/fontawesome-webfont.svgz';
+@fontAwesomeSvgPath:  'font/fontawesome-webfont.svg';
+@import "fontawesome";
 
 body {
   margin: 0px;
-  background: url(<%= asset_path 'bg/bg1.jpg' %>) repeat;
+  background: url(<%= asset_path 'bg/noisepattern.png' %>) repeat;
 }
 
 .hero-unit h1 {

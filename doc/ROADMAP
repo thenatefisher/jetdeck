@@ -1,0 +1,30 @@
+User profile cleanup
+  Close account feature
+  Delete logo
+  
+Retail spec view
+  4 Email to broker
+  Fix description field with rich edit
+  Responsiveness
+  
+Misc
+  6 Update JetDeck logo with correct resolutions
+  1 Airframe#show engines pane auto suggest
+  Help bubbles
+  5 Email templates
+  2 Config spec before sending
+  3 Send/Resend option in spec edit
+  Access Control Audit
+
+Propduction
+  SSL
+  Database Migration and Seeding
+  Browser Compat Checking
+  Write Tests
+  
+Brochure Site
+  Video
+  Pricing
+  Trial Signup
+  Invite list
+

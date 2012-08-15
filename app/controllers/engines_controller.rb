@@ -4,7 +4,16 @@ class EnginesController < ApplicationController
   # GET /engines
   # GET /engines.json
   def index
-    @engines = Engine.where("baseline = 't' OR user_id = '?'", @current_user.id).group(:model_name)
+    if params[:q]
+      @engines = Engine.find(:all,
+        :conditions => ["(make || ' ' || model_name) LIKE ?
+                             AND (baseline = 't' OR user_id = ?)",
+                          "%#{params[:q]}%",
+                          @current_user.id
+                       ],
+        :group => "model_name"
+      ).first(4)
+    end    
   end
   
   # PUT /engines/1

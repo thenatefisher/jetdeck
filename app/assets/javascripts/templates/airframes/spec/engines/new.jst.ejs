@@ -1,19 +1,13 @@
-<div class="modal-header">
+<div class="alert alert-info" style="width: 409px; position: absolute">
 
-  <a class="close" data-dismiss="modal">x</a>
+ This airframe currently has no engines associated with it. Begin typing a model name to select one from the library, or add your own. <br><br>
+ 
+  <input type="hidden" name="engine" class="engine-selection" style="position: absolute; width: 270px; margin-top: 5px"/>
+                
+  <button class="btn btn-primary table-input-margin add_engine pull-right" s>
+    <i class="icon-plus icon-white"></i> Add
+  </button>
+  
+</div>
 
-  <h3>Manage Engines</h3>
-  <p>Select the engines currently on-board this airframe</p>
-</div> <!-- modal header -->
-
-<div class="modal-body">
-
-     <form id="equipment-form" method=POST>
-        <select multiple="multiple" class="multiselect span3" id="avail-parts">
-        </select>
-      </form>
-
-</div> <!-- modal body -->
-
-<div class="modal-footer"></div> <!-- modal footer -->
-
+<div class="clearfix" style="height: 120px;"></div>

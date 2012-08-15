@@ -43,3 +43,6 @@ class Jetdeck.Models.Spec extends Backbone.Model
     last_viewed: ""
     logo: null
     
+class Jetdeck.Collections.SpecsCollection extends Backbone.Collection
+  model: Jetdeck.Models.Spec
+  url: '/xspecs'    

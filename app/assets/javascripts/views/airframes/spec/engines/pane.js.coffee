@@ -39,21 +39,51 @@ class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
     @model.engines.create(newEngine.toJSON())    
     return
   
-  add: () =>
-    newEquipment = new Jetdeck.Views.Engines.AddModal(model: @model, parent: this)
-    newEquipment.modal()
-    return
+  add: =>
+    
+    collection = new Jetdeck.Collections.AirframesCollection()
+    collection = window.router.airframes if window.router.airframes
+    collection.create(@model.toJSON(),
+      success: (airframe) =>
+        @model = airframe
+        window.router.view.spec.engines.render()
+
+      error: (airframe, jqXHR) =>
+        @model.set({errors: $.parseJSON(jqXHR.responseText)})
+    )
 
   destroy: (event) ->
     e = event.target || event.currentTarget
     engineId = $(e).data('eid')
     @model.engines.get(engineId).destroy(
         success: =>
-           @render()
+           window.router.view.spec.engines.render()
     )
     return 
     
   render: =>
     $(@el).html(@template(engineItems: @model.engines.toJSON() ))
 
+    @$("input[name='engine']").select2({
+      placeholder: "PT6A-114 (Pratt and Whitney)",
+      minimumInputLength: 3,
+      createSearchChoice: (term) ->
+        return { id: "0", text: term }
+      ajax: {
+        url: "/engines.json",
+        dataType: "json",
+        quietMillis: 100,
+        data: (term, page) ->
+          return { q: term }
+        results: (data) ->
+          return { results: data }
+      }
+    }).change( (e) =>
+        event = e.target || e.currentTarget
+        id = $(event).val()
+        model_name = $("div.engine-selection a span").html()
+        m = new Jetdeck.Models.EngineModel({id: id, model_name: model_name})
+        @model.engines.add(m)
+        @model.set('engines', @model.engines.toJSON())
+    )
     return this

@@ -6,8 +6,9 @@
       <% if (logo) { %>
       
         <% if (agent_website) { %>
-        
-          <a href="http://<%= agent_website %>"><img class="company-logo" src="<%= logo %>"></a>
+                  
+          <a href="<%= agent_website %>">
+          <img class="company-logo" style="margin-top: 20px;" src="<%= logo %>"></a>
           
         <% } else { %>
         
@@ -25,7 +26,7 @@
         <h1>&nbsp;<%= agent_phone %> </h1>
         <h4>&nbsp;</h4>
         <h4><%= agent_name %></h4>
-        <h4><a href="http://<%= agent_website %>"><%= agent_website %></a></h4>
+        <h4><a href="<%= agent_website %>"><%= agent_website.replace("http://", "") %></a></h4>
       </div>
       <div style="clear: both"></div>
     </div>
@@ -37,7 +38,7 @@
     <% if (message != "" && message != null) { %>
     <div class="alert alert-info broker-message">
     
-      <a class="close" data-dismiss="alert" href="#">×</a>
+      <a class="close" id="close-message" data-dismiss="alert" href="#">×</a>
       
       <h2 class="alert-heading"><%= salutation %></h2>
       
@@ -46,7 +47,7 @@
       <span style="float: right; margin-top: 7px; margin-right: -15px;"> 
       
           <input type="checkbox" 
-                  id="show-message" 
+                  id="dont-show-message" 
                   style="margin-right: 5px; margin-top: 0px"></input>   
                   
           Don't Show Again</span> 
@@ -63,9 +64,9 @@
       <% } else { %> <p> &nbsp;</p> <% } %>
       <br>
       <p>
-        <a class="btn btn-primary btn-large" id="message-seller">
-          <strong><i class="icon-envelope icon-white" style="margin: 4px 10px 0 0"></i> <%= agent_name %></strong>
-        </a>
+        <button class="btn btn-primary btn-large" id="message-seller">
+          <strong><i class="icon-envelope-alt icon-white"></i> <%= agent_name %></strong>
+        </button>
       </p>
 
       <ul class="hero-list">
@@ -89,7 +90,10 @@
         <div class="carousel-inner">
           <% for (i in images) { %>
           <div class="item<% if (images[i].thumbnail == true) { %> active<% } %>">
-            <img class="hero-image" src="<%= images[i].preview %>" data-original="<%= images[i].original %>"/>
+            <img class="hero-image" 
+                  src="<%= images[i].preview %>" 
+                  data-spec_lightbox="<%= images[i].spec_lightbox %>"
+                  data-original="<%= images[i].original %>"/>
           </div>
           <% } %>
         </div>
@@ -175,7 +179,7 @@
             <td><strong>TTSN</strong></td>
             <% for (i in engines) { %>
                 <td>
-                    <% if (typeof(engines[i].tt) != "undefined") { %> 
+                    <% if (typeof(engines[i].tt) != "undefined" && typeof(engines[i].tt) != null) { %> 
                         <%= engines[i].tt.formatMoney(0, ".", ",") %> 
                     <% } %>
                 </td>
@@ -185,7 +189,7 @@
             <td><strong>SMOH</strong></td>
             <% for (i in engines) { %>
                 <td>
-                    <% if (typeof(engines[i].smoh) != "undefined") { %> 
+                    <% if (typeof(engines[i].smoh) != "undefined" && typeof(engines[i].smoh) != null) { %> 
                         <%= engines[i].smoh.formatMoney(0, ".", ",") %> 
                     <% } %>
                 </td> 
@@ -195,7 +199,7 @@
             <td><strong>SHSI</strong></td>
             <% for (i in engines) { %>
                 <td>
-                    <% if (typeof(engines[i].shsi) != "undefined") { %> 
+                    <% if (typeof(engines[i].shsi) != "undefined" && typeof(engines[i].shsi) != null) { %> 
                         <%= engines[i].shsi.formatMoney(0, ".", ",") %> 
                     <% } %>
                 </td>
@@ -293,12 +297,10 @@
 
 </div>
 
-<div class="modal hide" id="image-modal">
-  <div class="modal-body"></div>
+<div class="modal hide" id="image-modal" style="width: 650px">
+  <div class="modal-body" style="max-height: 650px; text-align: center;"></div>
   <div class="modal-footer">
-    <a href="#" class="btn" data-dismiss="modal">Close</a>
-    <a href="#" class="btn"><i class="icon-download-alt"></i> Download</a>
-    <a href="#" class="btn"><i class="icon-briefcase"></i> Get All</a>
+    <button class="btn" data-dismiss="modal">Close</button>
   </div>
 </div>
 

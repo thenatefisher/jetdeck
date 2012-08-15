@@ -18,7 +18,7 @@ Jetdeck::Application.routes.draw do
   
   resources :equipment
 
-  resources :accessories, :only => [:index, :create, :destroy, :update]
+  resources :accessories
   
   match "/login" => "sessions#new"
 
@@ -33,6 +33,8 @@ Jetdeck::Application.routes.draw do
   match "/s/:code" => "xspecs#retail"
 
   match "/s" => "xspecs#recordTimeOnPage"
+  
+  match "/xspecs/send_spec" => "xspecs#send"
   
   match "/favicon.ico" => redirect("/assets/favicon.png")
 

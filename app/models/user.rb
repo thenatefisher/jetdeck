@@ -28,10 +28,10 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :contact_id
   validates_presence_of :contact_id
   validates_presence_of :password, :on => :create
-  
-  if defined? password
-      validates_presence_of :password_confirmation, :on => [:update, :create]
-      validates_confirmation_of :password, :on => [:update, :create]
+
+  if defined? :password
+      validates_presence_of :password_confirmation, :on => :update
+      validates_confirmation_of :password, :on => :update
   end
 
   def set_defaults(paramName)

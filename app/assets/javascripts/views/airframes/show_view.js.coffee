@@ -3,20 +3,22 @@ Jetdeck.Views.Airframes ||= {}
 class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   template: JST["templates/airframes/show"]
 
-  initialize : =>
-    return this
-
   events:
     "change .inline-edit"       : "edit"
     "click .manage_images"      : "manageImages"
+    "click .delete_spec"        : "deleteSpec"
 
+  deleteSpec: () ->
+    confirm = new Jetdeck.Views.Airframes.ConfirmDelete(model: @model)
+    modal(confirm.render().el)
+      
   manageImages: () ->
     if $("#uploader").is(":visible")
       $("#uploader").hide()
-      $(".manage_images a").html("Manage Images")
+      $(".manage_images").html("Manage Images")
     else
       $("#uploader").show()
-      $(".manage_images a").html("Hide Images")
+      $(".manage_images").html("Hide Images")
       
   edit: (event) ->
     e = event.target || event.currentTarget

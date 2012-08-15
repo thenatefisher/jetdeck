@@ -91,5 +91,6 @@ json.images @airframe.accessories do |json, i|
     json.preview "http://s3.amazonaws.com/jetdeck/images/#{i.id}/spec_monitor/#{i.image_file_name}" if i.image_file_name
     json.original "http://s3.amazonaws.com/jetdeck/images/#{i.id}/original/#{i.image_file_name}" if i.image_file_name
     json.thumbnail i.thumbnail
+    json.spec_lightbox "http://s3.amazonaws.com/jetdeck/images/#{i.id}/spec_lightbox/#{i.image_file_name}" if i.image_file_name
 end
 

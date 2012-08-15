@@ -4,8 +4,13 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
   template: JST["templates/contacts/show"]
 
   events:
-    "change .contact_field"  : "edit"
+    "change .contact_field"     : "edit"
+    "click .delete_contact"     : "delete"
 
+  delete: () ->
+    confirm = new Jetdeck.Views.Contacts.ConfirmDelete(model: @model)
+    modal(confirm.render().el)
+    
   edit: (e) ->
     value = $(e.target).val()
     name = $(e.target).attr('name')

@@ -48,12 +48,13 @@
                 class="inline-edit profile_field span3"
                 name="first"
                 value="<%= contact.first %>"
+                style="line-height: 35px"
                 placeholder="First Name">
          </input>
          
          <input type="text"
                 class="inline-edit profile_field span4"
-                style="float: right;"
+                style="float: right; line-height: 35px"
                 name="last"
                 value="<%= contact.last %>"
                 placeholder="Last Name">
@@ -78,12 +79,14 @@
                               <div class="profile-header-label span3">Account Type</div>
                           </td>
                           <td>
-                              Beta / Trial <small class="hide"><a style="margin-left: 20px;" href="#">Upgrade</a></small>
+                              <div style="margin-left: 25px;">Beta / Trial</div>
                           </td>
                       </tr>
+                      
                       <tr>
                           <td>
                               <div class="profile-header-label span3">Phone Number</div>
+                              <div class="span3">Number will be displayed exactly as entered to customers.</div>
                           </td>
                           <td>
                               <input  type="text"
@@ -94,10 +97,12 @@
                                       placeholder="Phone Number">
                               </input>                                                                                  
                           </td>
-                      </tr>       
+                      </tr>   
+                          
                       <tr>
                           <td>
                               <div class="profile-header-label span3">Website</div>
+                              <div class="span3">Must be a valid URL, beginning with <b>http://</b></div>
                           </td>
                           <td>
                               <input  type="text"
@@ -108,7 +113,8 @@
                                       placeholder="Website">
                               </input>                                                                                  
                           </td>
-                      </tr>                                         
+                      </tr> 
+                                                              
                       <tr>
                           <td>
                               <div class="profile-header-label span3">Email Address</div>
@@ -129,13 +135,11 @@
                               </input>
                               <span class="help-inline email-failure hide">
                                      <span>Could Not Update Email</span>
-                              </span>                                  
-                              <br><input style="float:right" 
-                                         type="submit" 
-                                         class="btn btn-warning email-btn"
-                                         id="update_email" 
-                                         value="Update Email"></input>   
-                                                                               
+                              </span>    
+                                                            
+                              <br><button style="float:right"
+                                         class="btn email-btn"
+                                         id="update_email">Update Email</button>                                       
                           </td>
                       </tr>    
                                     
@@ -147,49 +151,52 @@
                               <input  type="password"
                                       style="float:right" 
                                       class="profile_field span4"
-                                      name="password"
-                                      placeholder="[Old Password]">
-                              </input>
-                              <input  type="password"
-                                      style="float:right" 
-                                      class="profile_field span4"
                                       name="new_password"
-                                      placeholder="[New Password]">
+                                      placeholder="New Password">
                               </input>
                               <input  type="password"
                                       style="float:right" 
                                       class="profile_field span4"
                                       name="new_password_confirmation"
-                                      placeholder="[Confirm New Password]">
+                                      placeholder="Confirm New Password">
                               </input>
-                              <br><input style="float:right" 
-                                         type="submit" 
-                                         class="btn btn-warning" 
-                                         id="update_password"
-                                         value="Reset Password"></input>
+                              <br><button style="float:right"
+                                         class="btn email-btn"
+                                         id="update_password">Update Password</button>  
                           </td>
                       </tr>                  
                   
                       <tr>
                           <td>
-                              <div class="profile-header-label span3">Logo</div><br>
-                              <div class="span2">This image will be shown to your customers</div>
+                              <div class="profile-header-label span3">Logo</div>
+                              <div class="span3">This image will be shown to your customers</div>
                           </td>
                           <td>
+                          
                               <% if (logo) { %> 
-                                  <div class="span4" style="float: right">
+                                  <div class="span4" style="float: right; margin-bottom: 20px;">
                                     <img style="float:right" src="<%= logo %>"><br><br> 
                                   </div>
                               <% } %>
+                              
                               <form method="POST" action="/user_logos" enctype="multipart/form-data">
-                                <input style="margin-left: 20px" 
-                                        type="file" id="logo" 
-                                        name="image"></input>   <br>                 
+                                
+                                <input type="file" 
+                                        id="logo" 
+                                        name="image"
+                                        style="display: none"></input>  
+               
                                 <input style="float:right; margin-left: 20px" 
                                         type="submit"
                                         value="Upload"
-                                        class="btn btn-warning span2"></input>                                                                                   
+                                        class="btn span2"></input>   
+                                                                                 
+                                <a style="float: right; margin-left: 20px"
+                                        id="upload"
+                                        class="btn span2">Browse</a>   
+                                                                                                           
                               </form>
+                              
                           </td>
                       </tr>                  
                   </tbody>
