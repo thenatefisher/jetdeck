@@ -6,12 +6,12 @@ class AirframesController < ApplicationController
 
     if params[:q]
       @airframes = Airframe.find(:all,
-        :conditions => ["(make || ' ' || model_name) LIKE ?
+        :conditions => ["make || ' ' || model_name LIKE UPPER(?)
                              AND (baseline = 't' OR user_id = ?)",
                           "%#{params[:q]}%",
                           @current_user.id
                        ],
-        :group => "model_name"
+         :select => "DISTINCT ON (model_name) id, *"
       ).first(4)
     end
 

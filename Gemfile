@@ -26,8 +26,7 @@ gem 'aws-sdk', '~> 1.3.4'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'
-  gem 'mysql2'
-  gem 'sqlite3'
+  gem 'pg'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'guard-rspec'
@@ -35,6 +34,3 @@ group :test, :development do
   gem 'database_cleaner'
 end
 
-group :production do
-  gem 'pg'
-end
