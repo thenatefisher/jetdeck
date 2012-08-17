@@ -31,6 +31,7 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
     @$("#airframe_headline").select2({
       placeholder: "Enter a Model",
       minimumInputLength: 3,
+      id: (o) -> o.text,
       createSearchChoice: (term) ->
         return { id: term, text: term }
       ajax: {

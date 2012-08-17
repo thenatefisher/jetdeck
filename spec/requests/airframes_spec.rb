@@ -13,7 +13,7 @@ describe 'airframe' do
 	page.should have_selector("input#airframe_year")	
  	
 	fill_in "year", :with => "2010"
-	
+	page.execute_script("$('#airframe_headline').select2('val', {id: 'CUSTOM AIRFRAME', text: 'CUSTOM AIRFRAME'})")	
 	fill_in "serial", :with => "XX123"
 	
 	click_on "Create Spec"
