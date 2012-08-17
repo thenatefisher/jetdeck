@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   validates_presence_of :password, :on => :create
 
   if defined? :password
-      validates_presence_of :password_confirmation, :on => :update
+      validates_presence_of :password_confirmation, :on => :password_changed?
       validates_confirmation_of :password, :on => :update
   end
 

@@ -2,10 +2,13 @@ require 'spec_helper'
 
 describe "password reset page" do
   
-  it "loads with 'Reset Password' on page" do
+    it "loads with 'Reset Password' on page", :js => true do
    
         visit "/password_resets"    
-        page.should have_content("Reset Password")
+        
+	page.should have_content("Reset Password")
+
+	page.driver.render('/home/nate/test-shots/password_reset_page.png', :full => true)
         
     end
     

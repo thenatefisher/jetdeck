@@ -11,9 +11,29 @@ require 'paperclip/matchers'
 
 Capybara.javascript_driver = :poltergeist
 
-ScreenshotPath = '/home/nate/test-shots/'
+RSpec.configure do |config|
+  config.include Paperclip::Shoulda::Matchers
+end
 
-# DatabaseCleaner.strategy = :truncation
+RSpec.configure do |config|
+  # Transactional fixtures make Selenium an unhappy camper
+  config.use_transactional_fixtures = false
+
+  config.before do
+  if example.metadata[:js]
+    DatabaseCleaner.strategy = :truncation
+  else
+    DatabaseCleaner.strategy = :transaction
+  end
+  DatabaseCleaner.start
+
+end
+
+
+config.after do
+DatabaseCleaner.clean
+end
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -21,30 +41,14 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
 
-  config.include Paperclip::Shoulda::Matchers
-
-  config.include(UserLogin)
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-  config.use_transactional_fixtures = false 
-
-  config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-  end
-
-  config.before(:suite) do
-    DatabaseCleaner.start
-  end
-
-  config.before(:suite) do
-    DatabaseCleaner.clean
-  end
+  config.use_transactional_fixtures = true
 
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
-
 end

@@ -31,6 +31,8 @@ group :test, :development do
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'guard-rspec'
+  gem 'poltergeist'
+  gem 'database_cleaner'
 end
 
 group :production do
