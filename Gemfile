@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 
 gem 'rails', '3.2.2'
 gem 'bundler'
+gem 'pg'
 
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
@@ -26,7 +27,6 @@ gem 'aws-sdk', '~> 1.3.4'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'
-  gem 'pg'
   gem 'factory_girl_rails'
   gem 'capybara'
   gem 'guard-rspec'
