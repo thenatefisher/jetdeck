@@ -11,7 +11,7 @@ class EnginesController < ApplicationController
                           "%#{params[:q]}%",
                           @current_user.id
                        ],
-        :group => "model_name"
+        :select => "DISTINCT ON (model_name) id, *"
       ).first(4)
     end    
   end
