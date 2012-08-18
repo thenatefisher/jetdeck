@@ -4,7 +4,7 @@ class Jetdeck.Models.Airframe extends Backbone.Model
   defaults :
     serial: null
     registration: null
-    year: null
+    year: ""
     listed: false
     damage: false
     tags: []

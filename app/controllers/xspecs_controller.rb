@@ -3,7 +3,7 @@ class XspecsController < ApplicationController
   
   def send_spec
 
-      Authorize()
+      authorize()
  
       @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
       
@@ -50,7 +50,7 @@ class XspecsController < ApplicationController
   # GET /s/:code
   def retail
 
-    Authorize()
+    authorize()
     @xspec = Xspec.where(:url_code => params[:code]).first
     @airframe = @xspec.airframe
 
@@ -80,7 +80,7 @@ class XspecsController < ApplicationController
 
   # GET /specs/1
   def show
-    Authorize() 
+    authorize() 
     @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
     @backgrounds = XspecBackground.all
     @airframe = @xspec.airframe
@@ -91,7 +91,7 @@ class XspecsController < ApplicationController
   # POST /specs.json
   def create
     
-    Authorize()
+    authorize()
     sender = @current_user.contact
 
     recipient = Contact.where("email = ? AND owner_id = ?", params[:xspec]['recipient_email'], @current_user.id).first
@@ -136,7 +136,7 @@ class XspecsController < ApplicationController
   # PUT /specs/1.json
   def update
 
-      Authorize()
+      authorize()
       @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
       
       if @xspec

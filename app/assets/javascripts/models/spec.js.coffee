@@ -4,7 +4,7 @@ class Jetdeck.Models.Spec extends Backbone.Model
   defaults :
     serial: null
     registration: null
-    year: null
+    year: ""
     listed: false
     damage: false
     tags: []
@@ -12,7 +12,7 @@ class Jetdeck.Models.Spec extends Backbone.Model
     make: ""
     model_name: ""
     asking_price: 0
-    description: ""  
+    description: ""
     message: null
     salutation: null
     show_message: false
