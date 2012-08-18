@@ -16,17 +16,6 @@ class XspecsController < ApplicationController
       end
       
   end
-    
-  # GET /specs
-  # GET /specs.json
-  def index
-#    @specs = Xspec.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-#      format.json { render :json => @specs }
-    end
-  end
 
   def recordTimeOnPage
 
@@ -50,7 +39,6 @@ class XspecsController < ApplicationController
   # GET /s/:code
   def retail
 
-    authorize()
     @xspec = Xspec.where(:url_code => params[:code]).first
     @airframe = @xspec.airframe
 
@@ -67,20 +55,11 @@ class XspecsController < ApplicationController
 
   end
 
-  # GET /specs/new
-  # GET /specs/new.json
-  def new
-    @spec = Xspec.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @spec }
-    end
-  end
-
   # GET /specs/1
   def show
+  
     authorize() 
+    
     @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
     @backgrounds = XspecBackground.all
     @airframe = @xspec.airframe
@@ -92,6 +71,7 @@ class XspecsController < ApplicationController
   def create
     
     authorize()
+    
     sender = @current_user.contact
 
     recipient = Contact.where("email = ? AND owner_id = ?", params[:xspec]['recipient_email'], @current_user.id).first
@@ -137,6 +117,7 @@ class XspecsController < ApplicationController
   def update
 
       authorize()
+      
       @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
       
       if @xspec
@@ -178,15 +159,4 @@ class XspecsController < ApplicationController
       
   end
 
-  # DELETE /specs/1
-  # DELETE /specs/1.json
-  def destroy
-    #@spec = Xspec.find(params[:id])
-    @spec.destroy
-
-    respond_to do |format|
-      format.html { redirect_to specs_url }
-      format.json { head :no_content }
-    end
-  end
 end
