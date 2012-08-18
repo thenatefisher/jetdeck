@@ -1,9 +1,10 @@
 class XspecsController < ApplicationController
-  before_filter :authorize
   include ActionView::Helpers::NumberHelper
   
   def send_spec
-  
+
+      Authorize()
+ 
       @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
       
       if @xspec
@@ -19,11 +20,11 @@ class XspecsController < ApplicationController
   # GET /specs
   # GET /specs.json
   def index
-    @specs = Xspec.all
+#    @specs = Xspec.all
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render :json => @specs }
+#      format.json { render :json => @specs }
     end
   end
 
@@ -49,6 +50,7 @@ class XspecsController < ApplicationController
   # GET /s/:code
   def retail
 
+    Authorize()
     @xspec = Xspec.where(:url_code => params[:code]).first
     @airframe = @xspec.airframe
 
@@ -78,7 +80,7 @@ class XspecsController < ApplicationController
 
   # GET /specs/1
   def show
-  
+    Authorize() 
     @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
     @backgrounds = XspecBackground.all
     @airframe = @xspec.airframe
@@ -89,6 +91,7 @@ class XspecsController < ApplicationController
   # POST /specs.json
   def create
     
+    Authorize()
     sender = @current_user.contact
 
     recipient = Contact.where("email = ? AND owner_id = ?", params[:xspec]['recipient_email'], @current_user.id).first
@@ -133,6 +136,7 @@ class XspecsController < ApplicationController
   # PUT /specs/1.json
   def update
 
+      Authorize()
       @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
       
       if @xspec
@@ -177,7 +181,7 @@ class XspecsController < ApplicationController
   # DELETE /specs/1
   # DELETE /specs/1.json
   def destroy
-    @spec = Xspec.find(params[:id])
+    #@spec = Xspec.find(params[:id])
     @spec.destroy
 
     respond_to do |format|
