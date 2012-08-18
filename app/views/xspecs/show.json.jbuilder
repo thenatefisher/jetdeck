@@ -1,5 +1,6 @@
 json.(@xspec, 
   :id,
+  :url_code, 
   :message, 
   :salutation, 
   :show_message, 
@@ -35,7 +36,7 @@ end
 
 json.asking_price number_to_currency @xspec.airframe.asking_price, :precision => 0 
 
-json.recipient @xspec.recipient.email
+json.recipient @xspec.recipient
 
 json.hits @xspec.hits
 

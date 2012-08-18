@@ -26,7 +26,8 @@
         <h1>&nbsp;<%= agent_phone %> </h1>
         <h4>&nbsp;</h4>
         <h4><%= agent_name %></h4>
-        <h4><a href="<%= agent_website %>"><%= agent_website.replace("http://", "") %></a></h4>
+	<% if (agent_website) { %>
+        <h4><a href="<%= agent_website %>"><%= agent_website.replace("http://", "") %></a></h4><% } %>
       </div>
       <div style="clear: both"></div>
     </div>

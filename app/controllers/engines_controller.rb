@@ -6,7 +6,7 @@ class EnginesController < ApplicationController
   def index
     if params[:q]
       @engines = Engine.find(:all,
-        :conditions => ["(make || ' ' || model_name) LIKE ?
+        :conditions => ["(make || ' ' || model_name) LIKE UPPER(?)
                              AND (baseline = 't' OR user_id = ?)",
                           "%#{params[:q]}%",
                           @current_user.id
