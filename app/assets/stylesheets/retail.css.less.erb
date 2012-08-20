@@ -1,17 +1,11 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
+ *= require photoswipe
  *= require_self
 */
 
-@import "twitter/bootstrap/bootstrap";
-@import "twitter/bootstrap/responsive";
+@import 'twitter/bootstrap/bootstrap';
+@import 'twitter/bootstrap/responsive';
+
 @iconSpritePath: asset-path('/assets/glyphicons-halflings.png');
 @iconWhiteSpritePath: asset-path('/assets/glyphicons-halflings-white.png');
 @fontAwesomeEotPath:  'font/fontawesome-webfont.eot';
@@ -19,143 +13,219 @@
 @fontAwesomeTtfPath:  'font/fontawesome-webfont.ttf';
 @fontAwesomeSvgzPath: 'font/fontawesome-webfont.svgz';
 @fontAwesomeSvgPath:  'font/fontawesome-webfont.svg';
-@import "fontawesome";
+@import 'fontawesome';
 
 body {
-  margin: 0px;
   background: url(<%= asset_path 'bg/noisepattern.png' %>) repeat;
 }
 
-.hero-unit h1 {
-  font-size: 40px;
-  margin-top: 20px;
-}
-
-.hero-image {
-  width: 400px;
-  overflow: hidden;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-  cursor: pointer;  
-}
-
-.hero-list {
-  margin: 30px 0 0 0;
-  list-style: none;
-  
-}
-
-.item {
-  height: 300px;
-}
-
-.hero-list li {
-  height: 35px
-}
-
 .whitebox {
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px;
-  background: white;
-}
-
-.carousel-control {
-  top: 50%
+  background: #FFFFFF;
+  .border-radius(6px);
+  .container-fixed();
+  .center-block();
+  .clearfix();
+  padding: 10px 30px; 
+  margin: 15px auto;
 }
 
 .company-banner {
-  margin-bottom: 30px;
+  .whitebox;
+  .border-radius(0 0 6px 6px);
+  .clearfix;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  margin-top: 0px;
 }
 
-.company-banner div.whitebox {
-  -webkit-border-top-right-radius: 0px;
-  -webkit-border-top-left-radius: 0px;
-  -moz-border-radius-topright: 0px;
-  -moz-border-radius-topleft: 0px;
-  border-top-right-radius: 0px;
-  border-top-left-radius: 0px;
-}
-
-.hero-image-float {
-  float: right;
-}
-
-#hero-carousel {
-  width: 400px;
-  margin: 0 auto;
+.agent-name-phone {
+  margin-top: 10px; 
+  margin-left: 10px;
+  .pull-left;
 }
 
 .company-logo {
-  margin: 10px 20px; 
   max-height: 70px;
 }
 
-.company-name {
-    margin: 30px 20px;
-    float: left;
+.company-logo.has-website { 
+  margin-top: 20px 
 }
 
+.company-name {
+  .pull-left; 
+  color: black;
+}
+
+.agent-info {
+  position: absolute; 
+  right: 0; top: 0;
+  text-align: right;
+}
+
+#retail-unit {
+  .whitebox;
+  padding-bottom: 0px;
+  .clearfix;
+  padding-top: 30px;
+}
+
+#retail-unit h1 {
+  font-size: 40px;
+  margin-top: 20px;
+  .clearfix;
+}
+
+.asking-price {
+  margin-top: 5px;
+  font-size: 15px;
+}
+
+.contact {
+  margin-top: 10px;
+}
+
+.hero-list {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  list-style: disc;
+  font-size: 20px;
+}
+
+.hero-list li h3 { 
+  line-height: 20px;
+}
+
+.hero-list li {
+  margin-bottom: 15px;
+}
+
+.hero-list li:last-child {
+  margin-bottom: 0px;
+}
+
+.broker-message {
+  margin: -30px -30px;
+  margin-bottom: 30px;
+  .border-radius(6px 6px 0 0);
+}
+
+#dont-show-again {
+  float: right; 
+  margin-top: 7px; 
+  margin-right: -15px;
+}
+
+#dont-show-again:after { 
+  clear: both 
+}
+
+#dont-show-again input {
+  margin-right: 5px; 
+  margin-top: 0px;
+}
+
+.gallery img {
+  .border-radius(6px);
+  max-height: 300px;
+}
+
+.gallery {
+  overflow: none;
+  margin-bottom: 30px;
+  margin: 0px auto;
+}
+
+.gallery li {
+  .hide;
+}
+
+.gallery li:first-child {
+  .show;
+}
+
+#spec-detail {
+  .whitebox;
+  .clearfix;
+}
+
+#footer {
+  .pull-right;
+  margin: 20px;
+}
+    
+/* Large desktop */
+/* preview img 400x300 */
+@media (min-width: 1200px) { 
+
+  .container { 
+    width: 1000px; 
+  }
+
+}
+
+/* Portrait tablet to landscape and desktop */
+/* preview img 265x300 */
 @media (min-width: 768px) and (max-width: 979px) {
 
-  .hero-image-float {
-    float: none;
+  #retail-unit {
+    padding: 20px 10px;
   }
-  .hero-text-data {
-    width: 100%;
+  
+  .broker-message {
+    margin: -20px -10px;
+    margin-bottom: 10px;
+  }  
+  
+  #retail-unit h1 {
+    margin-top: 10px;
+    .clearfix;
   }
+
+  .contact {
+    margin-top: 20px;
+  }
+
 }
 
+/* Landscape phone to portrait tablet */
 @media (max-width: 767px) {
 
-  #message-seller {
-    display: none;
+  #retail-unit {
+    padding: 10px 10px;
+    margin-top: 5px;
+  }
+  
+  .broker-message {
+    margin: -10px -10px;
+    margin-bottom: 10px;
+  }  
+  
+  #retail-unit h1 {
+    margin-top: 10px;
+    .clearfix;
+  }
+  
+  .broker-message {
+    margin-bottom: 0px;
+  }    
+  
+  .contact {
+    margin: 0px auto;
   }
 
-  .company-logo {
-    width: 150px;
-    margin: 20px 20px;
-    height: auto;
+  .company-banner-phone {
+    padding: 0px;
+    margin: 0px;
+    margin-top: 5px;
   }
 
-  .hero-image-float {
-    float: none;
-  }
-
-  .hero-text-data {
-    width: 100%;
-  }
 }
 
-@media only screen and (max-width: 540px) {
+/* Landscape phones and down */
+@media only screen and (max-width: 480px) {
 
-  .print-spec, #message-seller, .company-logo, .broker-message {
-    display: none;
-  }
 
-  .hero-image-float {
-    float: none;
-  }
-
-  .hero-text-data {
-    width: 100%;
-  }
-
-  .spec-data {
-    margin: 0px;
-    width: 100%
-  }
-
-  .hero-list li {
-    height: 60px
-  }
-
-  #hero-carousel {
-    width: 300px;
-    height: auto;
-    margin: 0 auto;
-  }
 
 
 

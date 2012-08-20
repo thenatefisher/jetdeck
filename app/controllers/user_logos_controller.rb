@@ -14,7 +14,7 @@ class UserLogosController < ApplicationController
         if @logo.save && @current_user.present?
         
             if @logo.image_file_name.present?
-              @current_user.logo.destroy
+              @current_user.logo.destroy if @current_user.logo
               @current_user.logo = @logo
             end
 
