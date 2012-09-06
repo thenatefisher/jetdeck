@@ -2,15 +2,17 @@ class XSpecMailer < ActionMailer::Base
   default from: "JetDeck.co <noreply@jetdeck.co>"
   layout "retailMailer"
 
-  def sendRetail(xspec, contact)
+  def sendRetail(xspec, recipient)
 
-    @contact = contact
-    @url  = xspec.url_code
-
-    status = mail(:to => contact.email,
-         :subject => xspec.airframe.to_s) do |format|
-      format.html
+    @recipient = recipient
+    @xspec  = xspec
+    @sender  = xspec.sender
+    
+    status = mail(:to => @recipient.email,
+         :subject => xspec.airframe.to_s,
+         :from => @sender.emailField) do |format|
       format.text
+      format.html
     end
     
     xspec.sent = Time.now() if status

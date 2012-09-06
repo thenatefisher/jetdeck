@@ -34,7 +34,7 @@ Jetdeck::Application.routes.draw do
 
   match "/s" => "xspecs#recordTimeOnPage"
   
-  match "/xspecs/send_spec" => "xspecs#send"
+  match "/xspecs/send_spec/:id" => "xspecs#send_spec"
   
   match "/favicon.ico" => redirect("/assets/favicon.png")
 

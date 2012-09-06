@@ -83,6 +83,9 @@ json.leads @airframe.xspecs do |json, x|
         json.url "/s/" + x.url_code
         
         json.xspec_id x.id
+        
+        json.recipientEmailField x.recipient.emailField
+        
     end
     
 end

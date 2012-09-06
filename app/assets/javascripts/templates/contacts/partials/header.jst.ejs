@@ -7,10 +7,9 @@
 
   <div class="offset2">
   
-      <div class="span7" id="profile_name_edit">
-
+      <div class="span7">
          <input type="text"
-                class="inline-edit profile_field span3"
+                class="profile_field span3"
                 name="first"
                 value="<%= first %>"
                 style="line-height: 35px"
@@ -18,7 +17,7 @@
          </input>
          
          <input type="text"
-                class="inline-edit profile_field span4"
+                class="profile_field span4"
                 style="float: right; line-height: 35px"
                 name="last"
                 value="<%= last %>"
@@ -34,13 +33,23 @@
                       <div class="contact-header-label">Company</div>
                   </td>
                   <td>
+                  
+                    <div class="edit-group" for="company">
+                    
+                      <div class="btn-group pull-right">
+                        <button class="btn btn-small change-ok"><i class="icon-ok"></i></button>
+                        <button class="btn btn-small change-cancel"><i class="icon-remove"></i></button>
+                      </div>
+                      <div class="updated"><i class="icon-ok-sign"></i></div>
+                      <div class="error"><i class="icon-exclamation-sign"></i></div>
                       <input  type="text"
-                              style="float: right"
-                              class="inline-edit contact_field span5"
+                              style="float: right;"
+                              class="span4"
                               value="<%= company %>"
                               name="company"
-                              placeholder="Company Name">
-                      </input>
+                              placeholder="Company Name"></input>
+                    </div>
+                    
                   </td>
               </tr>
                           
@@ -49,13 +58,21 @@
                       <div class="contact-header-label">Phone</div>
                   </td>
                   <td>
+                    <div class="edit-group" for="phone">
+                    
+                      <div class="btn-group pull-right">
+                        <button class="btn btn-small change-ok"><i class="icon-ok"></i></button>
+                        <button class="btn btn-small change-cancel"><i class="icon-remove"></i></button>
+                      </div>
+                      <div class="updated"><i class="icon-ok-sign"></i></div>
+                      <div class="error"><i class="icon-exclamation-sign"></i></div>
                       <input  type="text"
-                              style="float: right"
-                              class="inline-edit contact_field span5"
+                              style="float: right;"
+                              class="span4"
                               value="<%= phone %>"
                               name="phone"
-                              placeholder="Phone Number">
-                      </input>
+                              placeholder="Phone Number"></input>
+                    </div>
                   </td>
               </tr>
               
@@ -64,13 +81,22 @@
                       <div class="contact-header-label">Email</div>
                   </td>
                   <td>
+                    <div class="edit-group" for="email">
+                    
+                      <div class="btn-group pull-right">
+                        <button class="btn btn-small change-ok"><i class="icon-ok"></i></button>
+                        <button class="btn btn-small change-cancel"><i class="icon-remove"></i></button>
+                      </div>
+                      <div class="updated"><i class="icon-ok-sign"></i></div>
+                      <div class="error"><i class="icon-exclamation-sign"></i></div>
                       <input  type="text"
-                              style="float: right"
-                              class="inline-edit contact_field span5"
+                              style="float: right;"
+                              class="span4"
                               value="<%= email %>"
                               name="email"
-                              placeholder="Email Address">
-                      </input>
+                              placeholder="Email Address"></input>
+                     </div>
+                     
                   </td>
               </tr>
               

@@ -1,4 +1,28 @@
-HTML
+<% if @recipient.first.present? %>Hello <%= @recipient.first %>, <% else %>Hello, <% end %>
 
-Click here to see this aircraft specification:
-<%= root_url %>s/<%= @url %>
+I have prepared a <%= @xspec.airframe.to_s%> spec for you, available here:
+
+<%= root_url %>s/<%= @xspec.url_code %>
+
+<% if @sender.phone.present? %>
+
+You may reach me by replying to this message or calling <%= @sender.phone %>.
+<% end %>
+
+<% if @sender.fullName %>
+Thank You, 
+  
+<%= @sender.fullName %>
+<% if @sender.company.present? %>
+<%= @sender.company %>
+<% end %>
+<% end %>
+
+
+
+--
+Powered by JetDeck [http://www.jetdeck.co]
+If you no longer wish to receive emails from this person, 
+you may notify the sender at <%= @sender.email %>.
+
+

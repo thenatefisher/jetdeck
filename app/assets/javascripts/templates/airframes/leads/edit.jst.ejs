@@ -1,18 +1,19 @@
 
-<div class="modal">
+<div class="modal" id="spec-edit-modal">
     <form>
     <div style="margin-top: 20px;">
 
       <h2 style="margin-left: 20px; line-height: 18px;">
-          <small><%= recipient %></small>
+          <small><%= recipient.email %></small>
       </h2>
       
       <div class="tabbable">
         <ul class="nav nav-tabs">
-          <li class="pull-right" style="margin-right: 20px;"><a href="#fields_tab" data-toggle="tab">Fields</a></li>
+          <li class="pull-right" style="margin-right: 20px;"><a href="#stats_tab" data-toggle="tab">Stats</a></li>
+          <li class="pull-right"><a href="#fields_tab" data-toggle="tab">Fields</a></li>
           <li class="pull-right"><a href="#message_tab" data-toggle="tab">Message</a></li>
-          <li class="pull-right"><a href="#taglines_tab" data-toggle="tab">Taglines</a></li>          
-          <li class="pull-right active"><a href="#stats_tab" data-toggle="tab">Stats</a></li>
+          <li class="pull-right active"><a href="#taglines_tab" data-toggle="tab">Taglines</a></li>          
+          
         </ul>
       </div>
       
@@ -21,7 +22,7 @@
 
         <div class="tab-content">
         
-          <div class="tab-pane" id="taglines_tab">
+          <div class="tab-pane active" id="taglines_tab">
             
               <div style="margin: 0 20px 20px;">
                 <h3>Tag Lines</h3>
@@ -87,53 +88,6 @@
               </div>              
 
           </div>
-          
-          <div class="tab-pane active" id="stats_tab">
-          
-              
-              <div class="span6" style="margin: 0px auto; float: none;">
-                <h3>View History</h3>
-                <div id="chartContainer"></div>
-              </div>
-          
-              <div style="clear: both; height: 20px;">&nbsp;</div>
-          
-              <hr>
-              
-                <div class="span">
-                  
-                  <div style="text-align: center;" class="span3 pull-left">
-                    <h2><%= hits %></h2>
-                    <h3>Total Views</h3>
-                  </div>   
-                        
-                  <div style="text-align: center;" class="span3 pull-left">
-                    <h2><%= top_average %></h2>
-                    <h3>Avg View Time</h3>
-                  </div>  
-                                                                            
-                </div>
-              
-                <div style="clear: both; height: 20px;">&nbsp;</div>
-              
-                <div class="pull-left">
-                  <dl class="dl-horizontal" style="margin-bottom: 13px;">
-                    <dt>Last Sent</dt>
-                    <dd><%= sent %></dd>
-                    <dt>Last Viewed</dt>
-                    <dd><%= last_viewed %></dd>                      
-                      
-                  </dl>        
-                </div>
-              
-                <div class="pull-left">
-                  
-                      <button class="btn btn-warning btn-large offset1" style="margin-top: 10px;">
-                      <i class="icon-envelope-alt"></i> Send Spec</button>
-     
-                </div>                
- 
-          </div>
                     
           <div class="tab-pane" id="fields_tab">
             
@@ -188,12 +142,54 @@
                 <p> </p>
               </div>                         
                                 
-          </div>        
+          </div>    
+          
+          <div class="tab-pane" id="stats_tab">
+              
+              <div class="span6" style="margin: 0px auto; float: none;">
+                <h3>View History</h3>
+                <div id="chartContainer"></div>
+              </div>
+          
+              <div style="clear: both; height: 20px;">&nbsp;</div>
+          
+              <hr>
+              
+                <div class="span">
+                  
+                  <div style="text-align: center;" class="span3 pull-left">
+                    <h2><%= hits %></h2>
+                    <h3>Total Views</h3>
+                  </div>   
+                        
+                  <div style="text-align: center;" class="span3 pull-left">
+                    <h2><%= top_average %> </h2>
+                    <h3>Avg View Time</h3>
+                    <h5>( min:sec )</h5>
+                  </div>  
+                                                                            
+                </div>
+              
+                <div style="clear: both; height: 20px;">&nbsp;</div>
+              
+                <div class="pull-left">
+                  <dl class="dl-horizontal" style="margin-bottom: 13px;">
+                    <dt>Last Sent</dt>
+                    <dd><%= sent %></dd>
+                    <dt>Last Viewed</dt>
+                    <dd><%= last_viewed %></dd>                      
+                      
+                  </dl>        
+                </div>
+ 
+          </div>              
       </div>
   </form>
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal">Close</button>
-    <button class="btn btn-primary" id="xspec_save">Save</button>    
+    <button class="btn" data-dismiss="modal">Cancel</button>
+    <button class="btn" id="xspec_save">Save & Close</button>    
+    <button class="btn btn-primary" id="next_tab">Next</button>  
+    <button class="btn btn-warning hide" id="xspec_send"><i class="icon-envelope-alt"></i> Save and Send</button>    
   </div>
   
 </div>

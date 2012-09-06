@@ -31,7 +31,7 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
         new_lead = {
           email : m.recipient.email
           id : m.recipient.id
-          xspecId: m.id
+          xspec_id: m.id
           url: "/s/" + m.url_code
         }
 
@@ -46,7 +46,6 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
         specModel.collection = new Jetdeck.Collections.SpecsCollection()
         specView = new Jetdeck.Views.Spec.EditView(model: specModel)
         modal(specView.render().el)
-        console.log specView.render().el
         
     ).error( (m) =>
     

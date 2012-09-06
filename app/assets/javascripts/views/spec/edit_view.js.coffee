@@ -4,7 +4,24 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
   template: JST["templates/airframes/leads/edit"]
 
   events:
-    "click #xspec_save" : "update"
+    "click #xspec_send"             : "send"
+    "click #xspec_save"             : "update"
+    "click #next_tab"               : "next"
+    "click a[href='#stats_tab']"    : "sendButton"
+
+  send: =>
+    $.post("/xspecs/send_spec/" + @model.get("id") )
+    modalClose()
+    
+  sendButton: =>
+    @$("#next_tab").hide()
+    @$("#xspec_send").show()
+  
+  next: =>
+    tabname = $("#spec-edit-modal .tab-pane:visible").next().attr('id')
+    $("a[href='#" + tabname + "']").tab('show')
+    if $("#spec-edit-modal .tab-pane:visible").next().length == 0
+      @sendButton
 
   update : (e) ->
     e.preventDefault()
@@ -52,7 +69,7 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
         legend:
           enabled: false
         series: [{
-          data: [2,12,4,15,7,11,4,24,17,24]
+          data: @model.get('history').data
           pointStart: parseInt(@model.get('history').start)*1000
           pointInterval: 24 * 3600 * 1000        
         }]

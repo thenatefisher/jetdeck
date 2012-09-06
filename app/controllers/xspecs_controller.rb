@@ -46,7 +46,7 @@ class XspecsController < ApplicationController
         redirect_to "/"
         return
     else
-      if @current_user.nil?
+      if current_user.nil?
         @xspec.views << SpecView.create(:agent => request.user_agent, :ip => request.remote_ip)
       end
     end
@@ -92,7 +92,7 @@ class XspecsController < ApplicationController
     
       if @xspec.save
 
-        if params[:xspec]['send']
+        if params[:xspec]['send'] == "true"
         
           XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
           
@@ -158,5 +158,19 @@ class XspecsController < ApplicationController
       end
       
   end
+  
+  def destroy
+  
+    authorize()
+    
+    @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
+    
+    @xspec.destroy() if @xspec
 
+    respond_to do |format|
+      format.json { head :no_content }
+    end
+    
+  end
+  
 end

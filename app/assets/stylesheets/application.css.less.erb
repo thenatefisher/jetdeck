@@ -21,6 +21,29 @@ body {
   background: url(<%= asset_path 'bg/dots.png' %>) repeat;
 }
 
+.edit-group .btn-group {
+  display: none;
+  margin-left: 10px;
+}
+
+.edit-group .updated {
+  margin-top: 8px;
+  margin-left: 5px;
+  color: green;
+  display: none;
+  .pull-right;
+  font-size: 18px;
+}
+
+.edit-group .error {
+  margin-top: 8px;
+  margin-left: 5px;
+  color: #BB2222;
+  display: none;
+  .pull-right;
+  font-size: 18px;
+}
+
 .navbar-inner {
   background: transparent;
   -webkit-box-shadow: none;
@@ -118,6 +141,10 @@ body {
 .engine-table td { border: 0px; }
 
 .engine-table h4 { margin: 9px auto; }
+
+.engine-selection {
+  margin: 5px;
+}
 
 .main-thumbnail {
   overflow: hidden; -webkit-border-radius: 4px;

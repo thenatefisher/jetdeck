@@ -1,13 +1,10 @@
 Third Party Libraries
 
-  Brochure:
-      https://github.com/mhoofman/wordpress-heroku
-
   Front End:
       jQuery MultiSelect
       jQueryUI AutoComplete
-      SubtleBackgrounds Cork
-      Google Web Fonts
+      SubtleBackgrounds
+      https://github.com/jhollingworth/bootstrap-wysihtml5/
 
   Back End:
       Paperclip

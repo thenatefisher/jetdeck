@@ -35,8 +35,9 @@ class Jetdeck.Views.Engines.AddModal extends Backbone.View
     @model.engines.add(m)
     @model.set('engines', @model.engines.toJSON())
     @model.save(null,
-        success: =>
-            @model.fetch( success: => @options.parent.render())
+        success: (obj) =>
+            @model = obj
+            @options.parent.render()
     )
 
   modal : =>

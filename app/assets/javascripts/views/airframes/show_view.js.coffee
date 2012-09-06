@@ -15,10 +15,10 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   manageImages: () ->
     if $("#uploader").is(":visible")
       $("#uploader").hide()
-      $(".manage_images").html("Manage Images")
+      $("a.manage_images_link").html("Manage Images")
     else
       $("#uploader").show()
-      $(".manage_images").html("Hide Images")
+      $("a.manage_images_link").html("Hide Images")
       
   edit: (event) ->
     e = event.target || event.currentTarget

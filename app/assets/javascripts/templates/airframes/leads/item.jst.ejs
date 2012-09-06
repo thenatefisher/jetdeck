@@ -2,7 +2,8 @@
 <a href="/contacts#/<%= id %>">
     <%= (name != "") ? name : email %>
 </a>
-<% if (fire) { %><i class="icon-bolt"></i><% } %>
+<% if (fire) { %><i style="color: red; font-weight: bold; margin-left: 5px;" 
+                    class="icon-bolt"></i><% } %>
 </td>
 
 <td style="text-align:center;"><%= hits %></td>
@@ -20,14 +21,14 @@
     <div class="lead_buttons btn-group pull-right" 
           style="width: 85px; height: 20px;">
     
-      <button class="hide btn btn-mini xspec_settings">
-        <i class="icon-tasks xspec_settings"></i> 
+      <button class="hide btn btn-mini xspec_settings" title="Edit Spec" >
+        <i class="icon-wrench xspec_settings"></i> 
       </button>
       
-      <a class="hide btn btn-mini" href="<%= url %>"><i class="icon-folder-open view"></i></a>
+      <a class="hide btn btn-mini" title="Preview Spec" href="<%= url %>"><i class="icon-search view"></i></a>
       
-      <button class="hide btn btn-mini remove_xspec">
-        <i class="icon-trash remove_xspec"></i>
+      <button class="hide btn btn-mini remove_xspec" title="Delete Spec" >
+        <i class="icon-remove remove_xspec"></i>
       </button>
       
     </div>

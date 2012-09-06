@@ -14,9 +14,12 @@ class Jetdeck.Views.Spec.ShowView extends Backbone.View
   render: ->
     $(@el).html(@template(@model.toJSON() ))
 
+    # handle IE 7 compatibility
     if $.browser != 'msie' && $.browser.version != '7.0'
-      # handle IE 7 compatibility
-      @$(".gallery a").photoSwipe()
+      # only use gallery if images are present
+      if @model.get('images').length > 0
+        # start photo gallery  
+        @$(".gallery a").photoSwipe()
 
     urlCode = @model.get('url_code')
     
