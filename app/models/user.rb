@@ -20,10 +20,10 @@ class User < ActiveRecord::Base
   has_many :airframes, :dependent => :destroy
 
   has_many :contacts, :class_name => 'Contact', :foreign_key => "owner_id"
+  
   belongs_to :contact, :dependent => :destroy
 
-  #has_secure_password
-  #force_ssl
+  has_secure_password
 
   validates_uniqueness_of :contact_id
   validates_presence_of :contact_id
@@ -65,7 +65,7 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email, password)
-    contact = Contact.find_by_email(email)
+    contact = Contact.where(:email => email, :owner_id => nil).first
     user = User.where(:contact_id => contact, :active => true).first
     if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
       user
