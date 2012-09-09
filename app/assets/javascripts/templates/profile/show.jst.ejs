@@ -116,7 +116,9 @@
                                         type="text"
                                         class="inline-edit"
                                         style="width: 240px"
+                                        <% if (contact.website) { %>
                                         value="<%= contact.website.replace('http://', '') %>"
+                                        <% } %>
                                         name="website"
                                         placeholder="www.website.com" />
                             

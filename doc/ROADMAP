@@ -5,11 +5,12 @@ Production
   Write Tests
   Access Control Audit  
   Turn on Google Analytics, New Relic, Clear AWS
+  Install Intermediate SSL Cert
 
 Bugs List
   Images need to be resized/cropped on upload to spec defined sizes
   Need retail image placeholder of correct dimensions
-  contact model: uniqueness is also specific to an owner
+  contact model: email uniqueness is also specific to an owner
   Select thumbnail has some bugs
   Edit airframe engines, avionics and equipment 
   
