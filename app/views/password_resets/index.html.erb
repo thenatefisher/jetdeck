@@ -1,7 +1,7 @@
 
-<div style="padding: 20px 0 0 40px">
+<div style="padding: 20px 0 0 10px">
 
-    <div class="span2"></div><h2>Reset Password</h2>
+    <div class="span1">&nbsp;</div><h2>Reset Password</h2>
     <form class="form-horizontal" 
             style="margin: 20px 0px;" 
             method="POST" 
@@ -9,11 +9,12 @@
 
           <div class="control-group <% if flash[:notice] %> error <% end%>">
 
-              <label class="control-label" for="email">Email</label>
+              <div class="span1" for="email" style="text-align: right; margin-top: 5px">Email</div>
                         
-              <div class="controls">
+              <div class="span5">
                 <input
-                  class="input-xlarge focused"
+                  class="focused pull-right"
+                  style="margin-left: 10px; width: 100%" 
                   id="email"
                   name="email"
                   type="text"
@@ -27,13 +28,15 @@
 
           </div>
 
-          <div class="pull-right" style="margin-right: 30px;">
-              <span><a href="/login">Log In!</a></span>
-              <input style="margin-top: -5px; margin-left: 10px" 
-                        type="submit" 
-                        class="btn btn-primary" 
+          <div class="span1">&nbsp;</div>
+          <div class="span5">
+              
+              <input type="submit" 
+                        class="btn btn-primary pull-right" 
                         value="Reset Password" />
+              
           </div>
+          
           
           <div class="clearfix"></div>
           
