@@ -59,8 +59,7 @@
                         <a href="/profile">
 
                             <% if current_user %>
-                              <% if !current_user.contact.first && 
-                                    !current_user.contact.last %>
+                              <% if current_user.contact.first == "" && %>
                               <strong>Member</strong>    
                               <% else %>
                               <strong>

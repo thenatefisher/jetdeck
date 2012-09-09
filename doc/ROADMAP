@@ -1,37 +1,32 @@
+##### TODAY #####
 
-Production
-  Database Migration and Seeding
-  Browser Compat Checking
-  Write Tests
-  Access Control Audit  
-  Turn on New Relic, Clear AWS
+  10      Edit airframe engines, avionics and equipment 
+  15  XXX SSL the profile page logo image from S3
+  20      Images need to be resized/cropped on upload to spec defined sizes
+  30  XXX Contact model: email uniqueness is also specific to an owner
+  40      Need retail image placeholder of correct dimensions
+  50      Database Migration and Seeding
+  
+##### THIS WEEK #####
 
-Bugs List
-  Edit airframe engines, avionics and equipment 
-  Images need to be resized/cropped on upload to spec defined sizes
-  Contact model: email uniqueness is also specific to an owner
-  Need retail image placeholder of correct dimensions
-  Select thumbnail has some bugs
+  54      Write Tests
+  55      Access Control Audit
+  60      Browser Compatibility Checking
+  65      Migrate in public spec improvements from mkting demo
+  70  XXX Turn on New Relic
+  80      Mail LLC docs
+  90      Error Pages
+  100 XXX user.rb: has secure password / force ssl
+  110     Make staging/dev AWS S3 area
+  
+##### LATER #####
 
-Product Improvement
+================================================================================  
+
+Product Improvements
+
   Description field rich edit
   Close account feature 
   Partial out the layouts
   Combine lead and xspec data types in front end
   Straighten up user/contact schemas and model names
-  
-== TODAY == 
-
-  10      Edit airframe engines, avionics and equipment 
-  15      SSL the profile page logo image from S3
-  20      Images need to be resized/cropped on upload to spec defined sizes
-  30      Contact model: email uniqueness is also specific to an owner
-  40      Need retail image placeholder of correct dimensions
-  50      Database Migration and Seeding
-  60      Browser Compatibility Checking
-  70  XXX Turn on New Relic
-  80      Mail LLC docs
-  90      Error Pages
-  100 XXX user.rb: has secure password / force ssl
-  
-
