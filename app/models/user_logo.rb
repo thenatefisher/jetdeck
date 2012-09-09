@@ -7,6 +7,7 @@ class UserLogo < ActiveRecord::Base
                       :s3_credentials => "#{Rails.root}/config/aws_keys.yml",
                       :storage => :s3,
                       :s3_host_alias => "jetdeck.s3.amazonaws.com",
+                      :s3_protocol => "https",
                       :url => "jetdeck.s3.amazonaws.com",
                       :bucket => "jetdeck",
                       :s3_permissions => :public_read,
@@ -27,13 +28,13 @@ class UserLogo < ActiveRecord::Base
       
     def url
 
-      "http://s3.amazonaws.com/jetdeck/logos/#{id}/thumb/#{image_file_name}"
+      "https://s3.amazonaws.com/jetdeck/logos/#{id}/thumb/#{image_file_name}"
 
     end
 
     def url_original
 
-      "http://s3.amazonaws.com/jetdeck/logos/#{id}/original/#{image_file_name}"
+      "https://s3.amazonaws.com/jetdeck/logos/#{id}/original/#{image_file_name}"
 
     end
 
@@ -41,8 +42,8 @@ class UserLogo < ActiveRecord::Base
         {
           "name" => self.image_file_name,
           "size" => self.image_file_size,
-          "url" => "http://s3.amazonaws.com/jetdeck/logos/#{id}/original/#{image_file_name}",
-          "thumbnail_url" => "http://s3.amazonaws.com/jetdeck/logos/#{id}/thumb/#{image_file_name}",
+          "url" => "https://s3.amazonaws.com/jetdeck/logos/#{id}/original/#{image_file_name}",
+          "thumbnail_url" => "https://s3.amazonaws.com/jetdeck/logos/#{id}/thumb/#{image_file_name}",
           "delete_url" => "/user_logos",
           "delete_type" => "DELETE",
           "id" => self.id

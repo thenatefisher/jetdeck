@@ -23,8 +23,6 @@ class User < ActiveRecord::Base
   
   belongs_to :contact, :dependent => :destroy
 
-  has_secure_password
-
   validates_uniqueness_of :contact_id
   validates_presence_of :contact_id
   validates_presence_of :password, :on => :create
