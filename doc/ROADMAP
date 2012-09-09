@@ -4,16 +4,15 @@ Production
   Browser Compat Checking
   Write Tests
   Access Control Audit  
-  Turn on Google Analytics, New Relic, Clear AWS
-  Install Intermediate SSL Cert
+  Turn on New Relic, Clear AWS
 
 Bugs List
-  Images need to be resized/cropped on upload to spec defined sizes
-  Need retail image placeholder of correct dimensions
-  contact model: email uniqueness is also specific to an owner
-  Select thumbnail has some bugs
   Edit airframe engines, avionics and equipment 
-  
+  Images need to be resized/cropped on upload to spec defined sizes
+  Contact model: email uniqueness is also specific to an owner
+  Need retail image placeholder of correct dimensions
+  Select thumbnail has some bugs
+
 Product Improvement
   Description field rich edit
   Close account feature 
@@ -21,3 +20,16 @@ Product Improvement
   Combine lead and xspec data types in front end
 
   
+== TODAY == 
+
+  10  Edit airframe engines, avionics and equipment 
+  15  SSL the profile page logo image from S3
+  20  Images need to be resized/cropped on upload to spec defined sizes
+  30  Contact model: email uniqueness is also specific to an owner
+  40  Need retail image placeholder of correct dimensions
+  50  Database Migration and Seeding
+  60  Browser Compat Checking
+  70  Turn on New Relic
+  80  Mail LLC docs
+  
+

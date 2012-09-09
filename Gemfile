@@ -20,10 +20,7 @@ gem 'jbuilder'
 gem 'paperclip'
 gem 'thin'
 gem 'aws-sdk', '~> 1.3.4'
-
-#gem 'newrelic_rpm'
-#gem 'delayed_job_active_record'
-#gem 'nokogiri'
+gem 'newrelic_rpm'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'
