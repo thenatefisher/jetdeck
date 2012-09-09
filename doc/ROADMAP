@@ -1,9 +1,10 @@
 
-Propduction
+Production
   Database Migration and Seeding
   Browser Compat Checking
   Write Tests
   Access Control Audit  
+  Turn on Google Analytics, New Relic, Clear AWS
 
 Bugs List
   Images need to be resized/cropped on upload to spec defined sizes
