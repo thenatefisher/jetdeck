@@ -28,10 +28,10 @@ class Airframe < ActiveRecord::Base
     assy = accessories.where(:thumbnail => true).first
     if assy.present?
 
-        { :original => "http://s3.amazonaws.com/jetdeck/images/#{assy.id}/original/#{assy.image_file_name}",
-          :listing => "http://s3.amazonaws.com/jetdeck/images/#{assy.id}/listing/#{assy.image_file_name}",
-          :mini => "http://s3.amazonaws.com/jetdeck/images/#{assy.id}/mini/#{assy.image_file_name}",
-          :thumb => "http://s3.amazonaws.com/jetdeck/images/#{assy.id}/thumb/#{assy.image_file_name}" }
+        { :original => "https://s3.amazonaws.com/jetdeck/images/#{assy.id}/original/#{assy.image_file_name}",
+          :listing => "https://s3.amazonaws.com/jetdeck/images/#{assy.id}/listing/#{assy.image_file_name}",
+          :mini => "https://s3.amazonaws.com/jetdeck/images/#{assy.id}/mini/#{assy.image_file_name}",
+          :thumb => "https://s3.amazonaws.com/jetdeck/images/#{assy.id}/thumb/#{assy.image_file_name}" }
 
     end
 
