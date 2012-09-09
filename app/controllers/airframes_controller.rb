@@ -116,10 +116,17 @@ class AirframesController < ApplicationController
     params[:airframe][:engines].each do |a|
          
          if a[:id] == "0" && a[:model_name]
-            newItem = Engine.create(:model_name => a[:model_name], :user_id => @current_user.id)
+            newItem = Engine.create(
+                :model_name => a[:model_name], 
+                :user_id => @current_user.id)
             @engines << newItem if newItem
          else 
-            @baseline = Engine.find(:first, :conditions => ["id = ? AND (baseline = 't' OR user_id = ?)", a[:id], @current_user.id])
+            @baseline = Engine.find(
+              :first, 
+              :conditions => [
+                "id = ? AND (baseline = 't' OR user_id = ?)", 
+                a[:id], 
+                @current_user.id])
             if @baseline
                newItem = @baseline.dup
                newItem.baseline = false
@@ -128,12 +135,14 @@ class AirframesController < ApplicationController
                @engines << newItem
             end
          end
+         
     end
     whitelist[:engines] = @engines    
 
     respond_to do |format|
       if @airframe.update_attributes(whitelist)
-        format.html { redirect_to @airframe, :notice => 'Airframe was successfully updated.' }
+        format.html { redirect_to @airframe, 
+          :notice => 'Airframe was successfully updated.' }
         format.json { render  :locals => { airframe: @airframe }, 
                               :template => 'airframes/show', 
                               :formats => [:json],

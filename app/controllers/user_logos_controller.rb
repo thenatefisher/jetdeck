@@ -18,9 +18,9 @@ class UserLogosController < ApplicationController
               @current_user.logo = @logo
             end
 
-            redirect_to "/profile"
-
         end
+        
+        redirect_to "/profile"
 
     end
     
@@ -28,7 +28,7 @@ class UserLogosController < ApplicationController
 
       @current_user.logo.destroy if @current_user.logo
 
-      redirect_to "/profile"
+      render :text => "ok"
       
     end      
     

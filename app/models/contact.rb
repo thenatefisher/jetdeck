@@ -31,15 +31,17 @@ class Contact < ActiveRecord::Base
 
   validates_presence_of :email,
                         :message => "Email address is required"
-  
+
   validates_presence_of :email_confirmation, 
                         :message => "Confirm email address", 
-                        :if => :email_changed?, :on => :update
+                        :if => :email_changed?, :on => :update,
+                        :unless => Proc.new { |q| q.user.nil? }
   
   validates_confirmation_of :email, 
                             :message => "Email should match confirmation", 
-                            :if => :email_changed?, :on => :update
-  
+                            :if => :email_changed?, :on => :update,
+                            :unless => Proc.new { |q| q.user.nil? }
+
   # todo uniqueness is also specific to an owner
   #validates_uniqueness_of :email
 
@@ -55,7 +57,6 @@ class Contact < ActiveRecord::Base
   before_validation do
     self.email.sub!(" ", "")
   end       
-  
   
   def emailField
   

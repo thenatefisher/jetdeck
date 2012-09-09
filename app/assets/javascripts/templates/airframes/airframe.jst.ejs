@@ -6,9 +6,9 @@
           <div style="width: 210px; height: 157px; background: #eee url(/assets/placeholder/aircraft_default_avatar_small.png)"></div>
         <%}%>
 
-        <div class="caption" style="color: black;">
-          <h5><%= to_s %></h5>
-          <%= serial %> <% if (registration != "") { %>(<%= registration %>) <% } %>
+        <div class="caption" style="color: black; min-height: ">
+          <h5><%= to_s %>&nbsp;</h5>
+          <%= serial %> <% if (registration && registration != "") { %>(<%= registration %>) <% } %>&nbsp;
         </div>
     </a>
 </div> 

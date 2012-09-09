@@ -14,7 +14,7 @@ Jetdeck::Application.routes.draw do
 
   resources :users, :only => [:update]
   
-  resources :user_logos, :only => [:index, :create, :destroy]  
+  resources :user_logos 
   
   resources :equipment
 

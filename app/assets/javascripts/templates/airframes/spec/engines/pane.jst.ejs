@@ -35,10 +35,10 @@
     <% for (var i = 0; i < engineItems.length; i++) { %>
         <td style="text-align: center;">
         <input type="text" 
-                class="engine_inline_edit" 
+                class="inline-edit" 
                 value="<%= engineItems[i].make %>" 
                 data-eid="<%= engineItems[i].id %>" 
-                name="make"></input>
+                name="engines[<%= i %>][make]"></input>
         </td>
     <% } %>
   </tr>

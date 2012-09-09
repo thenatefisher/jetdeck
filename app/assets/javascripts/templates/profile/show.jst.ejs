@@ -49,23 +49,26 @@
                 name="first"
                 value="<%= contact.first %>"
                 style="line-height: 35px"
-                placeholder="First Name">
-         </input>
+                placeholder="First Name" />
          
          <input type="text"
                 class="inline-edit profile_field span4"
                 style="float: right; line-height: 35px"
                 name="last"
                 value="<%= contact.last %>"
-                placeholder="Last Name">
-         </input>
+                placeholder="Last Name" />
 
+        <input type="text"
+              class="inline-edit profile_field span7"
+              value="<%= contact.title %>"
+              name="title"
+              placeholder="Title" />
+      
         <input type="text"
               class="inline-edit profile_field span7"
               value="<%= contact.company %>"
               name="company"
-              placeholder="Company Name">
-        </input>
+              placeholder="Company Name" />
       
       </div>
 
@@ -86,32 +89,40 @@
                       <tr>
                           <td>
                               <div class="profile-header-label span3">Phone Number</div>
-                              <div class="span3">Number will be displayed exactly as entered to customers.</div>
                           </td>
                           <td>
                               <input  type="text"
                                       style="float:right" 
-                                      class="inline-edit profile_field span4"
+                                      class="inline-edit span4"
                                       value="<%= contact.phone %>"
                                       name="phone"
-                                      placeholder="Phone Number">
-                              </input>                                                                                  
+                                      placeholder="Phone Number" />
+                              <div style="text-align: right; 
+                                          margin: -5px 0 0 0; 
+                                          float: right;
+                                          color: #777">
+                              Number will be visible to customers as-entered.
+                              </div>                                            
                           </td>
                       </tr>   
                           
                       <tr>
                           <td>
                               <div class="profile-header-label span3">Website</div>
-                              <div class="span3">Must be a valid URL, beginning with <b>http://</b></div>
                           </td>
                           <td>
-                              <input  type="text"
-                                      style="float:right" 
-                                      class="inline-edit profile_field span4"
-                                      value="<%= contact.website %>"
-                                      name="website"
-                                      placeholder="Website">
-                              </input>                                                                                  
+                              <div class="input-prepend pull-right">
+                                <span class="add-on">http://</span><input 
+                                        type="text"
+                                        class="inline-edit"
+                                        style="width: 240px"
+                                        value="<%= contact.website.replace('http://', '') %>"
+                                        name="website"
+                                        placeholder="www.website.com" />
+                            
+                               </div>
+                               <span for="website" 
+                                      class="help-inline error pull-right"></span> 
                           </td>
                       </tr> 
                                                               
@@ -122,24 +133,20 @@
                           <td>
                               <input  type="text"
                                       style="float:right" 
-                                      class="profile_field span4"
+                                      class="inline-edit span4"
                                       value="<%= contact.email %>"
                                       name="email"
-                                      placeholder="Email Address">
-                              </input>
+                                      placeholder="Email Address" />
+                           
                               <input  type="text"
                                       style="float:right" 
-                                      class="profile_field span4 email-confirmation"
+                                      class="inline-edit span4"
                                       name="email_confirmation"
-                                      placeholder="Confirm New Email">
-                              </input>
-                              <span class="help-inline email-failure hide">
-                                     <span>Could Not Update Email</span>
-                              </span>    
-                                                            
-                              <br><button style="float:right"
-                                         class="btn email-btn"
-                                         id="update_email">Update Email</button>                                       
+                                      placeholder="Confirm New Email" />
+                       
+                               <span for="email" 
+                                      class="help-inline error pull-right"></span> 
+       
                           </td>
                       </tr>    
                                     
@@ -150,51 +157,60 @@
                           <td>
                               <input  type="password"
                                       style="float:right" 
-                                      class="profile_field span4"
-                                      name="new_password"
-                                      placeholder="New Password">
-                              </input>
+                                      class="inline-edit span4"
+                                      name="password"
+                                      placeholder="New Password" />
+                            
                               <input  type="password"
                                       style="float:right" 
-                                      class="profile_field span4"
-                                      name="new_password_confirmation"
-                                      placeholder="Confirm New Password">
-                              </input>
-                              <br><button style="float:right"
-                                         class="btn email-btn"
-                                         id="update_password">Update Password</button>  
+                                      class="inline-edit  span4"
+                                      name="password_confirmation"
+                                      placeholder="Confirm New Password" />
+                                      
+                               <span for="password" 
+                                      class="help-inline error pull-right"></span>
                           </td>
                       </tr>                  
                   
                       <tr>
                           <td>
                               <div class="profile-header-label span3">Logo</div>
-                              <div class="span3">This image will be shown to your customers</div>
                           </td>
                           <td>
                           
-                              <% if (typeof(logo) != "undefined") { %> 
+                              <% if (typeof(logo) != "undefined" && logo != null) { %> 
                                   <div class="span4" style="float: right; margin-bottom: 20px;">
-                                    <img style="float:right" src="<%= logo %>"><br><br> 
+                                    <img style="float:right" src="<%= logo %>">
+
                                   </div>
                               <% } %>
                               
+                              <div id="logo-help" style="text-align: right; 
+                                          margin-top: -10px; 
+                                          float: right;
+                                          width: 200px;
+                                          color: #777">
+                              Logo will be visible to customers.
+                              </div>
+                                                                  
                               <form method="POST" action="/user_logos" enctype="multipart/form-data">
                                 
                                 <input type="file" 
                                         id="logo" 
                                         name="image"
-                                        style="display: none"></input>  
-               
-                                <input style="float:right; margin-left: 20px" 
-                                        type="submit"
-                                        value="Upload"
-                                        class="btn span2"></input>   
-                                                                                 
-                                <a style="float: right; margin-left: 20px"
+                                        style="display: none" />  
+                                
+                                <% if (typeof(logo) != "undefined" && logo != null) { %> 
+                                <button style="float:right; margin-left: 20px" 
+                                        id="delete"
+                                        class="btn span2">Delete Logo</button> 
+                                <% } %>
+                                                                                
+                                <button style="float: right; margin-left: 20px"
+                                        onclick="return false"
                                         id="upload"
-                                        class="btn span2">Browse</a>   
-                                                                                                           
+                                        class="btn span2">Select Logo</button>   
+                                                                                                                                                 
                               </form>
                               
                           </td>

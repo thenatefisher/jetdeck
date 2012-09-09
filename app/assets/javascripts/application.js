@@ -29,7 +29,6 @@
 //= require uploader/jquery.xdr-transport
 //= require uploader/load-image.min
 //= require uploader/canvas-to-blob.min.js
-//= require uploader/bootstrap-image-gallery.min
 //= require uploader/jquery.iframe-transport
 //= require uploader/tmpl.min
 //= require uploader/jquery.fileupload

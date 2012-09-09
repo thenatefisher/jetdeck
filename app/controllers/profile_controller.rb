@@ -12,19 +12,21 @@ class ProfileController < ApplicationController
     # PUT /profile/1.json
     def update
     
-        if params[:profile][:password_confirmation]
+        errors = Hash.new()
+        
+        if params[:profile][:contact]
+        
+            if params[:profile][:contact][:password_confirmation]
 
-           @current_user.update_attributes(
-                  params[:profile].slice(:password,:password_confirmation))
-                  
-           if @current_user.errors.count > 0
-              render :json => @current_user.errors, 
-                      :status => :unprocessable_entity 
-           else
-              render :json => @current_user  
-           end
-            
-        elsif params[:profile][:contact]
+               @current_user.update_attributes(
+                      params[:profile][:contact].slice(:password,:password_confirmation))
+                      
+               if @current_user.errors.count > 0
+                  errors.merge! @current_user.errors
+               end
+                
+            end
+           
             contact_whitelist = params[:profile][:contact].slice(
               :email,
               :email_confirmation,
@@ -32,13 +34,15 @@ class ProfileController < ApplicationController
               :last,
               :phone,
               :website,
+              :title,
               :company)
 
             @current_user.contact.update_attributes(contact_whitelist)
             
-            if @current_user.contact.errors.count > 0
-              render :json => @current_user.contact.errors, 
-                      :status => :unprocessable_entity
+            if errors.count > 0 || @current_user.contact.errors.count > 0
+              errors.merge! @current_user.contact.errors
+              render :json => errors, 
+                     :status => :unprocessable_entity
             else
               render :json => @current_user.contact 
             end

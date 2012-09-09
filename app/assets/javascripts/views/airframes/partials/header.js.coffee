@@ -19,24 +19,26 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
       
   setThumbnail: (event) ->
     e = event.target || event.currentTarget
+    event.preventDefault()
     accessoryId = $(e).data("aid")
     $.ajax( {
         url: "/accessories/" + accessoryId, 
         data: {thumbnail: true},
         type: "PUT",
         success: => 
-            @model.fetch({
+            @model.fetch(
                 success: => 
-                    @render()
+                    window.router.view.cancel()
                     $("#uploader").show()
-                    })
+            )
         }
     )
 
   loadAccessories: () =>
+    # instantiate file uploader
     @$('#airframe_image_upload').fileupload()
 
-    # uploader settings:
+    # uploader settings
     @$('#airframe_image_upload').fileupload('option', {
         url: '/accessories'
         process: [
@@ -56,8 +58,11 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
         ]
     })
 
+    # set some drag/drop events
     @$('#airframe_image_upload').bind('fileuploaddrop', =>
       $('#uploader').show()
+      $("#changes").children().fadeIn()
+      $("#changes").slideDown()
       $(".manage_images a").html("Hide Images")
     )
 
@@ -72,6 +77,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
                 .appendTo('#airframe_image_upload');
         )
 
+    # get all existing images
     $.getJSON("/accessories/?airframe=" + @model.get("id"),  (files) =>
         fu = @$('#airframe_image_upload').data('fileupload')
         fu._renderDownload(files)

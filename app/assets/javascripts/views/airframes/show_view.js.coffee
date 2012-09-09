@@ -4,9 +4,19 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   template: JST["templates/airframes/show"]
 
   events:
-    "change .inline-edit"       : "edit"
+    "keydown .inline-edit"      : "edit"
     "click .manage_images"      : "manageImages"
     "click .delete_spec"        : "deleteSpec"
+  
+  initialize: =>
+    $("#cancel-changes").on("click", @cancel)
+    $("#save-changes").on("click", @save)
+    
+  cancel: ->
+    $("#changes").children().fadeOut()
+    $("#changes").slideUp(->
+      window.router.view.render()  
+    )
 
   deleteSpec: () ->
     confirm = new Jetdeck.Views.Airframes.ConfirmDelete(model: @model)
@@ -21,22 +31,59 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
       $("a.manage_images_link").html("Hide Images")
       
   edit: (event) ->
-    e = event.target || event.currentTarget
+    element = event.target || event.currentTarget 
+    $(element).addClass("changed")
+    $("#changes").children().fadeIn()
+    $("#changes").slideDown()
+  
+  save: (e) =>
+    $("#save-changes").prop('disabled', true)
+    self = this
+    imagesUploaded = false
     
-    if $(e).hasClass('number')
-      value = parseInt($(e).val().replace(/[^0-9]/g,""), 10)
-      $(e).val(value.formatMoney(0, ".", ","))
-    else if $(e).hasClass('money')
-      value = parseInt($(e).val().replace(/[^0-9]/g,""), 10)
-      $(e).val("$"+value.formatMoney(0, ".", ","))
-    else
-      value = $(e).val()
+    $(".files").find('.template-upload').each( ->
+      data = $(this).data('data')
+      e.preventDefault()
+      if (data && data.submit && !data.jqXHR && data.submit())
+        imagesUploaded = true
+      else
+        alertFailure("<i class='icon-warning-sign icon-large'></i> Error Saving Files") 
+        return 
+    )                
+                    
+    $(".inline-edit").each( ->
+      
+      # strip leading/trailing space
+      this.value = this.value.replace(/(^\s*)|(\s*$)/gi,"")
+      this.value = this.value.replace(/\n /,"\n")
+      
+      # format for money and thousands sep numbers
+      if $(this).hasClass('number')
+        this.value = parseInt(this.value.replace(/[^0-9]/g,""), 10)
+      else if $(this).hasClass('money')
+        this.value = parseInt(this.value.replace(/[^0-9]/g,""), 10)
 
-    name = $(e).attr('name')
+
+      self.model.set(this.name, this.value)  
+      
+    )
     
-    @model.set(name, value)
-    @model.save()
+    @model.save(null,
+      success: (response) =>
+        $("#changes").children().fadeOut()
+        $("#changes").slideUp(=>
+          window.router.view.render()
+          alertSuccess("<i class='icon-ok icon-large'></i> Changes Saved!") 
+          @manageImages() if imagesUploaded
+        )
+
+      error: =>
+        @cancel()
+        alertFailure("<i class='icon-warning-sign icon-large'></i> Error Saving Changes")      
+    )
     
+    $("#save-changes").prop('disabled', false)
+
   render: =>
   
     $(@el).html(@template(@model.toJSON() ))

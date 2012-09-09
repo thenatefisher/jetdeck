@@ -16,6 +16,8 @@ class Airframe < ActiveRecord::Base
 
   accepts_nested_attributes_for :accessories, :reject_if => lambda { |t| t['image'].nil? }
 
+  accepts_nested_attributes_for :engines
+  
   has_many :xspecs, :dependent => :destroy
 
   belongs_to :creator, :class_name => "User", :foreign_key => "user_id"

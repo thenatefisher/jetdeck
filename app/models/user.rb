@@ -31,7 +31,12 @@ class User < ActiveRecord::Base
 
   if defined? :password
       validates_presence_of :password_confirmation, :on => :password_changed?
-      validates_confirmation_of :password, :on => :update
+      validates_confirmation_of :password, :on => :update, 
+                                :message => "Password does not match confirmation"
+      validates :password, :length => 
+        { :minimum => 6, :message => "Password must be at least 6 chars" },
+        :on => :password_changed?
+                
   end
 
   def set_defaults(paramName)

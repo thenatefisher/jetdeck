@@ -17,7 +17,8 @@ class Jetdeck.Collections.EnginesCollection extends Backbone.Collection
     url: "/engines"
     
     initialize : () =>
-
+      @on('change', @updateAirframe)
+      
     updateAirframe : () =>
         if @airframe
             @airframe.set('engines', @toJSON())

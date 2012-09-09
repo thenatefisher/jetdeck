@@ -2,6 +2,7 @@
 <html lang="en">
 
   <head>
+  
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
@@ -35,8 +36,7 @@
 */
     </script>
 
-
-    </head>
+  </head>
 
     <body>
     
@@ -46,9 +46,11 @@
 
         <div class="navbar row">
 
-              
                 <div class="span12">
-                  <a class="brand" style="" href="/"><img src="/assets/logo_black_no_tag_130.png"></a>
+                
+                  <a class="brand" style="margin-left: 10px" href="/">
+                  <img src="/assets/logo_black_no_tag_130.png">
+                  </a>
                   
                   <div class="pull-right username">
 
@@ -57,7 +59,10 @@
                         <a href="/profile">
 
                             <% if current_user %>
-                              <strong><%= current_user.contact.first %> <%= current_user.contact.last %></strong>
+                              <strong>
+                              <%= current_user.contact.first %> 
+                              <%= current_user.contact.last %>
+                              </strong>
                             <% end %>
 
                         </a>
@@ -67,43 +72,28 @@
                     </div>
                   </div>
 
-
         </div> <!-- navbar navbar-fixed-top -->
 
         <div class="row" style="padding: 0px 0px 10px;">
-
-                  <div class="btn-group pull-right" style="margin: 10px 20px 0 0;">
-                    <button class="btn new-spec"><i class="icon-plane icon-white"></i> New Spec </button>
-                    <button class="btn new-contact"><i class="icon-user icon-white"></i> New Contact </button>
+                
+                  <div id="create-buttons" class="btn-group pull-right" 
+                  style="margin: 10px 20px 0 0;">
+                    <button class="btn new-spec">
+                      <i class="icon-plane icon-white"></i> New Spec </button>
+                    <button class="btn new-contact">
+                      <i class="icon-user icon-white"></i> New Contact </button>
                   </div>
-
-                  <!--<div class="btn-toolbar btn-group pull-right" style="margin: 10px 20px 0 0;">
-                    <button class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
-                      <i class="icon-plus icon-white"></i> New
-                      <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" style="left: auto">
-                      <li><a class="new-spec" href="#" onclick="return false;"><i class="icon-plane"></i> New Spec</a></li>
-                      <li><a class="new-contact" href="#" onclick="return false;"><i class="icon-user"></i> New Contact</a></li>
-                    </ul>
-                  </div>-->
-
-
-                  <!--<form class="navbar-search pull-right" action="">
-                    <input type="text" class="jui-autocomplete input-xlarge" placeholder="Find an aircraft or contact" style="margin: 4px 10px;"></input>
-                  </form>-->
-
 
         </div> <!-- end row class for search bar and new spec/contact-->
 
         <div class="row">
 
           <!-- notification message placeholder -->
-          <div class="alert alert-success span5" id="jetdeck-notification">
+          <div class="alert alert-success span4 offset4" id="jetdeck-notification">
             <button class="close" data-dismiss="alert">×</button>
             <div class="notification-content"></div>
           </div>
-          <div class="alert alert-error span5" id="jetdeck-notification-error">
+          <div class="alert alert-error span4 offset4" id="jetdeck-notification-error">
             <button class="close" data-dismiss="alert">×</button>
             <div class="notification-content"></div>
           </div>
@@ -111,6 +101,7 @@
           <div class="span2">
           
             <br/>
+
             <ul class="left-nav nav nav-list">
             
               <li>
@@ -125,8 +116,41 @@
             
           </div> <!-- end MY DECK ... navigation -->
 
-        <div class="span10" style="border: 1px solid #ccc; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; margin:0px; background: #fff;">
+        <div class="span10" style="
+          border: 1px solid #ccc; 
+          -webkit-border-radius: 4px; 
+          -moz-border-radius: 4px; 
+          border-radius: 4px; 
+          margin:0px; 
+          background: #fff;">
 
+            <div id="changes" 
+                class="hide alert clearfix"
+                style="
+                  margin: 0px; 
+                  width: auto; 
+                  -webkit-border-radius: 4px 4px 0 0; 
+                  -moz-border-radius: 4px 4px 0 0; 
+                  border-radius: 4px 4px 0 0;">
+                
+                <div class="span" style="margin: bottom: 7px; margin-top: 10px;">
+                <h3>
+                 Updates Pending
+                </h3>
+                </div>
+                
+                <button id="save-changes" class="btn btn-warning pull-right" 
+                  style="margin: 7px 0;">
+                  <i class="icon-save icon-white icon-large"></i> &nbsp;
+                  <strong>Save Changes</strong>
+                </button>
+                
+                <div style="margin: 14px 15px 0px 0px; float: right;">
+                  <a id="cancel-changes" href="#">
+                    Cancel</a></div>
+                  
+            </div>
+                  
             <div style="margin-top: 20px;"></div>
 
             <%= yield %>
@@ -135,13 +159,14 @@
 
       </div> <!-- end main row -->
 
-
-        <div class="span12 footer"><p>© <%=  Time.now.year %>, JetDeck Services, LLC </p></div>
-
+        <div class="span12 footer">
+        <p>© <%=  Time.now.year %>, JetDeck Services, LLC </p>
+        </div>
 
       </div> <!-- end container class -->
 
-    <div class="modal fade" id="jetdeckModal"></div> <!-- modal container place holder -->
+    <div class="modal hide" id="jetdeckModal"></div> <!-- modal container place holder -->
 
     </body>
+    
 </html>

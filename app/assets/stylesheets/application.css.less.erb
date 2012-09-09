@@ -21,6 +21,16 @@ body {
   background: url(<%= asset_path 'bg/dots.png' %>) repeat;
 }
 
+.modal-backdrop {
+  background-clip: border-box;
+  background-color: transparent;
+  background-image: -webkit-radial-gradient(50% 50%, ellipse closest-corner, rgba(0, 0, 0, 0.296875) 1%, rgba(0, 0, 0, 0.722656) 100%);
+}
+
+.changed {
+  background: #FCF8E3 !important;
+}
+
 .edit-group .btn-group {
   display: none;
   margin-left: 10px;
@@ -35,11 +45,11 @@ body {
   font-size: 18px;
 }
 
+.error { color: @red; }
+
 .edit-group .error {
   margin-top: 8px;
   margin-left: 5px;
-  color: #BB2222;
-  display: none;
   .pull-right;
   font-size: 18px;
 }

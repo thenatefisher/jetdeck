@@ -1,31 +1,21 @@
 
 Propduction
-  SSL
   Database Migration and Seeding
   Browser Compat Checking
   Write Tests
   Access Control Audit  
-  
-Brochure Site
-  Video
-  Pricing
-  Trial Signup
-  Invite list
 
 Bugs List
   Images need to be resized/cropped on upload to spec defined sizes
   Need retail image placeholder of correct dimensions
-  tablet view for login lacks formatting
-  phone view for login needs content higher
-  fix email requirement for contact vs user
+  contact model: uniqueness is also specific to an owner
+  Select thumbnail has some bugs
+  Edit airframe engines, avionics and equipment 
   
 Product Improvement
-  *Add edit/save/cancel buttons to all edit-in-line fields
-  Delete logo feature
   Description field rich edit
   Close account feature 
   Partial out the layouts
-  mobile version for broker side
   Combine lead and xspec data types in front end
 
   
