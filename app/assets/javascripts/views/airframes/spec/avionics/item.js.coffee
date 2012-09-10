@@ -1,5 +1,6 @@
 Jetdeck.Views.Avionics ||= {}
 
+## model: EquipmentModel
 class Jetdeck.Views.Avionics.Item extends Backbone.View
   template: JST["templates/airframes/spec/avionics/item"]   
 
@@ -13,8 +14,8 @@ class Jetdeck.Views.Avionics.Item extends Backbone.View
     e = event.target || event.currentTarget
     value = $(e).val()
     name = $(e).attr('name')
-    @model.set(name, value)
     $(e).addClass("changed")
+    window.router.view.model.equipment.get(@model.id).set(name, value)
     window.router.view.edit()
     
   removeEquipment : =>
@@ -34,10 +35,4 @@ class Jetdeck.Views.Avionics.Item extends Backbone.View
     )
     
     return this
-    
-class Jetdeck.Views.Avionics.New extends Backbone.View
-  template: JST["templates/airframes/spec/avionics/new"]   
-  
-  render: =>
-    $(@el).html(@template())
-    return this  
+

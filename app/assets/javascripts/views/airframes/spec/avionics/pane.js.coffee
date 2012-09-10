@@ -1,7 +1,7 @@
 Jetdeck.Views.Airframes ||= {}
 
 # This is a pane inside the specification tab container
-
+## model: AirframeModel
 class Jetdeck.Views.Airframes.ShowAvionicsPane extends Backbone.View
   template: JST["templates/airframes/spec/avionics/pane"]
 

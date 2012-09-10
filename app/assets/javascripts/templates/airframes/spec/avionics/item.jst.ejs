@@ -2,6 +2,7 @@
 <input type="text" 
         value="<%= title %>" 
         name="title" 
+        <% if (typeof(pending) != "undefined") { %>disabled<% } %>
         class="equipment equipment-title <% 
           if (typeof(pending) != "undefined") { %>changed<% } %>" 
         style="font-weight: bold; 
@@ -14,6 +15,7 @@
 <input type="text" 
         value="<%= name %>" 
         name="name" 
+        <% if (typeof(pending) != "undefined") { %>disabled<% } %>
         class="equipment equipment-name <% 
           if (typeof(pending) != "undefined") { %>changed<% } %>" 
         style="width: 120px; margin-bottom: 0px"/>

@@ -1,20 +1,19 @@
 #########     TODAY       #########
 
   10      Edit airframe engines, avionics and equipment 
-  20      Images need to be resized/cropped on upload to spec defined sizes
-  40      Need retail image placeholder of correct dimensions
-  65      Migrate in public spec improvements from mkting demo
+
   
 #########     THIS WEEK   #########
 
+  20      Images need to be resized/cropped on upload to spec defined sizes
+  40      Need retail image placeholder of correct dimensions
+  65      Migrate in public spec improvements from mkting demo
   50      Database Migration and Seeding
   54      Write Tests
   55      Access Control Audit
   60      Browser Compatibility Checking
-  70  XXX Turn on New Relic
   80      Mail LLC docs
   90      Error Pages
-  100 XXX user.rb: has secure password / force ssl
   110     Make staging/dev AWS S3 area
   
 #########     LATER       #########
@@ -24,6 +23,8 @@
   15  XXX SSL the profile page logo image from S3
   30  XXX Contact model: email uniqueness is also specific to an owner
   45  XXX Make user login email addy case insensitive 
+  70  XXX Turn on New Relic  
+  100 XXX user.rb: has secure password / force ssl  
   
 ================================================================================  
 

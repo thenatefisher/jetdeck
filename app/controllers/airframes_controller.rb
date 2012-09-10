@@ -112,7 +112,7 @@ class AirframesController < ApplicationController
     
     equipment = Array.new()
     params[:airframe][:equipment].each do |e|
-      equipment << e.slice(:etype, :name, :title, :airframe_id)
+      equipment << e.slice(:etype, :name, :title, :airframe_id, :id)
     end
     params[:airframe][:equipment_attributes] = equipment 
     
