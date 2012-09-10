@@ -9,17 +9,15 @@ class Jetdeck.Views.Airframes.ShowEquipmentPane extends Backbone.View
     "click .add-equipment"         : "addEquipment"
 
   addEquipment : =>
-    c = new Jetdeck.Collections.EquipmentCollection()
-    eq = c.create({
+    @model.equipment.add(
         airframe_id: @model.get("id")
-        title: null,
+        title: null
         name: $(".equipment-name", @el).val()
         etype: 'equipment'
-      }, 
-      success: (c) =>
-        @model.equipment.add(c)
-        window.router.view.spec.equipment.render()
+        pending: true
     )
+    @render()
+    window.router.view.edit()
 
   render: ->
     $(@el).html(@template() )

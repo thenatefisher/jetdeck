@@ -5,7 +5,8 @@
 <input type="text" 
         value="<%= name %>" 
         name="name" 
-        class="equipment equipment-name span5" 
+        class="equipment equipment-name span5 <% 
+          if (typeof(pending) != "undefined") { %>changed<% } %>" 
         style="margin-bottom: 0px"/>
         
 <span class="remove_equipment">x</span>        

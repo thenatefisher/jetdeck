@@ -109,10 +109,20 @@ class AirframesController < ApplicationController
   # PUT /airframes/1.json
   def update
     @airframe = Airframe.find(params[:id])
-    whitelist = params[:airframe].slice(:asking_price, :description,
-        :serial, :registration, :tt, :tc, :year, :make, :model_name)
+    
+    equipment = Array.new()
+    params[:airframe][:equipment].each do |e|
+      equipment << e.slice(:etype, :name, :title, :airframe_id)
+    end
+    params[:airframe][:equipment_attributes] = equipment 
+    
+    whitelist = params[:airframe].slice(
+        :asking_price, :description,
+        :serial, :registration, :tt, 
+        :tc, :year, :make, :model_name, 
+        :equipment_attributes)
 
-    @engines = []
+    @engines = Array.new()
     params[:airframe][:engines].each do |a|
          
          if a[:id] == "0" && a[:model_name]

@@ -16,7 +16,9 @@ class Airframe < ActiveRecord::Base
 
   accepts_nested_attributes_for :accessories, :reject_if => lambda { |t| t['image'].nil? }
 
-  accepts_nested_attributes_for :engines
+  accepts_nested_attributes_for :engines, :allow_destroy => true
+  
+  accepts_nested_attributes_for :equipment, :allow_destroy => true
   
   has_many :xspecs, :dependent => :destroy
 
@@ -24,7 +26,7 @@ class Airframe < ActiveRecord::Base
 
   def avatar
 
-    avatars = {}
+    avatars = Hash.new()
     assy = accessories.where(:thumbnail => true).first
     if assy.present?
 

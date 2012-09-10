@@ -12,10 +12,12 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     $("#cancel-changes").on("click", @cancel)
     $("#save-changes").on("click", @save)
     
-  cancel: ->
-    $("#changes").children().fadeOut()
-    $("#changes").slideUp(->
-      window.router.view.render()  
+  cancel: =>
+    @model.fetch(success:->
+      $("#changes").children().fadeOut()
+      $("#changes").slideUp(->
+        window.router.view.render()  
+      )
     )
 
   deleteSpec: () ->
@@ -31,8 +33,9 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
       $("a.manage_images_link").html("Hide Images")
       
   edit: (event) ->
-    element = event.target || event.currentTarget 
-    $(element).addClass("changed")
+    if element
+      element = event.target || event.currentTarget 
+      $(element).addClass("changed")
     $("#changes").children().fadeIn()
     $("#changes").slideDown()
   
@@ -86,6 +89,10 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
 
   render: =>
   
+    lastSpecTab = null
+    if $("#airframe_spec_details .tab-pane:visible").attr("id")
+      lastSpecTab = $("#airframe_spec_details .tab-pane:visible").attr("id")
+      
     $(@el).html(@template(@model.toJSON() ))
     
     @header = new Jetdeck.Views.Airframes.ShowHeader(model: @model)
@@ -93,6 +100,7 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     
     @spec = new Jetdeck.Views.Airframes.ShowSpec(model: @model)
     @$("#airframe_spec_details").html(@spec.render().el)
+    @$("a[href='#"+lastSpecTab+"']'").tab('show') if lastSpecTab
     
     @send = new Jetdeck.Views.Airframes.ShowSend(model: @model)
     @$("#airframe_send").html(@send.render().el)

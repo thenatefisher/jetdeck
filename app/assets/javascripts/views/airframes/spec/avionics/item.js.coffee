@@ -14,10 +14,8 @@ class Jetdeck.Views.Avionics.Item extends Backbone.View
     value = $(e).val()
     name = $(e).attr('name')
     @model.set(name, value)
-    @model.save(false, 
-      success: =>
-        window.router.view.spec.avionics.render()
-    )
+    $(e).addClass("changed")
+    window.router.view.edit()
     
   removeEquipment : =>
     @model.destroy(

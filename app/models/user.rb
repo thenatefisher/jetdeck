@@ -63,9 +63,11 @@ class User < ActiveRecord::Base
   end
 
   def self.authenticate(email, password)
-    contact = Contact.where(:email => email, :owner_id => nil).first
-    user = User.where(:contact_id => contact, :active => true).first
-    if user && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
+    contact = Contact.find(:first, :conditions =>
+      ["lower(email) = ? AND owner_id is null", email.downcase])
+    user = User.where(:contact_id => contact.id, :active => true).first if contact
+    if user && 
+      user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
       user
     else
       nil
