@@ -54,3 +54,20 @@ class Jetdeck.Collections.SpecsCollection extends Backbone.CollectionBook
   direction : (d) ->
     @dx = d
     
+  comparator: (i) ->
+    d = 1
+    d = -1 if @dx == "desc"   
+
+    if !isNaN (parseInt(i.get(@order), 10))
+        return d * parseInt(i.get(@order), 10)
+    
+    if i.get(@order)
+        if d == 1
+            return i.get(@order)
+        else
+            return String.fromCharCode.apply(String,
+                _.map(i.get(@order).split(""), (c) ->
+                    return 0xffff - c.charCodeAt()
+                )
+            )    
+    

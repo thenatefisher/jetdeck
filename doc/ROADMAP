@@ -6,7 +6,6 @@
 
 
   40      Need retail image placeholder of correct dimensions
-  65      Migrate in public spec improvements from mkting demo
   50      Database Migration and Seeding
   --- ---
   54      Write Tests
@@ -21,6 +20,7 @@
 
 #########     DONE        #########
 
+  65      Migrate in public spec improvements from mkting demo
   20      Images need to be resized/cropped on upload to spec defined sizes
   10      Edit airframe engines, avionics and equipment 
   15      SSL the profile page logo image from S3

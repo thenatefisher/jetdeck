@@ -21,7 +21,8 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
     tabname = $("#spec-edit-modal .tab-pane:visible").next().attr('id')
     $("a[href='#" + tabname + "']").tab('show')
     if $("#spec-edit-modal .tab-pane:visible").next().length == 0
-      @sendButton
+      console.log "true"
+      @sendButton()
 
   update : (e) ->
     e.preventDefault()
