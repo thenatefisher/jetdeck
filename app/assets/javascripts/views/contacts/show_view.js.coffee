@@ -70,11 +70,19 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
 
   render: =>
     @model.fetch(
-      success: () =>
+      success: =>
+      
+        @model.updateChildren()
+        
         $(@el).html(@template(@model.toJSON() ))
 
         @header = new Jetdeck.Views.Contacts.ShowHeaderView(model: @model)
         @$("#contact_show_header").html(@header.render().el)
+        
+        @specs = new Jetdeck.Views.Contacts.ShowSpecs(model: @model)
+        if @model.specs.length > 0
+          @$("#contact_specs").html(@specs.render().el) 
+                 
      )
      return this
 

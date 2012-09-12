@@ -1,0 +1,21 @@
+<td>
+
+  <% if (avatar != null && typeof(avatar['mini']) != "undefined") { %>
+  <a href="/airframes/<%= id %>"><img src="<%= avatar['mini'] %>" /></a>
+  <% } else { %>
+  <a href="/airframes/<%= id %>"><img width=60 src="/assets/logo_black_emblem.png"/></a>
+  <% } %>
+  
+</td>
+
+<td><%= year %></td>
+
+<td><%= make %> <%= model_name %></td>
+
+<td><%= serial %></td>
+
+<td><%= registration %></td>
+
+
+
+

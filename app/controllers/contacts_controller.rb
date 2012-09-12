@@ -15,12 +15,7 @@ class ContactsController < ApplicationController
   # GET /contacts/1
   # GET /contacts/1.json
   def show
-    @contact = Contact.find(:all, :conditions => ["id = ? AND owner_id = ?", params[:id], @current_user.id]).first
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render :json => @contact }
-    end
+    @contact = Contact.find(:first, :conditions => ["id = ? AND owner_id = ?", params[:id], @current_user.id])
   end
 
   # GET /contacts/new

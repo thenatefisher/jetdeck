@@ -1,0 +1,57 @@
+<div>
+
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a href="#" onclick="return false;">Aircraft Specs Received</a>
+      </li>
+    </ul>
+
+      <table class="table table-condensed" id="contact_specs_table">
+        <thead>
+
+          <th><!-- img --></th>
+          <th>
+            <a class="sort" data-sort="year" data-dir="asc" onclick="return false;" href="#">
+            Year
+            </a>
+          </th>          
+          <th>
+            <a class="sort" data-sort="modelName" data-dir="asc" onclick="return false;" href="#">
+            Model
+            </a>
+          </th>
+          <th>
+            <a class="sort" data-sort="serial" data-dir="asc" onclick="return false;" href="#">
+            Serial
+            </a>          
+          </th>
+          <th>
+            <a class="sort" data-sort="registration" data-dir="asc" onclick="return false;" href="#">
+            Registration
+            </a>          
+          </th>
+
+        </thead>
+        <tbody></tbody>
+      </table>
+
+    <% if (pages > 1) { %>
+    <div class="row"  style="margin-left: 20px;">
+    
+            <div class="pagination pull-right">
+              <ul>
+                <li><a class="prev" onclick="return false;" href="#">Prev</a></li>
+
+                <% if (pages > 2) { %>
+                <% for (var i = 1; i < pages + 1; i++) { %>
+                <li><a class="page" rel="<%= i %>" onclick="return false;" href="#"><%= i %></a></li>
+                <% } } %>
+
+                <li><a class="next" onclick="return false;" href="#">Next</a></li>
+              </ul>
+            </div>
+      
+    </div>
+    <% } %> 
+      
+  </div> <!-- specs -->

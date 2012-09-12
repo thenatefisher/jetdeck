@@ -2,6 +2,7 @@ class Jetdeck.Models.Spec extends Backbone.Model
   paramRoot : 'spec'
 
   defaults :
+    avatar: null
     serial: null
     registration: null
     year: ""
@@ -43,6 +44,13 @@ class Jetdeck.Models.Spec extends Backbone.Model
     last_viewed: ""
     logo: null
     
-class Jetdeck.Collections.SpecsCollection extends Backbone.Collection
+class Jetdeck.Collections.SpecsCollection extends Backbone.CollectionBook
   model: Jetdeck.Models.Spec
   url: '/xspecs'    
+  
+  orderBy : (o) ->
+    @order = o
+
+  direction : (d) ->
+    @dx = d
+    
