@@ -58,6 +58,13 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
         ]
     })
 
+    # open edit box when adding via the button
+    @$('#airframe_image_upload').bind('fileuploadadd', ->
+      $("#changes").children().fadeIn()
+      $("#changes").slideDown()
+      console.log "fired"
+    )
+    
     # set some drag/drop events
     @$('#airframe_image_upload').bind('fileuploaddrop', =>
       $('#uploader').show()
@@ -71,10 +78,10 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
         $.ajax({
             url: '/accessories',
             type: 'HEAD'
-        }).fail( () ->
+        }).fail( ->
             $('<span class="alert alert-error"/>')
                 .text('Uploads Unavailable')
-                .appendTo('#airframe_image_upload');
+                .appendTo('#airframe_image_upload')
         )
 
     # get all existing images

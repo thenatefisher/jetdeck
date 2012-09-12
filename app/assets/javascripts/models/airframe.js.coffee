@@ -14,34 +14,27 @@ class Jetdeck.Models.Airframe extends Backbone.Model
     asking_price: 0
     description: ""
 
-  initialize : () =>
+  initialize : =>
     ## leads collection
     @leads = new Jetdeck.Collections.LeadsCollection(page_size: 5)
     @leads.airframe = this
-    @updateLeads()
-    @on('change', @updateLeads)
-
+    
     ## equipment collection
     @equipment = new Jetdeck.Collections.EquipmentCollection()
     @equipment.airframe = this
-    @updateEquipment()
-    @on('change', @updateEquipment)
-
+    
     ## engines collection
     @engines = new Jetdeck.Collections.EnginesCollection()
     @engines.airframe = this
-    @updateEngines()
-    @on('change', @updateEngines)
 
-  updateEngines : =>
-    @engines.reset @get('engines')
-
-  updateEquipment : =>
-    @equipment.reset @get('equipment')
-
-  updateLeads : =>
+    ## populate child collections
+    @updateChildren()
+    
+  updateChildren : =>
     @leads.reset @get('leads')
-
+    @equipment.reset @get('equipment')
+    @engines.reset @get('engines')
+    
 class Jetdeck.Collections.AirframesCollection extends Backbone.CollectionBook
   
   model: Jetdeck.Models.Airframe

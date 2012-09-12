@@ -6,12 +6,11 @@ class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
   template: JST["templates/airframes/spec/engines/pane"]
 
   events:
-    "click .remove_engine"            : "destroy"
-    "change .engine_inline_edit"      : "edit"
-    "click .copy_engine"              : "copy"
-    "click .add_engine"               : "add"
-
-  edit: (event) ->
+    "keyup .engine_inline_edit"      : "edit"
+    "click .add_engine"                : "add"
+    "click .remove_engine"             : "destroy"
+    
+  edit: (event) =>
     e = event.target || event.currentTarget
     engineId = $(e).data('eid')
     
@@ -23,49 +22,37 @@ class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
 
     name = $(e).attr('name')
     
-    @model.engines.get(engineId).set(name, value)
-    @model.engines.get(engineId).save()
-  
-  copy: (event) ->
-    e = event.target || event.currentTarget
-    engineId = $(e).data('eid')
-    
-    newEngine = new Jetdeck.Models.EngineModel()
-    newEngine.attributes = @model.engines.get(engineId).attributes
-    newEngine.attributes.airframe_id = @model.id
-    newEngine.attributes.id = null
-
-    @model.engines.on("add", @render)
-    @model.engines.create(newEngine.toJSON())    
-    return
+    $(e).addClass('changed')
+    @model.engines.getByCid(engineId).set(name, value)
+    window.router.view.edit()
   
   add: =>
+    @render()
+    window.router.view.edit()
     
-    collection = new Jetdeck.Collections.AirframesCollection()
-    collection = window.router.airframes if window.router.airframes
-    collection.create(@model.toJSON(),
-      success: (airframe) =>
-        @model = airframe
-        window.router.view.spec.engines.render()
-
-      error: (airframe, jqXHR) =>
-        @model.set({errors: $.parseJSON(jqXHR.responseText)})
-    )
-
-  destroy: (event) ->
+  destroy: (event) =>
     e = event.target || event.currentTarget
     engineId = $(e).data('eid')
-    @model.engines.get(engineId).destroy(
-        success: =>
-           window.router.view.spec.engines.render()
-    )
-    return 
+    engine = @model.engines.getByCid(engineId)
+    console.log engine
+    if !engine.get("pending")
+      engine.destroy(
+          success: =>
+             window.router.view.spec.engines.render()
+      )
+    else
+      @model.engines.remove(engine)
+      @model.set('engines', @model.engines.toJSON())
+      window.router.view.spec.engines.render()
     
   render: =>
+    
+    @model.engines.each( (m) -> m.set('cid', m.cid))  
+  
     $(@el).html(@template(engineItems: @model.engines.toJSON() ))
 
     @$("input[name='engine']").select2({
-      placeholder: "PT6A-114 (Pratt and Whitney)",
+      placeholder: "i.e. PT6A-114 (Pratt and Whitney)",
       minimumInputLength: 3,
       createSearchChoice: (term) ->
         return { id: "0", text: term }
@@ -82,7 +69,12 @@ class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
         event = e.target || e.currentTarget
         id = $(event).val()
         model_name = $("div.engine-selection a span").html()
-        m = new Jetdeck.Models.EngineModel({id: id, model_name: model_name})
+        m = new Jetdeck.Models.EngineModel(
+          id: id
+          model_name: model_name
+          pending: true
+        )
+        m.set('cid', m.cid)
         @model.engines.add(m)
         @model.set('engines', @model.engines.toJSON())
     )

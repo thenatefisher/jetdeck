@@ -10,7 +10,6 @@ class Jetdeck.Views.Airframes.ShowEquipmentPane extends Backbone.View
 
   addEquipment : =>
     @model.equipment.add(
-        airframe_id: @model.get("id")
         title: null
         name: $(".equipment-name", @el).val()
         etype: 'equipment'

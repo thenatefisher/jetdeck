@@ -7,9 +7,8 @@ class EnginesController < ApplicationController
     if params[:q]
       @engines = Engine.find(:all,
         :conditions => ["(make || ' ' || model_name) LIKE UPPER(?)
-                             AND (baseline = 't' OR user_id = ?)",
-                          "%#{params[:q]}%",
-                          @current_user.id
+                             AND (baseline = 't')",
+                          "%#{params[:q]}%"
                        ],
         :select => "DISTINCT ON (model_name) id, *"
       ).first(4)

@@ -10,19 +10,20 @@ class Jetdeck.Views.Equipment.Item extends Backbone.View
     "click .remove_equipment" : "removeEquipment" 
     "change .equipment"       : "edit" 
    
-  edit: (event) ->
+  edit: (event) =>
     e = event.target || event.currentTarget
     value = $(e).val()
-    name = $(e).attr('name')
+    name = $(e).attr("name")
     $(e).addClass("changed")
-    window.router.view.model.equipment.get(@model.id).set(name, value)
+    window.router.view.model.equipment.getByCid(@model.cid).set(name, value)
     window.router.view.edit()
     
   removeEquipment : =>
-    @model.destroy(
-      success: =>
-        window.router.view.spec.equipment.render()
-    )
+    if !@model.get("pending")
+      @model.destroy()
+    else
+      window.router.view.model.equipment.remove(@model)
+    window.router.view.render()
     
   render: =>
     $(@el).addClass("pull-left equipment-item")

@@ -11,6 +11,7 @@ class Jetdeck.Models.EngineModel extends Backbone.Model
         tc: null
         smoh: null
         shsi: null
+        pending: false
 
 class Jetdeck.Collections.EnginesCollection extends Backbone.Collection
     model: Jetdeck.Models.EngineModel

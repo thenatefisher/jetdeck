@@ -13,7 +13,8 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     $("#save-changes").on("click", @save)
     
   cancel: =>
-    @model.fetch(success:->
+    @model.fetch(success: =>
+      @model.updateChildren()
       $("#changes").children().fadeOut()
       $("#changes").slideUp(->
         window.router.view.render()  
@@ -74,7 +75,8 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     @model.save(null,
       success: (response) =>
         $("#changes").children().fadeOut()
-        $("#changes").slideUp(=>
+        $("#changes").slideUp( =>
+          @model.updateChildren()
           window.router.view.render()
           alertSuccess("<i class='icon-ok icon-large'></i> Changes Saved!") 
           @manageImages() if imagesUploaded
