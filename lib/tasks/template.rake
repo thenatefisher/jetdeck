@@ -1,26 +1,49 @@
-namespace :js do
+namespace :databases do
 
-    desc "Prints out the first airframe"
-    task :firstAf => :environment do
+    task :faa => :environment do
 
-        puts Airframe.all.first
+      open("/home/nate/Desktop/MASTER.txt") do |infile|
+        infile.read.each_line do |row|
 
-    end
+          aircraft = row.split(",")
 
-end
-
-namespace :db do
-    desc "Destroys all objects in all tables in a SQLite DB"
-    task :sqlclear => :environment do
-        ActiveRecord::Base.establish_connection
-        ActiveRecord::Base.connection.tables.each do |table|
-          # MySQL
-          # ActiveRecord::Base.connection.execute("TRUNCATE #{table}")
-
-          # SQLite
-          if table != "schema_migrations"
-            ActiveRecord::Base.connection.execute("DELETE FROM #{table} WHERE 1=1")
+          registration = aircraft[0].strip
+          serial = aircraft[1].strip
+          af_mfg_code = aircraft[2].strip      
+          eng_mfg_code = aircraft[3].strip
+          year = aircraft[4].strip
+          
+          acft_ref = open("/home/nate/Desktop/ACFTREF.txt").grep(/#{af_mfg_code}/i).first
+          if acft_ref 
+            acft_ref = acft_ref.split(",")
+            ref_code = acft_ref[0]
+            if (ref_code == af_mfg_code)
+              af_make = acft_ref[1]
+              af_model = acft_ref[2]
+              engines = acft_ref[7]
+              
+            end
           end
+          
+          ref = open("/home/nate/Desktop/ENGINE.txt").grep(/#{eng_mfg_code}/i).first
+          if ref 
+            ref = ref.split(",")
+            ref_code = ref[0]
+            if (ref_code == eng_mfg_code)
+              eng_make = ref[1]
+              eng_model = ref[2]
+            end
+          end
+                    
+          Airframe.create(:registration => "N#{registration}", :serial => serial, :year => year, :model_name => af_model, :make => af_make, :baseline => true)
+          Engine.where(:model_name => eng_model, :make => eng_make, :baseline => true).first || Engine.create(:model_name => eng_model, :make => eng_make, :baseline => true)
+          
+
+          print "#{year} #{af_make} #{af_model} N#{registration} SN:#{serial}\n"
+          
         end
+      end
+
     end
+
 end
