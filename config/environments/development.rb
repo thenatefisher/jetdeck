@@ -46,4 +46,13 @@ Jetdeck::Application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { :host => "localhost:3000" }
 
+  # AWS
+  config.aws_s3_bucket = "jetdeck_dev"
+  
+  # mix panel
+  config.mixpanel_token = "***REMOVED***"
+  config.middleware.use "Mixpanel::Tracker::Middleware", 
+    config.mixpanel_token, { :persist => true }
+  
+  
 end

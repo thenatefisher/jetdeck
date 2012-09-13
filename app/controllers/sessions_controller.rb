@@ -1,12 +1,14 @@
 class SessionsController < ApplicationController
 
     def new
-    
+        
         if current_user.present? 
             redirect_to airframes_url
         else
             render :layout => 'login'
+            
         end
+        
     end
 
     def create

@@ -44,7 +44,7 @@ class AirframesController < ApplicationController
   # GET /airframes/1
   # GET /airframes/1.json
   def show
-
+    @mixpanel.track_event("Pull Airframe Record")
     if params[:id].present?
         @airframe = Airframe.find(params[:id])
     end
