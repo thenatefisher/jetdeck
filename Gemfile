@@ -21,6 +21,8 @@ gem 'paperclip'
 gem 'thin'
 gem 'aws-sdk', '~> 1.3.4'
 gem 'newrelic_rpm'
+gem 'mixpanel'
+gem 'airbrake'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'

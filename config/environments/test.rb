@@ -10,10 +10,16 @@ Jetdeck::Application.configure do
   # Configure static asset server for tests with Cache-Control for performance
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
+  
+  # font-awesome crashes phatomJs
+  config.font_awesome = false
 
   # Log error messages when you accidentally call methods on nil
   config.whiny_nils = true
 
+  # log level
+  config.log_level = :debug
+    
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
@@ -28,6 +34,7 @@ Jetdeck::Application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+  config.action_mailer.default_url_options = { :host => "localhost:3000" }
 
   # Raise exception on mass assignment protection for Active Record models
   config.active_record.mass_assignment_sanitizer = :strict
@@ -35,6 +42,10 @@ Jetdeck::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
   
-  config.action_mailer.default_url_options = { :host => "localhost:3000" }
+  # AWS
+  config.aws_s3_bucket = "jetdeck_test"
+  
+  # disable mixpanel 
+  config.mixpanel_token = ""
   
 end

@@ -65,5 +65,13 @@ Jetdeck::Application.configure do
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   config.active_record.auto_explain_threshold_in_seconds = 0.5
-
+  
+  # AWS
+  config.aws_s3_bucket = "jetdeck_prod"
+  
+  # mix panel
+  config.mixpanel_token = "***REMOVED***"
+  config.middleware.use "Mixpanel::Tracker::Middleware", 
+    config.mixpanel_token, { :persist => true }
+    
 end

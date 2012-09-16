@@ -16,5 +16,8 @@
 /public/assets
 /public/system
 
+# spec screenshots
+/spec/screenshots
+
 # Ignore backup files
 *~

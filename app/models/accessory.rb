@@ -10,10 +10,14 @@ class Accessory < ActiveRecord::Base
                                     :listing => "210x157#" },
                       :s3_credentials => "#{Rails.root}/config/aws_keys.yml",
                       :storage => :s3,
-                      :s3_host_alias => "jetdeck.s3.amazonaws.com",
+                      :s3_host_alias => 
+                        Jetdeck::Application.config.aws_s3_bucket + 
+                        ".s3.amazonaws.com",
                       :s3_protocol => "https",
-                      :url => "jetdeck.s3.amazonaws.com",
-                      :bucket => "jetdeck",
+                      :url => 
+                        Jetdeck::Application.config.aws_s3_bucket + 
+                        ".s3.amazonaws.com",
+                      :bucket => Jetdeck::Application.config.aws_s3_bucket,
                       :s3_permissions => :public_read,
                       :path => ":attachment/:id/:style/:basename.:extension"
 
@@ -48,12 +52,25 @@ class Accessory < ActiveRecord::Base
     def to_jq_upload
         {
           "name" => self.image_file_name,
+          
           "size" => self.image_file_size,
-          "url" => "https://s3.amazonaws.com/jetdeck/images/#{id}/original/#{image_file_name}",
-          "thumbnail_url" => "https://s3.amazonaws.com/jetdeck/images/#{id}/mini/#{image_file_name}",
+          
+          "url" => 
+            "https://s3.amazonaws.com/" + 
+            Jetdeck::Application.config.aws_s3_bucket + 
+            "/images/#{id}/original/#{image_file_name}",
+            
+          "thumbnail_url" => 
+            "https://s3.amazonaws.com/" +
+            Jetdeck::Application.config.aws_s3_bucket +
+            "/images/#{id}/mini/#{image_file_name}",
+            
           "delete_url" => "/accessories/#{id}",
+          
           "delete_type" => "DELETE",
+          
           "is_thumbnail" => self.thumbnail,
+          
           "id" => self.id
         }
     end

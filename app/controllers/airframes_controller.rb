@@ -6,9 +6,9 @@ class AirframesController < ApplicationController
 
     if params[:q]
       @airframes = Airframe.find(:all,
-        :conditions => ["make || ' ' || model_name LIKE UPPER(?)
+        :conditions => ["upper(make || ' ' || model_name) LIKE ?
                              AND (baseline = 't' OR user_id = ?)",
-                          "%#{params[:q]}%",
+                          "%#{params[:q].to_s.upcase}%",
                           @current_user.id
                        ],
          :select => "DISTINCT ON (model_name) id, *"
@@ -26,8 +26,8 @@ class AirframesController < ApplicationController
     if params[:term].present?
 
         @airframes = Airframe.where(
-          "registration like ? AND (baseline = 't' OR user_id = ?)",
-          "%"+params[:term].to_s+"%",
+          "upper(registration) like ? AND (baseline = 't' OR user_id = ?)",
+          "%"+params[:term].to_s.upcase+"%",
           @current_user.id
         ).first(5)
 
@@ -45,6 +45,7 @@ class AirframesController < ApplicationController
   # GET /airframes/1.json
   def show
 
+    @mixpanel.track_event("Pull Airframe Record")
     if params[:id].present?
         @airframe = Airframe.find(params[:id])
     end
