@@ -41,9 +41,11 @@ class ProfileController < ApplicationController
             
             if errors.count > 0 || @current_user.contact.errors.count > 0
               errors.merge! @current_user.contact.errors
+              @mixpanel.track_event("Error Updating Profile")
               render :json => errors, 
                      :status => :unprocessable_entity
             else
+              @mixpanel.track_event("Updated Profile")
               render :json => @current_user.contact 
             end
             

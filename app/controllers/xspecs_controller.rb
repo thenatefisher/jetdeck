@@ -9,7 +9,9 @@ class XspecsController < ApplicationController
       
       if @xspec
 
-        XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
+        delivered = XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
+        
+        @mixpanel.track_event("Spec Sent", {:delivered => delivered})
         
         render :json => @spec.to_json()
       
@@ -43,12 +45,14 @@ class XspecsController < ApplicationController
     @airframe = @xspec.airframe
 
     if @xspec.nil? then
+        @mixpanel.track_event("Invalid Retail Spec Code")
         redirect_to "/"
         return
     else
-      if current_user.nil?
+      if @current_user.nil?
         @xspec.views << SpecView.create(:agent => request.user_agent, :ip => request.remote_ip)
       end
+      @mixpanel.track_event("Spec Viewed", {:logged_in => @current_user.present?})
     end
 
     render :layout => 'retail'
@@ -60,7 +64,11 @@ class XspecsController < ApplicationController
   
     authorize() 
     
-    @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
+    @xspec = Xspec.where(
+      "id = ? AND sender_id = ?", 
+      params[:id],  
+      @current_user.contact.id
+    ).first
     @backgrounds = XspecBackground.all
     @airframe = @xspec.airframe
     
@@ -76,6 +84,8 @@ class XspecsController < ApplicationController
 
     recipient = Contact.where("email = ? AND owner_id = ?", params[:xspec]['recipient_email'], @current_user.id).first
 
+    @mixpanel.track_event("Spec Created", {:new_contact => recipient.nil?})
+    
     # create a contact record if none found
     if recipient.nil?
         recipient = Contact.create(:email => params[:xspec]['recipient_email'])
@@ -94,7 +104,8 @@ class XspecsController < ApplicationController
 
         if params[:xspec]['send'] == "true"
         
-          XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
+          delivered = XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
+          @mixpanel.track_event("Spec Sent", {:delivered => delivered})
           
         end
 
@@ -138,11 +149,12 @@ class XspecsController < ApplicationController
           :background_id   
         )
         
-      
+        @mixpanel.track_event("Updated Spec")
       elsif params[:spec][:url_code]
       
         @xspec = Xspec.where("url_code = ?", params[:spec][:url_code]).first
         @whitelist = params[:spec].slice(:show_message)
+        @mixpanel.track_event("Recipient Removed Broker Message")
                 
       end
 
@@ -152,6 +164,7 @@ class XspecsController < ApplicationController
           format.html { redirect_to @spec, :notice => 'Spec was successfully updated.' }
           format.json { head :no_content }
         else
+          @mixpanel.track_event("Failed to Update Spec")
           format.html { render :action => "edit" }
           format.json { render :json => @spec.errors, :status => :unprocessable_entity }
         end
@@ -165,8 +178,11 @@ class XspecsController < ApplicationController
     
     @xspec = Xspec.where("id = ? AND sender_id = ?", params[:id], @current_user.contact.id).first
     
-    @xspec.destroy() if @xspec
-
+    if @xspec
+       @xspec.destroy()
+       @mixpanel.track_event("Destroyed Spec")
+    end
+    
     respond_to do |format|
       format.json { head :no_content }
     end

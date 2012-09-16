@@ -39,7 +39,9 @@ class AccessoriesController < ApplicationController
           render :json => [@Assy.to_jq_upload].to_json
         }
       end
+      @mixpanel.track_event("Added Accessory")
     else
+      @mixpanel.track_event("Failed Adding Accessory")
       render :json => [{:error => "custom_failure"}], :status => 304
     end
 
@@ -66,6 +68,7 @@ class AccessoriesController < ApplicationController
   def destroy
     @Assy = Accessory.find(params[:id])
     @Assy.destroy
+    @mixpanel.track_event("Deleted Accessory")
     render :json => true
   end
 end
