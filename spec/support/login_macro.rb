@@ -1,12 +1,18 @@
 module UserLogin
 		
-	def login
+	def login(credentials = nil)
 
 	    # email addy
-	    email = "test@test" + Time.now.sec.to_s + ".com"
-
+	    email = "test@test_" + Time.now.strftime("%M%S") + ".com"
+	    
+	    # use supplied value if available
+			if credentials && credentials[:email]
+			  email = credentials[:email]
+			end
+			
 	    # Create temp contact
-	    contact = Contact.create(
+	    contact = Contact.find_by_email(email) || 
+	      Contact.create(
 			    :first => "FIRSTNAME",
 			    :last => "LASTNAME",
 			    :email => email,
@@ -15,21 +21,27 @@ module UserLogin
 			)
 
 	    # Create temp user
-	    user = User.create(
+	    user = contact.user || 
+	      User.create(
 			    :contact => contact,
 			    :password_confirmation => "secret",
 			    :password => "secret"
 			)
 
 	    # Login and verify user's name shows up
-	    visit login_path
-
+	    visit "/login"
+	    
+      # uncomment for debugging the spec 
+      # screenshot('prelogin')
+      
 	    fill_in "email", :with => email
 
 	    fill_in "password", :with => "secret"
 
 	    click_button "Log In"
-
+	    
+	    {:email => contact[:email], :password => user[:password]}
+	    
 	end
 
 end

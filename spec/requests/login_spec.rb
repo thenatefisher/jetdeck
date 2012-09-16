@@ -2,19 +2,21 @@ require 'spec_helper'
 
 describe 'login page' do
 
- it 'allows login with valid username and password', :js => true do
+  it 'allows login with valid username and password', :js => true do
 	
     login  
 
-    page.driver.render(ScreenshotPath + '/login.png')
+    screenshot('login')
 
     page.should have_content("FIRSTNAME LASTNAME")
     
   end
   
-  it "shows 'forgot password' link with bogus login" do
+  it "shows 'forgot password' link with bogus login", :js => true do
 
-    visit login_path
+    visit "/login"
+    
+    screenshot('pre_forgot_password')
 
     fill_in "email", :with => "bogus"
 
@@ -22,8 +24,10 @@ describe 'login page' do
 
     click_button "Log In" 
 
+    screenshot('forgot_password')
+    
     page.should have_content("Forgot")   
-
+    
   end
   
 end

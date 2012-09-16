@@ -6,9 +6,9 @@ describe "password reset page" do
    
         visit "/password_resets"    
         
-	page.should have_content("Reset Password")
+	      page.should have_content("Reset Password")
 
-	page.driver.render('/home/nate/test-shots/password_reset_page.png', :full => true)
+	      page.driver.render('password_reset_page.png', :full => true)
         
     end
     
@@ -34,9 +34,13 @@ describe "password reset page" do
                     )
           
         visit "/password_resets"
+        
         page.should have_content("Reset Password")
+        
         fill_in "email", :with => contact.email
+        
         click_button "Reset"
+        
         ActionMailer::Base.deliveries.last.should have_content(contact.email)
     
     end

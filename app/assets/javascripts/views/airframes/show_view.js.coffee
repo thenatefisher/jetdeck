@@ -90,7 +90,6 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     $("#save-changes").prop('disabled', false)
 
   render: =>
-  
     lastSpecTab = null
     if $("#airframe_spec_details .tab-pane:visible").attr("id")
       lastSpecTab = $("#airframe_spec_details .tab-pane:visible").attr("id")

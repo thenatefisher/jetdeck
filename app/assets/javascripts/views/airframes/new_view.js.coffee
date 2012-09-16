@@ -71,7 +71,7 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
           $(".select2-choice").children("span").html(ui.item.make + " " + ui.item.model_name)
           return false
     })
-    .data("autocomplete" )._renderItem = ( ul, item ) ->
+    .data("autocomplete")._renderItem = ( ul, item ) ->
        ul.addClass("dropdown-menu");
        ul.addClass("typeahead");
        return $( "<li class=\"result\" style=\"cursor: pointer\"></li>" )

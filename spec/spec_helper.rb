@@ -9,42 +9,59 @@ require 'capybara/rspec'
 require 'capybara/rails'
 require 'paperclip/matchers'
 
+# cool headless js engine
 Capybara.javascript_driver = :poltergeist
 
-ScreenshotPath = '/home/nate/test-shots/'
+# set screenshot directory and clear before each run
+ScreenshotPath = Rails.root.join("spec/screenshots/")
+Dir.glob("#{ScreenshotPath}*.png") do |file|
+  next if file == '.' or file == '..'
+  File.delete(file)
+end
 
-# DatabaseCleaner.strategy = :truncation
+# options are :deletion, :transation or :truncation
+DatabaseCleaner.strategy = :truncation
+DatabaseCleaner.clean
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+# shutup airbrake
+module Airbrake
+  def self.notify(exception, opts = {})
+    # do nothing.
+  end
+end
+
 RSpec.configure do |config|
 
   config.include Paperclip::Shoulda::Matchers
 
+  # macros
   config.include(UserLogin)
+  config.include(ScreenShot)
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
-#  config.use_transactional_fixtures = false 
+  #  config.use_transactional_fixtures = false 
 
+  # run once before each 'describe' group
   config.before(:suite) do
-#    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean
+    DatabaseCleaner.start
   end
 
-  config.before(:suite) do
-#    DatabaseCleaner.start
+  config.after(:suite) do
+    DatabaseCleaner.clean
   end
-
-  config.before(:suite) do
-#    DatabaseCleaner.clean
-  end
-
+  
   # If true, the base class of anonymous controllers will be inferred
   # automatically. This will be the default behavior in future versions of
   # rspec-rails.
-  config.infer_base_class_for_anonymous_controllers = false
+  # config.infer_base_class_for_anonymous_controllers = false
 
 end
+
+
