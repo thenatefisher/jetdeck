@@ -48,11 +48,37 @@
             </div>          
           </div>
 
-          <div class="row">
+          <!--[if IE]>
+          
+          <style>.nonie {display: none;}</style>
+          
+          <div class="row-fluid">
+            <br>
+            <div class="span1" style="margin: 0px"></div>
+            <div class="span9 well">
+              <h1>Sorry, Internet Explorer is not yet supported.<br></h1>
+              <h4><br>JetDeck is currently in a private alpha test phase. We're working hard to provide a seamless user experience to all operating systems, devices and browsers. If you have been invited to try JetDeck, please consider loggin in with one of these currently supported options: </h4>
+              <br>
+              <ul>
+                <li>Mozilla Firefox</li>
+                <li>Apple Safari</li>
+                <li>Google Chrome</li>
+              </ul>
+            </div> 
+            <div class="clearfix"></div>
+            <div class="span1"></div>
+            <div class="span5 footer">
+            <p>© <%=  Time.now.year %>, JetDeck Services, LLC </p>
+            </div>                     
+          </div>
+           
+          <![endif]-->
+                
+          <div class="row nonie">
               <div class="span1"></div>
               
               <div class="span7 clearfix">
-                
+
                 <div class="login-box"><%= yield %></div>
                 
               </div>

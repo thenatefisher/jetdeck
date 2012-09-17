@@ -115,6 +115,7 @@ class AirframesController < ApplicationController
   # PUT /airframes/1
   # PUT /airframes/1.json
   def update
+
     @airframe = Airframe.find(params[:id])
     
     equipment = Array.new()
@@ -171,8 +172,7 @@ class AirframesController < ApplicationController
               :name, :year, :smoh, :shsi, :tbo, :hsi)
             engine.update_attributes(eng_wl) if engine
               
-            @engines << engine if engine
-            @mixpanel.track_event("Created Engine", {:baseline => false})  
+            @engines << engine if engine 
             
          end
          

@@ -16,7 +16,8 @@ class ProfileController < ApplicationController
         
         if params[:profile][:contact]
         
-            if params[:profile][:contact][:password_confirmation]
+            if params[:profile][:contact][:password_confirmation] &&
+              params[:profile][:contact][:password_confirmation] != ""
 
                @current_user.update_attributes(
                       params[:profile][:contact].slice(:password,:password_confirmation))

@@ -49,7 +49,7 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
     @$("#airframe_registration").autocomplete({
        minLength: 2,
        autofocus: true,
-       focus: (event, ui) ->
+       focus: (event, ui) =>
           $("#airframe_registration").val(ui.item.registration) if ui.item.registration
           $("#airframe_year").val(ui.item.year) if ui.item.year
           $("#airframe_serial").val(ui.item.serial) if ui.item.serial

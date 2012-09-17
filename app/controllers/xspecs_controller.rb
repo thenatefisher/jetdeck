@@ -9,9 +9,9 @@ class XspecsController < ApplicationController
       
       if @xspec
 
-        delivered = XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
+        XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
         
-        @mixpanel.track_event("Spec Sent", {:delivered => delivered})
+        @mixpanel.track_event("Spec Sent")
         
         render :json => @spec.to_json()
       
@@ -104,8 +104,8 @@ class XspecsController < ApplicationController
 
         if params[:xspec]['send'] == "true"
         
-          delivered = XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
-          @mixpanel.track_event("Spec Sent", {:delivered => delivered})
+          XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
+          @mixpanel.track_event("Spec Sent")
           
         end
 

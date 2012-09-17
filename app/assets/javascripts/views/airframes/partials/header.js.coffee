@@ -62,7 +62,6 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     @$('#airframe_image_upload').bind('fileuploadadd', ->
       $("#changes").children().fadeIn()
       $("#changes").slideDown()
-      console.log "fired"
     )
     
     # set some drag/drop events

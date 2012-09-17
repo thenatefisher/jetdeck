@@ -30,7 +30,7 @@
       
   <div class="company-banner hidden-phone">
 
-      <div style="float: left; position: relative; width: 100%">
+      <div style="float: left; position: relative; width: 100%;">
       
           <div class="agent-info">
 
@@ -408,7 +408,7 @@
                       <td><strong>TTSN</strong></td>
                       <% for (i in engines) { %>
                           <td>
-                              <% if (typeof(engines[i].tt) != "undefined" && typeof(engines[i].tt) != null) { %> 
+                              <% if (typeof(engines[i].tt) != "undefined" && engines[i].tt != null) { %> 
                                   <%= engines[i].tt.formatMoney(0, ".", ",") %> 
                               <% } %>
                           </td>
@@ -419,7 +419,7 @@
                       <td><strong>SMOH</strong></td>
                       <% for (i in engines) { %>
                           <td>
-                              <% if (typeof(engines[i].smoh) != "undefined" && typeof(engines[i].smoh) != null) { %> 
+                              <% if (typeof(engines[i].smoh) != "undefined" && engines[i].smoh != null) { %> 
                                   <%= engines[i].smoh.formatMoney(0, ".", ",") %> 
                               <% } %>
                           </td> 
@@ -430,7 +430,7 @@
                       <td><strong>SHSI</strong></td>
                       <% for (i in engines) { %>
                           <td>
-                              <% if (typeof(engines[i].shsi) != "undefined" && typeof(engines[i].shsi) != null) { %> 
+                              <% if (typeof(engines[i].shsi) != "undefined" && engines[i].shsi != null) { %> 
                                   <%= engines[i].shsi.formatMoney(0, ".", ",") %> 
                               <% } %>
                           </td>
