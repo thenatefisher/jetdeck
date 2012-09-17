@@ -16,7 +16,8 @@ class ProfileController < ApplicationController
         
         if params[:profile][:contact]
         
-            if params[:profile][:contact][:password_confirmation]
+            if params[:profile][:contact][:password_confirmation] &&
+              params[:profile][:contact][:password_confirmation] != ""
 
                @current_user.update_attributes(
                       params[:profile][:contact].slice(:password,:password_confirmation))
@@ -41,9 +42,11 @@ class ProfileController < ApplicationController
             
             if errors.count > 0 || @current_user.contact.errors.count > 0
               errors.merge! @current_user.contact.errors
+              @mixpanel.track_event("Error Updating Profile")
               render :json => errors, 
                      :status => :unprocessable_entity
             else
+              @mixpanel.track_event("Updated Profile")
               render :json => @current_user.contact 
             end
             

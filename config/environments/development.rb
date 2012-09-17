@@ -50,7 +50,7 @@ Jetdeck::Application.configure do
   config.aws_s3_bucket = "jetdeck_dev"
   
   # mix panel
-  config.mixpanel_token = "" #"***REMOVED***"
+  config.mixpanel_token = "***REMOVED***"
   config.middleware.use "Mixpanel::Tracker::Middleware", 
     config.mixpanel_token, { :persist => true }
   

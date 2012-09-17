@@ -45,7 +45,6 @@ class AirframesController < ApplicationController
   # GET /airframes/1.json
   def show
 
-    @mixpanel.track_event("Pull Airframe Record")
     if params[:id].present?
         @airframe = Airframe.find(params[:id])
     end
@@ -56,7 +55,7 @@ class AirframesController < ApplicationController
   # GET /airframes/new.json
   def new
     @airframe = Airframe.new
-
+    
     respond_to do |format|
       format.html # new.html.erb
       format.json { render :json => @airframe }
@@ -75,6 +74,7 @@ class AirframesController < ApplicationController
     whitelist[:user_id] = @current_user.id
     @airframe = Airframe.new(whitelist)
 
+    baseline = Airframe.new()
     if params[:airframe][:baseline_id].present?
         baseline = Airframe.find(params[:airframe][:baseline_id])
         if baseline
@@ -97,9 +97,15 @@ class AirframesController < ApplicationController
     
     respond_to do |format|
       if @airframe.save
+        @mixpanel.track_event("Created Airframe", 
+          {:baseline => !baseline.new_record?}
+        )
         format.html { redirect_to @airframe, :notice => 'Airframe was successfully created.' }
         format.json { render :json => @airframe, :status => :created, :location => @airframe }
       else
+        @mixpanel.track_event("Failed Creating Airframe", 
+          {:baseline => !baseline.new_record?}
+        )      
         format.html { render :action => "new" }
         format.json { render :json => @airframe.errors, :status => :unprocessable_entity }
       end
@@ -109,6 +115,7 @@ class AirframesController < ApplicationController
   # PUT /airframes/1
   # PUT /airframes/1.json
   def update
+
     @airframe = Airframe.find(params[:id])
     
     equipment = Array.new()
@@ -137,7 +144,7 @@ class AirframesController < ApplicationController
             newItem.update_attributes(eng_wl) if newItem     
                        
             @engines << newItem if newItem
-            
+            @mixpanel.track_event("Created Engine", {:baseline => false})                
          elsif @baseline = Engine.find(
               :first, 
               :conditions => [
@@ -152,7 +159,8 @@ class AirframesController < ApplicationController
                 :name, :year, :smoh, :shsi, :tbo, :hsi)
                newItem.update_attributes(eng_wl) 
                              
-               @engines << newItem               
+               @engines << newItem        
+               @mixpanel.track_event("Created Engine", {:baseline => true})     
          else
          
             engine = Engine.find(:first, :conditions => [
@@ -164,7 +172,7 @@ class AirframesController < ApplicationController
               :name, :year, :smoh, :shsi, :tbo, :hsi)
             engine.update_attributes(eng_wl) if engine
               
-            @engines << engine if engine
+            @engines << engine if engine 
             
          end
          
@@ -173,6 +181,7 @@ class AirframesController < ApplicationController
 
     respond_to do |format|
       if @airframe.update_attributes(whitelist)
+        @mixpanel.track_event("Updated Airframe") 
         format.html { redirect_to @airframe, 
           :notice => 'Airframe was successfully updated.' }
         format.json { render  :locals => { airframe: @airframe }, 
@@ -180,6 +189,7 @@ class AirframesController < ApplicationController
                               :formats => [:json],
                               :handlers => [:jbuilder] }
       else
+        @mixpanel.track_event("Failed Updating Airframe")  
         format.html { render :action => "edit" }
         format.json { render :json => @airframe.errors, :status => :unprocessable_entity }
       end
@@ -191,7 +201,7 @@ class AirframesController < ApplicationController
   def destroy
     @airframe = Airframe.find(params[:id])
     @airframe.destroy
-
+    @mixpanel.track_event("Deleted Airframe") 
     respond_to do |format|
       format.html { redirect_to airframes_url }
       format.json { head :no_content }

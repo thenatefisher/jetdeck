@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
     protect_from_forgery
-
+            
     private
 
     helper_method :current_user
     before_filter :init_mixpanel
-
+    
     def current_user
         @current_user ||= User.find_by_auth_token(cookies[:auth_token]) if cookies[:auth_token]
     end
@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
     def authorize
         redirect_to login_url, alert: "Not authorized" if current_user.nil?
     end
-
+    
     def init_mixpanel
       @mixpanel = Mixpanel::Tracker.new(
         Jetdeck::Application.config.mixpanel_token, 
@@ -32,5 +32,4 @@ class ApplicationController < ActionController::Base
         })
       end
     end
-
 end
