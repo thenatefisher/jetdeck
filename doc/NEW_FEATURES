@@ -24,3 +24,16 @@ Reading Emails (replied from recipients) - defer
 
 Tutorial
 
+Deactivate xspecs that have been sent, instead of deleting. then redirect users to a nice error page with broker contact info should they click on it. 
+
+Product Improvements
+
+  Description field rich edit
+  Close account feature 
+  Partial out the layouts
+  Combine lead and xspec data types in front end
+  Straighten up user/contact schemas and model names
+  better error pages for app and heroku static (https://devcenter.heroku.com/articles/error-pages)
+  preload font-awesome graphics
+  use amazon cloud fron CDN
+  
