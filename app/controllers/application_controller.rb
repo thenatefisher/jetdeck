@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     end
     
     def init_mixpanel
-      @mixpanel = Mixpanel::Tracker.new(
+      @mixpanel ||= Mixpanel::Tracker.new(
         Jetdeck::Application.config.mixpanel_token, 
         request.env, 
         { :persist => true }
