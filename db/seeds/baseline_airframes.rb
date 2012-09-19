@@ -1,52 +1,102 @@
 puts "Creating Baseline Airframe Data"
 
-# manufacturers, models, baseline_airframes
-open("#{Rails.root}/db/seeds/data/aircraft_data.csv") do |infile|
+open("#{Rails.root}/db/seeds/data/FAA_MASTER.csv") do |infile|
 
-  
-    infile.read.each_line do |row|
+  infile.read.each_line do |row|
 
-        1000.times {next}
+    aircraft = row.split(",")
 
-        aircraft = row.chomp.split(",")
-        # MAKE MODEL SERIAL REG YEAR
-
-        if (!aircraft[0] ||
-          !aircraft[1] ||
-          !aircraft[2] ||
-          !aircraft[3] ||
-          !aircraft[4] ||
-          !aircraft[5])
-          next
-        end
-
-        # validate data
-        if (aircraft[1].length == 0 || !(/^[\d]+(\.[\d]+){0,1}$/ === aircraft[0]))
-            next
-        end
-
-        a = Airframe.new(
-            :id => aircraft[0],
-            :year => aircraft[5],
-            :serial => aircraft[3],
-            :registration => aircraft[4],
-            :model_name => aircraft[2],
-            :make => aircraft[1],
-            :baseline => true
-        )
-
-        for i in 1..2
-            baselineEngine = Engine.first(:offset => rand(Engine.count).to_i)
-            engine = baselineEngine.dup
-            engine.baseline = false
-            engine.baseline_id = baselineEngine.id
-            a.engines << engine
-        end
-
-        a.save
-        
+    registration      = aircraft[0].strip
+    serial            = aircraft[1].strip
+    af_mfg_code       = aircraft[2].strip      
+    eng_mfg_code      = aircraft[3].strip
+    year              = aircraft[4].strip.to_i
+    eng_type          = aircraft[19].strip.to_i
+    af_type           = aircraft[18].strip.to_i
+    cert_type         = aircraft[17].strip.to_i
+    
+    eng_count         = 0
+    af_model          = nil
+    af_make           = nil
+    eng_make          = nil
+    eng_model         = nil
+    
+    if (cert_type == 1) &&
+      (year > 1980) && 
+      (eng_type > 1) && 
+      (eng_type < 6) && 
+      (af_type > 3) && 
+      (af_type < 7)
+    
+          acft_ref = open("#{Rails.root}/db/seeds/data/FAA_ACFTREF.csv")
+            .grep(/#{af_mfg_code}/i).first
+            
+          if acft_ref 
+            acft_ref = acft_ref.split(",")
+            ref_code = acft_ref[0].strip
+            if (ref_code == af_mfg_code)
+              af_make  = acft_ref[1].strip
+              af_model = acft_ref[2].strip
+              eng_count  = acft_ref[7].to_i
+            end
+          end
+          
+          eng_ref = open("#{Rails.root}/db/seeds/data/FAA_ENGINE.csv")
+            .grep(/#{eng_mfg_code}/i).first
+            
+          if eng_ref 
+            eng_ref = eng_ref.split(",")
+            ref_code = eng_ref[0].strip
+            if (ref_code == eng_mfg_code)
+              eng_make = eng_ref[1].strip
+              eng_model = eng_ref[2].strip
+            end
+          end
+                    
+          a = Airframe.where(
+            :serial => serial, 
+            :year => year, 
+            :model_name => af_model, 
+            :make => af_make, 
+            :baseline => true).first || 
+          Airframe.create(
+            :registration => "N#{registration}", 
+            :serial => serial, 
+            :year => year, 
+            :model_name => af_model, 
+            :make => af_make, 
+            :baseline => true)
+          
+          e = Engine.where(
+            :model_name => eng_model, 
+            :make => eng_make, 
+            :baseline => true).first || 
+          Engine.create(
+            :model_name => eng_model, 
+            :make => eng_make, 
+            :baseline => true)
+          
+          if e && a.engines.empty?
+            for i in 1..eng_count
+              eng = e.dup
+              eng.baseline = false
+              a.engines << eng
+            end
+          end
+          
+          a.save
+          
+          print "#{year} "
+          print "(Eng Count: #{eng_count} )"
+          print "#{af_make} "
+          print "#{af_model} "
+          print "N#{registration} "
+          print "SN:#{serial}\n"
+    
     end
-
+    
+  end
+  
 end
 
 puts "Finished Creating Baseline Airframe Data"

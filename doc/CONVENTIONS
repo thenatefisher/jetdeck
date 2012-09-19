@@ -1,7 +1,0 @@
-Coding Conventions
-
-  TODO:
-  Class and Element ID names with underscores indicate that styles are not located in external CSS files. These selectors are used specifically for JS actions. Element names with dashes can have external styles applied.
-      Formatting uses dashes in names
-      JS Triggering uses underscores in names
-      Any JS element name without multiple words will end in an underscore to indicate its use as a JS handle

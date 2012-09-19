@@ -34,7 +34,7 @@ class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
     e = event.target || event.currentTarget
     engineId = $(e).data('eid')
     engine = @model.engines.getByCid(engineId)
-    console.log engine
+
     if !engine.get("pending")
       engine.destroy(
           success: =>

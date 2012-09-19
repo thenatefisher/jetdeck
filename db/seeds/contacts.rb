@@ -96,7 +96,10 @@ titles = [
   )
 
   if (rand(3) > 1 || User.all.length == 0)
-    user = User.create(:contact => contact, :password => "a", :password_confirmation => "a")
+    user = User.create(
+    :contact => contact, 
+    :password => "123123", 
+    :password_confirmation => "123123")
   elsif User.all.length > 0
     UIdMax = User.maximum(:id)
     UIdMin = User.minimum(:id)
