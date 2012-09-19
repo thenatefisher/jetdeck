@@ -10,14 +10,16 @@
   55      Access Control Audit
   60      Browser Compatibility Checking
   --- ---
-  80      Mail LLC docs
+
   90      Error Pages
-  110     Make staging/dev AWS S3 area
+
   
 #########     LATER       #########
 
 #########     DONE        #########
 
+  80      Mail LLC docs
+  110     Make staging/dev AWS S3 area
   40      Need retail image placeholder of correct dimensions
   65      Migrate in public spec improvements from mkting demo
   20      Images need to be resized/cropped on upload to spec defined sizes

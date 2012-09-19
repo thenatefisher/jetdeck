@@ -76,10 +76,18 @@ class AirframesController < ApplicationController
 
     baseline = Airframe.new()
     if params[:airframe][:baseline_id].present?
-        baseline = Airframe.find(params[:airframe][:baseline_id])
+        baseline = Airframe.find(:first, :conditions => [
+          "baseline = 't' AND id = ?",
+          params[:airframe][:baseline_id]])
         if baseline
             @airframe.model_name = baseline.model_name
             @airframe.make = baseline.make
+            @airframe.baseline_id = baseline.id
+            baseline.engines.each do |e| 
+              new_eng = e.dup
+              new_eng.user_id = @current_user.id
+              @airframe.engines << new_eng 
+            end
         end
     end
 
