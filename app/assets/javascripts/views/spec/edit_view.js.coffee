@@ -9,21 +9,37 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
     "click #next_tab"               : "next"
     "click a[href='#stats_tab']"    : "sendButton"
 
-  send: =>
-    $.post("/xspecs/send_spec/" + @model.get("id") )
-    modalClose()
+  # save and send button
+  send : (e) =>
+    e.preventDefault()
+    e.stopPropagation()  
     
-  sendButton: =>
+    @$("input@[type='checkbox']").each( (i, element) =>
+      if $(element).is(":checked") 
+        @model.set($(element).attr("name"), "true")
+      else 
+        @model.set($(element).attr("name"), "false")
+    )
+    
+    @model.save(null,
+      success : (xspec) =>
+        @model = xspec
+        $.post("/xspecs/send_spec/" + @model.get("id") )
+        modalClose()
+    )
+  
+  # show send button  
+  sendButton : =>
     @$("#next_tab").hide()
     @$("#xspec_send").show()
   
-  next: =>
+  next : =>
     tabname = $("#spec-edit-modal .tab-pane:visible").next().attr('id')
     $("a[href='#" + tabname + "']").tab('show')
     if $("#spec-edit-modal .tab-pane:visible").next().length == 0
-      console.log "true"
       @sendButton()
 
+  # save and close button
   update : (e) ->
     e.preventDefault()
     e.stopPropagation()

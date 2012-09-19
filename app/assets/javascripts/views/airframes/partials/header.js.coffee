@@ -8,7 +8,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
 
   initialize: () ->
     @model.on("change", @updateHeadline)
-    return this
+    @$(".fileinput-button").on("click", (e) -> e.preventDefault())
 
   updateHeadline: () =>
     headline = @model.get('year')
