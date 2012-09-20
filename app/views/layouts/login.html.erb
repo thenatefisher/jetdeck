@@ -53,6 +53,7 @@
             </div>          
           </div>
 
+          <% if Rails.env == "production" %>
           <!--[if IE]>
           
           <style>.nonie {display: none;}</style>
@@ -78,7 +79,8 @@
           </div>
            
           <![endif]-->
-                
+          <% end %>
+          
           <div class="row nonie">
               <div class="span1"></div>
               
