@@ -15,7 +15,13 @@ class ContactsController < ApplicationController
   # GET /contacts/1
   # GET /contacts/1.json
   def show
-    @contact = Contact.find(:first, :conditions => ["id = ? AND owner_id = ?", params[:id], @current_user.id])
+
+    @contact = Contact.find(:first, 
+      :conditions => [
+        "id = ? AND owner_id = ?", 
+        params[:id], 
+        @current_user.id]
+    )
   end
 
   # GET /contacts/new
@@ -24,7 +30,6 @@ class ContactsController < ApplicationController
     @contact = Contact.new
 
     respond_to do |format|
-      @mixpanel.track_event("Pull Contact Record")
       format.html # new.html.erb
       format.json { render :json => @contact }
     end
@@ -45,11 +50,9 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.save
-        @mixpanel.track_event("Created Contact")
         format.html { redirect_to @contact, :notice => 'Contact was successfully created.' }
         format.json { render :json => @contact, :status => :created, :location => @contact }
       else
-        @mixpanel.track_event("Failed Creating Contact")
         format.html { render :action => "new" }
         format.json { render :json => @contact.errors, :status => :unprocessable_entity }
       end
@@ -72,7 +75,7 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.update_attributes(whitelist)
-        @mixpanel.track_event("Updated Contact")
+  
         format.html { redirect_to @contact, :notice => 'Contact was successfully updated.' }
         format.json { head :no_content }
       else
@@ -87,7 +90,7 @@ class ContactsController < ApplicationController
   def destroy
     @contact = Contact.find(params[:id])
     @contact.destroy
-    @mixpanel.track_event("Deleted Contact")
+
     respond_to do |format|
       format.html { redirect_to contacts_url }
       format.json { head :no_content }

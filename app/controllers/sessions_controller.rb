@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
 
+
     def new
         
         if current_user.present? 
@@ -22,7 +23,6 @@ class SessionsController < ApplicationController
               cookies[:auth_token] = user.auth_token      
           end
           
-          mixpanel.track_event("User Logged In")
           redirect_to airframes_url, :notice => "Logged in!"
           
         else

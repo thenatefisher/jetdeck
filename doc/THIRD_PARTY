@@ -3,15 +3,25 @@ Third Party Libraries
   Front End:
       jQuery MultiSelect
       jQueryUI AutoComplete
+      jQuery Select2
       SubtleBackgrounds
-      https://github.com/jhollingworth/bootstrap-wysihtml5/
 
   Back End:
-      Paperclip
+      Rails
+      Paperclip gem
       Bootstrap
       Backbone.js
-      jBuilder
-      Annotate
+      jBuilder gem
       Factory Girl
-      Delayed Job
-      rspec
+      rspec-rails
+      
+  Hosting / Infrastructure:
+      Heroku
+      Amazon S3 (for image hosting)
+      SendGrid
+      MixPanel
+      Stripe (still implementing)
+      AirBrake
+      Amazon CloudFront (for CDN, not configured yet)
+      
+    
