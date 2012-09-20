@@ -51,8 +51,6 @@ Jetdeck::Application.configure do
   
   # mix panel
   config.mixpanel_token = "***REMOVED***"
-  config.middleware.use "Mixpanel::Tracker::Middleware", 
-    config.mixpanel_token, { :persist => true }
   
   
 end

@@ -17,7 +17,6 @@ class UserLogosController < ApplicationController
               @current_user.logo.destroy if @current_user.logo
               @current_user.logo = @logo
             end
-            mixpanel.track_event("Uploaded Logo")
         end
         
         redirect_to "/profile"

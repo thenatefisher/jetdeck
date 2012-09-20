@@ -11,8 +11,6 @@ class XspecsController < ApplicationController
 
         XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
         
-        mixpanel.track_event("Spec Sent")
-        
         render :json => @spec.to_json()
       
       end
@@ -45,14 +43,12 @@ class XspecsController < ApplicationController
     @airframe = @xspec.airframe
 
     if @xspec.nil? then
-        mixpanel.track_event("Invalid Retail Spec Code")
         redirect_to "/"
         return
     else
       if @current_user.nil?
         @xspec.views << SpecView.create(:agent => request.user_agent, :ip => request.remote_ip)
       end
-      mixpanel.track_event("Spec Viewed", {:logged_in => @current_user.present?})
     end
 
     render :layout => 'retail'
@@ -80,8 +76,6 @@ class XspecsController < ApplicationController
     sender = @current_user.contact
 
     recipient = Contact.where("email = ? AND owner_id = ?", params[:xspec]['recipient_email'], @current_user.id).first
-
-    mixpanel.track_event("Spec Created", {:new_contact => recipient.nil?})
     
     # create a contact record if none found
     if recipient.nil?
@@ -102,7 +96,6 @@ class XspecsController < ApplicationController
         if params[:xspec]['send'] == "true"
         
           XSpecMailer.sendRetail(@xspec, @xspec.recipient).deliver
-          mixpanel.track_event("Spec Sent")
           
         end
 
@@ -126,7 +119,6 @@ class XspecsController < ApplicationController
 
         @xspec = Xspec.where("url_code = ?", params[:spec][:url_code]).first
         @xspec.update_attributes(params[:spec].slice(:show_message))
-        mixpanel.track_event("Recipient Removed Broker Message")  
         render :nothing => true
         return 
         
@@ -154,8 +146,6 @@ class XspecsController < ApplicationController
           :background_id   
         )
         
-        mixpanel.track_event("Updated Spec")
-        
       else
           render :nothing => true
           return
@@ -167,7 +157,6 @@ class XspecsController < ApplicationController
           format.html { redirect_to @xspec, :notice => 'Spec was successfully updated.' }
           format.json { head :no_content }
         elsif @xspec.errors
-          mixpanel.track_event("Failed to Update Spec")
           format.html { render :action => "edit" }
           format.json { render :json => @xspec.errors, :status => :unprocessable_entity }
         end
@@ -184,7 +173,6 @@ class XspecsController < ApplicationController
     
     if @xspec
        @xspec.destroy()
-       mixpanel.track_event("Destroyed Spec")
     end
     
     respond_to do |format|

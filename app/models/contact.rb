@@ -56,7 +56,7 @@ class Contact < ActiveRecord::Base
                       :message => "Invalid Website URL"
                       
   before_validation do
-    self.email.sub!(" ", "")
+    self.email.gsub!(" ", "") if self.email
   end       
   
   def emailField

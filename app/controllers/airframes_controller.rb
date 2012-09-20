@@ -105,15 +105,9 @@ class AirframesController < ApplicationController
     
     respond_to do |format|
       if @airframe.save
-        mixpanel.track_event("Created Airframe", 
-          {:baseline => !baseline.new_record?}
-        )
         format.html { redirect_to @airframe, :notice => 'Airframe was successfully created.' }
         format.json { render :json => @airframe, :status => :created, :location => @airframe }
       else
-        mixpanel.track_event("Failed Creating Airframe", 
-          {:baseline => !baseline.new_record?}
-        )      
         format.html { render :action => "new" }
         format.json { render :json => @airframe.errors, :status => :unprocessable_entity }
       end
@@ -151,8 +145,7 @@ class AirframesController < ApplicationController
               :name, :year, :smoh, :shsi, :tbo, :hsi)
             newItem.update_attributes(eng_wl) if newItem     
                        
-            @engines << newItem if newItem
-            mixpanel.track_event("Created Engine", {:baseline => false})                
+            @engines << newItem if newItem             
          elsif @baseline = Engine.find(
               :first, 
               :conditions => [
@@ -167,8 +160,7 @@ class AirframesController < ApplicationController
                 :name, :year, :smoh, :shsi, :tbo, :hsi)
                newItem.update_attributes(eng_wl) 
                              
-               @engines << newItem        
-               mixpanel.track_event("Created Engine", {:baseline => true})     
+               @engines << newItem            
          else
          
             engine = Engine.find(:first, :conditions => [
@@ -189,7 +181,6 @@ class AirframesController < ApplicationController
 
     respond_to do |format|
       if @airframe.update_attributes(whitelist)
-        mixpanel.track_event("Updated Airframe") 
         format.html { redirect_to @airframe, 
           :notice => 'Airframe was successfully updated.' }
         format.json { render  :locals => { airframe: @airframe }, 
@@ -197,7 +188,6 @@ class AirframesController < ApplicationController
                               :formats => [:json],
                               :handlers => [:jbuilder] }
       else
-        mixpanel.track_event("Failed Updating Airframe")  
         format.html { render :action => "edit" }
         format.json { render :json => @airframe.errors, :status => :unprocessable_entity }
       end
@@ -209,7 +199,6 @@ class AirframesController < ApplicationController
   def destroy
     @airframe = Airframe.find(params[:id])
     @airframe.destroy
-    mixpanel.track_event("Deleted Airframe") 
     respond_to do |format|
       format.html { redirect_to airframes_url }
       format.json { head :no_content }

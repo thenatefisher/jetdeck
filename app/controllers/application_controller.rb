@@ -13,27 +13,5 @@ class ApplicationController < ActionController::Base
         redirect_to login_url, alert: "Not authorized" if current_user.nil?
     end
     
-    def mixpanel
-    
-      mixpanel ||= Mixpanel::Tracker.new(
-        Jetdeck::Application.config.mixpanel_token, 
-        request.env, 
-        { :persist => true }
-      )
-      
-      if current_user
-        mixpanel.append_api("name_tag", current_user.contact.email)
-        mixpanel.append_api("people.identify", current_user.id)
-        mixpanel.append_person_event({
-          :email => current_user.contact.email,
-          :created => current_user.created_at,
-          :first_name => current_user.contact.first,
-          :last_name => current_user.contact.last,
-          :specs => current_user.airframes.count
-        })
-      end
-      
-      return mixpanel
-      
-    end
+
 end
