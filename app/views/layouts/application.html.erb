@@ -161,19 +161,19 @@
     <div class="modal hide" id="jetdeckModal"></div> <!-- modal container place holder -->
     <% if current_user.present? %>
     <% require 'digest/sha1' %>
-    <script>
+    <script>  
       mixpanel.people.set({
-        $email        : '<%= current_user.contact.email %>',
-        $created      : '<%= current_user.created_at %>',
-        $first_name   : '<%= current_user.contact.first %>',
-        $last_name    : '<%= current_user.contact.last %>',
-        $company      : '<%= current_user.contact.company %>',
-        $specs        : '<%= current_user.airframes.count %>',
-        $distinct_id  : '<%= Digest::SHA1.base64digest(current_user.id.to_s) %>'
+        $email        : "<%= current_user.contact.email %>",
+        $created      : "<%= current_user.created_at %>",
+        $first_name   : "<%= current_user.contact.first %>",
+        $last_name    : "<%= current_user.contact.last %>",
+        $company      : "<%= current_user.contact.company %>",
+        $specs        : "<%= current_user.airframes.count %>",
+        $distinct_id  : "<%= Digest::SHA1.base64digest(current_user.id.to_s) %>"
       });
-      mixpanel.people.identify('<%= Digest::SHA1.base64digest(current_user.id.to_s) %>');    
-      mixpanel.identify('<%= Digest::SHA1.base64digest(current_user.id.to_s) %>');
-      mixpanel.name_tag('<%= current_user.contact.email %>');
+      mixpanel.people.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");    
+      mixpanel.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");
+      mixpanel.name_tag("<%= current_user.contact.email %>");
     </script>
     <% end %>
     </body>
