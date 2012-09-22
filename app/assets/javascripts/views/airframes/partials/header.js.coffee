@@ -70,6 +70,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
       $("#changes").children().fadeIn()
       $("#changes").slideDown()
       $(".manage_images a").html("Hide Images")
+      mixpanel.track("Dropped Image Into Airframe")
     )
 
     # upload server status check for browsers with CORS support:

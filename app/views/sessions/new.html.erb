@@ -8,56 +8,65 @@
 
 <div style="padding: 20px; padding-bottom: 0px">
 
-    <form class="form-horizontal login" method="POST" action="/authenticate">
+    <form class="login" method="POST" action="/authenticate">
 
-          <div class="control-group <% if flash[:error] %> error <% end%>">
+          <table style="width: 100%">
 
-              <label class="control-label" for="email">Email</label>
-              <div class="controls">
+            <tr>
+              <td>Email</td>
+              <td>
                 <input
-                  class="span4 focused"
+                  class="focused pull-right"
                   id="email"
                   name="email"
                   type="text"
-                  value="<%= flash[:email] if flash[:email] %>" />
-              </div><br>
+                  value="<%= flash[:email] if flash[:email] %>" />    
+              </td>
+            </tr>
+            
+            <tr>
+               <td>Password</td>
+               <td>
+                  <input class="focused pull-right" id="password"
+                          name="password" type="password" value="" />
+                </td>  
+            </tr>
+            
+            <tr>
+                
+                 <td colspan=2>
 
-              <label class="control-label" for="password">Password</label>
-              <div class="controls">
-                <input class="span4 focused" id="password"
-                        name="password" type="password" value="" />
-
-                <% if flash[:error] %>
-                <span class="help-inline" style="margin-top: 10px">
-
+                  <div class="pull-right">
+                  <% if flash[:error] %>
+                        <div style="color: red">
                         <%= flash[:error] %>
                         <a href="/password_resets">
                         Forgot Your Password?</a>
-
-                </span>
-                <% else %>
-
-                <div style="margin-top: 10px">
+                        </div>
+                  <% else %>
                    <input type="checkbox" name="remember_me" checked /> 
                    <span>Remember Me</span>
-                </div>  
-                
-                <% end %>
-                              
-              </div>
+                  <% end %>  
+                  </div>
 
-          </div>
+                </td>  
 
-          <div class="pull-right login">
-              <span><a href="http://www.jetdeck.co/#features">Learn More!</a></span>
-              <input style="margin-top: -5px; margin-left: 10px;" 
-                        type="submit" 
-                        class="btn btn-primary" 
-                        value="Log In" />
-          </div>
-
+            </tr>
+            
+            <tr>
+              <td colspan=2>
+                <br>
+                <div class="pull-right">
+                    <span><a href="http://www.jetdeck.co/#features">Learn More!</a></span>
+                    <input type="submit" 
+                           class="btn btn-primary" 
+                           value="Log In" />
+                </div>
+              </td>
+            </tr>
+            
+          </table>
           <div class="clearfix"></div>
-
     </form>
 
 </div>

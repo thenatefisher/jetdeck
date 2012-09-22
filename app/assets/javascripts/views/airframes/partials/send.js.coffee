@@ -41,17 +41,21 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
       @model.leads.add(new_lead)
       window.router.view.render()
 
-      if !send
+      if (!send)
         specModel = new Jetdeck.Models.Spec(m)
         specModel.collection = new Jetdeck.Collections.SpecsCollection()
         specView = new Jetdeck.Views.Spec.EditView(model: specModel)
         modal(specView.render().el)
-        
+        mixpanel.track("Created Spec", {success: true})
+      else
+        mixpanel.track("Sent Spec", {success: true, is_new: true})
+     
     ).error( (m) =>
     
       @$("#send_spec").button('reset')
       @$(".control-group").addClass("error")
       @$(".help-inline").show()
+      mixpanel.track("Created Spec", {success: false})
       
     )
 

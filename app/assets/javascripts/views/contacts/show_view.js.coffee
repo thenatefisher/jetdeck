@@ -51,6 +51,7 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
           window.router.view.render()
           alertSuccess("<i class='icon-ok icon-large'></i> Changes Saved!") 
         )
+        mixpanel.track("Updated Contact")
 
       error: (model, error) =>
         alertFailure(
@@ -64,7 +65,7 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     $("#save-changes").prop('disabled', false)
     
   
-  delete: () ->
+  delete: () =>
     confirm = new Jetdeck.Views.Contacts.ConfirmDelete(model: @model)
     modal(confirm.render().el)
 

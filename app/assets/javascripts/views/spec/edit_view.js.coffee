@@ -25,6 +25,7 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
       success : (xspec) =>
         @model = xspec
         $.post("/xspecs/send_spec/" + @model.get("id") )
+        mixpanel.track("Sent Spec", {success: true, is_new: false})
         modalClose()
     )
   
@@ -55,6 +56,7 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
       success : (xspec) =>
         @model = xspec
         modalClose()
+        mixpanel.track("Updated Spec")
     )
 
   render: ->

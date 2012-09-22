@@ -1,4 +1,4 @@
-// This is a manifest file that'll be compiled into application.js, which will include all the files
+ // This is a manifest file that'll be compiled into application.js, which will include all the files
 // listed below.
 //
 // Any JavaScript/Coffee file within this directory, lib/assets/javascripts, vendor/assets/javascripts,
@@ -12,43 +12,31 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.ui.autocomplete
 //= require twitter/bootstrap
 //= require underscore
+//= require klass.min
+//= require code.photoswipe-3.0.4.min
 //= require backbone
 //= require backbone_rails_sync
 //= require backbone_datalink
 //= require lib/collection_book
 //= require lib/view_book
-//= require jetdeck
-//= require jquery.multi-select
-//= require jquery.quicksearch
-//= require select2.min
-//= require uploader/jquery.ui.widget
-//= require uploader/jquery.postmessage-transport
-//= require uploader/jquery.xdr-transport
-//= require uploader/load-image.min
-//= require uploader/canvas-to-blob.min.js
-//= require uploader/jquery.iframe-transport
-//= require uploader/tmpl.min
-//= require uploader/jquery.fileupload
-//= require uploader/jquery.fileupload-fp
-//= require uploader/jquery.fileupload-ui
-//= require uploader/locale
-//= require highcharts
 //= require formatMoney
-//= require_tree .
+//= require jetdeck
+
+$(function() { window.startTime = new Date().getTime(); });
 
 // Google Analytics
 var _gaq = _gaq || [];
-_gaq.push(['_setAccount', 'UA-32538435-2']);
+_gaq.push(['_setAccount', 'UA-32538435-3']);
 _gaq.push(['_trackPageview']);
 
 (function() {
-var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
+
 
 // Mixpanel
 
@@ -64,12 +52,4 @@ f="mixpanel";g.people=g.people||[];h=['disable','track','track_pageview','track_
 a._i.push([b,c,f])};a.__SV=1.1;})(document,window.mixpanel||[]);
 mixpanel.init("<%= Jetdeck::Application.config.mixpanel_token %>");
 
-<% if Rails.env.production? && current_user.present? && current_user.contact.email != "***REMOVED***" %>
-// Ghostrec
-
-(function() {
-	var host = ("https:" == document.location.protocol ? "https://secure.eemt.se" : "http://www.eemt.se");
-	document.write(unescape("%3Cscript src='" + host + "/gt/js/2768.js' type='text/javascript'%3E%3C/script%3E"));
-})();
-<% end %>
 
