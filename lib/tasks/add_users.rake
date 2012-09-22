@@ -11,7 +11,7 @@ namespace :users do
         :title => "Vice President")
 
       u1 = User.create(
-        :contact => 1, 
+        :contact => c1, 
         :password => "sm6654", 
         :password_confirmation => "sm6654")    
       
