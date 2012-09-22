@@ -80,6 +80,7 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
           window.router.view.render()
           alertSuccess("<i class='icon-ok icon-large'></i> Changes Saved!") 
           @manageImages() if imagesUploaded
+          mixpanel.track("Airframe Updated")
         )
 
       error: =>

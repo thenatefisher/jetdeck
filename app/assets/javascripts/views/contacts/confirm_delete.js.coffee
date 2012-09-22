@@ -7,8 +7,12 @@ class Jetdeck.Views.Contacts.ConfirmDelete extends Backbone.View
     "click .confirm_delete_contact"  : "delete"
   
   delete: ->
+    console.log @model
+    @model.collection = new Jetdeck.Collections.ContactCollection()
     @model.destroy()
-    window.location.href = "/contacts"
+    mixpanel.track("Deleted Contact", {}, ->
+      window.location.href = "/contacts"
+    )
     
   render: ->
     $(@el).html(@template() )

@@ -6,14 +6,22 @@ class Jetdeck.Views.Spec.ShowView extends Backbone.View
   events: 
     "click #close-message"  : "closeMessage"
     
+  initialize: ->
+    mixpanel.track_links(".contact-email", "Contact Button Clicked", {type: 'email'})  
+    mixpanel.track_links(".contact-phone", "Contact Button Clicked", {type: 'phone'})  
+    
   closeMessage : ->
     if $("#dont-show-message").is(":checked")
       @model.collection = new Jetdeck.Collections.SpecsCollection()
       @model.save({show_message: 'false'})
+      mixpanel.track("Customer Closed Broker Message", {permanently: true})
       
+    mixpanel.track("Customer Closed Broker Message", {permanently: false})  
+
   render: ->
     $(@el).html(@template(@model.toJSON() ))
-
+    mixpanel.track("Retail Spec Viewed")
+    
     # handle IE 7 compatibility
     if $.browser != 'msie' && $.browser.version != '7.0'
       # only use gallery if images are present

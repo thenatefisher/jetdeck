@@ -6,7 +6,7 @@ class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
   template: JST["templates/airframes/spec/engines/pane"]
 
   events:
-    "keyup .engine_inline_edit"      : "edit"
+    "keyup .engine_inline_edit"        : "edit"
     "click .add_engine"                : "add"
     "click .remove_engine"             : "destroy"
     

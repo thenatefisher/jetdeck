@@ -44,8 +44,7 @@
 
           <div style="height: 150px;"></div>
 
-          <div class="row-fluid">
-            <div class="span1"></div>
+          <div class="row">
             <div class="span5">
               <a href="http://www.jetdeck.co">
               <img class="logo" src="<%= asset_path 'logo_black_no_tag_200.png' %>" />
@@ -82,20 +81,15 @@
           <% end %>
           
           <div class="row nonie">
-              <div class="span1"></div>
-              
-              <div class="span7 clearfix">
-
+              <div class="span7">
                 <div class="login-box"><%= yield %></div>
-                
               </div>
-              
-              <div class="clearfix"></div>
-              <div class="span1"></div>
-              <div class="span5 footer">
+          </div>
+          
+          <div class="row nonie">
+              <div class="span7 footer">
                 <p>© <%=  Time.now.year %>, JetDeck Services, LLC </p>
               </div>
-              
           </div>
 
       </div> <!-- end container class -->

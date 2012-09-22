@@ -6,7 +6,7 @@
 
       <% if (agent_phone) { %>
       
-      <a class="btn btn-primary btn-large contact pull-left"
+      <a class="btn btn-primary btn-large contact contact-phone pull-left"
           href="tel:<%= agent_phone %>">
           <strong>
           <i class="icon-phone icon-white"></i> <%= agent_name %>
@@ -15,7 +15,7 @@
            
       <% } else { %>
       
-      <a class="btn btn-primary btn-large contact" 
+      <a class="btn btn-primary btn-large contact contact-email" 
           href="mailto:<%= agent_email %>">
           <strong>
           <i class="icon-envelope-alt icon-white"></i> <%= agent_name %>
@@ -97,7 +97,7 @@
 
             <% if (agent_phone) { %>
             
-            <a class="btn btn-primary btn-large contact pull-left"
+            <a class="btn btn-primary btn-large contact contact-phone pull-left"
                 href="tel:<%= agent_phone %>">
                 <strong>
                 <i class="icon-phone icon-white"></i> <%= agent_name %>
@@ -106,7 +106,7 @@
                  
             <% } else { %>
             
-            <a class="btn btn-primary btn-large contact" 
+            <a class="btn btn-primary btn-large contact contact-email" 
                 href="mailto:<%= agent_email %>">
                 <strong>
                 <i class="icon-envelope-alt icon-white"></i> <%= agent_name %>
@@ -135,7 +135,7 @@
               <p class="asking-price">Asking <%= asking_price %> </p>
               <% } else { %> <p> &nbsp;</p> <% } %>
               
-              <a class="btn btn-primary btn-large contact" 
+              <a class="btn btn-primary btn-large contact contact-email" 
                   href="mailto:<%= agent_email %>">
                   <strong><i class="icon-envelope-alt icon-white"></i> <%= agent_name %></strong>
               </a>
@@ -202,7 +202,7 @@
               
           <div class="span7" style="margin-left: 10px">
               
-              <a class="btn btn-primary btn-large contact"
+              <a class="btn btn-primary btn-large contact contact-email"
                   href="mailto:<%= agent_email %>">
                   <strong><i class="icon-envelope-alt icon-white"></i> <%= agent_name %></strong>
               </a>

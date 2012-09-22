@@ -17,6 +17,7 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
        success: =>
           @model.set('logo', null)
           window.router.show()
+          mixpanel.track("Deleted Logo")  
      )
      
   showSelectedFile: (event) ->
@@ -52,6 +53,7 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
     $("#changes").slideDown()
   
   save: (e) =>
+    mixpanel.track("Updated Profile")  
     $("#save-changes").prop('disabled', true)
     $(".error").html("")
     self = this
@@ -93,7 +95,7 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
     
     $("#save-changes").prop('disabled', false)
     
-  updateEmail: ->    
+  updateEmail: ->
     email = @$("input[name='email']").val()
     email_confirmation = @$("input[name='email_confirmation']").val()  
     @model.attributes.contact.email = email
