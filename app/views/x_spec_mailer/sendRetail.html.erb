@@ -8,11 +8,8 @@
 	<p>I have prepared an aircraft spec for you. </p>
 
 	<a style="text-decoration: none" href="<%= root_url %>s/<%= @xspec.url_code %>">
-	<div style="margin: 30px 25px; text-align: center; color: #EDEDED; border-radius: 6px; border: 1px solid #9999CC; background: #55A; vertical-align: center">
-	<div style="padding: 10px">
-		<h4 style="margin: 0px;">Click Here to View The</h4>
-		<h1 style="margin: 10px auto; color: #FFFFFF"><%= @xspec.airframe.to_s %></h1>
-	</div>
+	<div style="color: #5555AA;">
+		<h4 style="margin: 0px;">Click Here to View The <%= @xspec.airframe.to_s %></h4>
 	</div>
 	</a>
 
