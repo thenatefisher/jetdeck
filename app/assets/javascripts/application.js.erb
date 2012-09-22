@@ -64,12 +64,4 @@ f="mixpanel";g.people=g.people||[];h=['disable','track','track_pageview','track_
 a._i.push([b,c,f])};a.__SV=1.1;})(document,window.mixpanel||[]);
 mixpanel.init("<%= Jetdeck::Application.config.mixpanel_token %>");
 
-<% if Rails.env.production? && current_user.present? && current_user.contact.email != "***REMOVED***" %>
-// Ghostrec
-
-(function() {
-	var host = ("https:" == document.location.protocol ? "https://secure.eemt.se" : "http://www.eemt.se");
-	document.write(unescape("%3Cscript src='" + host + "/gt/js/2768.js' type='text/javascript'%3E%3C/script%3E"));
-})();
-<% end %>
 
