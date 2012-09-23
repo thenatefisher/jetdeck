@@ -65,6 +65,6 @@ a._i.push([b,c,f])};a.__SV=1.1;})(document,window.mixpanel||[]);
 mixpanel.init("<%= Jetdeck::Application.config.mixpanel_token %>");
 */
 
-mixpanel = new Object()
+mixpanel = new Object() 
 mixpanel.track = function(a,b,c) { if (typeof(c) == "function") { c(); } }
 
