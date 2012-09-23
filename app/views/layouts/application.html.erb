@@ -162,7 +162,7 @@
     <% if current_user.present? %>
     <% require 'digest/sha1' %>
     <script>  
-      mixpanel.people.set({
+      /*mixpanel.people.set({
         $email        : "<%= current_user.contact.email %>",
         $created      : "<%= current_user.created_at %>",
         $first_name   : "<%= current_user.contact.first %>",
@@ -172,8 +172,9 @@
         $distinct_id  : "<%= Digest::SHA1.base64digest(current_user.id.to_s) %>"
       });
       mixpanel.people.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");    
+      
       mixpanel.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");
-      mixpanel.name_tag("<%= current_user.contact.email %>");
+      mixpanel.name_tag("<%= current_user.contact.email %>");*/
     </script>
     <% end %>
     </body>

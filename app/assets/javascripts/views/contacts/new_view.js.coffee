@@ -12,15 +12,16 @@ class Jetdeck.Views.Contacts.NewView extends Backbone.View
   save: (e) ->
     e.preventDefault()
     e.stopPropagation()
-    mixpanel.track("Created Contact")
+    
     collection = new Jetdeck.Collections.ContactCollection()
     collection = window.router.contacts if window.router.contacts
     collection.create(@model.toJSON(),
       success: (c) =>
         @model = c
-        window.location.href = "/contacts#/#{@model.id}"
-        modalClose()
-      
+        mixpanel.track("Created Contact", {}, =>
+          window.location.href = "/contacts#/#{@model.id}"
+          modalClose()
+        )
 
       error: (c, jqXHR) =>
         errObj = $.parseJSON(jqXHR.responseText)

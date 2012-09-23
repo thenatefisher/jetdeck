@@ -6,12 +6,12 @@ class Jetdeck.Views.Airframes.ConfirmDelete extends Backbone.View
   events:
     "click .confirm_remove_spec"  : "delete"
   
-  delete: ->
+  delete: =>
     @model.destroy()
     mixpanel.track("Deleted Airframe", {}, ->
       window.location.href = "/"
     )
     
-  render: ->
+  render: =>
     $(@el).html(@template() )
     return this

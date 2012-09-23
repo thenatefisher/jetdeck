@@ -15,6 +15,8 @@ class Jetdeck.Views.Avionics.Item extends Backbone.View
     value = $(e).val()
     name = $(e).attr("name")
     $(e).addClass("changed")
+    ## Uppercase the avionics title (ie TCAS, COMM, EGPWS, etc
+    if name == "title" then value = value.toUpperCase()
     window.router.view.model.equipment.getByCid(@model.cid).set(name, value)
     window.router.view.edit()
     

@@ -86,9 +86,9 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
 
     # get all existing images
     $.getJSON("/accessories/?airframe=" + @model.get("id"),  (files) =>
-        fu = @$('#airframe_image_upload').data('fileupload')
+        fu = $('#airframe_image_upload').data('fileupload')
         fu._renderDownload(files)
-            .appendTo(@$('#airframe_image_upload .files'))
+            .appendTo($('#airframe_image_upload .files'))
             .removeClass("fade")
     )  
     
