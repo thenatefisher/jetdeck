@@ -40,6 +40,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
 
     # uploader settings
     @$('#airframe_image_upload').fileupload('option', {
+        autoUpload: true
         url: '/accessories'
         process: [
             {
@@ -58,19 +59,19 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
         ]
     })
 
-    # open edit box when adding via the button
+    ### open edit box when adding via the button
     @$('#airframe_image_upload').bind('fileuploadadd', ->
       $("#changes").children().fadeIn()
       $("#changes").slideDown()
-    )
+    )###
     
     # set some drag/drop events
     @$('#airframe_image_upload').bind('fileuploaddrop', =>
       $('#uploader').show()
-      $("#changes").children().fadeIn()
-      $("#changes").slideDown()
+      #$("#changes").children().fadeIn()
+      #$("#changes").slideDown()
       $(".manage_images a").html("Hide Images")
-      mixpanel.track("Dropped Image Into Airframe")
+      #mixpanel.track("Dropped Image Into Airframe")
     )
 
     # upload server status check for browsers with CORS support:

@@ -45,15 +45,12 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     self = this
     imagesUploaded = false
     
-    $(".files").find('.template-upload').each( ->
+    ###$(".files").find('.template-upload').each( ->
       data = $(this).data('data')
       e.preventDefault()
-      if (data && data.submit && !data.jqXHR && data.submit())
+      if (data && data.submit() && !data.jqXHR)
         imagesUploaded = true
-      else
-        alertFailure("<i class='icon-warning-sign icon-large'></i> Error Saving Files") 
-        return 
-    )                
+    ) ###               
                     
     $(".inline-edit").each( ->
       
