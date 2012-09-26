@@ -1,5 +1,7 @@
 Jetdeck::Application.routes.draw do
 
+  resources :todos
+
   resources :contacts
 
   match "/airframes/models" => "airframes#models"
