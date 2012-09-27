@@ -1,0 +1,15 @@
+<div id="html_top"></div>
+
+<script type="text/javascript">
+  $(function() {
+    window.router = new Jetdeck.Routers.ActionsRouter(
+      { actions: <%= render(   template: 'todos/index',
+                                 handlers: [:jbuilder],
+                                 formats: [:json],  
+                                 locals: { actions: @actions}).html_safe %> }
+    );
+    Backbone.history.start();
+  });
+</script>
+
+

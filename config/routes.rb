@@ -1,6 +1,8 @@
 Jetdeck::Application.routes.draw do
 
-  resources :todos
+  resources :notes
+  
+  resources :actions, :path => "/todos"
 
   resources :contacts
 
@@ -21,6 +23,8 @@ Jetdeck::Application.routes.draw do
   resources :equipment
 
   resources :accessories
+  
+  match "/search" => "search#navbar"
   
   match "/login" => "sessions#new"
 

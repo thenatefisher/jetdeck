@@ -19,7 +19,7 @@ class Jetdeck.Views.Contacts.NewView extends Backbone.View
       success: (c) =>
         @model = c
         mixpanel.track("Created Contact", {}, =>
-          window.location.href = "/contacts#/#{@model.id}"
+          window.location.href = "/contacts/#{@model.id}"
           modalClose()
         )
 

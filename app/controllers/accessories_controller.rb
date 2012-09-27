@@ -1,17 +1,15 @@
 class AccessoriesController < ApplicationController
   before_filter :authorize
   
-  def show
-    
-  end
-  
   def index
+  
     if params[:airframe]
-      @assys = Airframe.find(params[:airframe]).accessories
+      @assys = Airframe.find(:all, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]]).accessories
       render :json => @assys.collect { |p| p.to_jq_upload }.to_json
     else
       render :json => true
     end
+    
   end
 
   def create
@@ -46,26 +44,34 @@ class AccessoriesController < ApplicationController
   end
 
   def update
+  
     @Assy = Accessory.find(params[:id])
+    if @Assy.airframe.user_id == @current_user.id
+      if params[:thumbnail] && @Assy.present?
+          @Assy.airframe.accessories.each { |a| a.thumbnail = false; a.save }
+          @Assy.thumbnail = true
+      end
 
-    if params[:thumbnail] && @Assy.present?
-        @Assy.airframe.accessories.each { |a| a.thumbnail = false; a.save }
-        @Assy.thumbnail = true
-    end
-
-    respond_to do |format|
-      if @Assy.update_attributes(params[:accessory])
-        format.json { head :no_content }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @Assy.errors, :status => :unprocessable_entity }
+      respond_to do |format|
+        if @Assy.update_attributes(params[:accessory])
+          format.json { head :no_content }
+        else
+          format.html { render :action => "edit" }
+          format.json { render :json => @Assy.errors, :status => :unprocessable_entity }
+        end
       end
     end
+    
   end
 
   def destroy
+    
     @Assy = Accessory.find(params[:id])
-    @Assy.destroy
-    render :json => true
+    if @Assy.airframe.user_id == @current_user.id
+      @Assy.destroy
+      render :json => true
+    end
+    
   end
+  
 end

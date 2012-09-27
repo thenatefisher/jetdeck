@@ -32,7 +32,7 @@ class AirframesController < ApplicationController
         ).first(5)
 
         if @airframes.nil?
-            render :layout => false, :nothing => true, :status => :unprocessable_entity
+            render :layout => false, :nothing => true
         else
             render :json => @airframes.to_json( :methods => [:model, :make, :to_s] )
         end

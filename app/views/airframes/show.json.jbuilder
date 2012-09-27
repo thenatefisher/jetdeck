@@ -90,6 +90,25 @@ json.leads @airframe.xspecs do |json, x|
     
 end
 
+json.notes @airframe.notes do |json, x|
+  json.title x.title
+  json.description x.description  
+  json.id x.id
+  json.created_at x.created_at
+end
+
+json.actions @airframe.actions do |json, c|
+    json.id c.id
+    json.title c.title
+    json.description c.description
+    json.due_at c.due_at
+    json.is_completed c.is_completed
+    json.completed_at c.completed_at
+    json.type c.actionable_type
+    json.url c.url
+end
+
+
 # TODO create model methods for these
 #json.damage (true)
 #json.listed (true)

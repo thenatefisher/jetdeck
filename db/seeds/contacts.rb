@@ -1,8 +1,8 @@
 puts "Creating Contact Data"
 
-LocIdMax = Location.maximum(:id)
-LocIdMin = Location.minimum(:id)
-LocIdRange = LocIdMax - LocIdMin
+#LocIdMax = Location.maximum(:id)
+#LocIdMin = Location.minimum(:id)
+#LocIdRange = LocIdMax - LocIdMin
 
 fnames = [
 "Tom",
@@ -82,14 +82,14 @@ titles = [
   )
 
   Address.create(
-    :location => Location.find(rand(LocIdRange).floor+LocIdMin),
+    #:location => Location.find(rand(LocIdRange).floor+LocIdMin),
     :contact => contact,
     :line1 => (rand(99999)+1000).to_s + " Main St",
     :description => "Home"
   )
 
   Address.create(
-    :location => Location.find(rand(LocIdRange).floor+LocIdMin),
+    #:location => Location.find(rand(LocIdRange).floor+LocIdMin),
     :contact => contact,
     :line1 => (rand(99999)+1000).to_s + " Airport Rd",
     :description => "Office"

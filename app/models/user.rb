@@ -2,6 +2,8 @@ require 'bcrypt'
 
 class User < ActiveRecord::Base
 
+  has_many :actions, :foreign_key => "created_by"
+  
   has_one :logo, :class_name => "UserLogo", :foreign_key => "user_id"
 
   attr_accessible :password,

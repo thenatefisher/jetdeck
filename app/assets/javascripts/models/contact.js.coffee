@@ -2,11 +2,11 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
     paramRoot: "contact"
 
     defaults:
-        company: null
-        first: null
-        last: null
-        email: null
-        phone: null
+      company: null
+      first: null
+      last: null
+      email: null
+      phone: null
         
     initialize : =>
       ## specs collection
@@ -15,10 +15,32 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       
       ## populate child collections
       @updateChildren()
-      
+    
     updateChildren : =>
       @specs.reset @get('specs')
         
 class Jetdeck.Collections.ContactCollection extends Backbone.CollectionBook
+
     model: Jetdeck.Models.ContactModel
+    
     url: "/contacts"
+    
+    initialize: ->
+      @order = "last"
+      @dx = "asc"
+    
+    orderBy : (o) ->
+      @order = o
+
+    direction : (d) ->
+      @dx = d
+      
+    comparator: (i) ->
+      d = 1
+      d = -1 if @dx == "desc"
+      
+      if @order == "created_at"
+          dt = new Date(i.get("created_at"))
+          return d*dt
+
+      return d * parseInt(i.get(@order), 10)    

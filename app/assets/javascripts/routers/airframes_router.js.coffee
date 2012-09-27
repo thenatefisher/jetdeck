@@ -8,7 +8,7 @@ class Jetdeck.Routers.AirframesRouter extends Backbone.Router
     "index"    : "index"
     ":id/edit" : "edit"
     ":id"      : "show"
-    ".*"        : "index"
+    ".*"       : "index"
 
   newAirframe: ->
     @view = new Jetdeck.Views.Airframes.NewView(collection: @airframes)
