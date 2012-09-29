@@ -70,7 +70,6 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     modal(confirm.render().el)
 
   render: =>
-    @model.updateChildren()
     
     $(@el).html(@template(@model.toJSON() ))
 
@@ -81,8 +80,11 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     if @model.specs.length > 0
       @$("#contact_specs").html(@specs.render().el) 
 
-    @actions = new Jetdeck.Views.Contacts.ShowActions(model: @model)
+    @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#contact_actions").html(@actions.render().el)
+    
+    @notes = new Jetdeck.Views.Contacts.ShowNotes(model: @model)
+    @$("#contact_notes").html(@notes.render().el)    
     
     return this
 

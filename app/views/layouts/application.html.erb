@@ -25,6 +25,12 @@
     <!-- Le javascript -->
     <%= javascript_include_tag "application" %>
 
+    <% if flash[:notice] %>
+    <script type="text/javascript"> 
+      $(function() { alertFailure("<%= flash[:notice] %>"); });
+    </script>
+    <% end %>
+        
   </head>
 
     <body>
@@ -78,7 +84,7 @@
             </div>
             
             <form class="navbar-search pull-right" action="">
-                <input type="text" id="navbar-search" class="input-xlarge" placeholder="Search..." style="margin: 4px 10px 4px 0;"></input>    
+                <input type="text" id="navbar-search" class="input-xlarge" placeholder="Jump To..." style="margin: 4px 10px 4px 0;"></input>    
             </form>                  
 
         </div> <!-- end row class for search bar and new spec/contact-->
@@ -172,19 +178,21 @@
     <% if current_user.present? %>
     <% require 'digest/sha1' %>
     <script>  
-      mixpanel.people.set({
-        $email        : "<%= current_user.contact.email %>",
-        $created      : "<%= current_user.created_at %>",
-        $first_name   : "<%= current_user.contact.first %>",
-        $last_name    : "<%= current_user.contact.last %>",
-        $company      : "<%= current_user.contact.company %>",
-        $specs        : "<%= current_user.airframes.count %>",
-        $distinct_id  : "<%= Digest::SHA1.base64digest(current_user.id.to_s) %>"
+      $(function() {
+        mixpanel.people.set({
+          $email        : "<%= current_user.contact.email %>",
+          $created      : "<%= current_user.created_at %>",
+          $first_name   : "<%= current_user.contact.first %>",
+          $last_name    : "<%= current_user.contact.last %>",
+          $company      : "<%= current_user.contact.company %>",
+          $specs        : "<%= current_user.airframes.count %>",
+          $distinct_id  : "<%= Digest::SHA1.base64digest(current_user.id.to_s) %>"
+        });
+        mixpanel.people.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");    
+        
+        mixpanel.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");
+        mixpanel.name_tag("<%= current_user.contact.email %>");
       });
-      mixpanel.people.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");    
-      
-      mixpanel.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");
-      mixpanel.name_tag("<%= current_user.contact.email %>");
     </script>
     <% end %>
     </body>

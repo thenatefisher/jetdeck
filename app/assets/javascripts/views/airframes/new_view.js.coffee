@@ -9,19 +9,18 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
   initialize: () ->
     @model = new Jetdeck.Models.Airframe()
 
-  save: (e) ->
+  save: (e) =>
     e.preventDefault()
     e.stopPropagation()
-    
+    mixpanel.track("Created Airframe",{ is_baseline: (@model.get("baseline_id") != null) })
     collection = new Jetdeck.Collections.AirframesCollection()
     collection = window.router.airframes if window.router.airframes
     collection.create(@model.toJSON(),
       success: (airframe) =>
         @model = airframe
-        mixpanel.track("Created Airframe",{ is_baseline: (@model.get("baseline_id") != null) }, =>
-          window.location.href = "/airframes/#{@model.id}"
-          modalClose()
-        )
+        window.location.href = "/airframes/#{@model.id}"
+        modalClose()
+
       error: (airframe, jqXHR) =>
         @model.set({errors: $.parseJSON(jqXHR.responseText)})
     )

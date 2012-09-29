@@ -1,7 +1,7 @@
 Jetdeck.Views.Contacts ||= {}
 
-class Jetdeck.Views.Contacts.ShowActions extends Backbone.View
-  template: JST["templates/contacts/partials/actions"]
+class Jetdeck.Views.Contacts.ShowNotes extends Backbone.View
+  template: JST["templates/contacts/partials/notes"]
         
   render : ->
     $(@el).html(@template())
@@ -11,4 +11,5 @@ class Jetdeck.Views.Contacts.ShowActions extends Backbone.View
     #)
 
     return this
+
 

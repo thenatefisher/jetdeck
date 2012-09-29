@@ -1,7 +1,7 @@
 class Contact < ActiveRecord::Base
 
-  has_many :actions, :as => :actionable
-  has_many :notes, :as => :notable
+  has_many :actions, :as => :actionable, :dependent => :destroy
+  has_many :notes, :as => :notable, :dependent => :destroy
   
   has_many :specsSent,
       :class_name => "Xspec",
@@ -94,6 +94,26 @@ class Contact < ActiveRecord::Base
     
   end       
   
+  def to_s
+  
+    sender_field = "#{self.email}"    
+    
+    if self.first.present?
+    
+      sender_field = "#{self.first}" 
+      
+      if self.last.present?
+      
+        sender_field = "#{self.first} #{self.last}" 
+      
+      end
+    
+    end
+    
+    return sender_field
+    
+  end  
+    
   def fullName
   
     fullName = ""    

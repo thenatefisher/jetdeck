@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
               cookies[:auth_token] = user.auth_token      
           end
           
-          redirect_to airframes_url, :notice => "Logged in!"
+          redirect_to airframes_url, :notice => actions_due_today(user)
           
         else
         

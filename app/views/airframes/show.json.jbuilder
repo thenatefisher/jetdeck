@@ -106,8 +106,10 @@ json.actions @airframe.actions do |json, c|
     json.completed_at c.completed_at
     json.type c.actionable_type
     json.url c.url
+    json.list_due_at c.due_at.strftime("%b %d, %Y") if c.due_at
+    json.list_title c.title.truncate(35) if c.title
+    json.past_due (c.due_at < Time.now()) if c.due_at    
 end
-
 
 # TODO create model methods for these
 #json.damage (true)

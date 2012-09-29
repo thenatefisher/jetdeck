@@ -1,5 +1,5 @@
 class Jetdeck.Models.ActionModel extends Backbone.Model
-    paramRoot: "actions"
+    paramRoot: "todo"
 
     defaults:
       is_completed: null 
@@ -8,15 +8,18 @@ class Jetdeck.Models.ActionModel extends Backbone.Model
       due_at: null
       completed_at: null
       created_at: null 
+      past_due: null
+      list_due_at: null
+      list_title: null
 
 class Jetdeck.Collections.ActionsCollection extends Backbone.CollectionBook
 
     model: Jetdeck.Models.ActionModel
     
-    url: "/actions"
+    url: "/todos"
     
     initialize: ->
-      @order = "due_date"
+      @order = "due_at"
       @dx = "asc"
     
     orderBy : (o) ->

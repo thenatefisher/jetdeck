@@ -3,32 +3,29 @@ class TodosController < ApplicationController
   
   def index
   
-    @actions = Action.find(:all, :conditions => ["created_by = ?", @current_user.id])
-    if !@actions.empty?
-      render :json => @actions.to_json
-    else
-      render :json => true
-    end
+    @actions = Action.find(:all, :conditions => ["is_completed != 'true' AND created_by = ?", @current_user.id])
     
   end
 
   def create
   
-    if params[:action][:actionable_id] && 
-      (params[:action][:actionable_type] == "Contact" || 
-      params[:action][:actionable_type] == "Airframe")
+    if params[:todo][:actionable_id] && 
+      (params[:todo][:actionable_type] == "Contact" || 
+      params[:todo][:actionable_type] == "Airframe")
       
-      whitelist = params[:action].slice(:title, :description, :is_completed, :due_at)
+      whitelist = params[:todo].slice(:title, :description, :is_completed)
 
       @action = Action.new(whitelist)
       @action.created_by = @current_user.id
-      @action.actionable_type = params[:action][:actionable_type]
-      @action.actionable_id = params[:action][:actionable_id]
+      @action.actionable_type = params[:todo][:actionable_type]
+      @action.actionable_id = params[:todo][:actionable_id]
+      @action.due_at = Time.now + Integer(params[:todo][:interval]).months if 
+        (params[:todo][:interval] && (Integer(params[:todo][:interval]) rescue false))
+      @action.due_at = params[:todo][:due_at] if params[:todo][:due_at]
       
       respond_to do |format|
         if @action.save
-          format.html { redirect_to @action, :notice => 'Action was successfully created.' }
-          format.json { render :json => @action, :status => :created, :location => @action }
+          format.json {render :locals => {action: @action}, :template => "todos/show", :formats => [:json], :handlers => [:jbuilder]}
         else
           format.html { render :action => "new" }
           format.json { render :json => @action.errors, :status => :unprocessable_entity }
@@ -42,11 +39,11 @@ class TodosController < ApplicationController
   
     @action = Action.find(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
 
-    whitelist = params[:action].slice(:title, :description, :is_completed, :due_at)
+    whitelist = params[:todo].slice(:title, :description, :is_completed, :due_at)
 
     respond_to do |format|
       if @action.update_attributes(whitelist)
-        format.json { head :no_content }
+        format.json {render :locals => {action: @action}, :template => "todos/show", :formats => [:json], :handlers => [:jbuilder]}
       else
         format.html { render :action => "edit" }
         format.json { render :json => @action.errors, :status => :unprocessable_entity }

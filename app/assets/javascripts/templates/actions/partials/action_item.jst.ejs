@@ -1,0 +1,16 @@
+<div class="action <% if (past_due) { %>late<% } %>">
+
+  <div class="action-buttons">
+  <i class="icon-ok close-action"></i>
+  </div>
+  
+  <strong class="short-title"><%= list_title %></strong>
+  <strong class="long-title hide"><%= title %></strong><br>
+
+  <% if (due_at != null) { %>
+  <div class="due-date"> 
+    <% if (past_due) { %><i class="icon-exclamation-sign icon-large"></i> <% } %> Due: <%= list_due_at %>
+  </div>
+  <% } %>
+  
+</div>

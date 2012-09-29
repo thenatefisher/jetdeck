@@ -26,6 +26,10 @@ class Jetdeck.Models.Airframe extends Backbone.Model
       ## engines collection
       @engines = new Jetdeck.Collections.EnginesCollection()
       @engines.airframe = this
+      
+      ## actions collection
+      @actions = new Jetdeck.Collections.ActionsCollection()
+      @actions.contact = this         
 
       ## populate child collections
       @updateChildren()
@@ -34,6 +38,7 @@ class Jetdeck.Models.Airframe extends Backbone.Model
       @leads.reset @get('leads')
       @equipment.reset @get('equipment')
       @engines.reset @get('engines')
+      @actions.reset @get('actions')
   
 class Jetdeck.Collections.AirframesCollection extends Backbone.CollectionBook
   

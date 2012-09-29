@@ -2,7 +2,9 @@ Jetdeck::Application.routes.draw do
 
   resources :notes
   
-  resources :actions, :path => "/todos"
+  match "/actions" => "todos#index"
+  
+  resources :todos
 
   resources :contacts
 

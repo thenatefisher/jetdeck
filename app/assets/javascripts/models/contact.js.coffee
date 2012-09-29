@@ -13,11 +13,16 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       @specs = new Jetdeck.Collections.SpecsCollection(page_size: 10)
       @specs.contact = this
       
+      ## actions collection
+      @actions = new Jetdeck.Collections.ActionsCollection()
+      @actions.contact = this      
+
       ## populate child collections
       @updateChildren()
     
     updateChildren : =>
       @specs.reset @get('specs')
+      @actions.reset @get('actions')
         
 class Jetdeck.Collections.ContactCollection extends Backbone.CollectionBook
 

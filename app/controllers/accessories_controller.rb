@@ -3,8 +3,8 @@ class AccessoriesController < ApplicationController
   
   def index
   
-    if params[:airframe]
-      @assys = Airframe.find(:all, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]]).accessories
+    if params[:airframe] && Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]])
+      @assys = Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]]).accessories
       render :json => @assys.collect { |p| p.to_jq_upload }.to_json
     else
       render :json => true
@@ -15,9 +15,9 @@ class AccessoriesController < ApplicationController
   def create
 
     @Assy = Accessory.new(params[:files])
-    if Airframe.find(params[:airframe]).present?
+    if Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]]).present?
       @Assy.airframe_id = params[:airframe]
-      @airframe = Airframe.find(params[:airframe])
+      @airframe = Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]])
       @airframe.accessories.each do |t|
         t.thumbnail = false
         t.save
