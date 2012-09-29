@@ -70,7 +70,10 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     modal(confirm.render().el)
 
   render: =>
-    
+    lastDetailTab = null
+    if $("#contact_details .tab-pane:visible").attr("id")
+      lastDetailTab = $("#contact_details .tab-pane:visible").attr("id")
+          
     $(@el).html(@template(@model.toJSON() ))
 
     @header = new Jetdeck.Views.Contacts.ShowHeaderView(model: @model)
@@ -83,8 +86,9 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#contact_actions").html(@actions.render().el)
     
-    @notes = new Jetdeck.Views.Contacts.ShowNotes(model: @model)
-    @$("#contact_notes").html(@notes.render().el)    
+    @details = new Jetdeck.Views.Contacts.ShowDetails(model: @model)
+    @$("#contact_details").html(@details.render().el)
+    @$("a[href='#"+lastDetailTab+"']'").tab('show') if lastDetailTab  
     
     return this
 

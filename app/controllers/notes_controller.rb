@@ -27,8 +27,7 @@ class NotesController < ApplicationController
       
       respond_to do |format|
         if @note.save
-          format.html { redirect_to @note, :notice => 'Note was successfully created.' }
-          format.json { render :json => @note, :status => :created, :location => @note }
+          format.json {render :locals => {note: @note}, :template => "notes/show", :formats => [:json], :handlers => [:jbuilder]}
         else
           format.html { render :action => "new" }
           format.json { render :json => @note.errors, :status => :unprocessable_entity }
@@ -46,7 +45,7 @@ class NotesController < ApplicationController
 
     respond_to do |format|
       if @note.update_attributes(whitelist)
-        format.json { head :no_content }
+        format.json {render :locals => {note: @note}, :template => "notes/show", :formats => [:json], :handlers => [:jbuilder]}
       else
         format.html { render :action => "edit" }
         format.json { render :json => @note.errors, :status => :unprocessable_entity }

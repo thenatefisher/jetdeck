@@ -1,0 +1,21 @@
+<h4><% if (author != null) { %><%= author %><small> on<% } else { %><small><% } %> <strong><%= date %></strong> @ <%= time %></small></h4>
+<div class="note-description"><%= description %></div>
+<div class="control-group" style="margin: 0px;">
+  <textarea class="note hide span6"><%= description %></textarea>
+</div>
+<div class="note-edit-buttons hide">
+  <button class="pull-right btn btn-primary update-note">Update Note</button>
+  <a href="#" class="pull-right cancel-note-edit" style="margin-right: 10px; margin-top: 6px;">Cancel</a>
+</div>
+
+<div class="page-header">
+
+<div class="disable-note-buttons">
+<% if (is_mine) { %>
+  <span class="note-buttons hide">
+  <a href="#" class="pull-right delete-note"><i class="icon-remove"></i> Delete</a>
+  <a href="#" class="pull-right edit-note" style="margin-right: 10px;"><i class="icon-pencil"></i> Edit</a>
+  </span>
+<% } %>
+</div>
+</div>

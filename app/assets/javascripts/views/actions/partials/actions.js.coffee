@@ -70,15 +70,17 @@ class Jetdeck.Views.Actions.ShowActions extends Backbone.View
       
     action = new Jetdeck.Models.ActionModel()
     action.collection = @model.actions
-    action.save({
+    action.set({
       title: @$("textarea").val(), 
-      due_at: @$("#due_at").val(), 
       actionable_type: @type, 
       actionable_id: @model.get('id')
-    }, success: (m) => 
-      mixpanel.track "Created Action", {type: @type}
-      @model.actions.add(m)
-      @render()
+    })
+    action.set({due_at: @$("#due_at").val()}) if @$("#due_at").val() != ""
+    action.save(null, 
+      success: (m) => 
+        mixpanel.track "Created Action", {type: @type}
+        @model.actions.add(m)
+        @render()
     )
         
   render : =>
