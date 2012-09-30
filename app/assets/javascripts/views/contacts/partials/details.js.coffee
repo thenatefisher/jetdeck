@@ -8,8 +8,8 @@ class Jetdeck.Views.Contacts.ShowDetails extends Backbone.View
     $(@el).html(@template(@model.toJSON() ))
     
     # populate aircraft tab
-    #@description = new Jetdeck.Views.Contacts.ShowDescriptionPane(model: @model)
-    #@$("#pane_description").html(@description.render().el)
+    @ownership = new Jetdeck.Views.Contacts.ShowOwnership(model: @model)
+    @$("#pane_aircraft").html(@ownership.render().el)
 
     # populate the notes tab
     @notes = new Jetdeck.Views.Notes.ShowNotes(model: @model)

@@ -28,7 +28,6 @@ class Jetdeck.Views.Notes.NoteItem extends Backbone.View
     @$(".disable-note-buttons").hide()
     
   save: =>
-    console.log "hey"
     if !@$("textarea.note").val()
       @$(".control-group").addClass("error")
       return 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120927053529) do
+ActiveRecord::Schema.define(:version => 20120929231107) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -160,6 +160,16 @@ ActiveRecord::Schema.define(:version => 20120927053529) do
     t.integer  "notable_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+  end
+
+  create_table "ownerships", :force => true do |t|
+    t.integer  "contact_id"
+    t.string   "assoc"
+    t.integer  "created_by"
+    t.string   "description"
+    t.datetime "assigned"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "spec_views", :force => true do |t|

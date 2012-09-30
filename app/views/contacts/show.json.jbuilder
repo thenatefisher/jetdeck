@@ -7,6 +7,12 @@ json.(@contact,
   :id
 )
 
+json.ownerships @contact.ownerships do |json, x|
+  json.description x.description  
+  json.assoc x.assoc  
+  json.id x.id
+end
+
 json.notes @contact.notes do |json, x|
   json.title x.title
   json.description x.description  

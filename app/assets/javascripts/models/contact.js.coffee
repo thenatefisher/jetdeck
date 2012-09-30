@@ -19,7 +19,11 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
 
       ## notes collection
       @notes = new Jetdeck.Collections.NotesCollection(page_size: 3)
-      @notes.contact = this          
+      @notes.contact = this      
+      
+      ## ownership collection
+      @ownership = new Jetdeck.Collections.OwnershipCollection(page_size: 8)
+      @ownership.contact = this            
 
       ## populate child collections
       @updateChildren()
@@ -28,6 +32,7 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       @specs.reset @get('specs')
       @actions.reset @get('actions')
       @notes.reset @get('notes')
+      @ownership.reset @get('ownerships')
         
 class Jetdeck.Collections.ContactCollection extends Backbone.CollectionBook
 

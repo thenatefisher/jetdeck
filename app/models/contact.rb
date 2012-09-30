@@ -1,6 +1,9 @@
 class Contact < ActiveRecord::Base
 
+  has_many :ownerships
+  
   has_many :actions, :as => :actionable, :dependent => :destroy
+  
   has_many :notes, :as => :notable, :dependent => :destroy
   
   has_many :specsSent,

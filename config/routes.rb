@@ -1,5 +1,7 @@
 Jetdeck::Application.routes.draw do
 
+  resources :ownerships
+  
   resources :notes
   
   match "/actions" => "todos#index"
