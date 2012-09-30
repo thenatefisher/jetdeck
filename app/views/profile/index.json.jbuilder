@@ -18,3 +18,5 @@ json.views @totalViews
 if @user.logo
   json.logo @user.logo.url  
 end
+
+json.spec_disclaimer @user.spec_disclaimer

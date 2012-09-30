@@ -43,6 +43,7 @@ class Jetdeck.Models.Spec extends Backbone.Model
     hits: 0
     last_viewed: ""
     logo: null
+    spec_disclaimer: null
     
 class Jetdeck.Collections.SpecsCollection extends Backbone.CollectionBook
   model: Jetdeck.Models.Spec
