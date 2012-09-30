@@ -72,7 +72,7 @@ class Jetdeck.Views.Actions.IndexView extends Backbone.View
     @$("#actions").html('')
     
   addOne: (action) => 
-    if action
+    if action && !action.get("due_today")
         view = new Jetdeck.Views.Actions.ActionView({model : action})
         @$("#actions").append(view.render().el)
 
@@ -81,7 +81,18 @@ class Jetdeck.Views.Actions.IndexView extends Backbone.View
         count : @options.actions.length
         pages : @options.actions.pages()
     $(@el).html(@template(params))
+    
+    # add all actions
     @addAll()    
+    
+    #today's actions stay on top
+    @options.actions.eachOnPage( (action) =>
+      if action && action.get("due_today")
+        @$("#todays_actions").show()
+        view = new Jetdeck.Views.Actions.ActionView({model : action})
+        @$("#todays_actions").append(view.render().el)    
+    )
+    
     @$('.page[rel=1]').parent('li').addClass('active')   
 
     return this

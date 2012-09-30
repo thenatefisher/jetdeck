@@ -115,8 +115,12 @@
                 <a href="/contacts"> <h3 style="font-size: 15px"> <i class="icon-book"></i> Contacts </h3></a>
               </li>
               
-              <li>
-                <a href="/actions"> <h3 style="font-size: 15px"> <i class="icon-check"></i> Actions 
+              <li >
+                <a href="/actions" <% if (actions_due_count > 0) %>
+                  data-placement="bottom" 
+                  rel="tooltip" 
+                  title="<%= actions_due_count %> Action(s) Past Due<% end %>"> 
+                  <h3 style="font-size: 15px"> <i class="icon-check"></i> Actions 
                 <% if (actions_due_count > 0) %><small>(<%= actions_due_count %>)</small><% end %>
                 </h3></a>
               </li>              

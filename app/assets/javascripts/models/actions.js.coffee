@@ -11,6 +11,7 @@ class Jetdeck.Models.ActionModel extends Backbone.Model
       past_due: null
       list_due_at: null
       list_title: null
+      due_today: false
 
 class Jetdeck.Collections.ActionsCollection extends Backbone.CollectionBook
 

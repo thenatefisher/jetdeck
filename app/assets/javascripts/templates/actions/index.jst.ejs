@@ -16,15 +16,12 @@
                 <a class="sort" data-sort="due_at" data-dir="asc" onclick="return false;" href="#">
                   Due Date
                 </a>
-            </li>
-            <li>
-                <a class="sort" data-sort="actionable_type" data-dir="asc" onclick="return false;" href="#">
-                  Type
-                </a>
-            </li>                        
+            </li>                       
         </ul>
         <% } %>
     </div>
+    
+    <div class="hide alert alert-info clearfix span8" id="todays_actions"><h4>Due Today</h4><br></div>
     
     <div id="actions"></div>
     
@@ -34,7 +31,7 @@
         You don't have any actions right now.
         <br/><br/>
     </div> 
-    <% } %>   
+    <% } %>
     
 </div>
 
@@ -55,5 +52,7 @@
         </div>
     </div>
 </div>
-<% } %> 
+<% } else { %>
+  <h2>&nbsp;</h2>
+<% } %>   
 

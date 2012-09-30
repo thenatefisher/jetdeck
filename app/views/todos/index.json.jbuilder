@@ -12,6 +12,7 @@ json.array! @actions do |json, c|
     json.list_due_at c.due_at.localtime.strftime("%b %d, %Y") if c.due_at
     json.list_title c.title.truncate(35) if c.title
     json.past_due (c.due_at < Time.now()) if c.due_at    
+    json.due_today (c.due_at.localtime.to_date == Time.now.localtime.to_date) if c.due_at    
 end
 
 
