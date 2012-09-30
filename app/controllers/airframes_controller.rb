@@ -46,7 +46,8 @@ class AirframesController < ApplicationController
   def show
 
     if params[:id].present?
-        @airframe = Airframe.find(params[:id])
+        @airframe = Airframe.find(:first, :conditions =>
+          ["id = ? AND user_id = ?", params[:id], @current_user.id])
     end
 
   end
@@ -64,7 +65,8 @@ class AirframesController < ApplicationController
 
   # GET /airframes/1/edit
   def edit
-    @airframe = Airframe.find(params[:id])
+        @airframe = Airframe.find(:first, :conditions =>
+          ["id = ? AND user_id = ?", params[:id], @current_user.id])
   end
 
   # POST /airframes
@@ -118,7 +120,8 @@ class AirframesController < ApplicationController
   # PUT /airframes/1.json
   def update
 
-    @airframe = Airframe.find(params[:id])
+    @airframe = Airframe.find(:first, :conditions =>
+      ["id = ? AND user_id = ?", params[:id], @current_user.id])
     
     equipment = Array.new()
     params[:airframe][:equipment].each do |e|
@@ -197,7 +200,8 @@ class AirframesController < ApplicationController
   # DELETE /airframes/1
   # DELETE /airframes/1.json
   def destroy
-    @airframe = Airframe.find(params[:id])
+    @airframe = Airframe.find(:first, :conditions =>
+      ["id = ? AND user_id = ?", params[:id], @current_user.id])
     @airframe.destroy
     respond_to do |format|
       format.html { redirect_to airframes_url }

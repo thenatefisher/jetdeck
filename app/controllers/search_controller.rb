@@ -12,8 +12,8 @@ class SearchController < ApplicationController
         @results = Array.new()
         
         @airframe_results = Airframe.find(:all,
-        :conditions => [  "upper(registration) like ? 
-                           OR upper(serial) like ?
+        :conditions => [  "(upper(registration) like ? 
+                           OR upper(serial) like ?)
                            AND user_id = ?",
                           "%"+params[:term].to_s.upcase+"%",
                           "%"+params[:term].to_s.upcase+"%",
