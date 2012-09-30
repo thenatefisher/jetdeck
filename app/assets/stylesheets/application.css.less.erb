@@ -29,12 +29,45 @@ body {
   background: url(<%= asset_path 'bg/dots.png' %>) repeat;
 }
 
-.note-buttons a, .buttons a {
+.ownership-item {
+  padding: 5px;
+}
+
+.ownership-item:hover {
+  background-color: #0088CC;
+  color: #fefefe;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-decoration: none;
+  text-shadow: none;
+}
+
+.ownership-item:hover .buttons a {
+  color: white;
+}
+
+.ownership-item .buttons a {
+  text-decoration: none;
+}
+
+.ownership-item .buttons a:hover {
+  font-weight: bold;
+}
+
+#note_items div:last-child div.page-header  {
+  border: 0px;
+  margin-bottom: 0px;
+}
+
+.notes-pagination ul li a { line-height: 25px; }
+
+.note-buttons a {
   color: @grayLight;
   text-decoration: none
 }
 
-.note-buttons a:hover, .buttons a:hover {
+.note-buttons a:hover {
   color: @grayDark;
 }
 

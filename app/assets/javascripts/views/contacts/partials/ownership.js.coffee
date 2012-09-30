@@ -24,7 +24,7 @@ class Jetdeck.Views.Contacts.OwnershipItem extends Backbone.View
   
   render : =>
     $(@el).html(@template(@model.toJSON() ))
-    @$(".assoc").val(@model.get("assoc")) if @model.get("assoc")
+    #@$(".assoc").val(@model.get("assoc")) if @model.get("assoc")
     return this
   
 class Jetdeck.Views.Contacts.ShowOwnership extends Backbone.View
