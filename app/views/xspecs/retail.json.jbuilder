@@ -81,6 +81,7 @@ if (@airframe.creator && @airframe.creator.contact)
     if @airframe.creator.logo
       json.logo @airframe.creator.logo.url  
     end    
+    json.spec_disclaimer @airframe.creator.spec_disclaimer
 end
 
 json.recipient @xspec.recipient.email
@@ -93,4 +94,5 @@ json.images @airframe.accessories do |json, i|
     json.thumbnail i.thumbnail
     json.spec_lightbox "http://s3.amazonaws.com/" + Jetdeck::Application.config.aws_s3_bucket + "/images/#{i.id}/spec_lightbox/#{i.image_file_name}" if i.image_file_name
 end
+
 

@@ -1,8 +1,7 @@
 class Jetdeck.Routers.ContactsRouter extends Backbone.Router
   
   initialize: (options) ->
-    @contacts = new Jetdeck.Collections.ContactCollection()
-    @contacts.reset options.contacts
+    @options = options
 
   routes:
     "index"    : "index"
@@ -11,16 +10,16 @@ class Jetdeck.Routers.ContactsRouter extends Backbone.Router
     ".*"       : "index"
 
   index: ->
-    @contacts = new Jetdeck.Collections.ContactCollection(page_size: 15)
-    @contacts.fetch ( success: =>
-        @view = new Jetdeck.Views.Contacts.IndexView(contacts: @contacts)
-        $("#contacts").html(@view.render().el)
-    )
-
+    contacts = new Jetdeck.Collections.ContactCollection(page_size: 15)
+    contacts.reset @options.contacts 
+    @view = new Jetdeck.Views.Contacts.IndexView(contacts: contacts)
+    $("#html_top").html(@view.render().el)
+    
   show: (id) ->
-    contact = @contacts.get(id)
+    contact = new Jetdeck.Models.ContactModel(@options.contact)
+    contact.url = "/contacts/" + contact.id
     @view = new Jetdeck.Views.Contacts.ShowView(model: contact)
-    $("#contacts").html(@view.render().el)
+    $("#html_top").html(@view.render().el)
 
   edit: (id) ->
     contact = @contacts.get(id)

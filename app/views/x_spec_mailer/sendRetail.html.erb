@@ -3,14 +3,23 @@
 
 <body style="text-align: left; width: 400px; font-family: Verdana, Verdana, Geneva, sans-serif, Arial; color: #333344; font-size: 18px;">
 
-	<p><% if @recipient.first.present? %>Hello <%= @recipient.first %>, <% else %>Hello, <% end %></p>
+	<p>
+	    <% if @recipient.first.present? %>
+	    Hello <%= @recipient.first %>, 
+	    <% elsif @xspec.salutation.present? %>
+	      <%= @xspec.salutation %>
+	    <% else %>
+	    Hello, 
+	    <% end %>
+	</p>
 
-	<p>I have prepared an aircraft spec for you. </p>
+	<p>I have prepared an aircraft specification for you: </p>
 
 	<a style="text-decoration: none" href="<%= root_url %>s/<%= @xspec.url_code %>">
-	<div style="color: #5555AA;">
-		<h4 style="margin: 0px;">Click Here to View The <%= @xspec.airframe.to_s %></h4>
-	</div>
+       <div style="margin: 30px 25px; text-align: center; color: #EDEDED; border-radius: 6px; border: 1px solid #9999CC; background: #55A; vertical-align: center">
+       <div style="padding: 10px">
+               <h1 style="margin: 10px auto; color: #FFFFFF"><%= @xspec.airframe.to_s %></h1>
+       </div>
 	</a>
 
 	<% if @sender.phone.present? %>
@@ -22,9 +31,10 @@
     <br>Thank You, 
     <br><%= @sender.fullName %>
     <% if @sender.company.present? %>
-    <br><%= @sender.company %>
       <% if @sender.user.logo.present? %>
       <br><img src="<%= @sender.user.logo.url %>" alt="<%= @sender.company %>">
+      <% else %>
+      <br><%= @sender.company %>
       <% end %>    
     <% end %>
   <% end %>

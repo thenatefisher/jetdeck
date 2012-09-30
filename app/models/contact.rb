@@ -1,5 +1,11 @@
 class Contact < ActiveRecord::Base
 
+  has_many :ownerships
+  
+  has_many :actions, :as => :actionable, :dependent => :destroy
+  
+  has_many :notes, :as => :notable, :dependent => :destroy
+  
   has_many :specsSent,
       :class_name => "Xspec",
       :foreign_key => "sender_id"
@@ -59,6 +65,18 @@ class Contact < ActiveRecord::Base
     self.email.gsub!(" ", "") if self.email
   end       
   
+  def search_url
+    "/contacts/#{id}"
+  end
+  
+  def search_desc
+    self.company
+  end
+  
+  def search_label
+    "<i class=\"icon-user\"></i> #{self.fullName}"
+  end
+  
   def emailField
   
     sender_field = "<#{self.email}>"    
@@ -79,17 +97,37 @@ class Contact < ActiveRecord::Base
     
   end       
   
+  def to_s
+  
+    sender_field = "#{self.email}"    
+    
+    if self.first.present?
+    
+      sender_field = "#{self.first}" 
+      
+      if self.last.present?
+      
+        sender_field = "#{self.first} #{self.last}" 
+      
+      end
+    
+    end
+    
+    return sender_field
+    
+  end  
+    
   def fullName
   
     fullName = ""    
     
     if self.first.present?
     
-      fullName = self.first
+      fullName = self.first.capitalize
       
       if self.last.present?
       
-        fullName = "#{self.first} #{self.last}" 
+        fullName = "#{self.first.capitalize} #{self.last.capitalize}" 
       
       end
     

@@ -1,0 +1,30 @@
+<% if (due_today) { %>
+  <div class="clicky" style="width: 100%; position: relative">
+    
+<% } else { %>
+  <div class="clicky span9 action <% if (past_due) { %>late<% } %>">
+<% } %>
+
+  <div class="action-buttons">
+    <i class="icon-ok close-action"></i>
+  </div>
+
+  <strong class="short-title">
+    <% if (type == "Airframe") { %><i class="icon-plane icon-large"></i> <% } %>
+    <% if (type == "Contact") { %><i class="icon-user icon-large"></i> <% } %>
+    <%= title %>
+  </strong>
+  
+  <strong class="long-title hide">
+    <% if (type == "Airframe") { %><i class="icon-plane icon-large"></i> <% } %>
+    <% if (type == "Contact") { %><i class="icon-user icon-large"></i> <% } %>  
+    <%= title %>
+  </strong><br>
+
+  <% if (due_at != null) { %>
+  <div class="due-date"> 
+    <% if (past_due && !due_today) { %><i class="icon-exclamation-sign icon-large"></i> Past<% } %> Due: <%= list_due_at %>
+  </div>
+  <% } %>
+  
+</div>

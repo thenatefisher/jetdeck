@@ -15,3 +15,5 @@ class Jetdeck.Models.Profile extends Backbone.Model
     contacts: 0
     sent: 0
     views: 0
+    spec_disclaimer: null
+    logo: null

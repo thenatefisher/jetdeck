@@ -1,5 +1,11 @@
 Jetdeck::Application.routes.draw do
 
+  resources :ownerships
+  
+  resources :notes
+  
+  match "/actions" => "todos#index"
+  
   resources :todos
 
   resources :contacts
@@ -21,6 +27,8 @@ Jetdeck::Application.routes.draw do
   resources :equipment
 
   resources :accessories
+  
+  match "/search" => "search#navbar"
   
   match "/login" => "sessions#new"
 

@@ -25,6 +25,12 @@
     <!-- Le javascript -->
     <%= javascript_include_tag "application" %>
 
+    <% if flash[:notice] %>
+    <script type="text/javascript"> 
+      $(function() { alertFailure("<%= flash[:notice] %>"); });
+    </script>
+    <% end %>
+        
   </head>
 
     <body>
@@ -68,14 +74,18 @@
         </div> <!-- navbar navbar-fixed-top -->
 
         <div class="row" style="padding: 0px 0px 10px;">
-                
-                  <div id="create-buttons" class="btn-group pull-right" 
-                  style="margin: 10px 20px 0 0;">
-                    <button class="btn new-spec">
-                      <i class="icon-plane icon-white"></i> New Spec </button>
-                    <button class="btn new-contact">
-                      <i class="icon-user icon-white"></i> New Contact </button>
-                  </div>
+          
+            <div id="create-buttons" class="btn-group pull-right" 
+            style="margin: 10px 20px 0 0;">
+              <button class="btn new-spec">
+                <i class="icon-plane icon-white"></i> New Spec </button>
+              <button class="btn new-contact">
+                <i class="icon-user icon-white"></i> New Contact </button>
+            </div>
+            
+            <form class="navbar-search pull-right" action="">
+                <input type="text" id="navbar-search" class="input-xlarge" placeholder="Jump To..." style="margin: 4px 10px 4px 0;"></input>    
+            </form>                  
 
         </div> <!-- end row class for search bar and new spec/contact-->
 
@@ -105,8 +115,14 @@
                 <a href="/contacts"> <h3 style="font-size: 15px"> <i class="icon-book"></i> Contacts </h3></a>
               </li>
               
-              <li>
-                <a href="/actions"> <h3 style="font-size: 15px"> <i class="icon-check"></i> Actions</h3></a>
+              <li >
+                <a href="/actions" <% if (actions_due_count > 0) %>
+                  data-placement="bottom" 
+                  rel="tooltip" 
+                  title="<%= actions_due_count %> Action(s) Past Due<% end %>"> 
+                  <h3 style="font-size: 15px"> <i class="icon-check"></i> Actions 
+                <% if (actions_due_count > 0) %><small>(<%= actions_due_count %>)</small><% end %>
+                </h3></a>
               </li>              
 
             </ul>
@@ -163,22 +179,24 @@
       </div> <!-- end container class -->
 
     <div class="modal hide" id="jetdeckModal"></div> <!-- modal container place holder -->
-    <% if current_user.present? %>
+    <% if current_user.present? && Rails.env != "development" %>
     <% require 'digest/sha1' %>
     <script>  
-      mixpanel.people.set({
-        $email        : "<%= current_user.contact.email %>",
-        $created      : "<%= current_user.created_at %>",
-        $first_name   : "<%= current_user.contact.first %>",
-        $last_name    : "<%= current_user.contact.last %>",
-        $company      : "<%= current_user.contact.company %>",
-        $specs        : "<%= current_user.airframes.count %>",
-        $distinct_id  : "<%= Digest::SHA1.base64digest(current_user.id.to_s) %>"
+      $(function() {
+        mixpanel.people.set({
+          $email        : "<%= current_user.contact.email %>",
+          $created      : "<%= current_user.created_at %>",
+          $first_name   : "<%= current_user.contact.first %>",
+          $last_name    : "<%= current_user.contact.last %>",
+          $company      : "<%= current_user.contact.company %>",
+          $specs        : "<%= current_user.airframes.count %>",
+          $distinct_id  : "<%= Digest::SHA1.base64digest(current_user.id.to_s) %>"
+        });
+        mixpanel.people.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");    
+        
+        mixpanel.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");
+        mixpanel.name_tag("<%= current_user.contact.email %>");
       });
-      mixpanel.people.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");    
-      
-      mixpanel.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");
-      mixpanel.name_tag("<%= current_user.contact.email %>");
     </script>
     <% end %>
     </body>

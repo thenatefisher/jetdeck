@@ -70,22 +70,27 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     modal(confirm.render().el)
 
   render: =>
-    @model.fetch(
-      success: =>
-      
-        @model.updateChildren()
-        
-        $(@el).html(@template(@model.toJSON() ))
+    lastDetailTab = null
+    if $("#contact_details .tab-pane:visible").attr("id")
+      lastDetailTab = $("#contact_details .tab-pane:visible").attr("id")
+          
+    $(@el).html(@template(@model.toJSON() ))
 
-        @header = new Jetdeck.Views.Contacts.ShowHeaderView(model: @model)
-        @$("#contact_show_header").html(@header.render().el)
-        
-        @specs = new Jetdeck.Views.Contacts.ShowSpecs(model: @model)
-        if @model.specs.length > 0
-          @$("#contact_specs").html(@specs.render().el) 
-                 
-     )
-     return this
+    @header = new Jetdeck.Views.Contacts.ShowHeaderView(model: @model)
+    @$("#contact_show_header").html(@header.render().el)
+    
+    @specs = new Jetdeck.Views.Contacts.ShowSpecs(model: @model)
+    if @model.specs.length > 0
+      @$("#contact_specs").html(@specs.render().el) 
+
+    @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
+    @$("#contact_actions").html(@actions.render().el)
+    
+    @details = new Jetdeck.Views.Contacts.ShowDetails(model: @model)
+    @$("#contact_details").html(@details.render().el)
+    @$("a[href='#"+lastDetailTab+"']'").tab('show') if lastDetailTab  
+    
+    return this
 
 
 class Jetdeck.Views.Contacts.ShowHeaderView extends Backbone.View

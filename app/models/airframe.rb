@@ -1,7 +1,9 @@
 class Airframe < ActiveRecord::Base
 
   # relationships
-
+  has_many :actions, :as => :actionable
+  has_many :notes, :as => :notable
+  
   belongs_to :airport
 
   has_many    :engines,
@@ -24,6 +26,26 @@ class Airframe < ActiveRecord::Base
 
   belongs_to :creator, :class_name => "User", :foreign_key => "user_id"
 
+  def search_url
+    "/airframes/#{id}"
+  end
+  
+  def search_desc
+    self.to_s
+  end
+  
+  def search_label
+    label = self.serial
+    if self.registration.present? && self.serial.present?
+      label += " (#{self.registration.upcase})"
+    else
+      label = self.registration.upcase
+    end
+   
+    label = "<i class=\"icon-plane\"></i> #{label}"
+     
+  end
+  
   def avatar
 
     avatars = Hash.new()

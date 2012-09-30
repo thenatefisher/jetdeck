@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120812071610) do
+ActiveRecord::Schema.define(:version => 20120930022957) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -28,6 +28,19 @@ ActiveRecord::Schema.define(:version => 20120812071610) do
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
     t.boolean  "thumbnail"
+  end
+
+  create_table "actions", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "due_at"
+    t.integer  "actionable_id"
+    t.integer  "created_by"
+    t.string   "actionable_type"
+    t.boolean  "is_completed"
+    t.datetime "completed_at"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "addresses", :force => true do |t|
@@ -139,6 +152,26 @@ ActiveRecord::Schema.define(:version => 20120812071610) do
     t.datetime "updated_at", :null => false
   end
 
+  create_table "notes", :force => true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.integer  "created_by"
+    t.string   "notable_type"
+    t.integer  "notable_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "ownerships", :force => true do |t|
+    t.integer  "contact_id"
+    t.string   "assoc"
+    t.integer  "created_by"
+    t.string   "description"
+    t.datetime "assigned"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "spec_views", :force => true do |t|
     t.integer  "spec_id"
     t.integer  "time_on_page"
@@ -169,6 +202,7 @@ ActiveRecord::Schema.define(:version => 20120812071610) do
     t.string   "auth_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
+    t.text     "spec_disclaimer"
   end
 
   add_index "users", ["contact_id"], :name => "indexusers_on_contact_id"

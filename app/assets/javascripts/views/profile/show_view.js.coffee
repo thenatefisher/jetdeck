@@ -58,14 +58,15 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
     $(".error").html("")
     self = this
     
+    @model.set('spec_disclaimer', @$("textarea[name='spec_disclaimer']").val())
+    
     $(".inline-edit").each( ->
       
       # strip leading/trailing space
       this.value = this.value.replace(/(^\s*)|(\s*$)/gi,"")
       this.value = this.value.replace(/\n /,"\n")
-
       self.model.attributes.contact[this.name] = this.value
-      
+
     )
     
     # add protocol onto website url

@@ -8,7 +8,7 @@ class Jetdeck.Views.Contacts.ContactView extends Backbone.View
     "click" : "gotoContact"
 
   gotoContact: ->
-    location.href = "/contacts#/" + @model.id
+    location.href = "/contacts/" + @model.id
     return
 
   tagName: "tr"

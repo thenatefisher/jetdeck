@@ -3,6 +3,7 @@
  *= require jquery.fileupload-ui
  *= require select2
  *= require_tree ./controllers
+ *= require datepicker
  *= require_self
 */
 
@@ -18,9 +19,103 @@
 @import "fontawesome";
 <% end %>
 
+@placeholderText: #cfcfcf;
+input:-moz-placeholder {
+  color: #cfcfcf;
+}
+
 body {
   padding-top: 10px;
   background: url(<%= asset_path 'bg/dots.png' %>) repeat;
+}
+
+.clicky { cursor: pointer; }
+
+.ownership-item {
+  padding: 5px;
+}
+
+.ownership-item:hover {
+  background-color: #0088CC;
+  color: #fefefe;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-decoration: none;
+  text-shadow: none;
+}
+
+.ownership-item:hover .buttons a {
+  color: white;
+}
+
+.ownership-item .buttons a {
+  text-decoration: none;
+}
+
+.ownership-item .buttons a:hover {
+  font-weight: bold;
+}
+
+#note_items div:last-child div.page-header  {
+  border: 0px;
+  margin-bottom: 0px;
+}
+
+.notes-pagination ul li a { line-height: 25px; }
+
+.note-buttons a {
+  color: @grayLight;
+  text-decoration: none
+}
+
+.note-buttons a:hover {
+  color: @grayDark;
+}
+
+.datepicker.dropdown-menu {padding: 4px;}
+
+.action {
+  padding: 10px 5px;
+  position:relative;
+}
+
+.action:hover {
+  background-color: #0088CC;
+  color: #fefefe;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-decoration: none;
+  text-shadow: none;
+}
+
+.due-date {
+  width: 100%; 
+  text-align: left; 
+  font-size: 80%
+}
+
+.late strong, .late .due-date {
+  color: @red;
+}
+
+.late:hover .due-date, .late:hover strong {
+  color: #fefefe;
+}
+
+.action-buttons {
+  position: absolute; 
+  bottom: 5px; 
+  right: 7px; 
+  font-weight: bold;
+  display: none;
+}
+
+.action-buttons i {
+  cursor: pointer;
+  font-size: 120%;
+  margin: 0 5px;
 }
 
 .modal-backdrop {
@@ -273,6 +368,10 @@ h4 i {
   .border-radius(4px 0 0 4px);
   text-decoration: none;
   text-shadow: none;
+}
+
+.left-nav > li > a:hover h3 small {
+  color: #fefefe;
 }
 
 .btn i {
