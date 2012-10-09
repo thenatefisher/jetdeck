@@ -16,9 +16,11 @@ class User < ActiveRecord::Base
   attr_accessor  :password, :password_confirmation
 
   before_save :encrypt_password
+  
   before_create { set_defaults(:auth_token) }
 
   has_many :logins
+  
   has_many :airframes, :dependent => :destroy
 
   has_many :contacts, :class_name => 'Contact', :foreign_key => "owner_id"
@@ -26,18 +28,23 @@ class User < ActiveRecord::Base
   belongs_to :contact, :dependent => :destroy
 
   validates_uniqueness_of :contact_id
+  
   validates_presence_of :contact_id
+  
   validates_presence_of :password, :on => :create
+  
+  validates_presence_of :password, :if => "password_confirmation.present?",
+                        :message => "Password does not match confirmation"
 
-  if defined? :password
-      validates_presence_of :password_confirmation, :on => :password_changed?
-      validates_confirmation_of :password, :on => :update, 
-                                :message => "Password does not match confirmation"
-      validates :password, :length => 
-        { :minimum => 6, :message => "Password must be at least 6 chars" },
-        :on => :password_changed?
-                
-  end
+  validates_presence_of :password_confirmation, :on => :password_changed?, :if => "password.present?"
+
+  validates_confirmation_of :password, :on => :update, 
+                            :message => "Password does not match confirmation",
+                            :if => "password.present?"
+
+  validates :password, :length => 
+            { :minimum => 6, :message => "Password must be at least 6 chars" }, 
+            :if => "password.present?"
 
   def set_defaults(paramName)
 
@@ -58,7 +65,7 @@ class User < ActiveRecord::Base
   end
   
   def encrypt_password
-    if defined? password && password.present?
+    if password.present?
       self.password_salt = BCrypt::Engine.generate_salt
       self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
     end

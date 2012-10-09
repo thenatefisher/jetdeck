@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120930022957) do
+ActiveRecord::Schema.define(:version => 20121009051431) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -96,7 +96,6 @@ ActiveRecord::Schema.define(:version => 20120930022957) do
     t.text     "description"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-    t.integer  "user_id"
     t.integer  "baseline_id"
     t.boolean  "baseline"
     t.string   "phone"
@@ -203,6 +202,7 @@ ActiveRecord::Schema.define(:version => 20120930022957) do
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
     t.text     "spec_disclaimer"
+    t.integer  "invites"
   end
 
   add_index "users", ["contact_id"], :name => "indexusers_on_contact_id"
