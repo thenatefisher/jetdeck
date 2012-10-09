@@ -103,11 +103,11 @@ class Contact < ActiveRecord::Base
     
     if self.first.present?
     
-      sender_field = "#{self.first}" 
+      sender_field = "#{self.first.capitalize}" 
       
       if self.last.present?
       
-        sender_field = "#{self.first} #{self.last}" 
+        sender_field = "#{self.first.capitalize} #{self.last.capitalize}" 
       
       end
     

@@ -1,5 +1,7 @@
 Jetdeck::Application.routes.draw do
 
+  resources :invites, :only => [:create]
+  
   resources :ownerships
   
   resources :notes
@@ -20,7 +22,9 @@ Jetdeck::Application.routes.draw do
 
   resources :password_resets
 
-  resources :users, :only => [:update]
+  match "/invited/:code" => "users#new"
+  
+  resources :users, :only => [:update, :create]
   
   resources :user_logos 
   

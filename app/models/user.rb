@@ -39,7 +39,18 @@ class User < ActiveRecord::Base
                 
   end
 
+  def use_invite
+    if self.invites > 1
+      self.invites -= 1
+    else 
+      self.invites = 0
+    end
+  end
+
   def set_defaults(paramName)
+
+    # set 10 invites
+    self.invites = 10
 
     # default to active status
     self.active ||= true

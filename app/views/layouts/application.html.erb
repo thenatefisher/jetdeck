@@ -116,14 +116,43 @@
               </li>
               
               <li >
-                <a href="/actions" <% if (actions_due_count > 0) %>
+                <a href="/actions" <% if (actions_due_count && actions_due_count > 0) %>
                   data-placement="bottom" 
                   rel="tooltip" 
                   title="<%= actions_due_count %> Action(s) Past Due<% end %>"> 
                   <h3 style="font-size: 15px"> <i class="icon-check"></i> Actions 
-                <% if (actions_due_count > 0) %><small>(<%= actions_due_count %>)</small><% end %>
+                <% if (actions_due_count && actions_due_count > 0) %><small>(<%= actions_due_count %>)</small><% end %>
                 </h3></a>
-              </li>              
+              </li>    
+          
+              <% if (current_user && current_user.invites.to_i > 0) %>    
+              <li class="nav-header" 
+                  style="margin-top: 100px; text-align: center" 
+                  rel="tooltip" 
+                  title="Send a free JetDeck subscription to your inner circle and work smarter together!"
+                  data-position="top">
+                Invite <%=current_user.invites%> Friend<%= (current_user.invites > 1) ? "s" : "" %>
+              </li>
+                            
+              <li>
+                <div style="margin-right: 10px;">
+                <input type="text" style="width: 100%" />
+                </div>
+              </li>
+              
+              <li>
+                <button class="pull-right btn btn-mini"
+                        rel="tooltip" 
+                        title="Send a free JetDeck subscription to your inner circle and work smarter together!"
+                        data-position="top">Send</button>
+              </li> 
+              
+              <li class="hide" id="invited-message">
+              
+              <div class="clearfix"><h2><br></h2></div>
+              <div class="clearfix alert alert-warning"><strong>Tom</strong> was invited!</div>
+              </li>
+              <% end %>                       
 
             </ul>
             
