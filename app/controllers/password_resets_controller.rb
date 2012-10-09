@@ -21,6 +21,7 @@ class PasswordResetsController < ApplicationController
 
     def edit
       @user = User.find_by_password_reset_token!(params[:id])
+      render :layout => "login" 
     end
 
     def update
@@ -30,7 +31,7 @@ class PasswordResetsController < ApplicationController
       elsif @user.update_attributes(params[:user])
         redirect_to airframes_url, :notice => "Password has been reset!"
       else
-        render :edit
+        render :edit, :layout => "login"   
       end
     end
 
