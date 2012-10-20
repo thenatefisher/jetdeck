@@ -86,6 +86,9 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#contact_actions").html(@actions.render().el)
     
+    @delete = new Jetdeck.Views.Contacts.ShowDelete(model: @model)
+    @$("#contact_delete").html(@delete.render().el)
+        
     @details = new Jetdeck.Views.Contacts.ShowDetails(model: @model)
     @$("#contact_details").html(@details.render().el)
     @$("a[href='#"+lastDetailTab+"']'").tab('show') if lastDetailTab  
