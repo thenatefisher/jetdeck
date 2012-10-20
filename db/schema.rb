@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121009051431) do
+ActiveRecord::Schema.define(:version => 20121020053714) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -132,6 +132,17 @@ ActiveRecord::Schema.define(:version => 20121009051431) do
     t.string   "etype"
   end
 
+  create_table "invites", :force => true do |t|
+    t.integer  "from_user_id"
+    t.boolean  "activated"
+    t.text     "message"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.string   "token"
+    t.string   "name"
+    t.string   "email"
+  end
+
   create_table "locations", :force => true do |t|
     t.string   "city"
     t.string   "country"
@@ -203,6 +214,8 @@ ActiveRecord::Schema.define(:version => 20121009051431) do
     t.datetime "password_reset_sent_at"
     t.text     "spec_disclaimer"
     t.integer  "invites"
+    t.string   "activation_token"
+    t.boolean  "activated"
   end
 
   add_index "users", ["contact_id"], :name => "indexusers_on_contact_id"

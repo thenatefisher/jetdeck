@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
 
   before_save :encrypt_password
   
-  before_create { set_defaults(:auth_token) }
+  before_create { set_defaults() }
 
   has_many :logins
   
@@ -46,16 +46,20 @@ class User < ActiveRecord::Base
             { :minimum => 6, :message => "Password must be at least 6 chars" }, 
             :if => "password.present?"
 
-  def set_defaults(paramName)
+  def set_defaults()
 
     # default to active status
     self.active ||= true
+    
+    # default to not activated
+    self.activated = false
 
     # generate auth token
-    begin
-        self[paramName] = SecureRandom.urlsafe_base64
-    end while User.exists?(paramName => self[paramName])
+    generate_token(:auth_token)
 
+    # generate activation token
+    generate_token(:activation_token)
+    
   end
   
   def generate_token(column)

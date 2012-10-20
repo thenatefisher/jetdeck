@@ -19,8 +19,14 @@ Jetdeck::Application.routes.draw do
   resources :engines
 
   resources :password_resets
+  
+  match "/signup/:token" => "users#new"
+  
+  match "/signup" => "users#new"
+  
+  match "/activate/:token" => "users#activate"
 
-  resources :users, :only => [:update]
+  resources :users, :only => [:create]
   
   resources :user_logos 
   

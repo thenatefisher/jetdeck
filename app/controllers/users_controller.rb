@@ -1,93 +1,98 @@
 class UsersController < ApplicationController
 
-  before_filter :authorize
-
-  # GET /users
-  # GET /users.json
-  def index
-    @users = User.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => @users }
-    end
+  def activate
+  
+    user = User.find_by_activation_token(params[:token])
+    user.activated = true
+    user.save
+    
+    flash[:notice] = "Account Activated!"
+    redirect_to "/login"
+  
   end
-
-  # GET /users/1
-  # GET /users/1.json
-  def show
-    #@user = User.find(params[:id])
-
-    @user = @current_user if @current_user.present?
-
-  end
-
-  # GET /users/new
-  # GET /users/new.json
+  
   def new
-    @user = User.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @user }
-    end
-  end
-
-  # GET /users/1/edit
-  def edit
-    @user = User.find(params[:id])
-  end
-
-  # POST /users
-  # POST /users.json
-  def create
-    @user = User.new(params[:user])
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, :notice => 'User was successfully created.' }
-        format.json { render :json => @user, :status => :created, :location => @user }
-      else
-        format.html { render :action => "new" }
-        format.json { render :json => @user.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /users/1
-  # PUT /users/1.json
-  def update
-    @user = User.find(params[:id])
-    whitelist = params[:user].slice(
-        :password,
-        :password_confirmation
-      )
-
-    if params[:user][:contact]
-        contact_whitelist = params[:user][:contact].slice(:email, :email_confirmation)
-        @user.contact.update_attributes(contact_whitelist)
+    invite = Invite.find_by_token(params[:token])
+    
+    # invites required
+    if !invite
+    
+      redirect_to "http://www.jetdeck.co/signup.php"
+      return
+      
+    elsif invite.activated
+    
+      flash[:notice] = "Invite already activated!"
+      redirect_to "/login"
+      return
+      
     end
     
-    respond_to do |format|
-      if @user.update_attributes(whitelist)
-        format.html { redirect_to @user, :notice => 'User was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @user.errors, :status => :unprocessable_entity }
+    # fill in form values
+    @email = invite.email
+    @name = invite.name
+    @token = params[:token]
+
+    render :layout => "signup"
+
+  end
+
+  def create
+
+    # if no token, cancel
+    if !Invite.find_by_token(params[:token])
+      redirect_to "http://www.jetdeck.co/signup.php"
+      return    
+    end
+    
+    # if a user already has this email addy, cancel reg
+    email = params[:email]
+    if !email || !Contact.where(:email => email, :owner_id => nil).empty?
+      flash[:alert] = "#{params[:email]} is already registered!"  
+      redirect_to request.referer
+      return
+    end
+    
+    # if first and last name not supplied, cancel reg
+    name = params[:name].split(" ") if params[:name]
+    if !name || name.count < 2 
+      flash[:alert] = "First and Last Names Required"
+      redirect_to request.referer
+      return
+    end
+    
+    # create user records
+    contact = Contact.create(:email => params[:email], :first => name[0], :last => name[1])
+    user = User.create(:contact_id => contact.id, :password => params[:password]) if contact
+    
+    if user
+    
+      # deactivate all invites with this email address
+      Invite.where(:email => params[:email]).each do |i|
+        i.activated = true
+        i.save
       end
+      
+      # send activation email
+      ActivationMailer.activation(user).deliver
+     
+      # log user in
+      cookies[:auth_token] = user.auth_token     
+
+      # redirect to default page
+      redirect_to "/"
+      return
+      
+    else
+    
+      # cleanup and send user to normal signup page
+      contact.destroy
+      redirect_to "http://www.jetdeck.co/signup.php"
+      return
+    
     end
+
   end
 
-  # DELETE /users/1
-  # DELETE /users/1.json
-  def destroy
-    @user = User.find(params[:id])
-    @user.destroy
-
-    respond_to do |format|
-      format.html { redirect_to users_url }
-      format.json { head :no_content }
-    end
-  end
 end

@@ -3,19 +3,27 @@ require 'bcrypt'
 class InvitesController < ApplicationController
     before_filter :authorize
     
+    # sends an invite
     def create
 
         if @current_user.invites > 0
         
-          c = Contact.create(:email => params[:recipient]) if params[:recipient].present? 
-          u = User.create(:contact_id => c.id, :password => BCrypt::Engine.generate_salt) if c
-
-          if u
+          # dont create the invite if a user already exists
+          if Contact.find(:first, :conditions => ["email = ? AND owner_id IS NULL", params[:recipient]]).present?
+            render :text => "error", :alert => "User Exists"
+            return
+          end
           
+          # otherwise try to create one
+          invite = Invite.create(:email => params[:recipient], :from_user_id => @current_user.id)
+
+          if invite
+          
+            # add the message
+            invite.message = params[:message]
+            
             # mail invite
-            u.generate_token(:password_reset_token)
-            u.save
-            InvitesMailer.invite(u, @current_user).deliver
+            InvitesMailer.invite(invite).deliver
       
             # decrement invite counter
             @current_user.use_invite
@@ -23,11 +31,15 @@ class InvitesController < ApplicationController
             # reply OK
             render :text => @current_user
           
+          else
+          
+            render :text => "error", :alert => "Could not create invite"
+          
           end
           
         else
         
-          render :text => "No Invites Left"
+          render :text => "error", :alert => "No Invites Left"
           
         end
 

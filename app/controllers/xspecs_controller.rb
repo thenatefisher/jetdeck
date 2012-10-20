@@ -47,7 +47,6 @@ class XspecsController < ApplicationController
         return
     else
       if current_user.nil? 
-        logger.info "USER ===== '#{@current_user}'\n"
         @xspec.views << SpecView.create(:agent => request.user_agent, :ip => request.remote_ip)
       end
     end
