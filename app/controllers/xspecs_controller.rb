@@ -47,7 +47,6 @@ class XspecsController < ApplicationController
         return
     else
       if current_user.nil? 
-        logger.info "USER ===== '#{@current_user}'\n"
         @xspec.views << SpecView.create(:agent => request.user_agent, :ip => request.remote_ip)
       end
     end
@@ -75,6 +74,8 @@ class XspecsController < ApplicationController
     authorize()
     
     sender = @current_user.contact
+    
+    params[:xspec]['recipient_email'] = params[:xspec]['recipient_email'].strip
 
     recipient = Contact.where("email = ? AND owner_id = ?", params[:xspec]['recipient_email'], @current_user.id).first
     

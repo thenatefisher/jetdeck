@@ -6,7 +6,6 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   events:
     "keydown .inline-edit"      : "edit"
     "click .manage_images"      : "manageImages"
-    "click .delete_spec"        : "deleteSpec"
   
   initialize: =>
     $("#cancel-changes").on("click", @cancel)
@@ -21,10 +20,6 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
       )
     )
 
-  deleteSpec: () ->
-    confirm = new Jetdeck.Views.Airframes.ConfirmDelete(model: @model)
-    modal(confirm.render().el)
-      
   manageImages: () ->
     if $("#uploader").is(":visible")
       $("#uploader").hide()
@@ -110,7 +105,10 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     @leads = new Jetdeck.Views.Airframes.ShowLeads(model: @model)
     if @model.leads.length > 0
       @$("#airframe_leads").html(@leads.render().el)
-
+    
+    @delete = new Jetdeck.Views.Airframes.ShowDelete(model: @model)
+    @$("#airframe_delete").html(@delete.render().el)
+    
     @$(".number").each(->
         if $(this).val() != null
           intPrice = parseInt($(this).val().replace(/[^0-9]/g,""), 10)

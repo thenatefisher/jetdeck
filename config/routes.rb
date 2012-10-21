@@ -21,10 +21,16 @@ Jetdeck::Application.routes.draw do
   resources :engines
 
   resources :password_resets
-
-  match "/invited/:code" => "users#new"
   
-  resources :users, :only => [:update, :create]
+  match "/signup/:token" => "users#new"
+  
+  match "/signup" => "users#new"
+  
+  match "/activate/:token" => "users#activate"
+
+  resources :users, :only => [:create]
+  
+  resources :invites, :only => [:create]
   
   resources :user_logos 
   

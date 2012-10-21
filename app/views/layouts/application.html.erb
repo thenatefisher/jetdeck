@@ -38,7 +38,7 @@
       <div class="sweatband"></div>
     
       <div class="container">
-
+        <% if current_user.present? %>
         <div class="navbar row">
 
                 <div class="span12">
@@ -77,9 +77,9 @@
           
             <div id="create-buttons" class="btn-group pull-right" 
             style="margin: 10px 20px 0 0;">
-              <button class="btn new-spec">
+              <button class="btn" id="new-spec">
                 <i class="icon-plane icon-white"></i> New Spec </button>
-              <button class="btn new-contact">
+              <button class="btn" id="new-contact">
                 <i class="icon-user icon-white"></i> New Contact </button>
             </div>
             
@@ -116,45 +116,30 @@
               </li>
               
               <li >
+              
                 <a href="/actions" <% if (actions_due_count && actions_due_count > 0) %>
+
                   data-placement="bottom" 
                   rel="tooltip" 
                   title="<%= actions_due_count %> Action(s) Past Due<% end %>"> 
                   <h3 style="font-size: 15px"> <i class="icon-check"></i> Actions 
                 <% if (actions_due_count && actions_due_count > 0) %><small>(<%= actions_due_count %>)</small><% end %>
                 </h3></a>
-              </li>    
-          
-              <% if (current_user && current_user.invites.to_i > 0) %>    
-              <li class="nav-header" 
-                  style="margin-top: 100px; text-align: center" 
-                  rel="tooltip" 
-                  title="Send a free JetDeck subscription to your inner circle and work smarter together!"
-                  data-position="top">
-                Invite <%=current_user.invites%> Friend<%= (current_user.invites > 1) ? "s" : "" %>
-              </li>
-                            
-              <li>
-                <div style="margin-right: 10px;">
-                <input type="text" style="width: 100%" />
-                </div>
-              </li>
-              
-              <li>
-                <button class="pull-right btn btn-mini"
-                        rel="tooltip" 
-                        title="Send a free JetDeck subscription to your inner circle and work smarter together!"
-                        data-position="top">Send</button>
-              </li> 
-              
-              <li class="hide" id="invited-message">
-              
-              <div class="clearfix"><h2><br></h2></div>
-              <div class="clearfix alert alert-warning"><strong>Tom</strong> was invited!</div>
-              </li>
-              <% end %>                       
+                       
+              </li>              
 
             </ul>
+            
+            <% if current_user.invites > 0 %>
+            <div id="invite-sidebar">
+            <button style="margin-top: 40px;" class="btn" id="new-invite"> <i class="icon-gift"></i> Invite a Friend!</button>
+            <div style="margin-top: 5px; margin-left: 5px;">
+              <span style="font-size: 90%">
+                (<strong id="invite-count"><%= current_user.invites %></strong> Invites Remaining)
+              </span>
+            </div>
+            </div>
+            <% end %>
             
           </div> <!-- end MY DECK ... navigation -->
 
@@ -205,6 +190,7 @@
         <p>© <%=  Time.now.year %>, JetDeck Services, LLC </p>
         </div>
 
+       <% end %>
       </div> <!-- end container class -->
 
     <div class="modal hide" id="jetdeckModal"></div> <!-- modal container place holder -->

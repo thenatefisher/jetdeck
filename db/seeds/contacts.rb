@@ -106,8 +106,8 @@ titles = [
     UIdRange = UIdMax - UIdMin
     u = User.find(rand(UIdRange).floor+UIdMin)
     if u 
-      contact.user_id = u.id
-      contact.save
+      u.contact = contact
+      u.save
     end
   end
 

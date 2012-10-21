@@ -1,49 +1,98 @@
 class UsersController < ApplicationController
 
-  # GET /users/new
-  # GET /users/new.json
-  def new
+  def activate
   
-    #@user = User.find_by_password_reset_token!(params[:id])
-    @user = User.first
+    user = User.find_by_activation_token(params[:token])
+    user.activated = true
+    user.save
     
-    respond_to do |format|
-      if @user
-        format.html {render :layout => "login"}
-      else
-        format.html { render :text => "Unauthorized" }
-      end
+    flash[:notice] = "Account Activated!"
+    redirect_to "/login"
+  
+  end
+  
+  def new
+
+    invite = Invite.find_by_token(params[:token])
+    
+    # invites required
+    if !invite
+    
+      redirect_to "http://www.jetdeck.co/signup.php"
+      return
+      
+    elsif invite.activated
+    
+      flash[:notice] = "Invite already activated!"
+      redirect_to "/login"
+      return
+      
     end
     
+    # fill in form values
+    @email = invite.email
+    @name = invite.name
+    @token = params[:token]
+
+    render :layout => "signup"
+
   end
 
-  # POST /users
-  # POST /users.json
   def create
 
-    @user = User.find_by_password_reset_token!(params[:token])
-    
-    @user.update_attributes(params[:user].slice(
-      :first, 
-      :last, 
-      :password, 
-      :password_confirmation
-      )
-    )
-    
-    respond_to do |format|
-      if @user.save
-        @user.password_reset_token = nil
-        @user.save
-        format.html { redirect_to profile_path, :notice => 'User was successfully created.' }
-        format.json { render :json => @user, :status => :created, :location => @user }
-      else
-        format.html { render :action => "new" }
-        format.json { render :json => @user.errors, :status => :unprocessable_entity }
-      end
+    # if no token, cancel
+    if !Invite.find_by_token(params[:token])
+      redirect_to "http://www.jetdeck.co/signup.php"
+      return    
     end
+    
+    # if a user already has this email addy, cancel reg
+    email = params[:email]
+    if !email || !Contact.where(:email => email, :owner_id => nil).empty?
+      flash[:alert] = "#{params[:email]} is already registered!"  
+      redirect_to request.referer
+      return
+    end
+    
+    # if first and last name not supplied, cancel reg
+    name = params[:name].split(" ") if params[:name]
+    if !name || name.count < 2 
+      flash[:alert] = "First and Last Names Required"
+      redirect_to request.referer
+      return
+    end
+    
+    # create user records
+    contact = Contact.create(:email => params[:email], :first => name[0], :last => name[1])
+    user = User.create(:contact_id => contact.id, :password => params[:password]) if contact
+    
+    if user
+    
+      # deactivate all invites with this email address
+      Invite.where(:email => params[:email]).each do |i|
+        i.activated = true
+        i.save
+      end
+      
+      # send activation email
+      ActivationMailer.activation(user).deliver
+     
+      # log user in
+      cookies[:auth_token] = user.auth_token     
+
+      # redirect to default page
+      redirect_to "/"
+      return
+      
+    else
+    
+      # cleanup and send user to normal signup page
+      contact.destroy
+      redirect_to "http://www.jetdeck.co/signup.php"
+      return
+    
+    end
+
   end
-
-
 
 end

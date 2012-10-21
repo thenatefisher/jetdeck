@@ -16,9 +16,11 @@ class User < ActiveRecord::Base
   attr_accessor  :password, :password_confirmation
 
   before_save :encrypt_password
-  before_create { set_defaults(:auth_token) }
+  
+  before_create { set_defaults() }
 
   has_many :logins
+  
   has_many :airframes, :dependent => :destroy
 
   has_many :contacts, :class_name => 'Contact', :foreign_key => "owner_id"
@@ -26,40 +28,41 @@ class User < ActiveRecord::Base
   belongs_to :contact, :dependent => :destroy
 
   validates_uniqueness_of :contact_id
+  
   validates_presence_of :contact_id
+  
   validates_presence_of :password, :on => :create
+  
+  validates_presence_of :password, :if => "password_confirmation.present?",
+                        :message => "Password does not match confirmation"
 
-  if defined? :password
-      validates_presence_of :password_confirmation, :on => :password_changed?
-      validates_confirmation_of :password, :on => :update, 
-                                :message => "Password does not match confirmation"
-      validates :password, :length => 
-        { :minimum => 6, :message => "Password must be at least 6 chars" },
-        :on => :password_changed?
-                
-  end
+  validates_presence_of :password_confirmation, :on => :password_changed?, :if => "password.present?"
 
-  def use_invite
-    if self.invites > 1
-      self.invites -= 1
-    else 
-      self.invites = 0
-    end
-  end
+  validates_confirmation_of :password, :on => :update, 
+                            :message => "Password does not match confirmation",
+                            :if => "password.present?"
 
-  def set_defaults(paramName)
+  validates :password, :length => 
+            { :minimum => 6, :message => "Password must be at least 6 chars" }, 
+            :if => "password.present?"
+
+  def set_defaults()
 
     # set 10 invites
     self.invites = 10
 
     # default to active status
     self.active ||= true
+    
+    # default to not activated
+    self.activated = false
 
     # generate auth token
-    begin
-        self[paramName] = SecureRandom.urlsafe_base64
-    end while User.exists?(paramName => self[paramName])
+    generate_token(:auth_token)
 
+    # generate activation token
+    generate_token(:activation_token)
+    
   end
   
   def generate_token(column)
@@ -69,7 +72,7 @@ class User < ActiveRecord::Base
   end
   
   def encrypt_password
-    if defined? password && password.present?
+    if password.present?
       self.password_salt = BCrypt::Engine.generate_salt
       self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
     end

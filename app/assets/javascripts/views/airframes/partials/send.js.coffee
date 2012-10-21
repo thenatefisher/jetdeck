@@ -51,7 +51,13 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
         mixpanel.track("Sent Spec", {success: true, is_new: true})
      
     ).error( (m) =>
-    
+      
+      if $.parseJSON(m.responseText).recipient
+        @$(".help-inline").html("Recipient " + $.parseJSON(m.responseText).recipient[0])
+      
+      if $.parseJSON(m.responseText).sender
+        @$(".help-inline").html($.parseJSON(m.responseText).sender[0])
+              
       @$("#send_spec").button('reset')
       @$(".control-group").addClass("error")
       @$(".help-inline").show()

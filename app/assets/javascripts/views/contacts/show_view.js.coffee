@@ -5,7 +5,6 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
 
   events:
     "keydown .inline-edit"      : "edit"
-    "click .delete_contact"     : "delete"
     "click .change-cancel"      : "cancel"
     "click .change-ok"          : "save"
   
@@ -64,11 +63,6 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     
     $("#save-changes").prop('disabled', false)
     
-  
-  delete: () =>
-    confirm = new Jetdeck.Views.Contacts.ConfirmDelete(model: @model)
-    modal(confirm.render().el)
-
   render: =>
     lastDetailTab = null
     if $("#contact_details .tab-pane:visible").attr("id")
@@ -86,6 +80,9 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#contact_actions").html(@actions.render().el)
     
+    @delete = new Jetdeck.Views.Contacts.ShowDelete(model: @model)
+    @$("#contact_delete").html(@delete.render().el)
+        
     @details = new Jetdeck.Views.Contacts.ShowDetails(model: @model)
     @$("#contact_details").html(@details.render().el)
     @$("a[href='#"+lastDetailTab+"']'").tab('show') if lastDetailTab  

@@ -48,8 +48,7 @@ class Contact < ActiveRecord::Base
                             :if => :email_changed?, :on => :update,
                             :unless => Proc.new { |q| q.user.nil? }
 
-  # todo uniqueness is also specific to an owner
-  validates_uniqueness_of :email, :scope => :owner_id, 
+  validates_uniqueness_of :email, :scope => :owner_id,
                           :message => "Another contact already exists with this address"
 
   validates_format_of :email, 

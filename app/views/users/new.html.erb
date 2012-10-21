@@ -1,0 +1,42 @@
+
+<h4>Start Your <span style="color: #46a546;">Free</span> Individual Account Now!</h4>
+
+<h4><br></h4>
+
+<% if flash[:alert] %>
+  <div class="alert alert-error span12" style="margin-left: 0px;">
+    <div><%= flash[:alert] %></div>
+  </div>
+  <div style="clear: both"></div>
+<% end %> 
+  
+<form action="/users" method="POST">
+
+  <div class="control-group clearfix">
+  <div class="controls">
+  <input type="text" class="span12" name="name" value="<%= @name %>" placeholder="First and Last Name">
+  <span class="help-inline pull-right"></span>
+  </div>
+  </div>
+  
+  <div class="control-group clearfix">
+  <div class="controls">
+  <input type="text" class="span12" value="<%= @email %>" name="email" placeholder="Email">
+  <span class="help-inline pull-right"></span>
+  </div>
+  </div>
+  
+  <div class="control-group clearfix">
+  <div class="controls">
+  <input type="password" class="span12" name="password" placeholder="Password">
+  <span class="help-inline pull-right "></span>
+  </div>
+  </div>
+    
+  <input type="hidden" class="span12" name="token" value="<%= @token %>">
+    
+</form>
+
+<button class="btn btn-success pull-right" id="signup"><h3>Sign Up</h3></button>
+
+<h4><br><br></h4>

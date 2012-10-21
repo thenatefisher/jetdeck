@@ -1,0 +1,48 @@
+<div class="modal-header">
+<button class="close" data-dismiss="modal">×</button>
+<h3> Give the Gift of JetDeck</h3>
+</div>
+
+<form>
+  <div class="modal-body" style="padding-left: 50px;">
+
+    <br/>
+    
+    <div class="row">
+    <div class="span6">
+        <div class="control-group email_group" style="margin-bottom: 0px">
+          <label for="email" style="clear: both;"><h4>Recipient Email  <small>(Required)</small></h4></label>
+          <input class="span6" type="text" name="email">
+          <p class="help-block pull-left hide" style="margin-top: 4px; margin-bottom: 0px;">Invalid Email Address</p>
+        </div>
+    </div>
+    </div>
+    
+    <div class="row" style="margin-bottom: 10px">
+        <hr class="span2"> 
+        <span class="span2" style="margin: 10px;"><h6 style="margin-left: 25px">Optional Details</h6></span>
+        <hr class="span2"> 
+    </div>
+        
+    <div class="row">
+    <div class="span6">
+        <div class="control-group name_group">
+          <input class="span6" type="text" name="name" id="name" placeholder="First & Last Name">
+        </div>
+
+        <div class="control-group message_group">
+          <textarea rows='3' class="span6" name="message" placeholder="">I've been using JetDeck and thought you might like to try it out. Here's an invitation to create an account.</textarea>
+        </div> 
+    </div>
+    </div>
+    
+  </div>
+</form>
+
+<div class="modal-footer">
+<img width=18 height=18 src='/assets/loading.gif' class="hide">
+<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+<button id="invite-send" 
+        class="btn btn-primary" 
+        data-loading-text="<img width=18 height=18 src='/assets/loading.gif'> Sending..."> <i class="icon-envelope-alt"></i> Send Invite</button>
+</div>
