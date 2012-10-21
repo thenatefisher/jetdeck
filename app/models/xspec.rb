@@ -24,7 +24,7 @@ class Xspec < ActiveRecord::Base
 
   def require_user_activation
     if !self.sender.user || self.sender.user.activated != true
-      self.errors.add(:sender, "Please check account activation email")
+      self.errors.add(:sender, "Please check account verification email")
       false
     end
   end

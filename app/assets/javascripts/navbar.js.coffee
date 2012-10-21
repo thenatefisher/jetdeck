@@ -31,7 +31,7 @@ $(->
     )
     
     $("#new-invite").click( ->
-        view = new Jetdeck.Views.Contacts.NewView()
+        view = new Jetdeck.Views.Invites.NewView()
         modal(view.render().el)
     )    
     

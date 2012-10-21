@@ -1,10 +1,14 @@
 class InvitesMailer < ActionMailer::Base
     default from: "support@jetdeck.co"
-    def invite(recipient, sender)
-      @recipient = recipient
-      @sender = sender
-      sender_name = sender.contact.to_s
-      mail  :to => recipient.contact.email, 
-            :subject => "#{sender_name} Has Invited You to JetDeck!"
+    def invite(invite)
+
+      @message    = invite.message
+      @name       = invite.name
+      @email      = invite.email
+      @sender     = invite.sender
+      @url        = "#{root_url}signup/#{invite.token}"
+      
+      mail  :to => @email, 
+            :subject => "#{@sender.contact.to_s} Has Invited You to JetDeck!"
     end
 end

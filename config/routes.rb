@@ -28,6 +28,8 @@ Jetdeck::Application.routes.draw do
 
   resources :users, :only => [:create]
   
+  resources :invites, :only => [:create]
+  
   resources :user_logos 
   
   resources :equipment
