@@ -74,6 +74,8 @@ class XspecsController < ApplicationController
     authorize()
     
     sender = @current_user.contact
+    
+    params[:xspec]['recipient_email'] = params[:xspec]['recipient_email'].strip
 
     recipient = Contact.where("email = ? AND owner_id = ?", params[:xspec]['recipient_email'], @current_user.id).first
     

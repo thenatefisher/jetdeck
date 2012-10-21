@@ -3,7 +3,19 @@
 </h4>
 
 <div id="delete-button" class="hide">
-<button class="btn btn-danger delete_contact" id="" style="width: 100%; margin-top: 6px;"> <strong> Delete Contact </strong> </button>
+
+    <p> <strong> Warning! </strong> This will 
+    <span class="label label-important">permanently delete</span> any data 
+        and associations with this contact. This person will also no longer 
+        be able to view any specs sent to them. Aircraft specs which have 
+        this contact as a lead will not be deleted.</p>
+
+    <p>You may <a href="#" id="delete-cancel">close this message</a> to cancel the operation.</p>
+            
+    <button class="btn btn-danger" id="delete-confirm" style="width: 100%; margin-top: 6px;"> 
+      <i class="icon-warning-sign icon-white"></i> Permanently Delete Contact
+    </button>
+
 </div>
     
 <h3>&nbsp;</h3>

@@ -19,16 +19,21 @@ $(->
 	        .append( "<a href='" + item.url + "'><strong>" + item.label + "</strong><br>" + item.desc + "</a>" )
 	        .appendTo( ul )  
 	        
-    $(".new-spec").click( ->
+    $("#new-spec").click( ->
         view = new Jetdeck.Views.Airframes.NewView()
         $(".new-spec").popover('hide')
         modal(view.render().el)
     )
 
-    $(".new-contact").click( ->
+    $("#new-contact").click( ->
         view = new Jetdeck.Views.Contacts.NewView()
         modal(view.render().el)
     )
+    
+    $("#new-invite").click( ->
+        view = new Jetdeck.Views.Contacts.NewView()
+        modal(view.render().el)
+    )    
     
     $(".dropdown-menu li").live('hover',
       (e) ->

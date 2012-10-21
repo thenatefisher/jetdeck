@@ -7,7 +7,7 @@ class Xspec < ActiveRecord::Base
 
   before_save :unique_recipients_per_airframe
 
-  before_create :generate_url_code
+  before_create :init
 
   belongs_to :background, :class_name => "XspecBackground", :foreign_key => "background_id"
 
@@ -17,16 +17,28 @@ class Xspec < ActiveRecord::Base
 
   attr_accessor :hits, :fire
 
+  def init
+    generate_url_code()
+    require_user_activation()
+  end
+
+  def require_user_activation
+    if !self.sender.user || self.sender.user.activated != true
+      self.errors.add(:sender, "Please check account activation email")
+      false
+    end
+  end
+
   def unique_recipients_per_airframe
 
     if self.id.nil?
       if Xspec.where("recipient_id = ? AND airframe_id = ?", self.recipient, self.airframe).length > 0
-        self.errors.add(:recipient, "Contact is already on the lead list for this airframe")
+        self.errors.add(:recipient, "is already on the lead list")
         false
       end
     else
       if Xspec.where("recipient_id = ? AND airframe_id = ? AND id != ?", self.recipient, self.airframe, self.id).length > 0
-        self.errors.add(:recipient, "Contact is already on the lead list for this airframe")
+        self.errors.add(:recipient, "is already on the lead list")
         false
       end
     end

@@ -6,7 +6,6 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   events:
     "keydown .inline-edit"      : "edit"
     "click .manage_images"      : "manageImages"
-    "click .delete_spec"        : "deleteSpec"
   
   initialize: =>
     $("#cancel-changes").on("click", @cancel)
@@ -21,10 +20,6 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
       )
     )
 
-  deleteSpec: () ->
-    confirm = new Jetdeck.Views.Airframes.ConfirmDelete(model: @model)
-    modal(confirm.render().el)
-      
   manageImages: () ->
     if $("#uploader").is(":visible")
       $("#uploader").hide()
