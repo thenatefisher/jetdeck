@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121021222709) do
+ActiveRecord::Schema.define(:version => 20121022001247) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -101,6 +101,15 @@ ActiveRecord::Schema.define(:version => 20121021222709) do
     t.string   "phone"
     t.integer  "owner_id"
     t.string   "website"
+  end
+
+  create_table "details", :force => true do |t|
+    t.string   "detailable_type"
+    t.integer  "detailable_id"
+    t.string   "name"
+    t.string   "value"
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
   end
 
   create_table "engines", :force => true do |t|

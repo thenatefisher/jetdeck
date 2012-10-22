@@ -78,7 +78,7 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
       @$("#contact_specs").html(@specs.render().el) 
 
     @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
-    @$("#contact_actions").html(@actions.render().el)
+    @$("#contact_actions").html(@actions.render().el)  
     
     @delete = new Jetdeck.Views.Contacts.ShowDelete(model: @model)
     @$("#contact_delete").html(@delete.render().el)
@@ -93,7 +93,12 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
 class Jetdeck.Views.Contacts.ShowHeaderView extends Backbone.View
   template: JST["templates/contacts/partials/header"]
 
+  addCustomDetails: =>
+    @model.custom_details.each (i) =>
+      item_view = new Jetdeck.Views.Contacts.CustomDetailItem(model: i)
+      @$(".contact-header-details tbody").append(item_view.render().el)
+
   render: ->
     $(@el).html(@template(@model.toJSON() )) 
-    
+    @addCustomDetails()
     return this

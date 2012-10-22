@@ -1,5 +1,7 @@
 class Contact < ActiveRecord::Base
 
+  has_many :details, :as => :detailable
+
   has_many :ownerships
   
   has_many :actions, :as => :actionable, :dependent => :destroy
