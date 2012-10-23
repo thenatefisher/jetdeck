@@ -2,6 +2,7 @@ class Airframe < ActiveRecord::Base
 
   # relationships
   has_many :actions, :as => :actionable
+  
   has_many :notes, :as => :notable
   
   belongs_to :airport

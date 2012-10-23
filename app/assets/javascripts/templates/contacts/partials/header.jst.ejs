@@ -1,4 +1,3 @@
-
   <div class="span2 main-thumbnail contact-main-thumbnail">
 
       <img src="/assets/missing.png">
@@ -23,64 +22,40 @@
                 placeholder="Last Name"/>
       </div>
       
-      <table class="contact-header-details span7">
-          <tbody>
-          
-              <tr>
-                  <td>
-                      <div class="contact-header-label">Company</div>
-                  </td>
-                  <td>
-           
-                    
-                      <input  type="text"
-                              style="float: right;"
-                              class="inline-edit span4"
-                              value="<%= company %>"
-                              name="company"
-                              placeholder="Company Name"/>
-                  
-                    
-                  </td>
-              </tr>
-                          
-              <tr>
-                  <td>
-                      <div class="contact-header-label">Phone</div>
-                  </td>
-                  <td>
-              
-                    
-                      <input  type="text"
-                              style="float: right;"
-                              class="inline-edit span4"
-                              value="<%= phone %>"
-                              name="phone"
-                              placeholder="Phone Number"/>
-         
-                  </td>
-              </tr>
-              
-              <tr>
-                  <td>
-                      <div class="contact-header-label">Email</div>
-                  </td>
-                  <td>
-           
-                      <input  type="text"
-                              style="float: right;"
-                              class="inline-edit span4"
-                              value="<%= email %>"
-                              name="email"
-                              placeholder="Email Address"/>
-                      <span for="email" class="error pull-right"></span>
-        
+      <div class="span3">
 
-                  </td>
-              </tr>
-              
-          </tbody>
-      </table>   
+        <div class="contact-header-label">Company</div>
+        <input  type="text"
+                class="inline-edit span3"
+                value="<%= company %>"
+                name="company"
+                placeholder="Company Name"/>                      
+        <div class="contact-header-label">Phone</div>              
+        <input  type="text"
+                style="float: right;"
+                class="inline-edit span3"
+                value="<%= phone %>"
+                name="phone"
+                placeholder="Phone Number"/>
+        <div class="contact-header-label">Email</div>
+        <input  type="text"
+                style="float: right;"
+                class="inline-edit span3"
+                value="<%= email %>"
+                name="email"
+                placeholder="Email Address"/>
+        <span for="email" class="error"></span>
+
+      </div>  
+       
+      <div class="span4" id="custom-details"></div>       
 
   </div> <!-- offset2 -->
+  
+<div style="margin-right: 40px; margin-top: 10px;" 
+      class="pull-right">
+       
+  <a onclick="return false;" href="#" id="detail-add">Add Detail</a>
+  
+</div>    
 

@@ -29,9 +29,9 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
       $("a.manage_images_link").html("Hide Images")
       
   edit: (event) ->
-    if element
-      element = event.target || event.currentTarget 
-      $(element).addClass("changed")
+    if event
+        element = event.target || event.currentTarget 
+        $(element).addClass("changed")
     $("#changes").children().fadeIn()
     $("#changes").slideDown()
   
@@ -39,14 +39,7 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     $("#save-changes").prop('disabled', true)
     self = this
     imagesUploaded = false
-    
-    ###$(".files").find('.template-upload').each( ->
-      data = $(this).data('data')
-      e.preventDefault()
-      if (data && data.submit() && !data.jqXHR)
-        imagesUploaded = true
-    ) ###               
-                    
+            
     $(".inline-edit").each( ->
       
       # strip leading/trailing space
@@ -58,7 +51,6 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
         this.value = parseInt(this.value.replace(/[^0-9]/g,""), 10)
       else if $(this).hasClass('money')
         this.value = parseInt(this.value.replace(/[^0-9]/g,""), 10)
-
 
       self.model.set(this.name, this.value)  
       

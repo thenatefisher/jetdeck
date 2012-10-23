@@ -1,16 +1,13 @@
-
-  <td>
-      <div class="contact-header-label"><%= name %></div>
-  </td>
-  
-  <td>
-
-    <input  type="text"
-            style="float: right;"
-            class="inline-edit span4"
-            value="<%= value %>"/>
-    <div class="clearfix"></div>
-    <div class="buttons pull-right detail-delete hide"><a href="#">Delete Detail</a></div>
-
-  </td>
-
+<input  type="text" 
+        value="<%= name %>" 
+        style="font-weight: bold; width: 65px; margin-bottom: 0px" 
+        name="name"
+        class="inline-edit"/>
+<input  type="text"
+        name="value"
+        value="<%= value %>"
+        style="margin-bottom: 0px"
+        class="inline-edit span3"/>          
+<div style="width: 100%; margin-bottom: 6px; height: 20px;">
+  <span class="hide buttons" style="float: right"><a href="#" class="detail-delete">Delete</a></span>
+</div>   

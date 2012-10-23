@@ -37,7 +37,7 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       @actions.reset @get('actions')
       @notes.reset @get('notes')
       @ownership.reset @get('ownerships')
-      @custom_details.reset @get('details')
+      @custom_details.reset @get('custom_details')
         
 class Jetdeck.Collections.ContactCollection extends Backbone.CollectionBook
 

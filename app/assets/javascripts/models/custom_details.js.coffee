@@ -12,4 +12,11 @@ class Jetdeck.Collections.CustomDetailsCollection extends Backbone.Collection
     
     url: "/details"
     
+    initialize : () =>
+        @on('change', @updateParent, this)
+        @on('add', @updateParent, this)
+        @on('remove', @updateParent, this)
 
+    updateParent : () =>
+        if @contact
+            @contact.set('custom_details', @toJSON())

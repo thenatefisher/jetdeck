@@ -13,7 +13,7 @@ json.ownerships @contact.ownerships do |json, x|
   json.id x.id
 end
 
-json.details @contact.details do |json, x|
+json.custom_details @contact.details do |json, x|
   json.name x.name  
   json.value x.value  
   json.id x.id

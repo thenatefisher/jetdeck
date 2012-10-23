@@ -1,5 +1,7 @@
 Jetdeck::Application.routes.draw do
 
+  resources :details, :only => [:destroy]
+  
   resources :invites, :only => [:create]
   
   resources :ownerships
@@ -34,7 +36,7 @@ Jetdeck::Application.routes.draw do
   
   resources :user_logos 
   
-  resources :equipment
+  resources :equipment, :only => [:destroy]
 
   resources :accessories
   

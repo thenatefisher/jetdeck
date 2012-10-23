@@ -62,7 +62,16 @@ class ContactsController < ApplicationController
   # PUT /contacts/1
   # PUT /contacts/1.json
   def update
-    @contact = Contact.find(params[:id])
+
+    @contact = Contact.find(:first, :conditions =>
+      ["id = ? AND owner_id = ?", params[:id], @current_user.id])
+      
+    details = Array.new()
+    params[:contact][:custom_details].each do |e|
+      details << e.slice(:name, :value, :id)
+    end
+    params[:contact][:details_attributes] = details 
+            
     whitelist = params[:contact].slice(
         :id,
         :first,
@@ -70,7 +79,8 @@ class ContactsController < ApplicationController
         :company,
         :phone,
         :email, 
-        :email_confirmation
+        :email_confirmation,
+        :details_attributes
       )
 
     respond_to do |format|
@@ -88,7 +98,9 @@ class ContactsController < ApplicationController
   # DELETE /contacts/1
   # DELETE /contacts/1.json
   def destroy
-    @contact = Contact.find(params[:id])
+    @contact = Contact.find(:first, :conditions =>
+      ["id = ? AND owner_id = ?", params[:id], @current_user.id])
+      
     @contact.destroy
 
     respond_to do |format|

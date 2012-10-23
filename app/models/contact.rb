@@ -1,8 +1,10 @@
 class Contact < ActiveRecord::Base
 
-  has_many :details, :as => :detailable
+  has_many :details, :as => :detailable, :dependent => :destroy
+  
+  accepts_nested_attributes_for :details, :allow_destroy => true
 
-  has_many :ownerships
+  has_many :ownerships, :dependent => :destroy
   
   has_many :actions, :as => :actionable, :dependent => :destroy
   
@@ -32,7 +34,7 @@ class Contact < ActiveRecord::Base
   
   attr_accessible :phone, 
         :first, :last, :source, :email, 
-        :email_confirmation, :company, 
+        :email_confirmation, :company, :details_attributes,
         :title, :description, :website, :emailFrom, :fullName
 
   has_many :credits, :as => :creditable
