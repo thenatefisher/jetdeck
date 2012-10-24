@@ -9,11 +9,17 @@ require 'capybara/rspec'
 require 'capybara/rails'
 require 'paperclip/matchers'
 
-# cool headless js engine
-Capybara.javascript_driver = :poltergeist
+# js engine
+#Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :webkit
+#Capybara.javascript_driver = :selenium
+
+## javascript event wait time
+Capybara.default_wait_time = 5
 
 # set screenshot directory and clear before each run
 ScreenshotPath = Rails.root.join("spec/screenshots/")
+Dir.mkdir ScreenshotPath if !File.directory? ScreenshotPath
 Dir.glob("#{ScreenshotPath}*.png") do |file|
   next if file == '.' or file == '..'
   File.delete(file)
@@ -26,13 +32,6 @@ DatabaseCleaner.clean
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
-
-# shutup airbrake
-module Airbrake
-  def self.notify(exception, opts = {})
-    # do nothing.
-  end
-end
 
 RSpec.configure do |config|
 

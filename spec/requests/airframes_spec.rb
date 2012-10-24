@@ -10,7 +10,7 @@ describe 'airframe' do
 
 	  credentials = login
 
-	  find('.new-spec').click
+	  find('#new-spec').click
 	  
 	  screenshot('new_airframe_modal')
 
@@ -18,17 +18,20 @@ describe 'airframe' do
    	
 	  fill_in 'year', :with => '2010'
 	  
+    
 	  page.execute_script("
 	  
-	    $('#airframe_headline').select2('val', {
-	        id: 'CUSTOM AIRFRAME', 
-	        text: 'CUSTOM AIRFRAME'
-	        })
-	        
-	    $('.select2-results li:first').click()
-	    
+      $('.select2-container a').click()
+      $('.select2-search input').val('CUSTOM AIRFRAME')
+      $('.select2-container a').click()
+      $('.select2-search input').val('CUSTOM AIRFRAME')
+      $('.select2-container a').click()
+      $('.select2-search input').val('CUSTOM AIRFRAME')	    
+	              
 	  ")	
 	  
+	  find('.select2-results li:first').click
+	  	  
 	  fill_in 'serial', :with => 'XX123'
 	
 	  screenshot('new_airframe_modal_filled')
@@ -47,45 +50,136 @@ describe 'airframe' do
 
   end
 
-  xit 'shows up in index', :js => true do
+  it 'shows up in index', :js => true do
   
     login(credentials)
     
     screenshot('airframe_index')
     
     page.should have_content("2010 CUSTOM AIRFRAME")
+    
+    page.should have_content("XX123")
       
   end
   
   it 'avionics can be added, edited and removed', :js => true do
   
-  end  
-  
-  it 'equipment can be added, edited and removed', :js => true do
-  
-  end    
-
-  it 'engines can be added, edited and removed', :js => true do
-  
-  end  
-  
-  
-  # phantom js keeps crashing, cant test this yet
-  xit 'images can be added, edited and removed', :js => true do
+    e =  Equipment.create(:etype => "avionics", :name => "avionics ITEM XXYY")
+    
+    airframe.equipment << e
     
     login(credentials)
     
     visit airframe_path
     
-    click_link 'manage_images_link'
+    find("a[href='#pane_avionics']").click
+    
+    page.should have_content("avionics ITEM XXYY")
+    	  
+    screenshot('find_avionics_item_xxyy')
+    
+    page.should have_selector("#avionics-name-input") 
+    
+    fill_in 'avionics-name-input', :with => "New Avionics Item"
+    
+    find('.add-equipment').click
+   
+	  screenshot('after_add_avionics')
+	  
+    click_on 'save-changes'
+
+	  screenshot('add_avionics_saved')
+	  
+	  airframe.equipment.where(:name => "New Avionics Item").count.should eq(1)
+	    
+  end  
+  
+  it 'equipment can be added, edited and removed', :js => true do
+    
+    e =  Equipment.create(:etype => "equipment", :name => "EQUIPMENT ITEM XXYY")
+    
+    airframe.equipment << e
+    
+    login(credentials)
+    
+    visit airframe_path
+    
+    find("a[href='#pane_equipment']").click
+    
+    page.should have_content("EQUIPMENT ITEM XXYY")
+    	  
+    screenshot('find_equipment_item_xxyy')
+    
+    #page.should have_selector("#new-equipment-input") 
+    
+    #fill_in 'new-equipment-input', :with => "New Equipment Item"
+    
+    #find('.add_equipment').click
+    
+	  screenshot('after_add_equipment')
+	  
+    click_on 'save-changes'
+
+	  screenshot('add_equipment_saved')    
+      
+  end    
+
+  it 'engines can be added, edited and removed', :js => true do
+  
+    e =  Engine.create(:name => "Test Engine XXYY")
+    
+    airframe.engines << e
+      
+    login(credentials)
+    
+    visit airframe_path
+    
+    find("a[href='#pane_engines']").click
+    
+    page.should have_content("Test Engine XXYY")
+    	  
+    screenshot('pre_add_engine')
+    
+	  page.execute_script("
+	  
+      $('.select2-container a').click()
+      $('.select2-search input').val('test')
+      $('.select2-container a').click()
+      $('.select2-search input').val('test')
+      $('.select2-container a').click()
+      $('.select2-search input').val('test')	    
+	              
+	  ")	
+	  
+	  find('.select2-results li:first').click
+	  
+	  find('.add_engine').click
+	  
+	  screenshot('add_engine')
+	  
+    click_on 'save-changes'
+
+	  screenshot('add_engine_saved')	
+	  
+	  airframe.engines.count.should eq(1)  
+	    
+  end  
+  
+  it 'images can be added, edited and removed', :js => true do
+    
+    login(credentials)
+    
+    visit airframe_path
+    
+    find('.manage_images').click
     
     test_img = screenshot('airframe_images_list')
     
-    #el = page.find('#airframe-image-input')
+    el = page.find('#airframe-image-input')
     
-    #el.set(test_img)
+    el.set(test_img)
     
-    #attach_file('airframe-image-input', test_img)
+    attach_file('airframe-image-input', test_img)
     
     screenshot('add_test_image')
   
@@ -120,6 +214,26 @@ describe 'airframe' do
       airframe.description.should eq('DESCRIPTION OF AIRFRAME')
     end
     
+  end
+  
+  it 'can be destroyed', :js => true do
+  
+	  login(credentials)
+	    
+	  visit airframe_path
+	  
+	  find("#delete-section").click
+	  
+	  screenshot('pre_delete_airframe')
+	  
+	  find("#delete-confirm").click
+	  
+	  visit "/"
+	  
+	  page.should_not have_content("2010 CUSTOM AIRFRAME") 
+	  
+	  screenshot('after_delete_airframe')
+	  
   end
 
 end

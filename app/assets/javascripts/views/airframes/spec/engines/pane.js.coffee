@@ -51,7 +51,7 @@ class Jetdeck.Views.Airframes.ShowEnginePane extends Backbone.View
   
     $(@el).html(@template(engineItems: @model.engines.toJSON() ))
 
-    @$("input[name='engine']").select2({
+    @$("#new-engine-input").select2({
       placeholder: "i.e. PT6A-114 (Pratt and Whitney)",
       minimumInputLength: 3,
       createSearchChoice: (term) ->

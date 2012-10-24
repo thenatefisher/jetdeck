@@ -23,7 +23,6 @@ class AccessoriesController < ApplicationController
         t.save
       end
       @Assy.thumbnail = true
-
     end
 
     if @Assy.save
