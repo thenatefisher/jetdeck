@@ -1,5 +1,34 @@
-Hi <%= @name %>,
-<br><br>
-<%= @message %>
-<br><br>
-<a href="<%= @url %>">Come try Jetdeck!</a>
+<% if @name %>Hi <%= @name.split(" ")[0] %>, <% end %>You've Been Invited to JetDeck!
+
+*Sign Up at: <%= @url %>
+                                      
+<% if @message %>
+  <%= @message %>
+<% else %>
+  <%= @sender.contact.fullName %> has invited you to open a JetDeck account. 
+<% end %>
+
+JetDeck is a free inventory and contact management service built for aircraft brokers to be intuitive, efficient, and effective. JetDeck gives you:
+
+*Organization
+  Connect your address book to your aircraft inventory. See more details and close more business.
+
+*Time Saving Tools
+  Stop wasting time updating specs in Word and resending to all your leads. Manage data in once place to save time and avoid mistakes.
+
+*Service Mobile Customers
+  Over half of your customers are already reading email on mobile devices. JetDeck makes your aircraft look great on smart phones.
+
+*Mobile Access
+  You dont' need to be at a computer to send or update specs any longer. Stay responsive on the road...or tarmac!
+
+Get Started: <%= @url %>
+or
+Learn more: http://www.jetdeck.co
+
+
+
+
+This message was intended for: <%= @email %>. If you feel this message was delivered in error, please contact JetDeck customer support and ask to be removed from all future emails: support@jetdeck.co. This email was sent by JetDeck Services, LLC (20100 N 78th Pl, Suite 2200, Scottsdale, AZ 85255).  
+
+Smarter inventory management for aircraft sales professionals.

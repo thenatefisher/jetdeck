@@ -1,6 +1,6 @@
 class ActivationMailer < ActionMailer::Base
 
-    default from: "JetDeck Account Activation <activation@jetdeck.co>"
+    default from: "JetDeck <support@jetdeck.co>"
     
     def activation(recipient)
       @recipient = recipient

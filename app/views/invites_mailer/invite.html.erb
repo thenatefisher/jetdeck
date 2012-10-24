@@ -1,6 +1,123 @@
-Hi <%= @name %>,
-<br><br>
-<%= @message %>
-<br><br>
-<a href="<%= @url %>">Come try Jetdeck!</a>
+<table cellpadding="0" border="0" style="line-height: 1.2em; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; border-spacing: 0px; font-size: 100%; border: 0; background-color: #E7E8E8; border-top: 1px solid #ddd" cellspacing="0" width="100%">
+   <tbody>
+      <tr>
+         <td width="100%" align="center">
+         
+            <table cellpadding="0" border="0" style="line-height: 1.2em; font-family: Helvetica, Arial, sans-serif; border-spacing: 0px; font-size: 100%; border: 0; margin: 30px 0px 30px 0px;" cellspacing="0" width="585">
+               <tbody>
+                  <tr>
+                     <td width="65" valign="top">
+                        <a href="http://www.jetdeck.co">
+                        <img width="65px" style="border-style: none;" height="65px" alt=" Smarter inventory management for aircraft sales professionals." src="http://jetdeck.co/img/logo_black_emblem.png" />
+                        </a>
+                     </td>
+                     <td width="486" style="vertical-align: middle; padding-left: 20px; text-align: left;">
+                        <div style="color: #333333; padding: 0; font-size: 1.4em; line-height: 1.4em;text-align: left;  font-family: Helvetica, Arial, sans-serif;">
+                           
+                           <% if @name && @name.split(" ")[0] != "" %>Hi <%= @name.split(" ")[0].capitalize %>, <% end %>You've Been Invited to JetDeck!
+                        </div>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+            
+            <table cellpadding="0" border="0" style="border-spacing: 0px; background-color: #ffffff; border: 1px solid #dddddd; border-bottom: 1px solid #bbbbbb; padding-bottom: 20px;" cellspacing="0" width="585">
+               <tbody>
+                  <tr>
+                     <td>
+                        <table cellpadding="0" border="0" style="line-height: 1.2em; font-family: Helvetica, Arial, sans-serif; border-spacing: 0px; font-size: 100%; border: 0;" cellspacing="0" width="585">
+                           <tbody>
+                              <tr>
+                                 <td width="50"><img src="" style="border-style: none;" height="1" width="1" /></td>
+                                 <td width="485">
+                                    <table cellpadding="0" border="0" style="line-height: 1.2em; font-family: Helvetica, Arial, sans-serif; border-spacing: 0px; font-size: 100%; border: 0;" cellspacing="0" width="485">
+                                       <tbody>
+                                          <tr>
+                                             <td style="padding: 30px 0 0;">
+                                                <div style="text-align: left; font-family: Helvetica, Arial, sans-serif; font-size: 1.2em; font-weight: bold">
+                                                <a href="<%= @url %>">Come try Jetdeck!</a>
+                                                </div>
 
+
+<br><br><strong><%= @sender.contact.fullName %></strong> has invited you to open a JetDeck account:<br>
+<% if @message %>
+<blockquote style="color: #0088CC;"><%= @message %></blockquote><br>
+<% end %>
+JetDeck is a free inventory and contact management service built for aircraft brokers to be intuitive, efficient, and effective. JetDeck gives you: <br><br>
+
+  <ul>
+  <li>
+  <strong>Organization</strong>
+  Connect your address book to your aircraft inventory. See more details and close more business.
+  </li>
+
+  <li>	
+  <strong>Time Saving Tools</strong>
+  Stop wasting time updating specs in Word and resending to all your leads. Manage data in once place to save time and avoid mistakes.
+  </li>
+
+  <li>
+  <strong>Service Mobile Customers</strong>
+  Over half of your customers are already reading email on mobile devices. JetDeck makes your aircraft look great on smart phones.
+  </li>
+
+  <li>	
+  <strong>Mobile Access</strong>
+  You dont' need to be at a computer to send or update specs any longer. Stay responsive on the road...or tarmac!
+  </li>
+  </ul>
+  <br><br>
+  
+<a href="http://www.jetdeck.co">Learn more</a> or <a href="<%= @url %>"><strong>get started</strong></a>!
+
+
+
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+            
+            <table cellpadding="0" border="0" style="border-spacing: 0px; padding-bottom: 20px; margin: 30px auto;" cellspacing="0" width="585">
+               <tbody>
+                  <tr>
+                     <td>
+                        <table cellpadding="0" border="0" style="line-height: 1.2em; font-family: Helvetica, Arial, sans-serif; border-spacing: 0px; font-size: 100%; border: 0;" cellspacing="0" width="585">
+                           <tbody>
+                              <tr>
+                                 <td width="585">
+                                    <table cellpadding="0" border="0" style="line-height: 1.2em; font-family: Helvetica, Arial, sans-serif; border-spacing: 0px; font-size: 100%; border: 0;" cellspacing="0" width="585">
+                                       <tbody>
+                                          <tr>
+                                             <td style="padding:0;">
+
+                                                <div style="font-size: 8px; color: #999; line-height:1.1em; text-align: left;  font-family: Helvetica, Arial, sans-serif;" /><br /> 
+                                                <span style="color: #333333">This message was intended for: <%= @email %>. If you feel this message was delivered in error, please contact JetDeck customer support and ask to be removed from all future emails: <a href="mailto:support@jetdeck.co">support@jetdeck.co</a>. This email was sent by JetDeck Services, LLC (20100 N 78th Pl, Suite 2200, Scottsdale, AZ 85255).  <br><br><strong>Smarter inventory management for aircraft sales professionals.</strong></span>
+
+                                             </td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 </td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>            
+            
+
+            
+            
+         </td>
+      </tr>
+   </tbody>
+</table>

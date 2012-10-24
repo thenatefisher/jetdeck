@@ -1,5 +1,5 @@
 class InvitesMailer < ActionMailer::Base
-    default from: "support@jetdeck.co"
+    default from: "JetDeck <support@jetdeck.co>"
     def invite(invite)
 
       @message    = invite.message
