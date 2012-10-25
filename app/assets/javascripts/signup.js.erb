@@ -19,19 +19,40 @@
 // field validation
 $(function() {
 
+    $('#beta').popover({
+      animation: true,
+      placement: "bottom",
+      title: "JetDeck is a Beta!",
+      content: "This means it's not a commercial product yet and may have a few bugs here and there. We appreciate your feedback when something isn't perfect. In exchange for any inconvenience, you get to use all the features of JetDeck for free while we keep making it better. Fair trade, right?"
+    })   
+
   // set input fields from DOM
   var email_field = $("input[name='email']");
   var password_field = $("input[name='password']");
   var name_field = $("input[name='name']");
+  var terms_check = $("input[type='checkbox']");
   
   // handle signup button click
   $("#signup").click(function() {
   
     $("input").trigger("blur");
     
+    // reset checkbox error msgs
+    terms_check.parents(".control-group").removeClass("error");
+    terms_check.parents(".control-group").removeClass("success");  
+    terms_check.siblings(".help-inline").html("");  
+    
+    // check for ToC and PrivPol checkbox
+    if (!terms_check.is(":checked")) {
+      terms_check.parents(".control-group").addClass("error");
+      var suggestion_msg = "Please agree to the terms.";
+      terms_check.parents(".control-group").find(".help-inline").html(suggestion_msg);
+    }
+    
     if ($(".error").size() == 0) $("form").submit();
     
   });
+  
   
   // validate first and last name
   name_field.on('blur', function() {
