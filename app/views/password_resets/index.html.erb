@@ -1,48 +1,29 @@
 
-<div style="padding: 20px 0 0 10px">
+<h4>Reset Password</h4>
 
-    <div class="span1">&nbsp;</div><h2>Reset Password</h2>
-    <form class="form-horizontal" 
-            style="margin: 20px 0px;" 
-            method="POST" 
-            action="/password_resets">
+<h4><br></h4>
 
-          <div class="control-group <% if flash[:notice] %> error <% end%>">
+<% if flash[:notice] %>
+  <div class="alert alert-danger span12" id="jetdeck-notification" style="margin-left: 0px;">
 
-              <div class="span1" for="email" style="text-align: right; margin-top: 5px">Email</div>
-                        
-              <div class="span5">
-                <input
-                  class="focused pull-right"
-                  style="margin-left: 10px; width: 100%" 
-                  id="email"
-                  name="email"
-                  type="text"
-                  value="" />
-
-                <% if flash[:notice] %>
-                <div class="clearfix"></div>
-                <span class="help-inline" style="margin-top: 10px"><%= flash[:notice] %></span>
-                <% end %>             
-              </div>
-
-          </div>
-          
-          <div class="span1" for="email" style="text-align: right; margin-top: 5px">&nbsp;</div>
-          <div class="span5">
-          <div class="pull-right" >
-              <span><a href="/login">Log In</a></span>
-              <input style="margin-top: -5px; margin-left: 10px;" 
-                        type="submit" 
-                        class="btn btn-primary" 
-                        value="Reset Password" />
-          </div>          
-          </div> 
-
-          
-          
-          <div class="clearfix"></div>
-          
-    </form>
+    <div class="notification-content"><%= flash[:notice] %></div>
+  </div>
+  <div style="clear: both"></div>
+<% end %> 
+  
+<form action="/password_resets" method="POST">
+  
+  <div class="control-group clearfix">
+  <div class="controls">
+  <input type="text" class="span12" name="email" placeholder="Email">
+  </div>
+  </div>
+     
+</form>
+        
+  <button class="btn btn-success pull-right" onclick="$('form').submit()"><h3>Reset Password</h3></button>
+                
+<h4><br><br></h4>
 
 </div>
+

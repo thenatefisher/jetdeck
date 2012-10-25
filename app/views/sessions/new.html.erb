@@ -1,73 +1,53 @@
+
+<h4>Login To JetDeck</h4>
+
+<h4><br></h4>
+
 <% if flash[:notice] %>
-  <div class="alert alert-success" id="jetdeck-notification" style="margin: 10px;">
+  <div class="alert alert-success span12" id="jetdeck-notification" style="margin-left: 0px;">
     <button class="close" data-dismiss="alert">×</button>
     <div class="notification-content"></div>
   </div>
   <script type="text/javascript">$(function() { alertSuccess("<%= flash[:notice] %>"); });</script>
-<% end %>   
-
-<div style="padding: 20px; padding-bottom: 0px">
-
-    <form class="login" method="POST" action="/authenticate">
-
-          <table style="width: 100%">
-
-            <tr>
-              <td>Email</td>
-              <td>
-                <input
-                  class="focused pull-right span4"
-                  id="email"
-                  name="email"
-                  type="text"
-                  style="float: right"
-                  value="<%= flash[:email] if flash[:email] %>" />    
-              </td>
-            </tr>
-            
-            <tr>
-               <td>Password</td>
-               <td>
-                  <input class="focused pull-right span4" style="float: right" id="password"
-                          name="password" type="password" value="" />
-                </td>  
-            </tr>
-            
-            <tr>
+  <div style="clear: both"></div>
+<% end %> 
+  
+<form action="/authenticate" method="POST">
+  
+  <div class="control-group clearfix">
+  <div class="controls">
+  <input type="text" class="span12" value="<%= flash[:email] if flash[:email] %>" name="email" placeholder="Email">
+  </div>
+  </div>
+  
+  <div class="control-group clearfix">
+  <div class="controls">
+  <input type="password" class="span12" name="password" placeholder="Password">
+  </div>
+  </div>
+  
+  <% if flash[:error] %>
+  <div class="control-group clearfix error" style="margin: 0">
+  <div class="controls">
+  <span class="help-inline pull-right "><%= flash[:error] %> <a href="/password_resets">Forgot Your Password?</a></span>
+  </div>
+  </div>  
+  <div style="clear: both"></div>
+  <% else %>  
+    
+  <label class="checkbox">
+  <input type="checkbox" name="remember_me" checked /> 
+  <span>Remember Me</span>
+  <% end %>  
+  </label>  
+    
+</form>
+        
+  <button class="btn btn-success pull-right" onclick="$('form').submit()"><h3>Login</h3></button>
+  <div class="pull-right" style="margin: 10px;">
+      <span><a href="http://www.jetdeck.co/#features">Learn More!</a></span>
+  </div>
                 
-                 <td colspan=2>
-
-                  <div class="pull-right">
-                  <% if flash[:error] %>
-                        <div style="color: red">
-                        <%= flash[:error] %>
-                        <a href="/password_resets">
-                        Forgot Your Password?</a>
-                        </div>
-                  <% else %>
-                   <input type="checkbox" name="remember_me" checked /> 
-                   <span>Remember Me</span>
-                  <% end %>  
-                  </div>
-
-                </td>  
-
-            </tr>
-            
-            <tr>
-              <td colspan=2>
-                <br>
-                <div class="pull-right">
-                    <span><a href="http://www.jetdeck.co/#features">Learn More!</a></span>
-                    <input type="submit" 
-                           class="btn btn-primary" 
-                           value="Log In" />
-                </div>
-              </td>
-            </tr>
-            
-          </table>
-          <div class="clearfix"></div>
-    </form>
+<h4><br><br></h4>
 
 </div>
