@@ -199,7 +199,7 @@
       </div> <!-- end container class -->
 
     <div class="modal hide" id="jetdeckModal"></div> <!-- modal container place holder -->
-    <% if current_user.present? && Rails.env != "development" %>
+    <% if current_user.present? && Rails.env != "development" && Rails.env != "test" %>
     <% require 'digest/sha1' %>
     <script>  
       $(function() {
