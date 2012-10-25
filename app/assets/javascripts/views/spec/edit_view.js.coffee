@@ -21,6 +21,11 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
         @model.set($(element).attr("name"), "false")
     )
     
+    @model.set(
+      override_description: @$("textarea[name='override_description']").val()
+      message: @$("textarea[name='message']").val()
+    )    
+    
     @model.save(null,
       success : (xspec) =>
         @model = xspec
@@ -52,6 +57,11 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
         @model.set($(element).attr("name"), "false")
     )
     
+    @model.set(
+      override_description: @$("textarea[name='override_description']").val()
+      message: @$("textarea[name='message']").val()
+    )
+        
     @model.save(null,
       success : (xspec) =>
         @model = xspec
@@ -61,6 +71,27 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))
+    
+    @$("textarea[name='override_description']").wysihtml5(
+	    "font-styles": false
+	    "emphasis": true
+	    "lists": true
+	    "html": false
+	    "link": false
+	    "image": false
+	    "color": false               
+    )
+        
+    @$("textarea[name='message']").wysihtml5(
+	    "font-styles": false
+	    "emphasis": true
+	    "lists": true
+	    "html": false
+	    "link": false
+	    "image": false
+	    "color": false               
+    )
+    
     if @model.get('history')
       element = @$('#chartContainer')
       chart = new Highcharts.Chart(
