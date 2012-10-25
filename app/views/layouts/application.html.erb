@@ -38,7 +38,7 @@
       <div class="sweatband"></div>
     
       <div class="container">
-        <% if current_user.present? %>
+        <% if current_user %>
         <div class="navbar row">
 
                 <div class="span12">
@@ -210,11 +210,11 @@
         <p>© <%=  Time.now.year %>, JetDeck Services, LLC </p>
         </div>
 
-       <% end %>
+       
       </div> <!-- end container class -->
 
     <div class="modal hide" id="jetdeckModal"></div> <!-- modal container place holder -->
-    <% if current_user.present? && Rails.env != "development" && Rails.env != "test" %>
+    <% if Rails.env != "development" && Rails.env != "test" %>
     <% require 'digest/sha1' %>
     <script>  
       $(function() {
@@ -234,6 +234,7 @@
       });
     </script>
     <% end %>  
+    <% end %>
     </body>
     
 </html>
