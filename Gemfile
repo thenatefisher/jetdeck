@@ -22,6 +22,7 @@ gem 'thin'
 gem 'aws-sdk', '~> 1.3.4'
 #gem 'newrelic_rpm'
 #gem 'airbrake'
+gem 'bootstrap-wysihtml5-rails'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.6'
