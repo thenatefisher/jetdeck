@@ -19,6 +19,8 @@ class User < ActiveRecord::Base
   
   before_create { set_defaults() }
 
+  after_create :set_contact_owner_to_neg_1
+  
   has_many :logins
   
   has_many :airframes, :dependent => :destroy
@@ -46,6 +48,13 @@ class User < ActiveRecord::Base
             { :minimum => 6, :message => "Password must be at least 6 chars" }, 
             :if => "password.present?"
 
+  def set_contact_owner_to_neg_1
+    if self.contact
+      self.contact.owner_id = -1
+      self.contact.save
+    end
+  end
+  
   def set_defaults()
 
     # set 10 invites
@@ -80,7 +89,7 @@ class User < ActiveRecord::Base
 
   def self.authenticate(email, password)
     contact = Contact.find(:first, :conditions =>
-      ["lower(email) = ? AND owner_id is null", email.downcase])
+      ["lower(email) = ? AND owner_id = -1", email.downcase])
     user = User.where(:contact_id => contact.id, :active => true).first if contact
     if user && 
       user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)

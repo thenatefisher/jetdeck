@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     
     # if a user already has this email addy, cancel reg
     email = params[:email]
-    if !email || !Contact.where(:email => email, :owner_id => nil).empty?
+    if !email || !Contact.where(:email => email, :owner_id => -1).empty?
       flash[:alert] = "#{params[:email]} is already registered!"  
       redirect_to request.referer
       return
