@@ -86,6 +86,6 @@ class Jetdeck.Views.Airframes.ShowLeads extends Backbone.View
         @model.leads.turnTo(1)
         @addAll()    
         @$('.page[rel=1]').parent('li').addClass('active')
-    @$("a[rel=tooltip]").tooltip()
+    @$("[rel='tooltip']").tooltip()
     return this
 
