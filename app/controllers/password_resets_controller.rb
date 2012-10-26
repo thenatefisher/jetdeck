@@ -5,7 +5,7 @@ class PasswordResetsController < ApplicationController
     end
 
     def create
-      contact = Contact.find_by_email(params[:email])
+      contact = Contact.find(:first, :conditions => ["email = ? AND owner_id = -1", params[:email]])
       if contact
           user_record = contact.user 
           if user_record.present?
