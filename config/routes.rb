@@ -42,6 +42,8 @@ Jetdeck::Application.routes.draw do
   
   match "/search" => "search#navbar"
   
+  match "/hn" => "sessions#hn_demo"
+  
   match "/login" => "sessions#new"
 
   match "/authenticate" => "sessions#create"
