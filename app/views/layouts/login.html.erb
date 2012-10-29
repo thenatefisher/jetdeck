@@ -95,29 +95,33 @@
 
             </div>
             
-          <% if Rails.env == "production" %>
-          <!--[if IE]>
-          
-          <style>.nonie {display: none;}</style>
-          
-          <div class="span5">
-          
-              <h1>Sorry, Internet Explorer is not yet supported.<br></h1>
-              <h4><br>JetDeck is currently in a private alpha test phase. We're working hard to provide a seamless user experience to all operating systems, devices and browsers. If you have been invited to try JetDeck, please consider loggin in with one of these currently supported options: </h4>
-              <br>
-              <ul>
-                <li>Mozilla Firefox</li>
-                <li>Apple Safari</li>
-                <li>Google Chrome</li>
-              </ul>
-                                 
-          </div>
-           
-          <![endif]-->
-          <% end %>
+
                       
-            <div class="span5 nonie">
-              <div class="well"><%= yield %></div>
+            <div class="span5">
+
+              <% if Rails.env == "production" %>
+              <!--[if IE]>
+              
+              <style>.nonie {display: none;}</style>
+              
+              <div class="well">
+              
+                  <h1>Sorry, Internet Explorer is not yet supported.<br></h1>
+                  <h4><br>JetDeck is currently in a private alpha test phase. We're working hard to provide a seamless user experience to all operating systems, devices and browsers. If you have been invited to try JetDeck, please consider loggin in with one of these currently supported options: </h4>
+                  <br>
+                  <ul>
+                    <li>Mozilla Firefox</li>
+                    <li>Apple Safari</li>
+                    <li>Google Chrome</li>
+                  </ul>
+                                     
+              </div>
+               
+              <![endif]-->
+              <% end %>
+              
+              <div class="well nonie"><%= yield %></div>   
+            
             </div>
             
             <div class="row-fluid" style="padding: 0px 0px 10px;">
