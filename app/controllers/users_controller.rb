@@ -1,14 +1,15 @@
 class UsersController < ApplicationController
 
   def activate
-  
-    user = User.find_by_activation_token(params[:token])
-    user.activated = true
-    user.save
-    
-    flash[:notice] = "Account Activated!"
-    redirect_to "/login"
-  
+    if params[:token]
+      user = User.find(:first, :conditions => 
+        ["activation_token = ? AND activation_token IS NOT NULL", params[:token]])
+      user.activated = true
+      user.save
+      
+      flash[:notice] = "Account Activated!"
+      redirect_to "/login"
+    end
   end
   
   def new
