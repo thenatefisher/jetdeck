@@ -41,6 +41,24 @@
       $(function() { alertFailure("<%= flash[:notice] %>"); });
     </script>
     <% end %>
+    
+    <% if flash[:alert] %>
+    <script type="text/javascript"> 
+      $(function() { modal("<div class='modal-header'> \
+        <button class='close' data-dismiss='modal'>×</button> \
+        <h3>Welcome Hacker News User!</h3> \
+      </div> \
+      <div class='modal-body' style='padding-left: 50px;'> \
+      <h4>Thanks for reviewing our startup!</h4> \
+      <p>JetDeck is a CRM for business jet brokers.<br><br> \
+        While the industry may sound glitzy, multi-million dollar aircraft are most often sold with notepads and 30MB of hi-res email attachments. There are no such things as  'cloud data', 'analytics' or 'mobile apps' in the space and any software that is built for business aviation reeks of 1995.<br><br> \
+        JetDeck is a modern contact and inventory management application to fix the low-hanging fruit problems in an aircraft broker's day-to-day operations. Let us know what you think in the HN forum!</p> \
+      </div>    \
+      <div class='modal-footer'> \
+        <button class='btn bnt-primary' data-dismiss='modal'>Close</button> \
+      </div>"); });
+    </script>
+    <% end %>
         
   </head>
 
