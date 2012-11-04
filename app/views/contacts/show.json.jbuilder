@@ -1,27 +1,25 @@
-json.(@contact, 
-  :company, 
-  :email, 
-  :first, 
-  :last, 
-  :phone,
-  :id
-)
+json.company h @contact.company
+json.email h @contact.email
+json.first h @contact.first
+json.last h @contact.last
+json.phone h @contact.phone
+json.id @contact.id
 
 json.ownerships @contact.ownerships do |json, x|
-  json.description x.description  
-  json.assoc x.assoc  
+  json.description h x.description  
+  json.assoc h x.assoc  
   json.id x.id
 end
 
 json.custom_details @contact.details do |json, x|
-  json.name x.name  
-  json.value x.value  
+  json.name h x.name  
+  json.value h x.value  
   json.id x.id
 end
 
 json.notes @contact.notes do |json, x|
-  json.title x.title
-  json.description x.description  
+  json.title h x.title
+  json.description h x.description  
   json.id x.id
   json.created_at x.created_at.localtime if x.created_at
   json.type x.notable_type
@@ -34,8 +32,8 @@ end
 
 json.actions @contact.actions do |json, c|
     json.id c.id
-    json.title c.title
-    json.description c.description
+    json.title h c.title
+    json.description h c.description
     json.due_at c.due_at.localtime if c.due_at
     json.is_completed c.is_completed
     json.completed_at c.completed_at.localtime if c.completed_at
@@ -44,7 +42,7 @@ json.actions @contact.actions do |json, c|
     json.created_at c.created_at.localtime if c.created_at
     json.parent_name c.actionable.to_s
     json.list_due_at c.due_at.localtime.strftime("%b %d, %Y") if c.due_at
-    json.list_title c.title.truncate(35) if c.title
+    json.list_title h c.title.truncate(35) if c.title
     json.past_due (c.due_at < Time.now()) if c.due_at   
 end
 

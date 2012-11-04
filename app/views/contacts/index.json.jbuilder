@@ -1,7 +1,7 @@
 json.array! @contacts do |json, c|
     json.id c.id
-    json.company c.company
-    json.first c.first
-    json.last c.last
-    json.email c.email
+    json.company h c.company
+    json.first h c.first
+    json.last h c.last
+    json.email h c.email
 end

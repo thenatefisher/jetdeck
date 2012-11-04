@@ -1,37 +1,35 @@
-json.(@airframe, 
-  :id, 
-  :avatar, 
-  :tt, 
-  :tc, 
-  :serial, 
-  :asking_price, 
-  :registration, 
-  :make, 
-  :model_name, 
-  :year,
-  :description
-)
+json.id @airframe.id
+json.avatar h @airframe.avatar
+json.tt h @airframe.tt
+json.tc h @airframe.tc
+json.serial h @airframe.serial
+json.asking_price h @airframe.asking_price
+json.registration h @airframe.registration
+json.make h @airframe.make
+json.model_name h @airframe.model_name
+json.year h @airframe.year
+json.description h @airframe.description
 
-json.title (@airframe.to_s)
+json.title h(@airframe.to_s)
 
 json.engines @airframe.engines do |json, e|
     json.id e.id
-    json.model_name e.model_name
-    json.make e.make
-    json.name e.name
-    json.serial e.serial
-    json.tt e.tt
-    json.tc e.tc
-    json.shsi e.shsi
-    json.smoh e.smoh
-    json.tbo e.tbo
-    json.hsi e.hsi
-    json.year e.year
+    json.model_name h e.model_name
+    json.make h e.make
+    json.name h e.name
+    json.serial h e.serial
+    json.tt h e.tt
+    json.tc h e.tc
+    json.shsi h e.shsi
+    json.smoh h e.smoh
+    json.tbo h e.tbo
+    json.hsi h e.hsi
+    json.year h e.year
 end
 
 json.equipment @airframe.equipment do |json, i|
-    json.name i.name
-    json.title i.title
+    json.name h i.name
+    json.title h i.title
     json.etype i.etype
     json.id i.id
 end
@@ -91,8 +89,8 @@ json.leads @airframe.xspecs do |json, x|
 end
 
 json.notes @airframe.notes do |json, x|
-  json.title x.title
-  json.description x.description  
+  json.title h x.title
+  json.description h x.description  
   json.id x.id
   json.created_at x.created_at.localtime if x.created_at
   json.type x.notable_type
@@ -105,8 +103,8 @@ end
 
 json.actions @airframe.actions do |json, c|
     json.id c.id
-    json.title c.title
-    json.description c.description
+    json.title h c.title
+    json.description h c.description
     json.due_at c.due_at.localtime if c.due_at
     json.is_completed c.is_completed
     json.completed_at c.completed_at.localtime if c.completed_at
@@ -115,7 +113,7 @@ json.actions @airframe.actions do |json, c|
     json.created_at c.created_at.localtime if c.created_at
     json.parent_name c.actionable.to_s
     json.list_due_at c.due_at.localtime.strftime("%b %d, %Y") if c.due_at
-    json.list_title c.title.truncate(35) if c.title
+    json.list_title h c.title.truncate(35) if c.title
     json.past_due (c.due_at < Time.now()) if c.due_at      
 end
 
