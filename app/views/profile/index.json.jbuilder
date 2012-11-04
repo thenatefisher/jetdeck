@@ -19,4 +19,4 @@ if @user.logo
   json.logo @user.logo.url  
 end
 
-json.spec_disclaimer @user.spec_disclaimer
+json.spec_disclaimer h @user.spec_disclaimer
