@@ -28,6 +28,8 @@ class SessionsController < ApplicationController
 
         if user
         
+          reset_session
+        
           if params[:remember_me]
               cookies.permanent[:auth_token] = user.auth_token
           else

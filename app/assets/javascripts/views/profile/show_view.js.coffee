@@ -83,6 +83,8 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
           alertSuccess("<i class='icon-ok icon-large'></i> Changes Saved!") 
         )
         if $("#logo").val() != ""
+          token = $("meta[name='csrf-token']").attr("content")
+          $("input[name='authenticity_token']").val(token)
           $("form").submit()
 
       error: (model, error) =>
