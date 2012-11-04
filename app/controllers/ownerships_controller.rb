@@ -1,7 +1,7 @@
 class OwnershipsController < ApplicationController
-  before_filter :authorize
-  
 
+  before_filter :authorize, :sanitize_params
+  
   def create
 
     whitelist = params[:ownership].slice(:assoc, :description, :contact_id)

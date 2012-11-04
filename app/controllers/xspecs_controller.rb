@@ -1,4 +1,7 @@
 class XspecsController < ApplicationController
+
+  before_filter :sanitize_params
+
   include ActionView::Helpers::NumberHelper
   
   def send_spec

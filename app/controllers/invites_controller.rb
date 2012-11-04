@@ -1,5 +1,6 @@
 class InvitesController < ApplicationController
-    before_filter :authorize
+    
+    before_filter :authorize, :sanitize_params
     
     # sends an invite
     def create

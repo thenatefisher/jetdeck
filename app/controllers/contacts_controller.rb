@@ -1,5 +1,5 @@
 class ContactsController < ApplicationController
-  before_filter :authorize
+  before_filter :authorize, :sanitize_params
 
   # GET /contacts
   # GET /contacts.json

@@ -1,5 +1,5 @@
 class TodosController < ApplicationController
-  before_filter :authorize
+  before_filter :authorize, :sanitize_params
   
   def index
   
@@ -12,7 +12,7 @@ class TodosController < ApplicationController
     if params[:todo][:actionable_id] && 
       (params[:todo][:actionable_type] == "Contact" || 
       params[:todo][:actionable_type] == "Airframe")
-      
+
       whitelist = params[:todo].slice(:title, :description, :is_completed)
 
       @action = Action.new(whitelist)

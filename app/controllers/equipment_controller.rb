@@ -1,5 +1,6 @@
 class EquipmentController < ApplicationController
-  before_filter :authorize
+  
+  before_filter :authorize, :sanitize_params
 
   # DELETE /Equipment/1
   # DELETE /Equipment/1.json

@@ -1,5 +1,6 @@
 class DetailsController < ApplicationController
-  before_filter :authorize
+  
+  before_filter :authorize, :sanitize_params
 
   def destroy
     @d = Detail.find(params[:id])

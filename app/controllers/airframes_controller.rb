@@ -1,5 +1,5 @@
 class AirframesController < ApplicationController
-  before_filter :authorize
+  before_filter :authorize, :sanitize_params
 
   # GET /airframes/models
   def models
@@ -50,23 +50,6 @@ class AirframesController < ApplicationController
           ["id = ? AND user_id = ?", params[:id], @current_user.id])
     end
 
-  end
-
-  # GET /airframes/new
-  # GET /airframes/new.json
-  def new
-    @airframe = Airframe.new
-    
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @airframe }
-    end
-  end
-
-  # GET /airframes/1/edit
-  def edit
-        @airframe = Airframe.find(:first, :conditions =>
-          ["id = ? AND user_id = ?", params[:id], @current_user.id])
   end
 
   # POST /airframes

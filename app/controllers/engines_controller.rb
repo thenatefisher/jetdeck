@@ -1,5 +1,6 @@
 class EnginesController < ApplicationController
-  before_filter :authorize
+  
+  before_filter :authorize, :sanitize_params
 
   # GET /engines
   # GET /engines.json

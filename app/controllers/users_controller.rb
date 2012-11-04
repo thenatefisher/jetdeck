@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
 
+  before_filter :sanitize_params
+  
   def activate
     if params[:token]
       user = User.find(:first, :conditions => 
