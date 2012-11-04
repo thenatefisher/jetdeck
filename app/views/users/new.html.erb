@@ -10,7 +10,7 @@
   <div style="clear: both"></div>
 <% end %> 
   
-<form action="/users" method="POST">
+<%= form_tag "/users" do %>
 
   <div class="control-group clearfix">
   <div class="controls">
@@ -35,7 +35,7 @@
     
   <input type="hidden" class="span12" name="token" value="<%= @token %>">
     
-</form>
+<% end %>
 
   <div class="control-group clearfix">
   <div class="controls">
@@ -46,6 +46,6 @@
   </div>
   </div>
 
-<button class="btn btn-success pull-right" id="signup"><h3>Sign Up</h3></button>
+<button class="btn btn-primary pull-right" id="signup"><h3>Sign Up</h3></button>
 
 <h4><br><br></h4>
