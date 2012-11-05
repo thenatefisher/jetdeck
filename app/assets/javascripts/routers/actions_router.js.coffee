@@ -7,7 +7,7 @@ class Jetdeck.Routers.ActionsRouter extends Backbone.Router
     ".*"       : "index"
 
   index: ->
-    actions = new Jetdeck.Collections.ActionsCollection(page_size: 9)
+    actions = new Jetdeck.Collections.ActionsCollection(page_size: 12)
     actions.reset @options.actions  
     @view = new Jetdeck.Views.Actions.IndexView(actions: actions)
     $("#html_top").html(@view.render().el)
