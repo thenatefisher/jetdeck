@@ -80,6 +80,9 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     @specs = new Jetdeck.Views.Contacts.ShowSpecs(model: @model)
     if @model.specs.length > 0
       @$("#contact_specs").html(@specs.render().el) 
+      
+    @requirements = new Jetdeck.Views.Contacts.ShowRequirements(model: @model)
+    @$("#contact_requirements").html(@requirements.render().el)       
 
     @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#contact_actions").html(@actions.render().el)  
