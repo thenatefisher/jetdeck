@@ -66,7 +66,26 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
     )
 
   render : ->
-  
     $(@el).html(@template(@model.toJSON() ))
+    
+    @$("#recipient_email").autocomplete({
+       minLength: 2
+       autofocus: true
+       focus: (event, ui) =>
+          $("#recipient_email").val(ui.item.value) if ui.item.value
+          $(".select2-choice").children("span").html(ui.item.value)
+          event.preventDefault()
+       select: ( event, ui ) =>
+          $("#recipient_email").val(ui.item.value) if ui.item.value
+          $(".select2-choice").children("span").html(ui.item.label)
+          return false          
+       source: "/contacts/search"
+    }).data("autocomplete")._renderItem = ( ul, item ) ->
+       ul.addClass("dropdown-menu")
+       ul.addClass("typeahead")
+       return $( "<li class=\"result\" style=\"cursor: pointer\"></li>" )
+	        .data( "item.autocomplete", item )
+	        .append( "<a><strong>" + item.label + "</strong></a>" )
+	        .appendTo( ul )
     return this
 

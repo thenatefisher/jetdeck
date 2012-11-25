@@ -11,6 +11,8 @@ Jetdeck::Application.routes.draw do
   match "/actions" => "todos#index"
   
   resources :todos
+  
+  match "/contacts/search" => "contacts#search"
 
   resources :contacts
 
