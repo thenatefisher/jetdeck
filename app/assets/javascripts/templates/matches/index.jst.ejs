@@ -1,0 +1,58 @@
+<div class="row" style="margin-left: 20px;">
+
+    <div style="margin-left: 20px;">
+        <div class="span9 page-header">
+            <h1>My Actions</h1>        
+        </div>
+        
+        <% if (count > 0) { %>
+        <ul class="nav nav-pills">
+            <li>
+                <a class="sort" data-sort="created_at" data-dir="asc" onclick="return false;" href="#">
+                  Date Created 
+                </a>
+            </li>
+            <li>
+                <a class="sort" data-sort="due_at" data-dir="asc" onclick="return false;" href="#">
+                  Due Date
+                </a>
+            </li>                       
+        </ul>
+        <% } %>
+    </div>
+    
+    <div class="hide alert alert-info clearfix span8" id="todays_actions"><h4>Due Today</h4><br></div>
+    
+    <div id="actions"></div>
+    
+    <% if (count == 0) { %>
+    <div class="span8 alert alert-info">
+        <br/><strong>Welcome to JetDeck!</strong><br/>
+        You don't have any actions right now.
+        <br/><br/>
+    </div> 
+    <% } %>
+    
+</div>
+
+<% if (pages > 1) { %>
+<div class="row"  style="margin-left: 20px;" >
+    <div class="span9">
+        <div class="pagination pull-right">
+          <ul>
+            <li><a class="prev"  onclick="return false;" href="#">Prev</a></li>
+
+            <% if (pages > 2) { %>
+            <% for (var i = 1; i < pages + 1; i++) { %>
+            <li><a class="page" rel="<%= i %>" onclick="return false;" href="#"><%= i %></a></li>
+            <% } } %>
+
+            <li><a class="next" onclick="return false;" href="#">Next</a></li>
+          </ul>
+        </div>
+    </div>
+</div>
+<% } else { %>
+  <h2>&nbsp;</h2>
+<% } %>   
+

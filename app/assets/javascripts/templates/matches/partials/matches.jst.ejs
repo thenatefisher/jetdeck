@@ -1,0 +1,64 @@
+<h4 class="partial-header"> 
+  <i class="icon-check"></i> Actions 
+</h4>
+
+<div id="actions">
+
+  <div class="control-group" style="margin: 0px; padding-right: 10px"><textarea id="new-action-textarea" style="width: 100%"></textarea></div>
+  
+  <table style="width: 100%; margin-bottom: 20px">
+  
+    <tr><td style="vertical-align: middle; ">
+    
+    <% 
+    var d = new Date();
+
+    var curr_date = d.getDate();
+
+    var curr_month = d.getMonth() + 1;
+
+    var curr_year = d.getFullYear();
+
+    var dstring = curr_month + "-" + curr_date + "-" + curr_year;
+     %>
+ 
+    <div id="due_at_datepicker" class="pull-left" 
+      style="cursor: pointer;" 
+      data-date="<%= dstring %>" 
+      data-date-format="mm-dd-yyyy" >
+      
+      <a href="#"><span>Add Due Date</span></a>
+      
+      <input id="due_at" size="16" value="" type="hidden" style="margin: 0" class="span2">
+      
+    </div>
+    
+    </td>
+    
+    <td style="vertical-align: top">
+    
+    <div class="btn-group pull-right">
+      <button class="btn" id="add-action">Add Action</button>    
+      <button class="btn dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li style="vertical-align: middle; margin: 5px 15px; color: black"><strong>Canned Actions</strong></li>
+        <li class="divider"></li>
+        <li><a href="#" class="fup-action" data-interval="3">Follow up in Three Months</a></li>
+        <li><a href="#" class="fup-action" data-interval="6">Follow up in Six Months</a></li>
+        <li><a href="#" class="fup-action" data-interval="12">Follow up in One Year</a></li>
+      </ul>
+    </div>    
+    
+    
+    </td>
+    
+    </tr>
+    
+  </table>
+
+</div>
+    
+<h3>&nbsp;</h3>
+
