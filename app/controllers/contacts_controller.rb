@@ -1,6 +1,22 @@
 class ContactsController < ApplicationController
   before_filter :authorize, :sanitize_params
 
+  # GET /contacts/search
+  def search
+
+    if params[:term]
+      @contacts = Contact.find(:all,
+        :conditions => ["upper(first || ' ' || last || ' ' || email) LIKE ?
+                             AND owner_id = ?",
+                          "%#{params[:term].to_s.upcase}%",
+                          @current_user.id
+                       ],
+         :select => "DISTINCT ON (id) id, *"
+      ).first(4)
+    end
+
+  end
+  
   # GET /contacts
   # GET /contacts.json
   def index
