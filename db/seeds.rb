@@ -4,7 +4,7 @@
 #require "#{Rails.root}/db/seeds/contacts"
 
 # create 100,000 bogus baseline airframes to test db caching in heroku
-for i in [1..100000]
+100000.times do
 
   airframe = false
   alpha = "abcdefghjklmnpqrstuvwxyz".upcase
@@ -14,7 +14,7 @@ for i in [1..100000]
     registration = "N#{iterator}#{alpha[rand(24)]}#{alpha[rand(24)]}"
     conditions = {:baseline => true, :registration => registration}
     airframe = Airframe.find(:first, :conditions => conditions)
-  while !airframe.blank?
+  end while !airframe.blank?
   
   details = {
     :serial => "0000",
