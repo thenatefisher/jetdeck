@@ -86,7 +86,7 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     
     @spec = new Jetdeck.Views.Airframes.ShowSpec(model: @model)
     @$("#airframe_spec_details").html(@spec.render().el)
-    @$("a[href='#"+lastSpecTab+"']'").tab('show') if lastSpecTab
+    @$("a[href='#"+lastSpecTab+"']").tab('show') if lastSpecTab
     
     @send = new Jetdeck.Views.Airframes.ShowSend(model: @model)
     @$("#airframe_send").html(@send.render().el)
