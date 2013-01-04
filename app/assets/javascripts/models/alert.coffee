@@ -1,15 +1,15 @@
-class Jetdeck.Models.RequirementModel extends Backbone.Model
-    paramRoot: "requirement"
+class Jetdeck.Models.AlertModel extends Backbone.Model
+    paramRoot: "alert"
 
     defaults:
       name: null
 
 
-class Jetdeck.Collections.RequirementsCollection extends Backbone.CollectionBook
+class Jetdeck.Collections.AlertsCollection extends Backbone.CollectionBook
 
     model: Jetdeck.Models.RequirementModel
     
-    url: "/requirements"
+    url: "/alerts"
     
     initialize : () =>
         @on('change', @updateParent, this)
@@ -18,4 +18,4 @@ class Jetdeck.Collections.RequirementsCollection extends Backbone.CollectionBook
 
     updateParent : () =>
         if @contact
-            @contact.set('requirements', @toJSON())
+            @contact.set('alerts', @toJSON())

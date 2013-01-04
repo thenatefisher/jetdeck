@@ -29,9 +29,9 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       @custom_details = new Jetdeck.Collections.CustomDetailsCollection()
       @custom_details.contact = this            
 
-      ## requirements collection
-      @requirements = new Jetdeck.Collections.RequirementsCollection()
-      @requirements.contact = this 
+      ## alerts collection
+      @alerts = new Jetdeck.Collections.RequirementsCollection()
+      @alerts.contact = this 
       
       ## populate child collections
       @updateChildren()
@@ -42,7 +42,7 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       @notes.reset @get('notes')
       @ownership.reset @get('ownerships')
       @custom_details.reset @get('custom_details')
-      @requirements.reset @get('requirements')
+      @alerts.reset @get('alerts')
       
 class Jetdeck.Collections.ContactCollection extends Backbone.CollectionBook
 
