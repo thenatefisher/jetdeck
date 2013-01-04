@@ -1,6 +1,6 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
-gem 'rails', '3.2.2'
+gem 'rails', '3.2.3'
 gem 'bundler'
 gem 'pg'
 
@@ -12,6 +12,7 @@ end
 gem 'json'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'less-rails'
 gem 'twitter-bootstrap-rails'
 gem 'rails-backbone'
 gem 'bcrypt-ruby', :require => 'bcrypt'
