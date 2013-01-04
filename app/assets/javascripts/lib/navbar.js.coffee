@@ -50,18 +50,4 @@ $(->
           $("i", this).removeClass("icon-white")
     )
     
-    # bootstrap.js
-    $("a[rel=popover]").popover()
-    $(".tooltip").tooltip()
-    $("a[rel=tooltip]").tooltip()
-    
 )
-
-root = exports ? this
-
-
-root.editInline = (model, fname, value) ->
-  model.set(fname, value)
-  model.save(null)
-
-
