@@ -106,6 +106,7 @@ GEM
     less-rails (2.2.6)
       actionpack (>= 3.1)
       less (~> 2.2.0)
+    libv8 (3.11.8.3)
     libwebsocket (0.1.7.1)
       addressable
       websocket
@@ -235,6 +236,7 @@ DEPENDENCIES
   jquery-ui-rails
   json
   less-rails
+  libv8 (~> 3.11.8)
   paperclip
   pg
   poltergeist
