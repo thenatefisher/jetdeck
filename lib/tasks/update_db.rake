@@ -97,6 +97,7 @@ namespace :update_db do
           end
           
         end
+
       end
 
     end
