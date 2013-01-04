@@ -1,7 +1,7 @@
-root.modal = (content) ->
+this.modal = (content) ->
   if (content != "" && content != null) 
     $("#jetdeckModal").html(content)
     $("#jetdeckModal").modal()
 
-root.modalClose = ->
+this.modalClose = ->
   $("#jetdeckModal").modal('hide')

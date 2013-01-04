@@ -30,7 +30,7 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       @custom_details.contact = this            
 
       ## alerts collection
-      @alerts = new Jetdeck.Collections.RequirementsCollection()
+      @alerts = new Jetdeck.Collections.AlertsCollection()
       @alerts.contact = this 
       
       ## populate child collections
