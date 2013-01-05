@@ -237,13 +237,12 @@ DEPENDENCIES
   jquery-ui-rails
   json
   less-rails
-  libv8 (~> 3.11.8)
   paperclip
   pg
   poltergeist
   rails (= 3.2.3)
   rails-backbone
   rspec-rails (~> 2.6)
-  therubyracer
+  therubyracer (~> 0.11.0)
   thin
   twitter-bootstrap-rails
