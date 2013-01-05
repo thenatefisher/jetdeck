@@ -1,4 +1,3 @@
-  
 class Backbone.CollectionBook extends Backbone.Collection
  
   constructor : (options) ->
