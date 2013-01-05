@@ -6,6 +6,8 @@ gem 'pg'
 
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
+  gem 'libv8', '~> 3.11.8'
+  gem 'therubyracer', :platforms => :ruby
 end
 
 gem 'json'
