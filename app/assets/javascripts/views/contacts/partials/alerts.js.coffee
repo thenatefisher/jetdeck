@@ -1,7 +1,7 @@
 Jetdeck.Views.Contacts ||= {}
 
-class Jetdeck.Views.Contacts.ShowRequirements extends Backbone.View
-  template: JST["templates/contacts/requirements/pane"]
+class Jetdeck.Views.Contacts.ShowAlerts extends Backbone.View
+  template: JST["templates/contacts/alerts/pane"]
 
   events : 
     "click a.next" : "next"
@@ -11,56 +11,55 @@ class Jetdeck.Views.Contacts.ShowRequirements extends Backbone.View
   page : (event) ->
     e = event.target || event.currentTarget
     n = $(e).attr('rel')
-    @model.requirements.turnTo(n)
+    @model.alerts.turnTo(n)
     @addAll()
     @$('a.page').parent('li').removeClass('active')
     $(e).parent('li').addClass('active')
     
   next : ->
-    @model.requirements.next()
+    @model.alerts.next()
     @addAll()
     @$('a.page').parent('li').removeClass('active')
-    p = @model.requirements.currentPage()
+    p = @model.alerts.currentPage()
     @$('.page[rel='+p+']').parent('li').addClass('active')    
 
   prev : ->
-    @model.requirements.prev()
+    @model.alerts.prev()
     @addAll()
     @$('a.page').parent('li').removeClass('active')
-    p = @model.requirements.currentPage()
+    p = @model.alerts.currentPage()
     @$('.page[rel='+p+']').parent('li').addClass('active')    
 
   addAll: =>
     @clear()
-    view = new Jetdeck.Views.Contacts.RequirementView()
+    view = new Jetdeck.Views.Contacts.AlertView()
     @$("tbody").append(view.render().el)   
-    console.log view.render().el 
-    #@model.requirements.eachOnPage(@addOne)
+    #@model.alerts.eachOnPage(@addOne)
 
   clear : ->
     @$("tbody").html('')
     
   addOne: (req) => 
     if req
-        view = new Jetdeck.Views.Contacts.RequirementView({model : req})
+        view = new Jetdeck.Views.Contacts.AlertView({model : req})
         @$("tbody").append(view.render().el)
         
   render : ->
     params =
-        count : @model.requirements.length
-        pages : @model.requirements.pages()
+        count : @model.alerts.length
+        pages : @model.alerts.pages()
     $(@el).html("")
-    if @model.requirements.length > 0
+    if @model.alerts.length > 0
         $(@el).html(@template(params))
-        @model.requirements.turnTo(1)
+        @model.alerts.turnTo(1)
         @addAll()    
         @$('.page[rel=1]').parent('li').addClass('active')
     $(@el).html(@template(params))
     @addAll()
     return this
 
-class Jetdeck.Views.Contacts.RequirementView extends Backbone.View
-  template : JST["templates/contacts/requirements/item"]
+class Jetdeck.Views.Contacts.AlertView extends Backbone.View
+  template : JST["templates/contacts/alerts/item"]
   
   tagName : "tr"
       

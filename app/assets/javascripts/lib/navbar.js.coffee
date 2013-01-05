@@ -11,7 +11,7 @@ $(->
        minLength: 2,
        autofocus: true,
        focus: (event, ui) =>
-          $(".select2-choice").children("span").html("<a href='" + ui.item.url + "'><strong>" + ui.item.label + "</strong><br>" + ui.item.desc + "</a>" )
+          #$(".select2-choice").children("span").html("<a href='" + ui.item.url + "'><strong>" + ui.item.label + "</strong><br>" + ui.item.desc + "</a>" )
           event.preventDefault(); 
        source: "/search",
        select: ( event, ui ) =>
