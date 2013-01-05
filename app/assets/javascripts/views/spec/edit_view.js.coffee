@@ -14,7 +14,7 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
     e.preventDefault()
     e.stopPropagation()  
     
-    @$("input@[type='checkbox']").each( (i, element) =>
+    @$("input[type='checkbox']").each( (i, element) =>
       if $(element).is(":checked") 
         @model.set($(element).attr("name"), "true")
       else 
@@ -50,7 +50,7 @@ class Jetdeck.Views.Spec.EditView extends Backbone.View
     e.preventDefault()
     e.stopPropagation()
     
-    @$("input@[type='checkbox']").each( (i, element) =>
+    @$("input[type='checkbox']").each( (i, element) =>
       if $(element).is(":checked") 
         @model.set($(element).attr("name"), "true")
       else 
