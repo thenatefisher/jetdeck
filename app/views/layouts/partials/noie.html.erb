@@ -1,0 +1,24 @@
+
+<% if Rails.env == "production" %>
+    <!--[if IE]>
+    
+    <style>
+      .container { display: none; }
+      #iemsg { display :block; }
+    </style>
+
+    <![endif]-->
+    <% end %>
+
+    <div class="well hide" id="iemsg" style="margin: 50px;">
+
+      <h1>Sorry, Internet Explorer is not yet supported.<br></h1>
+      <h4><br>JetDeck is currently in a private alpha test phase. We're working hard to provide a seamless user experience to all operating systems, devices and browsers. If you have been invited to try JetDeck, please consider loggin in with one of these currently supported options: </h4>
+      <br>
+      <ul>
+        <li>Mozilla Firefox</li>
+        <li>Apple Safari</li>
+        <li>Google Chrome</li>
+      </ul>
+
+    </div>  

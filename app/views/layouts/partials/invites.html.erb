@@ -1,0 +1,10 @@
+<% if current_user.invites > 0 %>
+<div id="invite-sidebar">
+    <button style="margin-top: 40px;" class="btn" id="new-invite"> <i class="icon-gift"></i> Invite a Friend!</button>
+    <div style="margin-top: 5px; margin-left: 5px;">
+      <span style="font-size: 90%">
+        (<strong id="invite-count"><%= current_user.invites %></strong> Invites Remaining)
+    </span>
+</div>
+</div>
+<% end %>
