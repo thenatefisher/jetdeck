@@ -35,32 +35,32 @@
   
     <div class="sweatband"></div>
     
-    <%= render "partials/noie" %>
+    <%= render "layouts/partials/noie" %>
   
     <div class="container">
       <% if current_user %>
       
-      <%= render "partials/navbar" %>
+      <%= render "layouts/partials/navbar" %>
 
-      <%= render "partials/searchbar" %>
+      <%= render "layouts/partials/searchbar" %>
       
       <div class="row">
 
-          <%= render "partials/notifications" %>
+          <%= render "layouts/partials/notifications" %>
           
           <div class="span2">  <!-- MY DECK ... navigation -->
           
             <br/>
 
-            <%= render "partials/leftnav" %>
+            <%= render "layouts/partials/leftnav" %>
             
-            <%= render "partials/invites" %>
+            <%= render "layouts/partials/invites" %>
             
           </div> <!-- end MY DECK ... navigation -->
 
           <div class="span10" id="whitebox"> <!-- span10 entire spec (White background) -->
 
-              <%= render "partials/changes" %>
+              <%= render "layouts/partials/changes" %>
 
               <%= yield %>
 
@@ -68,13 +68,13 @@
 
       </div> <!-- end main row -->
 
-    <%= render "partials/footer" %>
+    <%= render "layouts/partials/footer" %>
 
     </div> <!-- end container class -->
 
     <div class="modal hide" id="jetdeckModal"></div> <!-- modal container place holder -->
   
-    <%= render "partials/mixpanel" %>
+    <%= render "layouts/partials/mixpanel" %>
 
     <% end %>
     
