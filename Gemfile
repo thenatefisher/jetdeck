@@ -1,12 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.9'
+gem 'rails', '3.2.2'
+gem 'bundler'
 gem 'pg'
 
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'therubyracer', '0.10.2', :platforms => :ruby
-  gem 'uglifier', '>= 1.0.3'
+  gem 'therubyracer'
 end
 
 gem 'json'
