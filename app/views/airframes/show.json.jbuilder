@@ -1,5 +1,5 @@
 json.id @airframe.id
-json.avatar h @airframe.avatar
+json.avatar @airframe.avatar
 json.tt h @airframe.tt
 json.tc h @airframe.tc
 json.serial h @airframe.serial
