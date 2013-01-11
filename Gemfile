@@ -13,6 +13,7 @@ end
 
 gem 'json'
 gem 'jquery-rails'
+gem 'less-rails'
 gem 'jquery-ui-rails'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'
