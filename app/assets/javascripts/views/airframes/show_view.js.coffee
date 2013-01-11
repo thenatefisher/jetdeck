@@ -12,11 +12,12 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     $("#save-changes").on("click", @save)
     
   cancel: =>
+    that = this
     @model.fetch(success: =>
       @model.updateChildren()
       $("#changes").children().fadeOut()
       $("#changes").slideUp(->
-        window.router.view.render()  
+        that.render()  
       )
     )
 
