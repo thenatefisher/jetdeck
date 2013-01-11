@@ -1,4 +1,5 @@
 /*
+ *= require lib/bootstrap
  *= require multi-select
  *= require jquery.fileupload-ui
  *= require select2 
@@ -9,7 +10,8 @@
  *= require_self
 */
 
-@import "twitter/bootstrap/bootstrap";
+@import "twitter/bootstrap/variables";
+@import "twitter/bootstrap/mixins";
 
 /* document body */
 body {
@@ -25,6 +27,14 @@ body {
   border-radius: 4px; 
   margin:0px; 
   background: #fff;
+}
+
+/* override bootstrap breadcrumb for section titles */
+.breadcrumb {
+  padding: 4px 15px;
+}
+.breadcrumb.subsection {
+  background: #D9EDF7;
 }
 
 /* make link-like */
