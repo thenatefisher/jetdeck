@@ -21,11 +21,6 @@ json.created_at @xspec.created_at.strftime("%b %e (%l:%M%p %Z)")
 
 json.history @xspec.history
 
-json.backgrounds @backgrounds do |json, b|
-  json.url b.url
-  json.thumbnail b.thumbnail
-end
-
 json.sent @xspec.sent.strftime("%b %e (%l:%M%p %Z)") if @xspec.sent
 
 if @xspec.override_price.present?

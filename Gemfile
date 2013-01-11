@@ -4,14 +4,17 @@ gem 'rails', '3.2.3'
 gem 'bundler'
 gem 'pg'
 
+# Gems used only for assets and not required
+# in production environments by default.
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'therubyracer', '~> 0.11.0'
-  gem 'uglifier'
+  gem 'therubyracer', '0.10.2', :platforms => :ruby
+  gem 'uglifier', '>= 1.0.3'
 end
 
 gem 'json'
 gem 'jquery-rails'
+gem 'less-rails'
 gem 'jquery-ui-rails'
 gem 'less-rails'
 gem 'twitter-bootstrap-rails'

@@ -33,12 +33,12 @@ class Xspec < ActiveRecord::Base
 
     if self.id.nil?
       if Xspec.where("recipient_id = ? AND airframe_id = ?", self.recipient, self.airframe).length > 0
-        self.errors.add(:recipient, "is already on the lead list")
+        self.errors.add(:recipient, "already received this spec")
         false
       end
     else
       if Xspec.where("recipient_id = ? AND airframe_id = ? AND id != ?", self.recipient, self.airframe, self.id).length > 0
-        self.errors.add(:recipient, "is already on the lead list")
+        self.errors.add(:recipient, "already received this spec")
         false
       end
     end

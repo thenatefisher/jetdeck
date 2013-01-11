@@ -1,6 +1,28 @@
 class AirframesController < ApplicationController
   before_filter :authorize, :sanitize_params
 
+  # GET /airframes/search_deck
+  def search_deck
+
+    # registration number search
+    if params[:term].present?
+        @airframes = Airframe.where(
+          "(upper(year || ' ' || make || ' ' || model_name || ' (' || registration || ')') LIKE ?
+            OR upper(serial) LIKE ?)
+            AND user_id = ?",
+          "%#{params[:term].to_s.upcase}%", "%#{params[:term].to_s.upcase}%",
+          @current_user.id
+        ).first(5)
+
+        if @airframes.nil?
+            render :layout => false, :nothing => true
+        else
+            render :json => @airframes.to_json( :methods => [:model, :make, :to_s] )
+        end
+    end
+
+  end
+
   # GET /airframes/models
   def models
 
@@ -27,7 +49,7 @@ class AirframesController < ApplicationController
 
         @airframes = Airframe.where(
           "upper(registration) like ? AND (baseline = 't' OR user_id = ?)",
-          "%"+params[:term].to_s.upcase+"%",
+          "%#{params[:term].to_s.upcase}%",
           @current_user.id
         ).first(5)
 

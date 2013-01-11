@@ -80,6 +80,9 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     @specs = new Jetdeck.Views.Contacts.ShowSpecs(model: @model)
     if @model.specs.length > 0
       @$("#contact_specs").html(@specs.render().el) 
+    
+    @send = new Jetdeck.Views.Contacts.ShowSend(model: @model)
+    @$("#contact_send").html(@send.render().el)      
       
     @alerts = new Jetdeck.Views.Contacts.ShowAlerts(model: @model)
     @$("#contact_alerts").html(@alerts.render().el)       

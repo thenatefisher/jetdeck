@@ -16,6 +16,8 @@ Jetdeck::Application.routes.draw do
 
   resources :contacts
 
+  match "/airframes/search_deck" => "airframes#search_deck"
+
   match "/airframes/models" => "airframes#models"
 
   resources :airframes
