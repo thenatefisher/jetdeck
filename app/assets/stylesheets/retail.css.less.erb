@@ -1,21 +1,11 @@
 /*
  *= require photoswipe
+ *= require components/fontawesome 
  *= require_self
 */
 
 @import 'twitter/bootstrap/bootstrap';
 @import 'twitter/bootstrap/responsive';
-@iconSpritePath: asset-path('/assets/glyphicons-halflings.png');
-@iconWhiteSpritePath: asset-path('/assets/glyphicons-halflings-white.png');
-<% if (Jetdeck::Application.config.font_awesome) %>
-@fontAwesomeEotPath:  'font/fontawesome-webfont.eot';
-@fontAwesomeWoffPath: 'font/fontawesome-webfont.woff';
-@fontAwesomeTtfPath:  'font/fontawesome-webfont.ttf';
-@fontAwesomeSvgzPath: 'font/fontawesome-webfont.svgz';
-@fontAwesomeSvgPath:  'font/fontawesome-webfont.svg';
-@fontAwesomeEotPath_iefix: 'font/fontawesome-webfont.eot#iefix';
-@import 'fontawesome';
-<% end %>
 
 body {
   background: url(<%= asset_path 'bg/retina_wood.png' %>) repeat;

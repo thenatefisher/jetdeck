@@ -1,0 +1,47 @@
+@import "twitter/bootstrap/variables";
+@import "twitter/bootstrap/mixins";
+
+.datepicker.dropdown-menu {padding: 4px;}
+
+.action {
+  padding: 10px 5px;
+  position:relative;
+}
+
+.action:hover {
+  background-color: #0074CC;
+  color: #fefefe;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  text-decoration: none;
+  text-shadow: none;
+}
+
+.due-date {
+  width: 100%; 
+  text-align: left; 
+  font-size: 80%
+}
+
+.late strong, .late .due-date {
+  color: @red;
+}
+
+.late:hover .due-date, .late:hover strong {
+  color: #fefefe;
+}
+
+.action-buttons {
+  position: absolute; 
+  bottom: 5px; 
+  right: 7px; 
+  font-weight: bold;
+  display: none;
+}
+
+.action-buttons i {
+  cursor: pointer;
+  font-size: 120%;
+  margin: 0 5px;
+}

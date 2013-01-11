@@ -1,0 +1,43 @@
+@import "twitter/bootstrap/variables";
+@import "twitter/bootstrap/mixins";
+
+.username {
+  margin-right: 20px; 
+  margin-top: 10px;
+}
+
+.username a {
+  color: @grayLight;
+  text-decoration: none;
+}
+
+.username a:hover {
+  color: @infoText;
+}
+
+.sweatband { 
+  width: 100%; 
+  position: absolute; 
+  top: 0px;
+  left: 0px;
+  /*background: #3963DE; */
+  background: #0074CC; 
+  /*background: url(<%= asset_path 'bg/denim.png' %>) repeat;*/
+  margin: 0;
+  padding: 0;
+  height: 4px;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.navbar .brand:hover {
+  text-decoration: none;
+}
+
+.navbar .brand {
+  display: block;
+  padding: 10px 20px 5px 0px;
+  margin-left: 0px;
+  width: 130px;
+}
