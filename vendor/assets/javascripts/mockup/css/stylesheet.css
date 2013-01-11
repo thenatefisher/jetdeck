@@ -1,0 +1,19 @@
+body {
+  background: url('../img/dots.png') repeat;
+}
+.navbar .brand:hover {
+  text-decoration: none;
+}
+.navbar .brand {
+  font-family: 'Condiment', cursive;
+  position: left;
+  display: block;
+  padding: 12px 20px 0px 0px;
+  margin-left: 0px;
+  font-size: 35px;
+  font-weight: 200;
+  line-height: 1;
+  color: #ffffff;
+  width: 140px;
+}
+.navbar .brand strong { }

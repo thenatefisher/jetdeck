@@ -38,6 +38,8 @@ class ContactsController < ApplicationController
         params[:id], 
         @current_user.id]
     )
+
+    render :html => 'contacts/show', :layout => 'contact_mockup' 
   end
 
   # GET /contacts/new
