@@ -1,6 +1,5 @@
 class XSpecMailer < ActionMailer::Base
   default from: "JetDeck.co <noreply@jetdeck.co>"
-  layout "retailMailer"
 
   def sendRetail(xspec, recipient)
 
