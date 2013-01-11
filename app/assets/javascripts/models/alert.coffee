@@ -7,7 +7,7 @@ class Jetdeck.Models.AlertModel extends Backbone.Model
 
 class Jetdeck.Collections.AlertsCollection extends Backbone.CollectionBook
 
-    model: Jetdeck.Models.RequirementModel
+    model: Jetdeck.Models.AlertModel
     
     url: "/alerts"
     

@@ -1,0 +1,34 @@
+<div class="navbar row">
+
+  <div class="span12">
+
+    <a class="brand" style="margin-left: 10px; width: 200px" href="/">
+      <img src="/assets/logo_black_no_tag_130_blue.png" style="float: left"> 
+      <div style="float: left; margin: 10px 5px" id="beta"><h5><small>BETA</small></h5></div>
+    </a>
+
+    <div class="pull-right username">
+
+      Welcome, 
+
+      <a href="/profile">
+
+        <% if current_user %>
+        <% if current_user.contact.first == "" && %>
+        <strong>Member</strong>    
+        <% else %>
+        <strong>
+          <%= current_user.contact.first %> 
+          <%= current_user.contact.last %>
+        </strong>                              
+        <% end %>
+        <% end %>
+
+      </a>
+
+      | <a href="/logout">Log Out</a>
+
+    </div>
+  </div>
+
+</div> <!-- navbar navbar-fixed-top -->
