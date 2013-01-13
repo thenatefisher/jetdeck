@@ -248,11 +248,28 @@ $(function(){
         );
     });
 
-  $("#requirements_hidden").click(
+  $(".show-requirements").click(
     function(){
-      $(this).hide();
-      $("#requirements").show();
+      if ($("#requirements-buttons").is(":visible")) {
+        $("#requirements-nav").fadeIn(100);
+        $("#requirements-buttons").hide();
+      }
+      $("#requirements").fadeIn(100);
+      $("#specs-sent").hide();
     });
+
+  $(".show-specs").click(
+    function(){
+      if ($("#requirements-buttons").is(":visible")) {
+        $("#requirements-nav").fadeIn(100);
+        $("#requirements-buttons").hide();
+      }
+      $("#specs-sent").fadeIn(100);
+      $("#requirements").hide();
+    });
+
+
+
 });
 </script>
 
@@ -286,8 +303,8 @@ $(function(){
       Aircraft Requirements 
     </strong> 
   </li>
-  <li style="margin-top: -7px; float: right; text-shadow: none"> 
-    <ul class="nav nav-pills hide">
+  <li class="show-specs" style="margin-top: -7px; float: right; text-shadow: none"> 
+    <ul id="requirements-nav" class="nav nav-pills hide">
       <li>
         <a href="#">Specs Sent</a> 
       </li>
@@ -295,10 +312,10 @@ $(function(){
         <a class="dropdown-toggle" id="drop4" role="button" data-toggle="dropdown" href="#">Requirements <b class="caret"></b></a>
         <ul id="menu1" class="dropdown-menu pull-right" role="menu" aria-labelledby="drop4">
           <li class="disabled"><a tabindex="-1" href="#">King Air B200, TT 2000-3000, Yr 1995-2001</a></li>
-          <li><a tabindex="-1" href="#">Phenom 100, TT 2000-3000, Yr 1995-2001</a></li>
-          <li><a tabindex="-1" href="#">Gulfstream G300, TT 2000-3000, Yr 1995-2001</a></li>
+          <li><a tabindex="-1" href="#" class="show-requirements">Phenom 100, TT 2000-3000, Yr 1995-2001</a></li>
+          <li><a tabindex="-1" href="#" class="show-requirements">Gulfstream G300, TT 2000-3000, Yr 1995-2001</a></li>
           <li class="divider"></li>
-          <li><a tabindex="-1" href="#">Create New Requirement</a></li>
+          <li class="show-requirements" ><a tabindex="-1" href="#">Create New Requirement</a></li>
         </ul>
       </li>
     </ul>
@@ -306,10 +323,10 @@ $(function(){
 </ul>
 </div>
 
-<div id="requirements_hidden">
+<div id="requirements-buttons">
   <div class="clearfix"></div>
 
-  <div class="span5">
+  <div class="span5 show-requirements">
     <ul class="breadcrumb" >
       <li style="text-shadow: none"> 
         <a href="#">
@@ -322,7 +339,7 @@ $(function(){
     </ul>        
   </div>
 
-  <div class="offset5" style="width: 340px">
+  <div class="offset5 show-specs" style="width: 340px">
     <ul class="breadcrumb">
       <li style="text-shadow: none"> 
         <a href="#">
@@ -675,6 +692,46 @@ $(document).ready(function() {
 
 </div>
 
+<div id="specs-sent" class="hide">
+  <div class="span" style="width: 740px;">
+    <table class="table table-hover table-condensed table-bordered">
+      <thead>
+        <tr>
+          <th>Aircraft</th>
+          <th>Serial</th>
+          <th>Registration</th>
+          <th>Price</th>
+          <th>Sent</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="info" style="margin: 5px auto">
+          <td>2005 Challenger 604</td>
+          <td>6002</td>
+          <td>N22A</td>
+          <td>$70,250,000</td>
+          <td>June 4, 2012</td>
+          <td style="text-align: center"><a href="#">Edit Spec</a></td>         
+        </tr>
+        <tr style="margin: 5px auto">
+          <td>2013 Gulfstream G650</td>
+          <td>1002</td>
+          <td>N234TG</td>
+          <td>$70,250,000</td>
+          <td>June 3, 2012</td>
+          <td style="text-align: center"><a href="#">Edit Spec</a></td>         
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="page-header" style="margin-top: 0"></div>
+
+</div>
+
 <div class="clearfix"></div>
 <br>
 
@@ -774,24 +831,87 @@ $(document).ready(function() {
 </div>
 
 <br>
+<script>
+  $(function(){
+    $("#add-action").toggle(
+      function(){
+        $("#new-action").fadeIn(300);
+        $("#add-action").html("Cancel");
+      },
+      function(){
+        $("#new-action").fadeOut(300);
+        $("#add-action").html("Add");
+      }      
+    );
+
+  })
+</script>
 <div class="tasks_enabled">
   <ul class="breadcrumb" 
   style="background: #D9EDF7">
-  <li style="text-shadow: none"> 
+  <li style="text-shadow: none; width: 100%"> 
     <strong>
       <i class="icon-check"></i> 
       Actions
     </strong> 
+    <a href="#" class="pull-right" id="add-action">Add</a>
   </li>
 </ul>                          
 
+<div id="new-action" class="hide">
+<div class="control-group" style="margin: 0px"><textarea id="new-action-textarea" style="width: 245px"></textarea></div>
+  
+<table style="width: 100%; margin-bottom: 20px">
+
+  <tr><td style="vertical-align: middle; ">
+
+  <div id="due_at_datepicker" class="pull-left" 
+    style="cursor: pointer;" 
+    data-date="" 
+    data-date-format="mm-dd-yyyy" >
+    
+    <a href="#"><span>Add Due Date</span></a>
+    
+    <input id="due_at" size="16" value="" type="hidden" style="margin: 0" class="span2">
+    
+  </div>
+  
+  </td>
+  
+  <td style="vertical-align: top">
+  
+  <div class="btn-group pull-right">
+    <button class="btn" id="add-action">Add Action</button>    
+    <button class="btn dropdown-toggle" data-toggle="dropdown">
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="#" class="fup-action" data-interval="3">Follow up in Three Months</a></li>
+      <li><a href="#" class="fup-action" data-interval="6">Follow up in Six Months</a></li>
+      <li><a href="#" class="fup-action" data-interval="12">Follow up in One Year</a></li>
+    </ul>
+  </div>    
+  
+  
+  </td>
+  
+  </tr>
+  
+</table>
+</div>
+
+<label class="checkbox">
+  <input type="checkbox">Call Steve S About possible lease back deal 
+  <small class="muted">June, 27 2013</small> 
+  <a href="#" class="hide pull-right muted"><i class="icon-pencil"></i></a>
+</label>
+
+<label class="checkbox">
+  <input type="checkbox">Update ownership info on BB-1242 
+  <small class="muted">August, 3 2013</small>
+  <a href="#" class="hide pull-right muted"><i class="icon-pencil"></i></a>
+</label>
 <!--
-<label class="checkbox">
-  <input type="checkbox"> <span class="label label-info"><i class="icon-comment icon-white"> </i> Contact</span> Steve S About possible lease back deal
-</label>
-<label class="checkbox">
-  <input type="checkbox"> <span class="label"><i class="icon-asterisk icon-white"> </i> Action</span> Update ownership info on BB-1242
-</label>
 <label class="checkbox">
   <input type="checkbox"> Arrange demo with new lead from bill
 </label>
