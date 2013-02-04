@@ -32,7 +32,7 @@ class Contact < ActiveRecord::Base
       :class_name => 'User',
       :foreign_key => 'contact_id'
   
-  attr_accessible :phone, 
+  attr_accessible :phone, :sticky_id,
         :first, :last, :source, :email, 
         :email_confirmation, :company, :details_attributes,
         :title, :description, :website, :emailFrom, :fullName
