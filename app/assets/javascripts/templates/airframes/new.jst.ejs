@@ -1,43 +1,58 @@
 <div class="modal-header">
-<button class="close" data-dismiss="modal">×</button>
-<h3>New Aircraft Spec</h3>
+  <button class="close" data-dismiss="modal">×</button>
+  <h3>New Aircraft</h3>
 </div>
 
 <div class="modal-body" style="padding-left: 50px;">
 
   <form name="airframe">
 
-    <div class="control-group">
-    
-      <label for="year" style="clear: both; color: #000">Either Select a Model:</label>
-      
-      <input type="text" name="year" 
-                         id="airframe_year" 
-                         class="input-mini" 
-                         placeholder="Year">
-                         
-      <input type="hidden" name="headline" 
-                         id="airframe_headline" 
-                         class="span3 airframe-headline">
-                         
-      <input type="text" name="serial" 
-                         id="airframe_serial" 
-                         class="input-small airframe-serial" 
-                         placeholder="Serial No.">
-                         
-      <span class="help-block hide">Invalid Aircraft Model</span>
-      
+    <div class="control-group import_group">
+      <label for="import" style="clear: both; color: #000">
+        <h5>Import From Listing URL:</h5>
+      </label>
+      <input class="pull-left" type="text" 
+      name="import" 
+      id="airframe_url" 
+      placeholder="www.listing.com/id/14413133..."/>
     </div>
 
-    <hr/>
+    <div class="clearfix"></div><hr>
 
     <div class="control-group registration_group">
       <label for="registration" style="clear: both; color: #000">
-        <h5><i class="icon-search"></i> Or Find Details By Registration Number:</h5></label>
+        <h5>Find Details By Registration Number:</h5>
+      </label>
       <input class="pull-left" type="text" 
-                               name="registration" 
-                               id="airframe_registration" 
-                               placeholder="N123XX, VP-XXX, etc.">
+      name="registration" 
+      id="airframe_registration" 
+      placeholder="N123XX, VP-XXX, etc."/>
+    </div>
+
+    <div class="clearfix"></div><hr>
+
+    <div class="control-group">
+
+      <label for="year" style="clear: both; color: #000">
+        <h5>Create New Aircraft:</h5>
+      </label>
+      
+      <input type="text" name="year" 
+      id="airframe_year" 
+      class="input-mini" 
+      placeholder="Year">
+
+      <input type="hidden" name="headline" 
+      id="airframe_headline" 
+      class="span3 airframe-headline">
+
+      <input type="text" name="serial" 
+      id="airframe_serial" 
+      class="input-small airframe-serial" 
+      placeholder="Serial No.">
+
+      <span class="help-block hide">Invalid Aircraft Model</span>
+      
     </div>
 
   </form>
@@ -45,6 +60,6 @@
 </div>
 
 <div class="modal-footer">
-<a href="#" class="btn" data-dismiss="modal">Cancel</a>
-<button id="new_airframe" class="btn btn-primary">Create Spec</button>
+  <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+  <button id="new_airframe" class="btn btn-primary">Create Spec</button>
 </div>

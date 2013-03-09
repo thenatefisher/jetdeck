@@ -1,19 +1,19 @@
 (function ($) {
-    var FullName = function (options) {
-        this.init('fullname', options, FullName.defaults);
+    var AircraftYMM = function (options) {
+        this.init('aircraft_ymm', options, AircraftYMM.defaults);
     };
 
     //inherit from Abstract input
-    $.fn.editableutils.inherit(FullName, $.fn.editabletypes.abstractinput);
+    $.fn.editableutils.inherit(AircraftYMM, $.fn.editabletypes.abstractinput);
 
-    $.extend(FullName.prototype, {
+    $.extend(AircraftYMM.prototype, {
         /**
         Renders input from tpl
 
         @method render() 
         **/        
         render: function() {
-            FullName.superclass.render.call(this);
+            AircraftYMM.superclass.render.call(this);
         },
         
         /**
@@ -26,7 +26,7 @@
                 $(element).empty();
                 return; 
             }
-            var html = $('<div>').text(value.first).html() + ' ' + $('<div>').text(value.last).html();
+            var html = $('<div>').text(value.year).html() + ' ' + $('<div>').text(value.make).html() + ' ' + $('<div>').text(value.modelName).html();
             $(element).html(html); 
         },
         
@@ -88,8 +88,9 @@
         @param {mixed} value
        **/         
        value2input: function(value) {
-           this.$input.find('input[name="first"]').val(value.first);
-           this.$input.find('input[name="last"]').val(value.last);
+           this.$input.find('input[name="year"]').val(value.year);
+           this.$input.find('input[name="make"]').val(value.make);
+           this.$input.find('input[name="modelName"]').val(value.modelName);
        },       
        
        /**
@@ -99,8 +100,9 @@
        **/          
        input2value: function() { 
            return {
-              first: this.$input.find('input[name="first"]').val(), 
-              last: this.$input.find('input[name="last"]').val()
+              year: this.$input.find('input[name="year"]').val(), 
+              make: this.$input.find('input[name="make"]').val(),
+              modelName: this.$input.find('input[name="modelName"]').val()
            };
        },        
        
@@ -110,7 +112,7 @@
         @method activate() 
        **/        
        activate: function() {
-            this.$input.find('input[name="first"]').focus();
+            this.$input.find('input[name="year"]').focus();
        },  
        
        /**
@@ -127,13 +129,14 @@
        }       
     });
 
-    FullName.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
-        tpl: '<div><input type="text" placeholder="First" name="first" class="input"> '+
-             '<input type="text" placeholder="Last" name="last" class="input"></div>',
+    AircraftYMM.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
+        tpl: '<div><input type="text" placeholder="Year" name="year" class="input-mini"> '+
+             '<div><input type="text" placeholder="Make" name="make" class="input"> '+
+             '<input type="text" placeholder="Model" name="modelName" class="input"></div>',
              
-        inputclass: 'editable-fullname'
+        inputclass: 'editable-aircraft_ymm'
     });
 
-    $.fn.editabletypes.fullname = FullName;
+    $.fn.editabletypes.aircraft_ymm = AircraftYMM;
 
 }(window.jQuery));

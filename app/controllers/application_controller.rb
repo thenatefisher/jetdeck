@@ -11,15 +11,15 @@ class ApplicationController < ActionController::Base
     def sanitize_params
     
       sanitize_array(params)
-      
+
     end
 
     def sanitize_array(arr)
 
       arr.each do |k,v|
       
-        if v.class.name == "Hash"
-        
+        if v.class < Hash
+
           sanitize_array(v)
           
         elsif v.class.name == "String"

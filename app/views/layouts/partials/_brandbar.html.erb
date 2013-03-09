@@ -1,34 +1,32 @@
-<div class="navbar row">
-
-  <div class="span12">
-
-    <a class="brand" style="margin-left: 10px; padding-left: 0px;" href="/">
-      <img src="/assets/logo_black_no_tag_130_blue.png" style="float: left"> 
-    </a>
-    <div style="position: absolute; margin: 8px 0 0 150px" id="beta"><h5><small>BETA</small></h5></div>
-
-    <div class="pull-right username">
-
-      Welcome, 
-
-      <a href="/profile">
-
-        <% if current_user %>
-        <% if current_user.contact.first == "" && %>
-        <strong>Member</strong>    
-        <% else %>
-        <strong>
-          <%= current_user.contact.first %> 
-          <%= current_user.contact.last %>
-        </strong>                              
-        <% end %>
-        <% end %>
-
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="brand" style="margin-bottom: 5px; padding-left: 0px;" href="/">
+        <img src="/assets/logo_white_no_tag_130_beta.png" style="float: left"> 
       </a>
+      <div class="pull-right username">
 
-      | <a href="/logout">Log Out</a>
+        Welcome, 
 
+        <a href="/profile">
+
+          <% if current_user %>
+          <% if current_user.contact.first == "" && %>
+          <strong>Member</strong>    
+          <% else %>
+          <strong>
+            <%= current_user.contact.first %> 
+            <%= current_user.contact.last %>
+          </strong>                              
+          <% end %>
+          <% end %>
+
+        </a>
+
+        | <a href="/logout">Log Out</a>
+
+      </div>
     </div>
   </div>
-
-</div> <!-- navbar navbar-fixed-top -->
+</div>  
+<div class="row" style="height: 60px;"></div>

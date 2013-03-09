@@ -11,10 +11,6 @@ class Jetdeck.Views.Contacts.ShowDetails extends Backbone.View
     @ownership = new Jetdeck.Views.Contacts.ShowOwnership(model: @model)
     @$("#pane_aircraft").html(@ownership.render().el)
 
-    # populate the notes tab
-    @notes = new Jetdeck.Views.Notes.ShowNotes(model: @model)
-    @$("#pane_notes").html(@notes.render().el)    
-
     # remove top border on first table item in spec panes
     @$(".spec_pane table").children('tbody').children('tr').first().children('td').css('border-top', '0px')
 

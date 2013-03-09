@@ -77,12 +77,23 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     @header = new Jetdeck.Views.Contacts.ShowHeaderView(model: @model)
     @$("#contact_show_header").html(@header.render().el)
     
-    @specs = new Jetdeck.Views.Contacts.ShowSpecs(model: @model)
-    if @model.specs.length > 0
-      @$("#contact_specs").html(@specs.render().el) 
+    #@specs = new Jetdeck.Views.Contacts.ShowSpecs(model: @model)
+    #if @model.specs.length > 0
+    #  @$("#contact_specs").html(@specs.render().el) 
+    
+    #@send = new Jetdeck.Views.Send.ShowSend(model: @model)
+    #@$("#contact_send").html(@send.render().el) 
+
+    @notes = new Jetdeck.Views.Notes.ShowNotes(model: @model)
+    @$("#contact_notes").html(@notes.render().el)    
       
-    @alerts = new Jetdeck.Views.Contacts.ShowAlerts(model: @model)
-    @$("#contact_alerts").html(@alerts.render().el)       
+    @model.on("unstick", => 
+      @model.set("sticky_id", null)
+      @notes.render() 
+    )
+
+    @requirements = new Jetdeck.Views.Contacts.ShowRequirements(model: @model)
+    @$("#contact_requirements").html(@requirements.render().el)       
 
     @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#contact_actions").html(@actions.render().el)  
@@ -90,16 +101,31 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     @delete = new Jetdeck.Views.Contacts.ShowDelete(model: @model)
     @$("#contact_delete").html(@delete.render().el)
         
-    @details = new Jetdeck.Views.Contacts.ShowDetails(model: @model)
-    @$("#contact_details").html(@details.render().el)
-    @$("a[href='#"+lastDetailTab+"']'").tab('show') if lastDetailTab  
+    #@details = new Jetdeck.Views.Contacts.ShowDetails(model: @model)
+    #@$("#contact_details").html(@details.render().el)
+    #@$("a[href='#"+lastDetailTab+"']'").tab('show') if lastDetailTab  
     
     return this
 
+class Jetdeck.Views.Contacts.ShowMastheadView extends Backbone.View
+  template: JST["templates/notes/partials/masthead"]
+
+  events:
+    "click .close"         : "close"
+
+  close: =>
+    @trigger('unstick')
+
+  render: =>
+    $(@el).html(@template(@model.toJSON() )) 
+    return this
 
 class Jetdeck.Views.Contacts.ShowHeaderView extends Backbone.View
   template: JST["templates/contacts/partials/header"]
   
+  initialize: =>
+    @model.on("sticky", (note_id) => @renderStickyNote(note_id))
+
   events:
     "click #detail-add"         : "add"
 
@@ -117,7 +143,89 @@ class Jetdeck.Views.Contacts.ShowHeaderView extends Backbone.View
       item_view = new Jetdeck.Views.Contacts.CustomDetailItem(model: i)
       @$("#custom-details").append(item_view.render().el)
 
-  render: ->
+  renderStickyNote: =>
+    sticky_note = @model.notes.where({id: @model.get('sticky_id')})[0]
+    if sticky_note
+      sticky_view = new Jetdeck.Views.Contacts.ShowMastheadView(model: sticky_note)
+      sticky_view.on("unstick", => @model.trigger("unstick"))
+      @$("#big_note").html(sticky_view.render().el)
+    else
+      @$("#big_note").html("")
+
+  render: =>
     $(@el).html(@template(@model.toJSON() )) 
-    @renderCustomDetails()
+    #@renderCustomDetails()
+
+    @renderStickyNote()
+
+    @$('#name').editable({
+      title: 'Contact Name',
+      value: {
+        first: @model.get('first'), 
+        last: @model.get('last')
+      },
+      placement: 'bottom',
+      send: 'never',
+      url: (obj) => 
+        @model.set('first', obj.value.first); 
+        @model.set('last', obj.value.last); 
+        @model.save()
+    })
+
+    @$('#company').editable({url: (obj) => @model.set(obj.name, obj.value); @model.save()})
+    @$('#phone').editable({url: (obj) => @model.set(obj.name, obj.value); @model.save()})
+    @$('#email').editable({url: (obj) => @model.set(obj.name, obj.value); @model.save()})
+
+    @$('#Owner_3').editable()
+    @$('#Owner_2').editable()
+    @$('#Owner_1').editable()
+    @$('#Pilot').editable({
+      url: '/post',
+      title: 'Pilot Of',
+      value: {
+        label: "Pilot", 
+        value: "Dassault 7X"
+      }             
+    })          
+    @$('#Mobile').editable()
+    @$('#Address').editable()
+    @$('#Birthday').editable()
+
+    @$('#add_detail_item').editable({
+      url: '/post',
+      title: 'New Contact Detail',
+      value: {
+        label: "", 
+        value: ""
+      }                  
+    })
+
+    @$('#add_aircraft_item').editable({
+      url: '/post',
+      title: 'Add Aircraft to Contact',
+      value: {
+        label: "", 
+        value: ""
+      }             
+    })
+
+    @$('#contact_details').hover(
+      =>  @$('.more_details').fadeIn(400),
+      =>  if (!$(".editable-container").is(":visible")) 
+        @$('.more_details').fadeOut(100)
+    )
+
+    @$(".remove_detail").parent("div").hover(
+      => @$(this).find(".remove_detail").show(),
+      => @$(this).find(".remove_detail").hide()
+    )
+
+    @$("#big_note").toggle(
+      =>
+        @$(".elipsis").hide()
+        @$(".more").fadeIn(100)
+      =>
+        @$(".more").fadeOut(100, => @$(".elipsis").show()) 
+    )
+
     return this

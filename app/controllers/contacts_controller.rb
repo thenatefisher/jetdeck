@@ -1,4 +1,5 @@
 class ContactsController < ApplicationController
+
   before_filter :authorize, :sanitize_params
 
   # GET /contacts/search
@@ -83,13 +84,15 @@ class ContactsController < ApplicationController
 
     @contact = Contact.find(:first, :conditions =>
       ["id = ? AND owner_id = ?", params[:id], @current_user.id])
-      
-    details = Array.new()
-    params[:contact][:custom_details].each do |e|
-      details << e.slice(:name, :value, :id)
+    
+    if !params[:contact][:custom_details].blank?
+      details = Array.new()
+      params[:contact][:custom_details].each do |e|
+        details << e.slice(:name, :value, :id)
+      end
+      params[:contact][:details_attributes] = details 
     end
-    params[:contact][:details_attributes] = details 
-            
+    
     whitelist = params[:contact].slice(
         :id,
         :first,
@@ -98,19 +101,18 @@ class ContactsController < ApplicationController
         :phone,
         :email, 
         :email_confirmation,
-        :details_attributes
+        :details_attributes,
+        :sticky_id
       )
 
     respond_to do |format|
       if @contact.update_attributes(whitelist)
-  
-        format.html { redirect_to @contact, :notice => 'Contact was successfully updated.' }
-        format.json { head :no_content }
+        format.json { render :json => @contact }
       else
-        format.html { render :action => "edit" }
         format.json { render :json => @contact.errors, :status => :unprocessable_entity }
       end
     end
+
   end
 
   # DELETE /contacts/1

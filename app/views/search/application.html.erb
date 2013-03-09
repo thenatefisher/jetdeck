@@ -21,7 +21,7 @@
     <!-- styles -->
     <%= stylesheet_link_tag "application", :media => "all" %>
     <!-- javascript -->
-    <%= javascript_include_tag "contact_mockup" %>
+    <%= javascript_include_tag "application" %>
 
     <% if flash[:notice] %>
     <script type="text/javascript"> 
@@ -34,7 +34,9 @@
   <body>
   
     <div class="sweatband"></div>
-     
+    
+    <%= render "layouts/partials/noie" %>
+  
     <div class="container">
       <% if current_user %>
       
@@ -52,9 +54,14 @@
 
             <%= render "layouts/partials/leftnav" %>
             
+            <%= render "layouts/partials/invites" %>
+            
           </div> <!-- end MY DECK ... navigation -->
 
           <div class="span10" id="whitebox"> <!-- span10 entire spec (White background) -->
+
+              <%= render "layouts/partials/changes" %>
+              <div style="height: 20px"></div>
 
               <%= yield %>
 
@@ -67,6 +74,8 @@
     </div> <!-- end container class -->
 
     <div class="modal hide" id="jetdeckModal"></div> <!-- modal container place holder -->
+  
+    <%= render "layouts/partials/mixpanel" %>
 
     <% end %>
     

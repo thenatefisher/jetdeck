@@ -2,18 +2,17 @@ Jetdeck.Views.Actions ||= {}
 
 class Jetdeck.Views.Actions.ActionItem extends Backbone.View
   template: JST["templates/actions/partials/action_item"]
-  
-  events: 
-    "click .close-action" : "close"
-    "click .edit-action"  : "edit"
-    
-  close: =>
-    @model.save({is_completed: true}, success: => $(@el).fadeOut(); mixpanel.track("Closed Action"))
-    
-  edit: =>
-    return
-    
+
   initialize: ->
+    $(@el).click( =>
+      @model.save(
+        { is_completed: true }, 
+        success: => 
+          $(@el).fadeOut(300, => @trigger("deleted"))
+          mixpanel.track("Closed Action")
+      )
+    )
+
     $(@el).hover( 
       => 
         @$(".action-buttons").show()
@@ -85,6 +84,25 @@ class Jetdeck.Views.Actions.ShowActions extends Backbone.View
         
   render : =>
     $(@el).html(@template())
+
+    @model.actions.sort()
+    @model.actions.each( (action) =>
+      item = new Jetdeck.Views.Actions.ActionItem(model: action)
+      @$("#actions").append(item.render().el) if action.get('is_completed') != true
+      item.on("deleted", @render)
+    )
+
+    if @model.actions.where({is_completed: false}).length == 0
+      @$("#add-action-fields").show()
+    else
+      @$(".subsection").toggle(
+        => @$("#add-action-fields").show(),
+        => @$("#add-action-fields").hide()
+      )   
+
+    return this
+
+  datepicker: =>
     @$('#due_at_datepicker').datepicker()
     .on('changeDate', (event) =>
       curr_date = event.date.getDate();
@@ -94,12 +112,4 @@ class Jetdeck.Views.Actions.ShowActions extends Backbone.View
       @$("#due_at").val(curr_year + "-" + curr_month + "-" + curr_date;)  
       @$("#due_at_datepicker span").html("Due: " + curr_month + "/" + curr_date + "/" +  curr_year;)
       $(".datepicker.dropdown-menu").hide()
-    )
-    @model.actions.sort()
-    @model.actions.each( (action) =>
-      item = new Jetdeck.Views.Actions.ActionItem(model: action)
-      @$("#actions").append(item.render().el) if action.get('is_completed') != true
-    )
-    return this
-
-
+    )      

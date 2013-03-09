@@ -100,5 +100,42 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     
     # wait for this content to be loaded in DOM, then activate fileupload()
     $(() => @loadAccessories())
+
+    # setup editable fields
+    @$('#spec_headline').editable({
+      title: 'Year, Make and Model',
+      value: {
+        year: @model.get('year'), 
+        make: @model.get('make'), 
+        modelName: @model.get('model_name')
+      },
+      placement: 'bottom',
+      send: 'never',
+      url: (obj) => 
+        @model.set('year', obj.value.year)
+        @model.set('make', obj.value.make)
+        @model.set('model_name', obj.value.modelName)
+        @model.save()
+    })
+
+    @$('#serial').editable({url: (obj) => @model.set(obj.name, obj.value); @model.save()})
+    @$('#registration').editable({url: (obj) => @model.set(obj.name, obj.value); @model.save()})
+    @$('#asking_price').editable({
+        url: (obj) => 
+            d = new $.Deferred
+            intPrice = parseInt(obj.value.replace(/[^0-9]/g,""), 10)
+            @model.set(obj.name, intPrice)
+            @model.save(null, {success: => d.resolve()})
+            return d.promise()
+        display: (obj) ->
+            intPrice = parseInt(obj.replace(/[^0-9]/g,""), 10)
+            $(this).html("$" + intPrice.formatMoney(0, ".", ","))
+        })
+
+    @$("#asking_price").each(->
+        if $(this).html() != null
+          intPrice = parseInt($(this).html().replace(/[^0-9]/g,""), 10)
+          $(this).html("$" + intPrice.formatMoney(0, ".", ","))
+    )        
     
     return this    

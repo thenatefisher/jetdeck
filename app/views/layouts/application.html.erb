@@ -7,7 +7,7 @@
      
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Jetdeck</title>
+    <title>JetDeck</title>
     
     <%= csrf_meta_tags %>
     
@@ -22,6 +22,7 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
     <!-- javascript -->
     <%= javascript_include_tag "application" %>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,900' rel='stylesheet' type='text/css'>
 
     <% if flash[:notice] %>
     <script type="text/javascript"> 
@@ -32,15 +33,12 @@
   </head>
 
   <body>
-  
-    <div class="sweatband"></div>
-    
-    <%= render "layouts/partials/noie" %>
-  
+
+  <% if current_user %>    
+
+    <%= render "layouts/partials/brandbar" %>
+
     <div class="container">
-      <% if current_user %>
-      
-      <%= render "layouts/partials/brandbar" %>
 
       <%= render "layouts/partials/searchbar" %>
       
@@ -53,15 +51,10 @@
             <br/>
 
             <%= render "layouts/partials/leftnav" %>
-            
-            <%= render "layouts/partials/invites" %>
-            
+                        
           </div> <!-- end MY DECK ... navigation -->
 
           <div class="span10" id="whitebox"> <!-- span10 entire spec (White background) -->
-
-              <%= render "layouts/partials/changes" %>
-              <div style="height: 20px"></div>
 
               <%= yield %>
 
@@ -74,8 +67,6 @@
     </div> <!-- end container class -->
 
     <div class="modal hide" id="jetdeckModal"></div> <!-- modal container place holder -->
-  
-    <%= render "layouts/partials/mixpanel" %>
 
     <% end %>
     

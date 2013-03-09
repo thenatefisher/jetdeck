@@ -7,25 +7,28 @@
  *= require datepicker 
  *= require_tree ./components
  *= require_tree ./controllers
+ *= require mockup/css/jquery-ui
+ *= require mockup/css/bootstrap-editable
+ *= require mockup/css/bootstrap-tagmanager
+ *= require mockup/css/DT_bootstrap
  *= require_self
 */
 
 @import "twitter/bootstrap/variables";
 @import "twitter/bootstrap/mixins";
 
+
 /* document body */
 body {
   padding-top: 10px;
-  background: url(<%= asset_path 'bg/dots.png' %>) repeat;
+  background: whiteSmoke;
 }
 
 /* application mode body */
 #whitebox {
   border: 1px solid #ccc; 
-  -webkit-border-radius: 4px; 
-  -moz-border-radius: 4px; 
-  border-radius: 4px; 
   margin:0px; 
+  padding-bottom: 20px;
   background: #fff;
 }
 
@@ -34,7 +37,24 @@ body {
   padding: 4px 15px;
 }
 .breadcrumb.subsection {
-  background: #D9EDF7;
+  .clicky;
+  background: rgb(236, 242, 245);
+}
+.breadcrumb a {
+  text-decoration: none;
+}
+.breadcrumb.subsection:hover {
+  background: rgb(220, 237, 245);
+}
+.breadcrumb.danger-header li a:hover {
+  color: white
+}
+
+#requirements-buttons .breadcrumb {
+  .clicky;
+}
+#requirements-buttons .breadcrumb:hover {
+  background: rgb(220, 237, 245);
 }
 
 /* make link-like */
@@ -45,21 +65,13 @@ body {
   font-size: 14px;
   color: #9999aa;
   line-height: 20px;
-  text-align: center; 
+  text-align: right; 
   margin: 20px;
+  font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif;
 }
 
 /* jquery uploader */
 #uploader { margin-top: 40px; }
-
-/* darken placeholder */
-@placeholderText: #cfcfcf;
-input:-moz-placeholder {
-  color: #cfcfcf;
-}
-
-/* generic error colors */
-.error { color: @red; }
 
 .edit-group .error {
   margin-top: 8px;
@@ -73,9 +85,10 @@ input:-moz-placeholder {
   line-height: 19px;
 }
 
+
 .dark_color { color: #999 }
 
-a {color: #0074CC;}
+a {color: rgb(41, 127, 170);}
 a.labelLink:hover {text-decoration :none; }
 a.thumbnail:hover {text-decoration :none; }
 
@@ -87,14 +100,17 @@ h4 i {
   margin-top: 2px;
 }
 
-.btn i {
-  margin-top: 2px;
+h1, h2, h3, h4, h5, h6 {
+  /*font-family: 'Source Sans Pro', 'Helvetica Neue', Helvetica, sans-serif;*/
 }
 
-.btn-large i {
-  padding-top: 2px;
-  margin-right: 4px;
+.caption, .caption h5 { 
+  font-size: 12px; 
+  line-height: 10px;
 }
+
+/* generic error colors */
+.error { color: @red; }
 
 .partial-header {
   background: @btnBackgroundHighlight;
@@ -106,3 +122,91 @@ h4 i {
 .large-line-height { line-height: 27px; }
 
 .table-input-margin { margin: 5px 0px; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  .inline_edit {
+    border: 0px;
+    box-shadow: none;
+    outline: 0px;
+    padding: 0px;
+    margin: 0px;
+    font-size: 15px;
+    vertical-align: baseline;
+    width: 100px;
+    background: transparent;
+  }
+
+  .inline_edit :focus {
+    border: 0px;
+    outline: 0px;
+  }
+
+  #main-thumbnail {
+    height: 130px;
+    overflow: hidden; -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .pagination a {
+    padding: 0px 6px;
+    line-height: 19px;
+  }
+
+  
+  .nav-pills > li > a:hover { background: transparent; }
+  .more_details { display: none; }
+  .remove_detail { display: none; }
+  .remove_detail i { color: #CCC; }
+  .action_column { text-align: center; }
+  .breadcrumb { padding: 4px 15px; }
+  .editable, a.editable { border: 0px; }
+  .select2-dropdown-open .select2-choice { height: 27px; }
+
+
+
+
+
+
+
+
+.index-image {
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  margin: 2px; 
+  width: 75px; 
+  height: 75px; 
+  float: left; 
+}
+
+.airframe-index-missing-image{
+  .index-image;
+  background: #eee url(/assets/placeholder/aircraft_default_avatar_small.png);
+  background-position-x: 114px;
+  background-position-y: 96px;
+  background-size: 127px;
+}
+
+.contact-index-missing-image{
+  .index-image;
+  background: #eee url(/assets/placeholder/missing.png);
+  background-position-x: 100px;
+  background-position-y: 108px;
+  background-size: 113px;
+}

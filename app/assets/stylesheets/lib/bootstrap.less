@@ -1,1 +1,94 @@
 @import "twitter/bootstrap/bootstrap";
+
+/* fix button icon margin */
+.btn i {
+  margin-top: 2px;
+}
+
+.btn-large i {
+  padding-top: 2px;
+  margin-right: 4px;
+}
+
+/* darken placeholder */
+@placeholderText: #cfcfcf;
+input:-moz-placeholder {
+  color: #cfcfcf;
+}
+
+.btn {
+ background-image: none;
+}
+
+
+.btn-danger {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: rgb(199, 120, 120);
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffee5f5b', endColorstr='#ffbd362f', GradientType=0);
+  border-color: #bd362f #bd362f #802420;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: rgb(199, 120, 120);
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+.btn-danger:hover,
+.btn-danger:active,
+.btn-danger.active,
+.btn-danger.disabled,
+.btn-danger[disabled] {
+  color: #ffffff;
+  background-color: #bd362f;
+  *background-color: #a9302a;
+}
+.btn-danger:active,
+.btn-danger.active {
+  background-color: #942a25 \9;
+}
+
+.dropdown-menu li > a:hover,
+.dropdown-menu li > a:focus,
+.dropdown-submenu:hover > a {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: rgb(41, 127, 170);
+  background-image: none;
+}
+.dropdown-menu .active > a,
+.dropdown-menu .active > a:hover {
+  color: #ffffff;
+  text-decoration: none;
+  outline: 0;
+  background-color: rgb(41, 127, 170);
+  background-image: none;
+}
+.dropdown-menu .disabled > a,
+.dropdown-menu .disabled > a:hover {
+  color: #999999;
+}
+.dropdown-menu .disabled > a:hover {
+  text-decoration: none;
+  background-color: transparent;
+  background-image: none;
+  cursor: default;
+}
+.dropdown-menu li > a.ui-state-focus {
+  text-decoration: none;
+  color: #ffffff;
+  background-color: rgb(41, 127, 170);
+  background-image: none;
+}
+.nav-pills > .active > a, .nav-pills > .active > a:hover {
+  color: #ffffff;
+  background-color: rgb(41, 127, 170);
+}
+.btn-primary {
+  color: #ffffff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: rgb(41, 127, 170);
+}
+.btn-primary:hover {
+  background-color: rgb(36, 108, 145);
+}

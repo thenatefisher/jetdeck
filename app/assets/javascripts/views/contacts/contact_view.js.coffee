@@ -11,8 +11,6 @@ class Jetdeck.Views.Contacts.ContactView extends Backbone.View
     location.href = "/contacts/" + @model.id
     return
 
-  tagName: "tr"
-
   destroy: () ->
     @model.destroy()
     this.remove()

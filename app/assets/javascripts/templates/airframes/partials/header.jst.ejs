@@ -1,42 +1,80 @@
-<div class="span3 main-thumbnail airframe-thumbnail">
+<div style="padding-top: 20px; background:rgb(236, 242, 245); border-bottom: 1px solid #CCC">
+
+<div class="span2 main-thumbnail airframe-thumbnail" style="height: 130px; margin-bottom: 20px;">
 <% if (typeof(avatar) != "undefined" && avatar != null && typeof(avatar.thumb) != "undefined") { %>
   <a class="manage_images" href="#" onclick="return false;"><img src="<%= avatar.thumb %>"></a>
   <% } else { %>
   <a class="manage_images" href="#" onclick="return false;">
-    <span style="position: absolute; margin-top: 70px; width: 220px; text-align: center">
-      <h1>Upload Image</h1>
-      <h3>Drag Files Here</h3>
+    <span style="position: absolute; margin-top: 45px; width: 140px; text-align: center">
+      <strong>Upload Image</strong><br>
+      Drag Files Here
     </span>
-    <img src="/assets/placeholder/aircraft_default_avatar.png">
+    <img style="height: 129px" src="/assets/placeholder/aircraft_default_avatar.png">
   </a>
   <% } %>
 </div>
 
-<div class="offset3">
+<div class="offset2">
 
-    <h1 id="spec_headline"><%= year %> <%= make %> <%= model_name %></h1>
+    <h1 style="margin-top: 0px;">
+      <span id="spec_headline" data-pk="1" style="cursor: pointer" data-emptytext="Unknown Aircraft" data-type="aircraft_ymm"><%= year %> <%= make %> <%= model_name %></span>             
+    </h1>
 
-    <div style="height: 5px;"></div>
+    <div style="margin-top: 5px; font-size: 110%" id="contact_details">
 
-    <% if (damage) { %>
-    <a class="labelLink" href="#">
-        <span class="label label-warning tags_enabled">Damage History</span>
-    </a>
-    <% } %>
+      <div class="span4" style="margin: 5px 0px;">
 
-    <% if (listed) { %>
-    <a class="labelLink" href="#">
-        <span class="label label-important tags_enabled">Listed</span>
-    </a>
-    <% } %>
+        <div style="margin: 0px;">
+          Serial &nbsp;
+          <a href="#" id="serial" data-type="text" data-pk="1" data-emptytext="none" data-original-title="Serial"><%= serial %></a> 
+        </div>
 
-    <% for (var i = 0; i < tags.length; i++) { %>
-    <a class="labelLink" href="#"><span class="label label-info tags_enabled">
-      <%= tags[i].name %></span>
-    </a>
-    <% } %>
+        <div style="margin: 5px 0px">
+          Registration &nbsp;
+          <a href="#" id="registration" data-type="text" data-pk="1" data-emptytext="none" data-original-title="Registration"><%= registration %></a> 
+        </div>
 
-    <div style="margin: 20px 0px 0px 0px; font-size: 110%">
+        <div style="margin: 5px 0px">
+          Asking Price &nbsp;
+          <a href="#" id="asking_price" data-type="text" data-pk="1" data-emptytext="$--" data-name="asking_price" data-original-title="Asking Price"><%= asking_price %></a> 
+        </div>
+
+      </div>
+
+        <div class="span4" style="margin: 5px 0px;">
+
+          <div style="margin: 0 0 5px 0px;">
+            <span class="muted">
+              Add <a href="#" id="add_associate" data-type="aircraft_associate">Associate</a>
+            </span>
+          </div> 
+
+          <div style="margin: 5px 0px">
+            <a href="/contacts/95"><span class="label label-info"><i class="icon-user icon-large"></i></span></a> Owner 
+            <a href="#" id="Owner_3" data-type="text" data-pk="1" data-name="email" data-original-title="Email Address">
+              Jackson Teller
+            </a>             
+            <a href="#" class="remove_detail"><i class="icon-remove"></i></a>
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div style="display: none; margin: 20px 0px 0px 0px; font-size: 110%">
 
         <div><div style="line-height: 5px;"><br></div>
         <strong class="span2" style="margin: 10px;">Serial Number</strong>
@@ -212,3 +250,6 @@
     </tr>
 {% } %}
 </script>
+
+<div class="clearfix"></div>
+</div>

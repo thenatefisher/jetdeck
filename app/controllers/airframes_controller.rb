@@ -106,11 +106,13 @@ class AirframesController < ApplicationController
     @airframe = Airframe.find(:first, :conditions =>
       ["id = ? AND user_id = ?", params[:id], @current_user.id])
     
-    equipment = Array.new()
-    params[:airframe][:equipment].each do |e|
-      equipment << e.slice(:etype, :name, :title, :airframe_id, :id)
+    if !params[:airframe][:equipment].blank?
+      equipment = Array.new()
+      params[:airframe][:equipment].each do |e|
+        equipment << e.slice(:etype, :name, :title, :airframe_id, :id)
+      end
+      params[:airframe][:equipment_attributes] = equipment 
     end
-    params[:airframe][:equipment_attributes] = equipment 
     
     whitelist = params[:airframe].slice(
         :asking_price, :description,
@@ -118,52 +120,54 @@ class AirframesController < ApplicationController
         :tc, :year, :make, :model_name, 
         :equipment_attributes)
 
-    @engines = Array.new()
-    params[:airframe][:engines].each do |a|
-         
-         if a[:id] == "0" && a[:model_name]
-         
-            newItem = Engine.create(
-                :model_name => a[:model_name], 
-                :user_id => @current_user.id)
-                
-            eng_wl = a.slice(:tt, :tc, :serial, :make, :modelName, 
-              :name, :year, :smoh, :shsi, :tbo, :hsi)
-            newItem.update_attributes(eng_wl) if newItem     
-                       
-            @engines << newItem if newItem             
-         elsif @baseline = Engine.find(
-              :first, 
-              :conditions => [
-                "id = ? AND baseline = 't'", a[:id]])
+    if !params[:airframe][:engines].blank?
+      @engines = Array.new()
+      params[:airframe][:engines].each do |a|
            
-               newItem = @baseline.dup
-               newItem.baseline = false
-               newItem.user_id = @current_user.id
-               newItem.baseline_id = a[:id]
-                
-               eng_wl = a.slice(:tt, :tc, :serial, :make, :modelName, 
+           if a[:id] == "0" && a[:model_name]
+           
+              newItem = Engine.create(
+                  :model_name => a[:model_name], 
+                  :user_id => @current_user.id)
+                  
+              eng_wl = a.slice(:tt, :tc, :serial, :make, :modelName, 
                 :name, :year, :smoh, :shsi, :tbo, :hsi)
-               newItem.update_attributes(eng_wl) 
-                             
-               @engines << newItem            
-         else
-         
-            engine = Engine.find(:first, :conditions => [
-              "id = ? AND user_id = ?",
-              a[:id],
-              @current_user.id])
-            
-            eng_wl = a.slice(:tt, :tc, :serial, :make, :modelName, 
-              :name, :year, :smoh, :shsi, :tbo, :hsi)
-            engine.update_attributes(eng_wl) if engine
+              newItem.update_attributes(eng_wl) if newItem     
+                         
+              @engines << newItem if newItem             
+           elsif @baseline = Engine.find(
+                :first, 
+                :conditions => [
+                  "id = ? AND baseline = 't'", a[:id]])
+             
+                 newItem = @baseline.dup
+                 newItem.baseline = false
+                 newItem.user_id = @current_user.id
+                 newItem.baseline_id = a[:id]
+                  
+                 eng_wl = a.slice(:tt, :tc, :serial, :make, :modelName, 
+                  :name, :year, :smoh, :shsi, :tbo, :hsi)
+                 newItem.update_attributes(eng_wl) 
+                               
+                 @engines << newItem            
+           else
+           
+              engine = Engine.find(:first, :conditions => [
+                "id = ? AND user_id = ?",
+                a[:id],
+                @current_user.id])
               
-            @engines << engine if engine 
-            
-         end
-         
+              eng_wl = a.slice(:tt, :tc, :serial, :make, :modelName, 
+                :name, :year, :smoh, :shsi, :tbo, :hsi)
+              engine.update_attributes(eng_wl) if engine
+                
+              @engines << engine if engine 
+              
+           end
+           
+      end
+      whitelist[:engines] = @engines    
     end
-    whitelist[:engines] = @engines    
 
     respond_to do |format|
       if @airframe.update_attributes(whitelist)

@@ -8,7 +8,12 @@ class Jetdeck.Views.Notes.NoteItem extends Backbone.View
     "click .edit-note"          : "edit"
     "click .cancel-note-edit"   : "cancel_update"
     "click .update-note"        : "save"
-    
+    "click .sticky-note"        : "sticky"
+  
+  sticky: ->  
+    # bubble the event up to owner model
+    @trigger("sticky")
+
   destroy: =>
     @model.destroy(success: => 
       mixpanel.track("Deleted Note", {type: @model.get("type")} )
@@ -19,13 +24,18 @@ class Jetdeck.Views.Notes.NoteItem extends Backbone.View
     # cancel editing any other note
     $(".note-description").show()
     $("textarea.note").hide()
+    $(".note-page-header").show()
     $(".note-edit-buttons").hide()  
     $(".disable-note-buttons").show()
       
     @$(".note-description").hide()
     @$("textarea.note").show()
+    @$(".note-page-header").hide()
     @$(".note-edit-buttons").show()
     @$(".disable-note-buttons").hide()
+
+    @$("textarea.note").addClass("large-note") if @model.get("description").length >= 120
+    @$("textarea.note").removeClass("large-note") if @model.get("description").length < 120
     
   save: =>
     if !@$("textarea.note").val()
@@ -38,6 +48,9 @@ class Jetdeck.Views.Notes.NoteItem extends Backbone.View
       mixpanel.track "Updated Note", {type: @model.get("type")}
       @model = n
       @render()
+      if @model.get("is_sticky") 
+        @trigger("sticky") 
+        @trigger("sticky") 
     )
     
   cancel_update: =>
@@ -45,6 +58,7 @@ class Jetdeck.Views.Notes.NoteItem extends Backbone.View
     @$("textarea.note").hide()
     @$(".note-edit-buttons").hide()  
     @$(".disable-note-buttons").show()  
+    @$(".note-page-header").show()
     
   initialize: ->
     $(@el).hover( 
@@ -54,6 +68,15 @@ class Jetdeck.Views.Notes.NoteItem extends Backbone.View
   
   render : =>
     $(@el).html(@template(@model.toJSON() ))
+    
+    @$(".note-description").toggle(
+      =>
+        @$(".elipsis").hide()
+        @$(".more").fadeIn(100)
+      =>
+        @$(".more").fadeOut(100, => @$(".elipsis").show()) 
+    )
+
     return this
   
 class Jetdeck.Views.Notes.ShowNotes extends Backbone.View
@@ -61,14 +84,14 @@ class Jetdeck.Views.Notes.ShowNotes extends Backbone.View
     
   initialize: =>
     @type = window.router.view.model.paramRoot.charAt(0).toUpperCase() + window.router.view.model.paramRoot.slice(1)   
-    
+
   events:
     "click #add-note" : "create"
     "click a.next" : "next"
     "click a.prev" : "prev"
     "click a.page" : "page"
     "click .sort" : "sort"
-  
+
   sort : (event) ->
     # capture the click and get the parameters
     e = event.target || event.currentTarget
@@ -131,7 +154,11 @@ class Jetdeck.Views.Notes.ShowNotes extends Backbone.View
   addOne: (note) => 
     if note
       note.on("deleted", => @render() )
+      # set is_sticky
+      is_sticky = if (@model.get("sticky_id") == note.get("id")) then true else false
+      note.set("is_sticky", is_sticky)
       item = new Jetdeck.Views.Notes.NoteItem(model: note)
+      item.on("sticky", => @sticky(note.get('id') ))
       @$("#note_items").append(item.render().el) 
             
   create: =>
@@ -151,6 +178,19 @@ class Jetdeck.Views.Notes.ShowNotes extends Backbone.View
       @render()
     )
         
+  sticky: (note_id) =>
+    # set owner-model sticky id
+    if @model.get("sticky_id") == note_id then note_id = null
+    @model.save({
+      sticky_id: note_id
+    }, success: (n) => 
+      mixpanel.track "Updated Sticky"
+      @model = n
+      @model.trigger("sticky", note_id)
+      @render()
+    ) 
+    # todo update masthead
+
   render : =>
     params =
         count : @model.notes.length
@@ -159,6 +199,15 @@ class Jetdeck.Views.Notes.ShowNotes extends Backbone.View
     @model.notes.turnTo(1)
     @addAll()    
     @$('.page[rel=1]').parent('li').addClass('active')  
+
+    if @model.notes.length == 0
+      @$("#add-note-fields").show()
+    else
+      @$(".subsection").toggle(
+        => @$("#add-note-fields").show(),
+        => @$("#add-note-fields").hide()
+      )     
+
     return this
 
 

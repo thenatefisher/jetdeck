@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121120225340) do
+ActiveRecord::Schema.define(:version => 20130130001403) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(:version => 20121120225340) do
     t.string   "phone"
     t.integer  "owner_id"
     t.string   "website"
+    t.integer  "sticky_id"
   end
 
   create_table "credits", :force => true do |t|

@@ -39,12 +39,12 @@ class Jetdeck.Views.Contacts.IndexView extends Backbone.View
     @options.contacts.eachOnPage(@addOne)
 
   clear : ->
-    @$("#contacts tbody").html('')
+    @$("#contacts").html('')
 
   addOne: (contact) =>
     if contact
         view = new Jetdeck.Views.Contacts.ContactView({model : contact})
-        @$("#contacts tbody").append(view.render().el)
+        @$("#contacts").append(view.render().el)
 
   render: =>
     params =

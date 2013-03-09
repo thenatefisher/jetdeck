@@ -1,18 +1,7 @@
-Jetdeck.Views.Airframes ||= {}
+Jetdeck.Views.Send ||= {}
 
-class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
+class Jetdeck.Views.Send.ShowSend extends Backbone.View
   template: JST["templates/airframes/partials/send"]
-
-  intialize: ->
-    @$("#toggle_send").toggle(
-      => 
-        @$("#history_container").hide()
-        @$("#send_container").show()
-      ,
-      =>
-        @$("#history_container").show()
-        @$("#send_container").hide()
-    )
 
   events :
     "click #send_spec" : "send"
@@ -79,28 +68,6 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
   render : ->
     $(@el).html(@template(@model.toJSON() ))
     
-    $(@el).ready( -> 
-      $('#history').sparkline([15,6,7,2,0,4,2,4,0,3,5,6,12,10], {
-        type: 'bar',
-        height: '30',
-        barWidth: 14,
-        barSpacing: 3,
-        zeroAxis: false,
-        barColor: '#c7d8e0'
-      })
-    )
-
-    @$("#toggle_send").toggle(
-      => 
-        @$("#history_container").hide()
-        @$("#send_container").show()
-      ,
-      =>
-        @$("#history_container").show()
-        @$("#send_container").hide()
-    )
-    
-        
     @$("#recipient_email").autocomplete({
        minLength: 2
        autofocus: true

@@ -4,6 +4,7 @@ json.first h @contact.first
 json.last h @contact.last
 json.phone h @contact.phone
 json.id @contact.id
+json.sticky_id @contact.sticky_id
 
 json.ownerships @contact.ownerships do |json, x|
   json.description h x.description  

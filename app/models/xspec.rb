@@ -63,7 +63,7 @@ class Xspec < ActiveRecord::Base
       return
     end
   
-    window_start = self.views.where("created_at > ?", 30.days.ago).first.created_at
+    window_start = self.views.find(:all, :conditions => ["created_at > ?", 30.days.ago], :order => "created_at ASC").first.created_at
     window_end = window_start + 24.hours
     series_start = window_start
     result = []
@@ -71,7 +71,7 @@ class Xspec < ActiveRecord::Base
     until Time.now() < window_start
     
       result.push(
-        self.views.where("created_at < ? AND created_at > ?", window_end, window_start).length
+        self.views.where("created_at <= ? AND created_at > ?", window_end, window_start).length
       )
     
       window_start += 24.hours

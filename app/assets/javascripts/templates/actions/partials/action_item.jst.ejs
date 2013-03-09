@@ -1,16 +1,16 @@
-<div class="action <% if (past_due) { %>late<% } %>">
+<label class="checkbox <% if (past_due) { %>late<% } %>">
 
-  <div class="action-buttons">
-  <i class="icon-ok close-action"></i>
-  </div>
+  <input name="item" type="checkbox"></input> 
+  <span class="short-title"><%= list_title %></span>
+  <span class="long-title hide"><%= title %></span>
   
-  <strong class="short-title"><%= list_title %></strong>
-  <strong class="long-title hide"><%= title %></strong><br>
-
   <% if (due_at != null) { %>
   <div class="due-date"> 
-    <% if (past_due) { %><i class="icon-exclamation-sign icon-large"></i> <% } %> Due: <%= list_due_at %>
+    <small class="muted"><%= list_due_at %></small>
   </div>
-  <% } %>
+  <% } %>  
   
-</div>
+  <a href="#" class="hide pull-right muted"><i class="icon-pencil"></i></a>
+
+</label>
+
