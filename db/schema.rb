@@ -56,36 +56,6 @@ ActiveRecord::Schema.define(:version => 20130130001403) do
     t.datetime "updated_at",  :null => false
   end
 
-  create_table "airframe_contacts", :force => true do |t|
-    t.integer  "airframe_id"
-    t.integer  "contact_id"
-    t.string   "relation"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
-  create_table "airframe_equipments", :force => true do |t|
-    t.integer  "airframe_id"
-    t.integer  "equipment_id"
-    t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-    t.integer  "engine_id"
-  end
-
-  create_table "airframe_histories", :force => true do |t|
-    t.integer  "airframe_id"
-    t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-    t.text     "description"
-    t.text     "oldValue"
-    t.text     "newValue"
-    t.string   "changeField"
-  end
-
-  add_index "airframe_histories", ["user_id"], :name => "index_airframe_histories_on_user_id"
-
   create_table "airframes", :force => true do |t|
     t.string   "serial"
     t.string   "registration"
@@ -157,19 +127,6 @@ ActiveRecord::Schema.define(:version => 20130130001403) do
     t.integer  "sticky_id"
   end
 
-  create_table "credits", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "creditable_type"
-    t.integer  "creditable_id"
-    t.decimal  "amount"
-    t.boolean  "direction"
-    t.text     "description"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  add_index "credits", ["user_id"], :name => "index_credits_on_user_id"
-
   create_table "details", :force => true do |t|
     t.string   "detailable_type"
     t.integer  "detailable_id"
@@ -208,14 +165,6 @@ ActiveRecord::Schema.define(:version => 20130130001403) do
     t.string   "etype"
   end
 
-  create_table "equipment_details", :force => true do |t|
-    t.string   "value"
-    t.string   "parameter"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
-    t.integer  "airframeEquipment_id"
-  end
-
   create_table "invites", :force => true do |t|
     t.integer  "from_user_id"
     t.boolean  "activated"
@@ -246,13 +195,6 @@ ActiveRecord::Schema.define(:version => 20130130001403) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "manufacturers", :force => true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "notes", :force => true do |t|
     t.string   "title"
     t.text     "description"
@@ -271,14 +213,6 @@ ActiveRecord::Schema.define(:version => 20130130001403) do
     t.datetime "assigned"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
-  end
-
-  create_table "spec_permissions", :force => true do |t|
-    t.integer  "spec_id"
-    t.string   "field"
-    t.boolean  "allowed"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "spec_views", :force => true do |t|

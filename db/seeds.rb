@@ -4,7 +4,7 @@
 #require "#{Rails.root}/db/seeds/contacts"
 
 # create 100,000 bogus baseline airframes to test db caching in heroku
-100000.times do
+100.times do
 
   airframe = false
   alpha = "abcdefghjklmnpqrstuvwxyz".upcase
@@ -26,3 +26,16 @@
   airframe = Airframe.create(conditions.merge(details))
     
 end
+
+Contact.create(
+  :first => "Nate",
+  :last => "Fisher",
+  :email => "***REMOVED***",
+  :email_confirmation => "***REMOVED***"
+  )
+
+u = User.create()
+u.password = "asd123"
+u.password_confirmation = "asd123"
+u.contact_id = 1
+u.save
