@@ -4,28 +4,30 @@
       <a class="brand" style="margin-bottom: 5px; padding-left: 0px;" href="/">
         <img src="/assets/logo_white_no_tag_130_beta.png" style="float: left"> 
       </a>
+      <% if current_user %>
       <div class="pull-right username">
 
         Welcome, 
 
         <a href="/profile">
 
-          <% if current_user %>
-          <% if current_user.contact.first == "" && %>
-          <strong>Member</strong>    
-          <% else %>
-          <strong>
-            <%= current_user.contact.first %> 
-            <%= current_user.contact.last %>
-          </strong>                              
-          <% end %>
-          <% end %>
+          
+            <% if current_user.contact.first == "" && %>
+            <strong>Member</strong>    
+            <% else %>
+            <strong>
+              <%= current_user.contact.first %> 
+              <%= current_user.contact.last %>
+            </strong>                              
+            <% end %>
+          
 
         </a>
 
         | <a href="/logout">Log Out</a>
 
       </div>
+      <% end %>
     </div>
   </div>
 </div>  
