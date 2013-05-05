@@ -18,6 +18,8 @@ Jetdeck::Application.routes.draw do
 
   match "/airframes/models" => "airframes#models"
 
+  match "/airframes/import/:url" => "airframes#import", :constraints => { :url => /.*/ }
+
   resources :airframes
 
   resources :xspecs

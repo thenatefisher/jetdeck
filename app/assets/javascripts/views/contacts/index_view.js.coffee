@@ -34,7 +34,6 @@ class Jetdeck.Views.Contacts.IndexView extends Backbone.View
     @$('.page[rel='+p+']').parent('li').addClass('active')
 
   addAll: =>
-    window.m = @options.contacts
     @clear()
     @options.contacts.eachOnPage(@addOne)
 

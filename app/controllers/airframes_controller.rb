@@ -1,6 +1,19 @@
 class AirframesController < ApplicationController
   before_filter :authorize, :sanitize_params
 
+  def import
+
+    if params[:url].present? && @current_user.present?
+      Airframe.import(@current_user.id, params[:url])
+    end
+
+    respond_to do |format|
+      format.html { redirect_to airframes_url }
+      format.json { head :no_content }
+    end   
+
+  end
+
   # GET /airframes/models
   def models
 
@@ -20,7 +33,7 @@ class AirframesController < ApplicationController
   # GET /airframes
   # GET /airframes.json
   def index
-    @airframes = Airframe.where("user_id = ?", @current_user.id)
+    @airframes = Airframe.find(:all, :conditions => ["user_id = ?", @current_user.id], :order => "created_at DESC")
 
     # registration number search
     if params[:term].present?
