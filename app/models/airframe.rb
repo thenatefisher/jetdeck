@@ -1,4 +1,10 @@
+require_relative 'lib/airframe_import_cdc'
+require_relative 'lib/airframe_import_aso'
+require_relative 'lib/airframe_import_tap'
+
 class Airframe < ActiveRecord::Base
+
+  extend AirframeImport
 
   # relationships
   has_many :actions, :as => :actionable
@@ -26,6 +32,34 @@ class Airframe < ActiveRecord::Base
   has_many :xspecs, :dependent => :destroy
 
   belongs_to :creator, :class_name => "User", :foreign_key => "user_id"
+
+
+  def self.import(user_id=nil, link=nil)
+
+    # require a url and owner
+    return nil if link.blank? || user_id.blank?
+
+    # forward declare the airframe
+    airframe = Airframe.new
+
+    # switch to correct parser
+    airframe = AirframeImport::import_cdc(link) if 
+      (link =~ /[www\.]?controller\.com/).present?
+
+    airframe = AirframeImport::import_cdc(link) if 
+      (link =~ /[www\.]?aso\.com/).present?
+
+    airframe = AirframeImport::import_cdc(link) if 
+      (link =~ /[www\.]?trade-a-plane\.com/).present?      
+
+    if airframe.present?
+      airframe.user_id = user_id
+      airframe.save
+    end
+
+    return airframe
+
+  end
 
   def search_url
     "/airframes/#{id}"

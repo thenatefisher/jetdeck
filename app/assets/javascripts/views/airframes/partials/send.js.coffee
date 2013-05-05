@@ -111,7 +111,7 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
           $("#recipient_email").val(ui.item.value) if ui.item.value
           return false          
        source: "/contacts/search"
-    }).data("autocomplete")._renderItem = ( ul, item ) ->
+    }).data("uiAutocomplete")._renderItem = ( ul, item ) ->
        ul.addClass("dropdown-menu")
        ul.addClass("typeahead")
        return $( "<li class=\"result\" style=\"cursor: pointer\"></li>" )

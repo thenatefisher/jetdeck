@@ -13,17 +13,20 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
     e.preventDefault()
     e.stopPropagation()
     mixpanel.track("Created Airframe",{ is_baseline: (@model.get("baseline_id") != null) })
-    collection = new Jetdeck.Collections.AirframesCollection()
-    collection = window.router.airframes if window.router.airframes
-    collection.create(@model.toJSON(),
-      success: (airframe) =>
-        @model = airframe
-        window.location.href = "/airframes/#{@model.id}"
-        modalClose()
+    if @$("input[name='airframe-create']").val == "find"
+      collection = new Jetdeck.Collections.AirframesCollection()
+      collection = window.router.airframes if window.router.airframes
+      collection.create(@model.toJSON(),
+        success: (airframe) =>
+          @model = airframe
+          window.location.href = "/airframes/#{@model.id}"
+          modalClose()
 
-      error: (airframe, jqXHR) =>
-        @model.set({errors: $.parseJSON(jqXHR.responseText)})
-    )
+        error: (airframe, jqXHR) =>
+          @model.set({errors: $.parseJSON(jqXHR.responseText)})
+      )
+    else
+      $.post("/airframes/import/" + encodeURIComponent(@$("#airframe_url").val()))
 
   render: =>
     $(@el).html(@template(@model.toJSON() ))
@@ -71,7 +74,7 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
           $(".select2-choice").children("span").html(ui.item.make + " " + ui.item.model_name)
           return false
     })
-    .data("autocomplete")._renderItem = ( ul, item ) ->
+    .data("uiAutocomplete")._renderItem = ( ul, item ) ->
        ul.addClass("dropdown-menu");
        ul.addClass("typeahead");
        return $( "<li class=\"result\" style=\"cursor: pointer\"></li>" )

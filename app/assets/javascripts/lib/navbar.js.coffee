@@ -19,7 +19,7 @@ $(->
           window.location.href = ui.item.url
           return false
     })
-    .data("autocomplete")._renderItem = ( ul, item ) ->
+    .data("uiAutocomplete")._renderItem = ( ul, item ) ->
        ul.addClass("dropdown-menu");
        ul.addClass("typeahead");
        return $( "<li class=\"result\" style=\"cursor: pointer\"></li>" )
