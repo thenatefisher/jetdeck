@@ -119,6 +119,7 @@
 </div> <!-- offset3 -->
 
 <form id="airframe_image_upload" action="/accessories" method="POST" enctype="multipart/form-data">
+  <input type="hidden" name="authenticity_token">
   <div id="uploader" class="hide">
 
       <!-- The loading indicator is shown during file processing -->
@@ -140,7 +141,6 @@
               <input type="file" name="files[image]" id="airframe-image-input" value="Add Files" multiple>
               <input type="hidden" name="airframe" value="<%= id %>">
                   
-
           </div>
           <!-- The global progress information -->
           <div class="span3 fileupload-progress fade">

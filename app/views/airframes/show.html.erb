@@ -4,9 +4,9 @@
   $(function() {
     window.router = new Jetdeck.Routers.AirframesRouter(
       { airframe: <%= render(   template: 'airframes/show',
-				                        handlers: [:jbuilder],
-				                        formats: [:json], 
-                                locals: { airframe: @airframe}).html_safe %> });
+				                handlers: [:jbuilder],
+				                formats: [:json], 
+                                locals: {airframe: @airframe}).html_safe %> });
     Backbone.history.start({silent: true});
     window.router.show();
   });

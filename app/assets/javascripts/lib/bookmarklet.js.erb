@@ -1,0 +1,4 @@
+$.post('<%="http://localhost:3000/airframes/import"%>', 
+    {url: encodeURIComponent(location.href)}, function() {
+    console.log("imported");
+});

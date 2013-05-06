@@ -2,7 +2,8 @@
 
     <div style="margin-left: 20px;">
         <div class="span9 page-header" style="margin-bottom: 10px;">
-            <h1>My Deck <small> (<%= count %>)</small></h1>        
+            <div class="span5"><h1>My Deck <small> (<%= count %>)</small></h1></div>
+            <div class="span4" style="margin-left: 0"><a class="btn pull-right" href="javascript:(function(){document.getElementsByTagName('head')[0].appendChild(document.createElement('script')).src='http://localhost:3000/assets/jetdeck.js';})();">Drag Me to Bookmarks</a></div>
         </div>
         
         <% if (count > 2) { %>

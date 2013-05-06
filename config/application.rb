@@ -63,5 +63,7 @@ module Jetdeck
     # disabled in test becuase it crashes phantomJs
     config.font_awesome = true
 
+    config.autoload_paths += %W(#{Rails.root}/app/models/lib)
+
   end
 end

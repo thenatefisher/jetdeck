@@ -71,6 +71,9 @@ class User < ActiveRecord::Base
 
     # generate activation token
     generate_token(:activation_token)
+
+    # generate activation token
+    generate_token(:bookmarklet_token)    
     
   end
   

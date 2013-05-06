@@ -1,40 +1,41 @@
 Jetdeck.Views.Airframes ||= {}
 
 class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
-  template: JST["templates/airframes/partials/header"]
+  template: JST['templates/airframes/partials/header']
 
   events:
-    "click .set-thumbnail" : "setThumbnail"
+    'click .set-thumbnail' : 'setThumbnail'
 
   initialize: () ->
-    @model.on("change", @updateHeadline)
-    @$(".fileinput-button").on("click", (e) -> e.preventDefault())
+    @model.on('change', @updateHeadline)
+    @$('.fileinput-button').on('click', (e) -> e.preventDefault())
 
   updateHeadline: () =>
     headline = @model.get('year')
-    headline += " " + @model.get('make')
-    headline += " " + @model.get('model_name')
-    $("#spec_headline").html(headline)
+    headline += ' ' + @model.get('make')
+    headline += ' ' + @model.get('model_name')
+    $('#spec_headline').html(headline)
     return this
       
   setThumbnail: (event) ->
     e = event.target || event.currentTarget
     event.preventDefault()
-    accessoryId = $(e).data("aid")
+    accessoryId = $(e).data('aid')
     $.ajax( {
-        url: "/accessories/" + accessoryId, 
+        url: '/accessories/' + accessoryId, 
         data: {thumbnail: true},
-        type: "PUT",
+        type: 'PUT',
         success: => 
             @model.fetch(
                 success: => 
                     window.router.view.cancel()
-                    $("#uploader").show()
+                    $('#uploader').show()
             )
         }
     )
 
   loadAccessories: () =>
+
     # instantiate file uploader
     @$('#airframe_image_upload').fileupload()
 
@@ -46,7 +47,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
             {
                 action: 'load',
                 fileTypes: /^image\/(gif|jpeg|png)$/,
-                maxFileSize: 50000000 # 5MB
+                maxFileSize: 50000000 # 50MB
             },
             {
                 action: 'resize',
@@ -59,19 +60,19 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
         ]
     })
 
-    ### open edit box when adding via the button
+    # open edit box when adding via the button
     @$('#airframe_image_upload').bind('fileuploadadd', ->
       $("#changes").children().fadeIn()
       $("#changes").slideDown()
-    )###
+    )
     
     # set some drag/drop events
     @$('#airframe_image_upload').bind('fileuploaddrop', =>
       $('#uploader').show()
-      #$("#changes").children().fadeIn()
-      #$("#changes").slideDown()
-      $(".manage_images a").html("Hide Images")
-      #mixpanel.track("Dropped Image Into Airframe")
+      #$('#changes').children().fadeIn()
+      #$('#changes').slideDown()
+      $('.manage_images a').html('Hide Images')
+      #mixpanel.track('Dropped Image Into Airframe')
     )
 
     # upload server status check for browsers with CORS support:
@@ -86,12 +87,15 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
         )
 
     # get all existing images
-    $.getJSON("/accessories/?airframe=" + @model.get("id"),  (files) =>
-        fu = $('#airframe_image_upload').data('fileupload')
+    $.getJSON('/accessories/?airframe=' + @model.get('id'),  (files) =>
+        fu = $('#airframe_image_upload').data('blueimpUIFileupload')
         fu._renderDownload(files)
             .appendTo($('#airframe_image_upload .files'))
-            .removeClass("fade")
-    )  
+            .removeClass('fade')
+    )
+
+    token = $("meta[name='csrf-token']").attr("content")
+    @$("#airframe_image_upload input[name='authenticity_token']").val(token)    
     
   render: ->
   
@@ -123,19 +127,19 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     @$('#asking_price').editable({
         url: (obj) => 
             d = new $.Deferred
-            intPrice = parseInt(obj.value.replace(/[^0-9]/g,""), 10)
+            intPrice = parseInt(obj.value.replace(/[^0-9]/g,''), 10)
             @model.set(obj.name, intPrice)
             @model.save(null, {success: => d.resolve()})
             return d.promise()
         display: (obj) ->
-            intPrice = parseInt(obj.replace(/[^0-9]/g,""), 10)
-            $(this).html("$" + intPrice.formatMoney(0, ".", ","))
+            intPrice = parseInt(obj.replace(/[^0-9]/g,''), 10)
+            $(this).html('$' + intPrice.formatMoney(0, '.', ','))
         })
 
-    @$("#asking_price").each(->
+    @$('#asking_price').each(->
         if $(this).html() != null
-          intPrice = parseInt($(this).html().replace(/[^0-9]/g,""), 10)
-          $(this).html("$" + intPrice.formatMoney(0, ".", ","))
+          intPrice = parseInt($(this).html().replace(/[^0-9]/g,''), 10)
+          $(this).html('$' + intPrice.formatMoney(0, '.', ','))
     )        
     
     return this    

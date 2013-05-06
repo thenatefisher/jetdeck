@@ -1,10 +1,10 @@
 require_relative 'lib/airframe_import_cdc'
-require_relative 'lib/airframe_import_aso'
-require_relative 'lib/airframe_import_tap'
+#require_relative 'lib/airframe_import_aso'
+#require_relative 'lib/airframe_import_tap'
 
 class Airframe < ActiveRecord::Base
 
-  extend AirframeImport
+  include AirframeImport
 
   # relationships
   has_many :actions, :as => :actionable
@@ -43,13 +43,13 @@ class Airframe < ActiveRecord::Base
     airframe = Airframe.new
 
     # switch to correct parser
-    airframe = AirframeImport::import_cdc(link) if 
+    airframe = import_cdc(link) if 
       (link =~ /[www\.]?controller\.com/).present?
 
-    airframe = AirframeImport::import_cdc(link) if 
+    airframe = import_cdc(link) if 
       (link =~ /[www\.]?aso\.com/).present?
 
-    airframe = AirframeImport::import_cdc(link) if 
+    airframe = import_cdc(link) if 
       (link =~ /[www\.]?trade-a-plane\.com/).present?      
 
     if airframe.present?

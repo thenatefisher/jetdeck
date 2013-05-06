@@ -1,5 +1,6 @@
 class AirframesController < ApplicationController
   before_filter :authorize, :sanitize_params
+  skip_before_filter :verify_authenticity_token, :only => [:import]
 
   def import
 
