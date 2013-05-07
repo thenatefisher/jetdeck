@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130130001403) do
+ActiveRecord::Schema.define(:version => 20130506062117) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -249,6 +249,7 @@ ActiveRecord::Schema.define(:version => 20130130001403) do
     t.integer  "invites"
     t.string   "activation_token"
     t.boolean  "activated"
+    t.string   "bookmarklet_token"
   end
 
   add_index "users", ["contact_id"], :name => "indexusers_on_contact_id"

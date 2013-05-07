@@ -1,11 +1,13 @@
 class AirframesController < ApplicationController
   before_filter :authorize, :sanitize_params
   skip_before_filter :verify_authenticity_token, :only => [:import]
+  skip_before_filter :authorize, :only => [:import]
 
   def import
 
-    if params[:url].present? && @current_user.present?
-      Airframe.import(@current_user.id, params[:url])
+    user = User.find_by_bookmarklet_id([:token])
+    if params[:url].present? && user.present?
+      Airframe.import(user.id, params[:url])
     end
 
     respond_to do |format|

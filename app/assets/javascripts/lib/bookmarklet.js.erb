@@ -1,4 +1,37 @@
-$.post('<%="http://localhost:3000/airframes/import"%>', 
-    {url: encodeURIComponent(location.href)}, function() {
-    console.log("imported");
+ jc = function(data) {
+
+   bg_container = ($("div#babyg").length > 0) ? $("div#babyg") : $("<div id='babyg'>").appendTo("body")
+
+   window.bg_router = new EverShoppe.Routers.BookmarkletRouter(
+     { suggestions: data }
+   );
+   
+   window.bg_router.index();
+   
+   Backbone.history.start();
+   
+   window.bgto = setTimeout('close_bg()', 7000);
+   
+   $("div#babyg").slideDown();
+   
+}
+
+function close_bg() {
+
+ clearTimeout(window.bgto);
+ 
+ $("div#babyg").slideUp();
+ 
+}
+
+url = window.location.href;
+
+url = url.replace(/\./g,"%2E");
+
+$.ajax("http://<%=request.host%>:<%=request.port%>/a/<%= @user.bm_token %>/" + encodeURIComponent(url), {
+ crossDomain: true,
+ dataType: "jsonp",
+ headers: {
+       'X-CSRF-Token': CSRF_TOKEN
+     },
 });

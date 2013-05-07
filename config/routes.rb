@@ -16,6 +16,8 @@ Jetdeck::Application.routes.draw do
 
   resources :contacts
 
+  match "/b/:token" => "bookmarklet#index"  
+
   match "/airframes/models" => "airframes#models"
 
   match "/airframes/import" => "airframes#import", :only => [:create]
