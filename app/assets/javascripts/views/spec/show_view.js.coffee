@@ -21,13 +21,6 @@ class Jetdeck.Views.Spec.ShowView extends Backbone.View
   render: ->
     $(@el).html(@template(@model.toJSON() ))
     mixpanel.track("Retail Spec Viewed")
-    
-    # handle IE 7 compatibility
-    if $.browser != 'msie' && $.browser.version != '7.0'
-      # only use gallery if images are present
-      if @model.get('images').length > 0
-        # start photo gallery  
-        @$(".gallery a").photoSwipe()
 
     urlCode = @model.get('url_code')
     
