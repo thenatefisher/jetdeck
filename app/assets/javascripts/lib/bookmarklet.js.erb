@@ -1,37 +1,27 @@
- jc = function(data) {
+var jetdeck_$ = jQuery.noConflict(true);
 
-	bg_container = ($("div#babyg").length > 0) ? $("div#babyg") : $("<div id='babyg'>").appendTo("body")
+/*jc = function(data) {
 
-	window.bg_router = new EverShoppe.Routers.BookmarkletRouter(
-	 { suggestions: data }
+	jetdeck_container = (jetdeck_$("div#jetdeck").length > 0) ? jetdeck_$("div#jetdeck") : jetdeck_$("<div id='jetdeck'></div>").appendTo("body");
+
+	window.jetdeck_router = new JetDeck.Routers.BookmarkletRouter(
+		{ suggestions: data }
 	);
 
-	window.bg_router.index();
+	window.jetdeck_router.index();
 
 	Backbone.history.start();
 
-	window.bgto = setTimeout('close_bg()', 7000);
+	window.jetdeck_timeout = setTimeout('close_jetdeck()', 7000);
 
-	$("div#babyg").slideDown();
+	jetdeck_$("div#jetdeck").slideDown();
    
 }
 
-function close_bg() {
+function close_jetdeck() {
 
-	clearTimeout(window.bgto);
+	clearTimeout(window.jetdeck_timeout);
 
-	$("div#babyg").slideUp();
+	jetdeck_$("div#jetdeck").slideUp();
  
-}
-
-url = window.location.href;
-
-url = url.replace(/\./g,"%2E");
-
-$.ajax("http://<%=request.host%>:<%=request.port%>/a/<%= @user.bm_token %>/" + encodeURIComponent(url), {
- crossDomain: true,
- dataType: "jsonp",
- headers: {
-       'X-CSRF-Token': CSRF_TOKEN
-     },
-});
+}*/

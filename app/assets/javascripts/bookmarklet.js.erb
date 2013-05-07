@@ -1,13 +1,2 @@
 //= require jquery
 //= require lib/bookmarklet
-jetdeck.$ = jQuery.noConflict(true);
-
-if (jetdeck.$('#jetdeck_css').length == 0) {
-   var link = jetdeck.$("<link id='jetdeck_css'>").appendTo("head");
-   link.attr('rel','stylesheet');
-   link.attr('type','text/css');
-   link.attr('href','<%= "http://#{request.host}:#{request.port}#{stylesheet_path('bookmarklet')}" %>');
-   link.attr('media','all');
-}
-
-var CSRF_TOKEN ="<%= csrf_meta_tags.match(/content="(.*)" name="csrf-token"/)[1] %>";

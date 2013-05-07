@@ -20,7 +20,7 @@ Jetdeck::Application.routes.draw do
 
   match "/airframes/models" => "airframes#models"
 
-  match "/airframes/import" => "airframes#import", :only => [:create]
+  match "/airframes/import" => "airframes#import"
 
   resources :airframes
 

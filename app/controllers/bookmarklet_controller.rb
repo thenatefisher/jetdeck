@@ -3,7 +3,7 @@ class BookmarkletController < ApplicationController
 	skip_before_filter :authorize
 
 	def index
-		@user = User.find_by_bookmarklet_token(params[:token])
+		@user = User.where(:bookmarklet_token => params[:token]).first
 		render :layout => "bookmarklet", :chunked => true, :content_type => 'application/javascript' if @user
 	end
 

@@ -43,14 +43,14 @@ class Airframe < ActiveRecord::Base
     airframe = Airframe.new
 
     # switch to correct parser
-    airframe = import_cdc(link) if 
+    airframe = AirframeImport.import_cdc(link) if 
       (link =~ /[www\.]?controller\.com/).present?
 
-    airframe = import_cdc(link) if 
-      (link =~ /[www\.]?aso\.com/).present?
+    #airframe = import_cdc(link) if 
+    #  (link =~ /[www\.]?aso\.com/).present?
 
-    airframe = import_cdc(link) if 
-      (link =~ /[www\.]?trade-a-plane\.com/).present?      
+    #airframe = import_cdc(link) if 
+    #  (link =~ /[www\.]?trade-a-plane\.com/).present?      
 
     if airframe.present?
       airframe.user_id = user_id

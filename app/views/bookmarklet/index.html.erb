@@ -1,0 +1,16 @@
+jetdeck_$(function() {
+
+	jetdeck_$.ajax("http://<%=request.host%>:<%=request.port%>/airframes/import", {
+		crossDomain: true,
+		type: "POST",
+		dataType: "jsonp",
+		data: {
+			url: window.location.href,
+			token: "<%= @user.bookmarklet_token %>"
+		},
+		headers: {
+			'X-CSRF-Token': CSRF_TOKEN
+		},
+	});
+
+});
