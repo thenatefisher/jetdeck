@@ -1,24 +1,19 @@
 class AirframesController < ApplicationController
   before_filter :authorize, :sanitize_params
-  skip_before_filter :authorize, :only => [:import]
 
   def import
-
-    user = User.where(:bookmarklet_token => params[:token]).first
+    user = @current_user || User.where(:bookmarklet_token => params[:token]).first
     if params[:url].present? && user.present?
       Airframe.import(user.id, params[:url])
     end
-
     respond_to do |format|
       format.html { redirect_to airframes_url }
       format.json { head :no_content }
     end   
-
   end
 
   # GET /airframes/models
   def models
-
     if params[:q]
       @airframes = Airframe.find(:all,
         :conditions => ["upper(make || ' ' || model_name) LIKE ?
@@ -29,7 +24,6 @@ class AirframesController < ApplicationController
          :select => "DISTINCT ON (model_name) id, *"
       ).first(4)
     end
-
   end
 
   # GET /airframes

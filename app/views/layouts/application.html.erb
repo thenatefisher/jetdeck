@@ -29,6 +29,10 @@
       $(function() { alertFailure("<%= flash[:notice] %>"); });
     </script>
     <% end %>
+
+    <script type="text/javascript">
+    window.bookmarklet_url = '<%= "http://#{request.host_with_port}/b/#{current_user.bookmarklet_token}" %>';
+    </script>
         
   </head>
 

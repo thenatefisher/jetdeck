@@ -34,5 +34,6 @@ gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'jbuilder' # serves .json.jbuilder type files in views
 gem 'paperclip' # used for file uploads
 gem 'thin' # webserver
-gem 'aws-sdk', '~> 1.3.4'
+gem 'aws-sdk', '~> 1.3.4' # amazon toolkit for S3
+gem 'delayed_job_active_record' # delayed job
 

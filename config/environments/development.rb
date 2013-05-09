@@ -51,6 +51,7 @@ Jetdeck::Application.configure do
   
   # mix panel
   config.mixpanel_token = "***REMOVED***"
-  
+
+  config.eager_load_paths += %W(#{Rails.root}/app/models/lib)
   
 end

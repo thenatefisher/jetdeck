@@ -80,7 +80,6 @@ class Jetdeck.Views.Airframes.IndexView extends Backbone.View
     params =
         count : @options.airframes.length
         pages : @options.airframes.pages()
-        bookmarklet_url : window.bookmarklet_url
     $(@el).html(@template(params))
     @addAll()    
     @$('.page[rel=1]').parent('li').addClass('active')   

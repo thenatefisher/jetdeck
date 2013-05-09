@@ -72,7 +72,8 @@ module AirframeImport
             images_list = mobile_doc.css(".cImgList img")
             images_list.each_with_index do |img, index|
                 thumb = Accessory.new(:image => open(img.attr("src")))
-                thumb.image_file_name = "image_#{index}.jpg"
+                img_id = img.attr("src").match(/id=([\d]*)/)[1] rescue index
+                thumb.image_file_name = "#{img_id}.jpg"
                 thumb.thumbnail = true if index == 0
                 thumb.save
                 airframe.accessories << thumb

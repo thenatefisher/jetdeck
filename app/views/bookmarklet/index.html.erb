@@ -11,6 +11,7 @@ jetdeck_$(function() {
 		headers: {
 			'X-CSRF-Token': CSRF_TOKEN
 		},
+		success: function(){ show_jetdeck({data: ""}); }
 	});
 
 });

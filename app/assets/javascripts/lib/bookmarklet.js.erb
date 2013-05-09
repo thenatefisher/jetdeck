@@ -1,27 +1,31 @@
 var jetdeck_$ = jQuery.noConflict(true);
 
-/*jc = function(data) {
+function show_jetdeck(data) {
 
 	jetdeck_container = (jetdeck_$("div#jetdeck").length > 0) ? jetdeck_$("div#jetdeck") : jetdeck_$("<div id='jetdeck'></div>").appendTo("body");
 
-	window.jetdeck_router = new JetDeck.Routers.BookmarkletRouter(
-		{ suggestions: data }
-	);
+	window.Jetdeck.router = new Jetdeck.Routers.BookmarkletRouter(data);
 
-	window.jetdeck_router.index();
+	window.Jetdeck.router.index();
 
 	Backbone.history.start();
 
 	window.jetdeck_timeout = setTimeout('close_jetdeck()', 7000);
 
-	jetdeck_$("div#jetdeck").slideDown();
+	jetdeck_$("div#jetdeck").css('top', '-300px');
+
+	jetdeck_$("div#jetdeck").animate({top: '10px'}, 500);
    
+   	jetdeck_$("div#jetdeck").hover(function(){
+   		clearTimeout(window.jetdeck_timeout);
+   	});
+
 }
 
 function close_jetdeck() {
 
 	clearTimeout(window.jetdeck_timeout);
 
-	jetdeck_$("div#jetdeck").slideUp();
+	jetdeck_$("div#jetdeck").animate({top: '-300px'}, 1000);
  
-}*/
+}

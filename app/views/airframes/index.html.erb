@@ -2,7 +2,7 @@
 
 <script type="text/javascript">
   $(function() {
-  	window.bookmarklet_url = '<%= "http://#{request.host_with_port}/b/#{@current_user.bookmarklet_token}" %>';
+  	
     window.router = new Jetdeck.Routers.AirframesRouter(
       { airframes: <%= render(   template: 'airframes/index',
                                  handlers: [:jbuilder],

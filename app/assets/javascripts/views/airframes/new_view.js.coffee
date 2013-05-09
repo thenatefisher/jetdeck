@@ -25,11 +25,11 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
         error: (airframe, jqXHR) =>
           @model.set({errors: $.parseJSON(jqXHR.responseText)})
       )
-    else
-      $.post("/airframes/import/" + encodeURIComponent(@$("#airframe_url").val()))
 
   render: =>
-    $(@el).html(@template(@model.toJSON() ))
+    $(@el).html(@template($.merge(
+        bookmarklet_url : window.bookmarklet_url, 
+        @model.toJSON()) ))
     
     @$("#airframe_headline").select2({
       placeholder: "Enter a Model",

@@ -1,26 +1,37 @@
 <div class="modal-header">
   <button class="close" data-dismiss="modal">×</button>
-  <h3>New Aircraft</h3>
+  <h3>Create a New Aircraft</h3>
 </div>
 
-<div class="modal-body" style="padding-left: 50px;">
+<div class="modal-body">
 
   <form name="airframe">
 
-    <div class="import_group">
-      <label class="radio" for="airframe-create" style="clear: both; color: #000">
-        <input type="radio" name="airframe-create" value="import" checked><h5> Import From Listing URL:</h5>
-      
-        <input class="span6 pull-left" type="text" 
-        name="import" 
-        id="airframe_url" 
-        placeholder="www.listing.com/id/14413133..."/>
-      </label>
+    <label class="radio" for="airframe-create" style="clear: both; color: #000">
+    <div>
+      <h5>Import From an Online Listing</h5>
+      <div class="alert alert-info">
+      <ol>
+
+        <li>
+
+          <strong>Drag</strong> this button to your bookmarks 
+
+          <a class="btn btn-success btn-large pull-right" style="margin-top: 20px" href="javascript:(function(){document.getElementsByTagName('head')[0].appendChild(document.createElement('script')).src='<%=bookmarklet_url%>';})();"><i class="icon-download-alt icon-large"></i> Import Aircraft</a>
+          <br>
+        </li>
+
+        <li>Browse to an <strong>aircraft listing</strong><br></li>
+
+        <li><strong>Click the bookmark</strong> and the aircraft will be imported to your deck!<br></li>
+
+      </ol>
+      </div>
     </div>
 
     <div class="registration_group">
-      <label class="radio" for="airframe-create" style="clear: both; color: #000">
-        <input type="radio" name="airframe-create" value="find"><h5> Find Details By Registration Number:</h5>
+      
+        <h5>Create From Registration or Serial</h5>
         
         <input class="span6 pull-left" type="text" 
         name="registration" 
@@ -41,11 +52,12 @@
         class="input-small airframe-serial" 
         placeholder="Serial No.">
 
-      </label>
+      
 
       <span class="help-block hide">Invalid Aircraft Model</span>
       
     </div>
+    </label>
 
   </form>
 
