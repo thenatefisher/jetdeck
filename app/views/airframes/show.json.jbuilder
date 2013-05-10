@@ -34,13 +34,9 @@ json.equipment @airframe.equipment do |json, i|
     json.id i.id
 end
 
-if (@airframe.airport)
-    json.location ({
-        :icao => @airframe.airport.icao,
-        :city => @airframe.airport.location.city,
-        :state => @airframe.airport.location.state_abbreviation,
-        :id => @airframe.airport.id
-    })
+json.location @airframe.location do |json, i|
+    json.city h i.city
+    json.state h i.state_abbreviation
 end
 
 if (@airframe.creator && @airframe.creator.contact)

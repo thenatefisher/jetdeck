@@ -26,7 +26,7 @@ json.serial (!@xspec.hide_serial) ? @airframe.serial : nil
 
 json.registration (!@xspec.hide_registration) ? @airframe.registration : nil
 
-json.location @airframe.airport.location if @airframe.airport && !@xspec.hide_location
+json.location @airframe.location if !@xspec.hide_location
 
 json.background @xspec.background if @xspec.background
 
@@ -58,13 +58,9 @@ json.equipment @airframe.equipment.where("etype != 'avionics'") do |json, i|
     json.id i.id
 end
 
-if (@airframe.airport)
-    json.location ({
-        :icao => @airframe.airport.icao,
-        :city => @airframe.airport.location.city,
-        :state => @airframe.airport.location.state_abbreviation,
-        :id => @airframe.airport.id
-    })
+json.location @airframe.location do |json, i|
+    json.city h i.city
+    json.state h i.state_abbreviation
 end
 
 if (@airframe.creator && @airframe.creator.contact)

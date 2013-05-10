@@ -1,35 +1,23 @@
-#########     TODAY       #########
+just create a few migrations to hold data from import scraping of controller
+*intending to import controller fields as text blobs and made a new model for it
+*added currency field to asking price
+*changed airport field to location for airframes
+
+I think we should make the broker message on retail spec come  up like a chat in G+ or facebook. It would entice people to respond right there!
+
+I also like the G+ profile image and crop tool. 
+
+next up:
+1x    finish importing for controller, aso, tap - make sure to use real headers
+1x    finish bookmarklet ui, create import update feature
+1.5x  finish retail spec page, allow positioning of images, create carousel
+2x    finish airframe show page, add analytics and editable details
+1x    integrate payments
+2x    marketing and signup brochure site
+1x    profile page and misc ui improvements
+1x    contact page and actions page
+.5x   check all services operational (s3, sendgrid, etc)
 
 
-  
-#########     THIS WEEK   #########
-
-  50      Database Migration and Seeding
-  --- ---
-  54      Write Tests
-  55      Access Control Audit
-  60      Browser Compatibility Checking
-  --- ---
-
-  90      Error Pages
-
-  
-#########     LATER       #########
-
-#########     DONE        #########
-
-  80      Mail LLC docs
-  110     Make staging/dev AWS S3 area
-  40      Need retail image placeholder of correct dimensions
-  65      Migrate in public spec improvements from mkting demo
-  20      Images need to be resized/cropped on upload to spec defined sizes
-  10      Edit airframe engines, avionics and equipment 
-  15      SSL the profile page logo image from S3
-  30      Contact model: email uniqueness is also specific to an owner
-  45      Make user login email addy case insensitive 
-  70      Turn on New Relic  
-  100     user.rb: has secure password / force ssl  
-  
-================================================================================  
 
 

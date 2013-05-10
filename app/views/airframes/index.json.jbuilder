@@ -6,7 +6,7 @@ json.array! @airframes do |json, a|
     json.year h a.year
     json.tt h a.tt
     json.tc h a.tc
-    json.location a.airport
+    json.location a.location
     json.created_at a.created_at
     json.avatar a.avatar
 end

@@ -15,7 +15,7 @@ module AirframeImport
 
         # grab the details block at top of page, possible values include: 
         # Year, Manufacturer, Model, Price, Location, Condition, SerialNumber, 
-        # RegistrationNumber, TotalTime, NumberOfSeats
+        # RegistrationNumber, TotalTime, NumberOfSeats, Overhaul, FlightRules
         doc.css("#tblSpecs tr").each do |tr|
             if tr.css("td").count == 2
                 begin
@@ -37,33 +37,51 @@ module AirframeImport
         page_details[:DetailedDescription] = doc.css("#ctl00_tdContent > table:nth-child(4) > tbody > tr:last-child > td > table").last rescue nil
 
         # detail sections
-        details = doc.xpath("//table/tr/td/font/b/text()[contains(.,'Detailed Description')]").first.parent.parent.parent.parent.next.inner_html rescue nil
-        page_details[:DetailedDescription] = details.match(/detailstablecell\">(.*?)<font color=\"#910029\"><b>[\w\s]+:/m)[1] rescue nil
-        page_details[:Airframe] = details.match(/<hr[^>]*>.*Airframe:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
-        page_details[:EngineSpecs] = details.match(/<hr[^>]*>.*Engine Specs:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
-        page_details[:Avionics] = details.match(/<hr[^>]*>.*Avionics\/Radios:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
-        page_details[:Props] = details.match(/<hr[^>]*>.*Props:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
-        page_details[:AdditionalEquipment] = details.match(/<hr[^>]*>.*Additional Equipment:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
-        page_details[:InspectionStatus] = details.match(/<hr[^>]*>.*Inspection Status:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
-        page_details[:Exterior] = details.match(/<hr[^>]*>.*Exterior:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
-        page_details[:Interior] = details.match(/<hr[^>]*>.*Interior:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+        details = doc.xpath("//table/tr/td/font/b/text()[contains(.,'Detailed Description')]")
+            .first.parent.parent.parent.parent.next.inner_html rescue nil
 
-        # remove all escapes and strip it
+        page_details[:DetailedDescription] ||= details.match(
+            /detailstablecell\">(.*?)<font color=\"#910029\"><b>[\w\s]+:/m)[1] rescue nil
+        page_details[:Airframe] = details.match(
+            /<hr[^>]*>.*Airframe:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+        page_details[:EngineSpecs] = details.match(
+            /<hr[^>]*>.*Engine Specs:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+        page_details[:Avionics] = details.match(
+            /<hr[^>]*>.*Avionics\/Radios:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+        page_details[:Props] = details.match(
+            /<hr[^>]*>.*Prop\(s\):<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+        page_details[:Modifications] = details.match(
+            /<hr[^>]*>.*Modifications\/Conversions:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+        page_details[:AdditionalEquipment] = details.match(
+            /<hr[^>]*>.*Additional Equipment:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+        page_details[:InspectionStatus] = details.match(
+            /<hr[^>]*>.*Inspection Status:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+        page_details[:Exterior] = details.match(
+            /<hr[^>]*>.*Exterior:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+        page_details[:Interior] = details.match(
+            /<hr[^>]*>.*Interior:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+        page_details[:YearPainted] = details.match(
+            /<hr[^>]*>.*Year Painted:<\/b><\/font><br>(.*?)<hr/m)[1].gsub!(/[^\d]/, "") rescue nil
+        page_details[:YearInterior] = details.match(
+            /<hr[^>]*>.*Year Interior:<\/b><\/font><br>(.*?)<hr/m)[1].gsub!(/[^\d]/, "") rescue nil
+
+        # for each parameter, remove all escapes and strip it
         page_details.each do |key, val|
             page_details[key] = val.gsub(/[\r\n\t]/, "").strip if val.present?
         end
 
+        # store airframe details
         airframe = Airframe.new()
-        airframe.import_url = link
-        airframe.user_id = user_id
-        airframe.serial = page_details[:SerialNumber]
-        airframe.registration = page_details[:RegistrationNumber]
-        airframe.make = page_details[:Manufacturer]
-        airframe.model_name = page_details[:Model]
-        airframe.year = page_details[:Year]
-        airframe.asking_price = page_details[:Price]
-        airframe.description = page_details[:DetailedDescription]
-        airframe.tt = page_details[:TotalTime]
+        airframe.import_url     = link
+        airframe.user_id        = user_id
+        airframe.serial         = page_details[:SerialNumber]
+        airframe.registration   = page_details[:RegistrationNumber]
+        airframe.make           = page_details[:Manufacturer]
+        airframe.model_name     = page_details[:Model]
+        airframe.year           = page_details[:Year]
+        airframe.asking_price   = page_details[:Price]
+        airframe.description    = page_details[:DetailedDescription]
+        airframe.tt             = page_details[:TotalTime]
 
         # add thumbnail if available
         listing_id = link.match(/([\d]+).htm[l]?/)[1] rescue nil

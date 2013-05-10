@@ -11,7 +11,7 @@ class Airframe < ActiveRecord::Base
   
   has_many :notes, :as => :notable
   
-  belongs_to :airport
+  belongs_to :location
 
   has_many    :engines,
               :foreign_key => "airframe_id",
