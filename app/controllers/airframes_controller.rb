@@ -2,14 +2,44 @@ class AirframesController < ApplicationController
   before_filter :authorize, :sanitize_params
 
   def import
+
+    # defaults
+    response = {:status => "UNAUTHORIZED"}
+    status = :forbidden
+
+    # find the user
     user = @current_user || User.where(:bookmarklet_token => params[:token]).first
-    if params[:url].present? && user.present?
-      Airframe.import(user.id, params[:url])
+
+    if user.present?
+
+      # valid user
+      status = :ok
+
+      # start airframe import
+      airframe = nil
+      if params[:url].present? && user.present?
+        airframe = Airframe.import(user.id, params[:url])
+      end
+
+      # create response
+      case airframe.class.name
+        when "Delayed::Backend::ActiveRecord::Job"
+          response[:status] = "OK"
+        when "Airframe"
+          response[:status] = "DUPLICATE"
+          response[:airframe] = {
+            :name => airframe.to_s,
+            :link => "http://#{request.host}:#{request.port}/airframes/#{airframe.id}",
+          }
+        when "NilClass"
+          response[:status] = "ERROR"
+      end
+
     end
-    respond_to do |format|
-      format.html { redirect_to airframes_url }
-      format.json { head :no_content }
-    end   
+
+    # render response
+    render :json => response, :callback => params[:callback], :status => status
+
   end
 
   # GET /airframes/models

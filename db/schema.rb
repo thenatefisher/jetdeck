@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130506062117) do
+ActiveRecord::Schema.define(:version => 20130510042627) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20130506062117) do
     t.boolean  "baseline"
     t.integer  "asking_price"
     t.text     "description"
+    t.text     "import_url"
   end
 
   create_table "airports", :force => true do |t|
@@ -126,6 +127,22 @@ ActiveRecord::Schema.define(:version => 20130506062117) do
     t.string   "website"
     t.integer  "sticky_id"
   end
+
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0
+    t.integer  "attempts",   :default => 0
+    t.text     "handler"
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "details", :force => true do |t|
     t.string   "detailable_type"

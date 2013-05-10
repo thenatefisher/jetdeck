@@ -1,5 +1,7 @@
 jetdeck_$(function() {
 
+	show_jetdeck();
+
 	jetdeck_$.ajax("http://<%=request.host%>:<%=request.port%>/airframes/import", {
 		crossDomain: true,
 		type: "POST",
@@ -11,7 +13,21 @@ jetdeck_$(function() {
 		headers: {
 			'X-CSRF-Token': CSRF_TOKEN
 		},
-		success: function(){ show_jetdeck({data: ""}); }
+		success: function(response) { 
+			console.log(response);
+			switch (response.status) 
+			{
+				case "OK":
+					window.Jetdeck.router.success();
+					break;
+				case "DUPLICATE":
+					window.Jetdeck.router.duplicate(response.airframe);
+					break;
+				default:
+					window.Jetdeck.router.error();
+					break;				
+			}
+		}
 	});
 
 });

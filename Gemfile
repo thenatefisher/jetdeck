@@ -21,6 +21,7 @@ group :test, :development do
   gem 'database_cleaner' # used by test framework
   gem 'better_errors' # replaces standard error page with better errors
   gem 'binding_of_caller' # used by better errors for advanced features
+  gem 'debugger' # real time debugging
 end
 
 gem 'json'

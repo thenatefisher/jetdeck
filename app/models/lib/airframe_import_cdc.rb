@@ -4,10 +4,10 @@ require 'nokogiri'
 
 module AirframeImport
 
-    def AirframeImport.import_cdc(link=nil)
+    def import_cdc(user_id=nil, link=nil)
 
         # url is required
-        return if link.blank?
+        return nil if user_id.blank? || link.blank?
 
         # capture page
         page_details = Hash.new
@@ -54,6 +54,8 @@ module AirframeImport
         end
 
         airframe = Airframe.new()
+        airframe.import_url = link
+        airframe.user_id = user_id
         airframe.serial = page_details[:SerialNumber]
         airframe.registration = page_details[:RegistrationNumber]
         airframe.make = page_details[:Manufacturer]
@@ -67,7 +69,7 @@ module AirframeImport
         listing_id = link.match(/([\d]+).htm[l]?/)[1] rescue nil
         if listing_id.present?
             mobile_link = "http://m.controller.com/Picture/Index?listingId=#{listing_id}"
-            mobile_content = AirframeImport.fetch_cdc(mobile_link)
+            mobile_content = fetch_cdc(mobile_link)
             mobile_doc = Nokogiri::HTML(mobile_content)
             images_list = mobile_doc.css(".cImgList img")
             images_list.each_with_index do |img, index|
@@ -80,15 +82,15 @@ module AirframeImport
             end
         end
 
-        return airframe
+        return airframe.save
 
     end
 
-    def AirframeImport.decode_string(str) 
+    def decode_string(str) 
         return URI.unescape str
     end
 
-    def AirframeImport.fetch_cdc(url)
+    def fetch_cdc(url)
 
         doc = `curl --user-agent "Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11" "#{url}"`
 
@@ -152,7 +154,7 @@ module AirframeImport
         end
 
         # parameters for document request
-        tS40436f_75 = AirframeImport.decode_string(prefix + ":" + chlg.to_s + ":" + slt.to_s + ":" + crc.to_s)
+        tS40436f_75 = decode_string(prefix + ":" + chlg.to_s + ":" + slt.to_s + ":" + crc.to_s)
         tS40436f_id = 3
         tS40436f_md = 1
         tS40436f_rf = "http://www.controller.com/"
