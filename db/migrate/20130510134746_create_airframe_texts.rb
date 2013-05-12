@@ -7,5 +7,12 @@ class CreateAirframeTexts < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    # set all current users as activated
+    User.all.each do |u|
+      u.generate_token(:bookmarklet_token)
+      u.save
+    end
+
   end
 end

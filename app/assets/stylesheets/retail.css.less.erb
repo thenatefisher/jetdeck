@@ -4,7 +4,7 @@
  *= require_self
 */
 
-@import 'twitter/bootstrap/bootstrap';
+@import "twitter/bootstrap/variables";
 @import 'twitter/bootstrap/responsive';
 
 body {
@@ -33,7 +33,7 @@ body {
 .agent-name-phone {
   margin-top: 10px; 
   margin-left: 10px;
-  .pull-left;
+  float: left;
 }
 
 .company-logo {
@@ -45,7 +45,7 @@ body {
 }
 
 .company-name {
-  .pull-left; 
+  float: left; 
   color: black;
 }
 
@@ -128,11 +128,11 @@ body {
 }
 
 .gallery li {
-  .hide;
+  display: none;
 }
 
 .gallery li:first-child {
-  .show;
+  display: block;
 }
 
 #spec-detail {
@@ -141,7 +141,7 @@ body {
 }
 
 #footer {
-  .pull-right;
+  float: right;
   margin: 20px;
 }
 
