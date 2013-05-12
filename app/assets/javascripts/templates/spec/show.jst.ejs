@@ -1,102 +1,234 @@
+<!-- MAKE MODEL SERIAL -->
+<style>
+    #title-box {
+        background: #222; 
+        color: #eee; 
+        position: absolute; 
+        z-index: 99999; 
+        top: 86px; 
+        font-size: 15px; 
+        padding: 7px 7px 3px 7px;
+        border-right: 1px #777 solid; 
+        border-left: 1px #777 solid; 
+        border-bottom: 1px #777 solid; 
+    }
+</style>
 
+<div class="container">
+    <div id="title-box">
+        <%= make %> <%= model_name %> 
+        <small style="margin-left: 5px;"> SN <%= serial %> 
+        <% if(!registration){ %>(<%= registration %>)<%}%>
+        </small>
+    </div>
+</div>
 
-
+<!-- HEADER -->
+<div class="navbar transparent  navbar-fixed-top">
+  <div class="navbar-inner">
     <div class="container">
-    <div style="background: #222; color: #eee; position: absolute; z-index: 99999; top: 86px; font-size: 15px; padding: 7px 7px 3px 7px;"><%= make %> <%= model_name %> <small style="margin-left: 5px;"> SN <%= serial %> (<%= registration %>)</small></div>
-    </div>
-
-    <div class="navbar transparent  navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </a>
-            <a class="brand" href="index.html">
-                <h2><%= agent_company %></h2>
-            </a>
-            <div class="nav-collapse collapse pull-right">
-                <ul class="nav pull-right">
-                    <li><a class="btn-header" href="sign-in.html"><%= agent_email %></a></li>
-                    <li><a class="btn-header" href="sign-up.html">(800) 886-5955</a></li>
-                </ul>
-                
-                <div style="clear:both"></div>
-                <div class="pull-right"><h3 style="padding: 0; margin-right: 15px; margin-top: -5px"><%= agent_name %></h3></div>
-            </div>
-        </div>
-      </div>
-    </div>
-
-
-    <section id="feature_slider" class="">
-        <!-- 
-            Each slide is composed by <img> and .info
-            - .info's position is customized with css in index.css
-            - each <img> parallax effect is declared by the following params inside its class:
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <a class="brand" href="index.html">
+            <h2><%= agent_company %></h2>
+        </a>
+        <div class="nav-collapse collapse pull-right">
+            <ul class="nav pull-right">
+                <li><a class="btn-header" href="sign-in.html"><%= agent_email %></a></li>
+                <li><a class="btn-header" href="sign-up.html">(800) 886-5955</a></li>
+            </ul>
             
-            example: class="asset left-472 sp600 t120 z3"
-            left-472 means left: -472px from the center
-            sp600 is speed transition
-            t120 is top to 120px
-            z3 is z-index to 3
-            Note: Maintain this order of params
-
-            For the backgrounds, you can combine from the bgs folder :D
-        -->
-        <style>
-            .info h2 {
-                color: white;
-                font-size: 20px;
-                font-weight: normal;
-                text-shadow: 1px 1px 1px #3B3262;
-                line-height: 56px;
-            }
-
-            .title-contrast-box {
-                background: rgba(0, 0, 0, 0.4);
-                -webkit-box-shadow: 0 1px 10px rgba(0, 0, 0, .1);
-                -moz-box-shadow: 0 1px 10px rgba(0,0,0,.1);
-                box-shadow: 0 1px 10px rgba(0, 0, 0, .1);                
-                padding: 0 5px;
-            }
-            #pagination {margin-top: -40px;}
-        </style>
-
-        <% for (var i = 0; i < images.length; i++) { %>
-
-        <article class="slide" style="background: url('<%=images[i].original%>') repeat-x top center;">
-            <div class="info" style="top: 500px; left: 20%; position: absolute;">
-
-            </div>
-        </article>
-
-        <% } %>
-
-    </section>
-
-    <div>
-    <div class="container">
-
-        <div class="span11 well hide">
-        <div class="span5">   
-            <h4>Lowest Time Airframe on Market</h4>
-            <h4>Zero Known Damage History</h4>
-            <h4>Fresh Phase 1-4 Inspection, April 2012</h4>
-        </div>
-        <button class="btn btn-large btn-warning pull-right"><strong>Contact Seller</strong></button>
-
-        </div>
-
-        <div class="span10">
-
+            <div style="clear:both"></div>
+            <div class="pull-right"><h3 style="padding: 0; margin-right: 15px; margin-top: -5px"><%= agent_name %></h3></div>
         </div>
     </div>
-    </div>
+  </div>
+</div>
 
-    <!-- Scripts -->
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="http://cleancanvas.herokuapp.com/js/bootstrap.min.js"></script>
-    <script src="http://cleancanvas.herokuapp.com/js/theme.js"></script>
-    <script type="text/javascript" src="http://cleancanvas.herokuapp.com/js/index-slider.js"></script>  
+<!-- GALLERY -->
+<!-- SlidesJS Optional: If you'd like to use this design -->
+<style>
+
+    #slides {
+      display: none
+    }
+
+    #slides .slidesjs-navigation {
+      margin-top:3px;
+    }
+
+    #slides .slidesjs-previous {
+      margin-right: 5px;
+      float: left;
+    }
+
+    #slides .slidesjs-next {
+      margin-right: 5px;
+      float: left;
+    }
+
+    .slidesjs-pagination {
+      margin: 6px 0 0;
+      float: right;
+      list-style: none;
+    }
+
+    .slidesjs-pagination li {
+      float: left;
+      margin: 0 1px;
+    }
+
+    .slidesjs-pagination li a {
+      display: block;
+      width: 13px;
+      height: 0;
+      padding-top: 13px;
+      background-image: url(http://www.slidesjs.com/img/pagination.png);
+      background-position: 0 0;
+      float: left;
+      overflow: hidden;
+    }
+
+    .slidesjs-pagination li a.active,
+    .slidesjs-pagination li a:hover.active {
+      background-position: 0 -13px
+    }
+
+    .slidesjs-pagination li a:hover {
+      background-position: 0 -26px
+    }
+
+    #slides a:link,
+    #slides a:visited {
+      color: #333
+    }
+
+    #slides a:hover,
+    #slides a:active {
+      color: #9e2020
+    }
+
+    .navbar {
+      overflow: hidden
+    }
+    #slides {
+      display: none
+    }
+</style>
+<!-- SlidesJS Required: -->
+
+<script>
+    $(function(){
+      $("#slides").slidesjs({
+        width: 1200,
+        height: 400,
+        pagination: {active: false}, 
+        navigation: {active: false},
+        play: {
+            auto: true
+        }, 
+        effect: {
+            slide: {speed: 1000}
+        }
+      });
+    });
+</script>
+
+<div id="slides">
+    <% for (var i = 0; i < images.length; i++) { %>
+        <img src="<%=images[i].original%>">
+    <% } %>  
+</div>
+
+<!-- SPEC NAV -->
+<style> 
+    .spec-nav-item, .contact-button {
+        vertical-align: middle;
+        line-height: 45px;
+        text-align: center;
+        float: left;
+        padding: 0px 20px;
+        cursor: pointer;
+        border-bottom: 2px transparent solid;
+    }
+    .contact-button {
+        float:right;
+        padding-right: 0px;
+    }
+    .spec-nav-item:hover {
+        background: #DDD;
+    }
+    .spec-nav-item.first {
+        margin-left: 20px;
+    }
+    .spec-nav-item.selected {
+        border-bottom: 2px blue solid;
+        font-weight: bold;  
+    }
+    .container.spec-nav {
+        border-bottom: 1px #DDD solid;
+    }
+</style>
+
+<div class="container spec-nav">
+    <div class="row">
+        <div class="contact-button"> 
+            <button class="btn">Contact Seller</button> 
+        </div>    
+        <div class="spec-nav-item first"> Airframe </div>
+        <div class="spec-nav-item"> Engines </div>
+        <div class="spec-nav-item"> Avionics </div>
+        <div class="spec-nav-item selected"> Equipment </div>
+        <div class="spec-nav-item"> Interior/Exterior </div>
+        <div class="spec-nav-item"> Inspection Status </div>
+    </div>
+</div>
+
+<!-- CONTENT --> 
+<style>
+.spec-content {
+    margin: 30px;
+}
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="span4 spec-content">
+        CVR: L3 FA2100<br>
+        EGPWS: Honeywell Mk VIII<br>
+        HF: Collins HF 9000<br>
+        ELT: Artex C406-2<br>
+        Transponder: Dual Collins TDR 94D<br>
+        Autopilot: Collins FGC 3000<br>
+        DME: Collins DME 4000<br>
+        TCAS: Collins TCAS 4000 (TCAS II)<br>
+        ADF: Collins NAV 4000<br>
+        Radar: Collins TWR 850 <br>
+        Rad Alt: Collins ALT 4000<br>
+        FMS: Collins FMS 3000<br>
+        CVR: L3 FA2100<br>
+        EGPWS: Honeywell Mk VIII<br>
+        HF: Collins HF 9000<br>
+        ELT: Artex C406-2<br>        
+        </div>
+        <div class="span4 spec-content">
+        Collins Pro Line 21, 3-Tube EFIS<br>
+        Comm: Dual Collins VHF 4000<br>
+        Nav: Dual Collins NAV 4000<br>
+        Transponder: Dual Collins TDR 94D<br>
+        Autopilot: Collins FGC 3000<br>
+        DME: Collins DME 4000<br>
+        TCAS: Collins TCAS 4000 (TCAS II)<br>
+        ADF: Collins NAV 4000<br>
+        Radar: Collins TWR 850 <br>
+        Rad Alt: Collins ALT 4000<br>
+        FMS: Collins FMS 3000<br>
+        CVR: L3 FA2100<br>
+        EGPWS: Honeywell Mk VIII<br>
+      
+        </div>        
+    </div>
+</div>
