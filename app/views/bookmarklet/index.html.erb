@@ -1,5 +1,7 @@
 jetdeck_$(function() {
 
+	window.jetdeck_logo = "<%= "http://#{request.host}:#{request.port}#{asset_path 'bookmarklet_logo.png'}" %>";
+
 	show_jetdeck();
 
 	jetdeck_$.ajax("http://<%=request.host%>:<%=request.port%>/airframes/import", {
@@ -14,7 +16,6 @@ jetdeck_$(function() {
 			'X-CSRF-Token': CSRF_TOKEN
 		},
 		success: function(response) { 
-			console.log(response);
 			switch (response.status) 
 			{
 				case "OK":

@@ -22,7 +22,7 @@
 
 
 #jetdeck_widget_title { 
-	padding: 8px;
+	padding: 15px;
 }
 #jetdeck_widget_title h3 {
 	color: whiteSmoke;
@@ -32,7 +32,8 @@
 }
 
 #jetdeck_widget_content {
-	padding: 0px 8px 8px 8px;
+	margin-top: 15px;
+	padding: 0px 8px 8px 15px;
 	color: whiteSmoke;
 	text-align: left;
 	width: 500px;
@@ -40,6 +41,7 @@
 
 #jetdeck_airframe_label {
 	font-size: 18px;
+	margin-top: 5px;
 }
 #jetdeck_airframe_label_error {
 	font-size: 18px;
@@ -50,10 +52,23 @@
 	color: #3bf; 
 	text-decoration: none;
 }
+#jetdeck_airframe_label a:hover { 
+	color: #6ef; 
+	text-decoration: none;
+}
 
 #jetdeck_close {
-	color: #CCC;;
+	color: #CCC;
+	background: transparent;
 	float: right;
 	font-weight: bold;
 	text-decoration: none;
+	margin-top: -5px;
+}
+#jetdeck_close:hover {
+	background: transparent;
+	color: white;
+}
+.jetdeck_error #jetdeck_close {
+	color: whiteSmoke;
 }

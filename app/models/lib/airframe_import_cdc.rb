@@ -1,6 +1,7 @@
 require 'uri' 
 require 'open-uri'
 require 'nokogiri'  
+require_relative 'header_spoofer'
 
 module AirframeImport
 
@@ -9,9 +10,17 @@ module AirframeImport
         # url is required
         return nil if user_id.blank? || link.blank?
 
-        # capture page
+        # fwd declare page hash
         page_details = Hash.new
-        doc = Nokogiri::HTML(open(link))
+
+        # spoof headers
+        include HeaderSpoofer
+        content = open(link,
+            "User-Agent" => HeaderSpoofer::header,
+            "Referer" => "https://www.google.com/webhp?sourceid=chrome-instant&ion=1&ie=UTF-8").read rescue nil
+
+        # get page content        
+        doc = Nokogiri::HTML(content)
 
         # grab the details block at top of page, possible values include: 
         # Year, Manufacturer, Model, Price, Location, Condition, SerialNumber, 
@@ -43,35 +52,39 @@ module AirframeImport
         page_details[:DetailedDescription] ||= details.match(
             /detailstablecell\">(.*?)<font color=\"#910029\"><b>[\w\s]+:/m)[1] rescue nil
         page_details[:Airframe] = details.match(
-            /<hr[^>]*>.*Airframe:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+            /Airframe:<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1] rescue nil
         page_details[:EngineSpecs] = details.match(
-            /<hr[^>]*>.*Engine Specs:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+            /Engine Specs:<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1] rescue nil
         page_details[:Avionics] = details.match(
-            /<hr[^>]*>.*Avionics\/Radios:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+            /Avionics\/Radios:<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1] rescue nil
         page_details[:Props] = details.match(
-            /<hr[^>]*>.*Prop\(s\):<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+            /Prop\(s\):<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1] rescue nil
         page_details[:Modifications] = details.match(
-            /<hr[^>]*>.*Modifications\/Conversions:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+            /Modifications\/Conversions:<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1] rescue nil
         page_details[:AdditionalEquipment] = details.match(
-            /<hr[^>]*>.*Additional Equipment:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+            /Additional Equipment:<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1] rescue nil
         page_details[:InspectionStatus] = details.match(
-            /<hr[^>]*>.*Inspection Status:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+            /Inspection Status:<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1] rescue nil
         page_details[:Exterior] = details.match(
-            /<hr[^>]*>.*Exterior:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+            /Exterior:<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1] rescue nil
         page_details[:Interior] = details.match(
-            /<hr[^>]*>.*Interior:<\/b><\/font><br>(.*?)<hr/m)[1] rescue nil
+            /Interior:<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1] rescue nil
         page_details[:YearPainted] = details.match(
-            /<hr[^>]*>.*Year Painted:<\/b><\/font><br>(.*?)<hr/m)[1].gsub!(/[^\d]/, "") rescue nil
+            /Year Painted:<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1].gsub!(/[^\d]/, "") rescue nil
         page_details[:YearInterior] = details.match(
-            /<hr[^>]*>.*Year Interior:<\/b><\/font><br>(.*?)<hr/m)[1].gsub!(/[^\d]/, "") rescue nil
+            /Year Interior:<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1].gsub!(/[^\d]/, "") rescue nil
+
+        airframe = Airframe.new()
 
         # for each parameter, remove all escapes and strip it
         page_details.each do |key, val|
-            page_details[key] = val.gsub(/[\r\n\t]/, "").strip if val.present?
+            if val.present?
+                page_details[key] = val.gsub(/[\r\n\t]/, "").strip 
+                airframe.airframe_texts << AirframeText.create(:label => key, :body => val)
+            end
         end
 
-        # store airframe details
-        airframe = Airframe.new()
+        # store airframe details        
         airframe.import_url     = link
         airframe.user_id        = user_id
         airframe.serial         = page_details[:SerialNumber]
@@ -110,8 +123,11 @@ module AirframeImport
 
     def fetch_cdc(url)
 
-        doc = `curl --user-agent "Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11" "#{url}"`
-
+        include HeaderSpoofer
+        header = HeaderSpoofer::header
+        referer = "https://www.google.com/webhp?sourceid=chrome-instant&ion=1&ie=UTF-8"
+        doc = `curl --user-agent "#{header}" --referer "#{referer}" "#{url}"`
+        
         begin 
             table   = doc.match(/table = \"(.*)\"/)[1]
             prefix  = doc.match(/document\.forms\[0\]\.elements\[1\]\.value=\"([^:]*)/)[1]
@@ -179,7 +195,7 @@ module AirframeImport
         tS40436f_ct = 0
         tS40436f_pd = 0
         
-        content = `curl -i -F "tS40436f_id=3&tS40436f_md=1&tS40436f_rf=0&tS40436f_ct=0&tS40436f_pd=0&tS40436f_75=#{tS40436f_75}" --user-agent "User-Agent:Mozilla/5.0 (X11; Linux i686) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.47 Safari/536.11" "#{url}"`
+        content = `curl -i -F "tS40436f_id=3&tS40436f_md=1&tS40436f_rf=0&tS40436f_ct=0&tS40436f_pd=0&tS40436f_75=#{tS40436f_75}"  --user-agent "#{header}" "#{url}"`
         
     end
 

@@ -8,6 +8,12 @@ json.(@airframe,
   :year
 )
 
+json.airframe_texts @airframe.airframe_texts do |json, i|
+    json.body i.body
+    json.label i.label
+    json.id i.id
+end
+
 if @xspec.override_description.present?
   json.description @xspec.override_description 
 else
@@ -70,12 +76,15 @@ if (@airframe.creator && @airframe.creator.contact)
     else
       json.agent_name ""
     end
-    json.agent_phone @airframe.creator.contact.phone
-    json.agent_website @airframe.creator.contact.website
-    json.agent_company @airframe.creator.contact.company
-    json.agent_email @airframe.creator.contact.email
+    if @airframe.creator.contact.first
+      json.agent_first h @airframe.creator.contact.first 
+    end
+    json.agent_phone h @airframe.creator.contact.phone
+    json.agent_website h @airframe.creator.contact.website
+    json.agent_company h @airframe.creator.contact.company
+    json.agent_email h @airframe.creator.contact.email
     if @airframe.creator.logo
-      json.logo @airframe.creator.logo.url  
+      json.logo h @airframe.creator.logo.url  
     end    
     json.spec_disclaimer @airframe.creator.spec_disclaimer
 end
@@ -85,10 +94,9 @@ json.recipient @xspec.recipient.email
 json.(@xspec, :url_code, :message, :salutation, :show_message, :headline1, :headline2, :headline3)
 
 json.images @airframe.accessories do |json, i|
-    json.preview "http://s3.amazonaws.com/" + Jetdeck::Application.config.aws_s3_bucket + "/images/#{i.id}/spec_monitor/#{i.image_file_name}" if i.image_file_name
     json.original "http://s3.amazonaws.com/" + Jetdeck::Application.config.aws_s3_bucket + "/images/#{i.id}/original/#{i.image_file_name}" if i.image_file_name
     json.thumbnail i.thumbnail
-    json.spec_lightbox "http://s3.amazonaws.com/" + Jetdeck::Application.config.aws_s3_bucket + "/images/#{i.id}/spec_lightbox/#{i.image_file_name}" if i.image_file_name
+    json.slides "http://s3.amazonaws.com/" + Jetdeck::Application.config.aws_s3_bucket + "/images/#{i.id}/slides/#{i.image_file_name}" if i.image_file_name
 end
 
 

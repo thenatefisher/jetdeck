@@ -3,11 +3,10 @@ class Accessory < ActiveRecord::Base
     belongs_to :airframe
 
     has_attached_file :image,
-                      :styles => {  :thumb => "140x130#",
-                                    :mini => "80x60#",
-                                    :spec_lightbox => "600",
-                                    :spec_monitor => "400",
-                                    :listing => "75x75#" },
+                      :styles => {  :thumb => "140x130#", # ddisplayed on show page
+                                    :mini => "80x60#", # on show page in picture list
+                                    :slides => { :processors => [:cropper], :geometry => "NONE" },
+                                    :listing => "75x75#" }, # on index page
                       :s3_credentials => "#{Rails.root}/config/aws_keys.yml",
                       :storage => :s3,
                       :s3_host_alias => 

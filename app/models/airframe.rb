@@ -1,6 +1,7 @@
 require "#{Rails.root}/app/models/lib/airframe_import_cdc"
 #require_relative 'lib/airframe_import_aso'
 #require_relative 'lib/airframe_import_tap'
+#require_relative 'lib/airframe_import_amp'
 
 class Airframe < ActiveRecord::Base
 
@@ -22,6 +23,10 @@ class Airframe < ActiveRecord::Base
               :class_name => "Equipment"              
 
   has_many :accessories, :dependent => :destroy
+
+  has_many :airframe_texts
+
+  accepts_nested_attributes_for :airframe_texts
 
   accepts_nested_attributes_for :accessories, :reject_if => lambda { |t| t['image'].nil? }
 

@@ -24,11 +24,26 @@
   </div>
 </div>
 
+<!-- MAKE MODEL SERIAL -->
+<style>
+    #title-box {
+        background: #222; 
+        color: #eee; 
+        position: fixed; 
+        z-index: 99; 
+        font-size: 15px; 
+        margin-top: 86px;
+        padding: 7px 7px 3px 7px;
+        border-right: 1px #777 solid; 
+        border-left: 1px #777 solid; 
+        border-bottom: 1px #777 solid; 
+    }
+</style>
 <div class="container">
     <div id="title-box">
         <%= make %> <%= model_name %> 
         <small style="margin-left: 5px;"> SN <%= serial %> 
-        <% if(!registration){ %>(<%= registration %>)<%}%>
+        <% if(registration){ %>(<%= registration %>)<%}%>
         </small>
     </div>  
 </div>
@@ -40,10 +55,17 @@
     #slides {
       display: none
     }
-
-    #slides .slidesjs-navigation {
-      margin-top:3px;
-    }
+    
+    #slides .slidesjs-navigation,
+    .slidesjs-navigation,
+    .slidesjs-stop.slidesjs-navigation, 
+    .slidesjs-play.slidesjs-navigation {
+        position: absolute;
+        color: white;
+        font-weight: bold;
+        z-index: 99;
+        margin-top: -30px;
+    }    
 
     #slides .slidesjs-previous {
       margin-right: 5px;
@@ -88,12 +110,13 @@
 
     #slides a:link,
     #slides a:visited {
-      color: #333
+      color: white;
     }
 
     #slides a:hover,
     #slides a:active {
-      color: #9e2020
+      color: #006dcc;
+      text-decoration: none;
     }
 
     .navbar {
@@ -110,33 +133,26 @@
         pagination: {active: false}, 
         navigation: {active: false},
         play: {
+            active: true,
             auto: true
         }, 
         effect: {
             slide: {speed: 1000}
         }
       });
+
+    container_margin_left = $(".container").css("marginLeft");
+
+    $(".slidesjs-navigation").css("marginLeft", container_margin_left);
+    $(".slidesjs-stop").html("<i class='icon-stop'></i> Stop Slideshow");
+    $(".slidesjs-play").html("<i class='icon-play'></i> Play Slideshow");
+
     });
 </script>
-<!-- MAKE MODEL SERIAL -->
-<style>
-    #title-box {
-        background: #222; 
-        color: #eee; 
-        position: fixed; 
-        z-index: 99999; 
-        font-size: 15px; 
-        margin-top: 86px;
-        padding: 7px 7px 3px 7px;
-        border-right: 1px #777 solid; 
-        border-left: 1px #777 solid; 
-        border-bottom: 1px #777 solid; 
-    }
-</style>
 
 <div id="slides">
     <% for (var i = 0; i < images.length; i++) { %>
-        <img src="<%=images[i].original%>">
+        <img src="<%=images[i].slides%>">
     <% } %>  
 </div>
 
@@ -155,6 +171,7 @@
     }
     .contact-button .btn-primary{
         background-color: #006dcc;
+        background-image: none;
     }
     .container.spec-nav {
         border-bottom: 1px #DDD solid;
@@ -163,10 +180,10 @@
     .nav-tabs {
         border-bottom: 0px solid #ddd;
     }
-    .nav {
+    .spec-nav .nav {
         margin-left: 0;
         margin-bottom: 0px;
-        margin-left: 30px;
+        margin-left: 20px;
         list-style: none;
     }
 
@@ -247,116 +264,154 @@
     <div class="tab-content">
 
         <div class="tab-pane active" id="airframe">
-
-                <div class="span6 spec-content">
-                    Twelve Passenger seating configur <br>
-                    Forward Lavatory: DW: 30" R/h Fo<br>
-                </div>
-
-                <div class="span6 spec-content">
-                    Collins Pro Line 21, 3-Tube EFIS<br>
-
-                </div>     
+            <div class="span6 spec-content">
+                <% airframe_texts.forEach(function(el){ %>
+                    <% if(el.label == "Airframe") { %>
+                        <%= el.body%>
+                    <% } %>
+                <% }); %>
+            </div>
         </div>  
-
+        <div class="tab-pane" id="engines">
+            <div class="span6 spec-content">
+                <% airframe_texts.forEach(function(el){ %>
+                    <% if(el.label == "EngineSpecs") { %>
+                        <%= el.body%>
+                    <% } %>
+                <% }); %>
+            </div>
+        </div>  
         <div class="tab-pane" id="avionics">
-
-                <div class="span6 spec-content">
-                    Twelve Passenger seating configuration. Forward Double Club, Dining Group, Credenza, 2x Three-place Divans. <br>
-                    Forward Lavatory: DW: 30" R/h Forward Lavatory with Fixed Sink and Storage area.<br>
-                    Aft Lavatory: Standard: Lavatory Door Hinged on the Right-Hand Side Opening into Lavatory<br>
-                    Cabin Systems<br>
-                    Rockwell Collins Falcon Cabin HD:<br>
-                    3D Interactive Moving Map and Flight Deck Controller<br>
-                    (1 Each) Dual Blu-Ray Player<br>
-                    (1 Each) Single iPod Docking Cradle <br>
-                    (1 Each) USB Port with Power Outlet (included in 1.212.0) for Video on Demand<br>
-                    (1 Each) HDMI with Power Outlet (included in 1.212.0)<br>
-                    (1 Each) USB Port for Audio on Demand (and Cabin System Remote Diagnotic)<br>
-                    (2 Each) 22" Widescreen HD LED Backlit Monitor on R/H Galley Bulkhead and L/H Aft Lav Bulkhead<br>
-                    (1 Each) 10.6" Widescreen LED Backlit Touch Screen Control in 15" Galley Annex<br>
-                    (12 Each) touchScreen TC-6000 Cabin Controls<br>
-                </div>
-
-                <div class="span6 spec-content">
-                    Collins Pro Line 21, 3-Tube EFIS<br>
-                    Comm: Dual Collins VHF 4000<br>
-                    Nav: Dual Collins NAV 4000<br>
-                    Transponder: Dual Collins TDR 94D<br>
-                    Autopilot: Collins FGC 3000<br>
-                    DME: Collins DME 4000<br>
-                    TCAS: Collins TCAS 4000 (TCAS II)<br>
-                    ADF: Collins NAV 4000<br>
-                    Radar: Collins TWR 850 <br>
-                    Rad Alt: Collins ALT 4000<br>
-                    FMS: Collins FMS 3000<br>
-                    CVR: L3 FA2100<br>
-                    EGPWS: Honeywell Mk VIII<br>
-                </div>     
+            <div class="span6 spec-content">
+                <% airframe_texts.forEach(function(el){ %>
+                    <% if(el.label == "Avionics") { %>
+                        <%= el.body%>
+                    <% } %>
+                <% }); %>
+            </div>
+        </div>  
+        <div class="tab-pane" id="equipment">
+            <div class="span6 spec-content">
+                <% airframe_texts.forEach(function(el){ %>
+                    <% if(el.label == "AdditionalEquipment") { %>
+                        <%= el.body%>
+                    <% } %>
+                <% }); %>
+            </div>
         </div>
+        <div class="tab-pane" id="interior_exterior">
+            <div class="span6 spec-content">
+                <% airframe_texts.forEach(function(el){ %>
+                    <% if(el.label == "Interior") { %>
+                        <%= el.body%>
+                    <% } %>
+                <% }); %>
+            </div>
+        </div>
+        <div class="tab-pane" id="inspection">
+            <div class="span6 spec-content">
+                <% airframe_texts.forEach(function(el){ %>
+                    <% if(el.label == "InspectionStatus") { %>
+                        <%= el.body%>
+                    <% } %>
+                <% }); %>
+            </div>
+        </div>        
     </div>    
     </div>
 </div>
 
+<% if (message && agent_name && agent_first) { %> 
 <!-- CHAT MESSAGE --> 
 <style>
 .chat-fixed {
     position: fixed;
-    bottom: 0px;
+    bottom: -1000px;
     width: 100%;
+    z-index: 99; 
 }
 .chat-window {
-    height: 350px;
-    width: 250px;
+    width: 300px;
     background: white;
     color: #333;
     float: right;
     border: 1px solid #ccc;
+    font-family: arial,sans-serif;
+    font-size: 14px;
+    line-height: 18px;
 }
 .chat-title {
-    height: 18px;
+    height: 20px;
     padding: 3px;
     background: #111;
     color: whiteSmoke;
     font-weight: bold;
 }
+.chat-title-close {
+    float: right; 
+    margin-right: 5px; 
+    font-size: 80%; 
+    cursor: pointer;
+}
+.chat-title-status-icon {
+    margin-left: 5px; 
+    margin-right: 10px;
+    color: #FE9A2E; 
+    font-size: 80%;
+}
+.chat-message {
+
+}
 .chat-message > div {
-    margin: 6px;
+    margin: 10px;
+    margin-bottom: 115px;
     color: black;
 }
 .chat-reply {
-    height: 60px;
-    width: 250px;
-    background: white;
+    height: 50px;
     position: absolute;
     bottom: 0px;
 }
-.chat-reply-body {
+.chat-reply-button {
     height: 44px;
-    width: 244px;
-    background: white;
-    margin: 6px;
-    border: 1px solid #ccc;
+    width: 287px;
+    margin: 0px 6px 12px 6px;
+    font-weight: bold;
+    color: #555555;
 }
 </style>
+
+<script>
+$(document).ready(function(){
+    window.setTimeout(showChat, 4000);
+    $(".chat-title-close").click(function(){
+        $(".chat-fixed").animate({bottom:'-1000px'}, 800);
+    });
+});
+function showChat() {
+    $(".chat-fixed").animate({bottom:'0px'}, 800);
+}
+</script>
 
 <div class="chat-fixed">
     <div class="container">
         <div class="chat-window">
             <div class="chat-title">
-                <span style="float: right">X</span>
-                <span style="float: left"><%= agent_name %></span>
+                <span class="chat-title-close">X</span>
+                <span style="float: left">
+                    <i class="icon-circle chat-title-status-icon"></i> <%= agent_name %>
+                </span>
             </div>
             <div class="chat-message">
                 <div>
-                    <strong>Nate: </strong> I wanna know which crazy mofo was the first one to say "let's check this out" and actually do it. Man, that's just nuts. I'd be afraid some unstable rocks/boulders would trap me in there. I'll stick to shipwrecks with big metal corridors that aren't as likely to collapse and can be followed easily in a silt out.
-                    <br><span class="muted pull-right">Sent at 4:32pm on May 3</span>
+                    <strong><%= agent_first %>: </strong> &nbsp;&nbsp; <%= message %>
+                    <!--<br><span class="muted">Sent at 4:32pm on May 3</span>-->
                 </div>
             </div>
             <div class="chat-reply">
-                <div class="chat-reply-body" content-editable>
-                </div>                
+                <button class="btn chat-reply-button"><i class="icon-reply"></i> &nbsp; Reply to <%= agent_first %></button>                
             </div>
         </div>
     </div>
 </div>
+<% } %>

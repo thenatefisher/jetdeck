@@ -9,6 +9,7 @@ json.make h @airframe.make
 json.model_name h @airframe.model_name
 json.year h @airframe.year
 json.description h @airframe.description
+json.import_url h @airframe.import_url
 
 json.title h(@airframe.to_s)
 
@@ -25,6 +26,12 @@ json.engines @airframe.engines do |json, e|
     json.tbo h e.tbo
     json.hsi h e.hsi
     json.year h e.year
+end
+
+json.airframe_texts @airframe.airframe_texts do |json, i|
+    json.body h i.body
+    json.label h i.label
+    json.id i.id
 end
 
 json.equipment @airframe.equipment do |json, i|

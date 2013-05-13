@@ -33,6 +33,7 @@ class Jetdeck.Models.Spec extends Backbone.Model
     agent_phone: null
     agent_company: null  
     agent_name: null  
+    agent_first: null
     images: []    
     tt: null
     tc: null
@@ -44,6 +45,7 @@ class Jetdeck.Models.Spec extends Backbone.Model
     last_viewed: ""
     logo: null
     spec_disclaimer: null
+    airframe_texts: []
     
 class Jetdeck.Collections.SpecsCollection extends Backbone.CollectionBook
   model: Jetdeck.Models.Spec
