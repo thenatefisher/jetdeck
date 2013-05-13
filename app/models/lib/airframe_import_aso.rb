@@ -22,17 +22,78 @@ module AirframeImport
         # get page content        
         doc = Nokogiri::HTML(content)
 
+        # airframe
         airframe = Airframe.new()
+
+        doc.css(".adSpecView-section-header").each do |header|
+            case header.content
+                when "Airframe & Power Systems Information"
+                    page_details[:EngineSpecs] = header.next.inner_html rescue nil                
+                when "Avionics"
+                    page_details[:Avionics] = header.next.inner_html rescue nil
+                when "Additional Equipment"
+                    page_details[:AdditionalEquipment] = header.next.inner_html rescue nil
+                when "Additional Equipment & Options"
+                    page_details[:AdditionalEquipment] = header.next.inner_html rescue nil                
+                when "Maintenance Condition"
+                    page_details[:InspectionStatus] = header.next.inner_html rescue nil
+                when "Maintenance & Weight"
+                    page_details[:InspectionStatus] = header.next.inner_html rescue nil
+                when "Modifications/Conversions"
+                    page_details[:Modifications] = header.next.inner_html rescue nil
+                when "Interior"
+                    page_details[:Interior] = header.next.inner_html rescue nil  
+                when "Exterior"
+                    page_details[:Exterior] = header.next.inner_html rescue nil  
+                when "Features"
+                    page_details[:AdditionalEquipment] = header.next.inner_html rescue nil  
+            end
+        end
+
+        # enter text blocks into airframe record
+        page_details.each do |key, val|
+            if val.present?
+                airframe.airframe_texts << AirframeText.create(:label => key, :body => val)
+            end
+        end
+
+        # general parameters
+        mms                                 = doc.css(".adSpecView-header-Descr div")[0].content rescue nil
+
+        page_details[:Manufacturer]         = mms.match(/[\d]*?\s(.*?)\s/)[1] rescue nil
+        page_details[:Model]                = mms[page_details[:Manufacturer].length+5..-1]
+        page_details[:Year]                 = mms.match(/([\d]{4})/)[0] rescue nil
+
+        page_details[:RegistrationNumber]   = doc.css(".adSpecView-header-RegSerialPrice")[0]
+            .css("span")[0].content.gsub("Reg #", "") rescue nil
+
+        page_details[:SerialNumber]         = doc.css(".adSpecView-header-RegSerialPrice")[0]
+            .css("span")[1].content.gsub("Serial #", "") rescue nil
+
+        page_details[:Price]                = doc.css(".adSpecView-header-RegSerialPrice")[1]
+            .css("span")[0].content.gsub("Price:", "") rescue nil
+
+        page_details[:Currency]             = doc.css(".adSpecView-header-RegSerialPrice")[1]
+            .css("span")[1].content rescue nil       
+
+        page_details[:TotalTime]            = doc.css(".adSpecView-header-RegSerialPrice")[2]
+            .css("span")[0].content.gsub("TTAF", "") rescue nil
+
+        page_details[:Location]             = doc.css(".adSpecView-header-RegSerialPrice")[2]
+            .css("span")[1].content.gsub("Location:", "") rescue nil
 
         # for each parameter, remove all escapes and strip it
         page_details.each do |key, val|
             if val.present?
                 page_details[key] = val.gsub(/[\r\n\t]/, "").strip 
-                airframe.airframe_texts << AirframeText.create(:label => key, :body => val)
             end
         end
 
-        # store airframe details        
+        # find digits for numeric data
+        page_details[:TotalTime].gsub!(/[^\d]/, "") if page_details[:TotalTime]
+        page_details[:Price].gsub!(/[^\d]/, "") if page_details[:Price]
+
+        # airframe parameters
         airframe.import_url     = link
         airframe.user_id        = user_id
         airframe.serial         = page_details[:SerialNumber]
@@ -41,27 +102,21 @@ module AirframeImport
         airframe.model_name     = page_details[:Model]
         airframe.year           = page_details[:Year]
         airframe.asking_price   = page_details[:Price]
-        airframe.description    = page_details[:DetailedDescription]
         airframe.tt             = page_details[:TotalTime]
 
-        # add thumbnail if available
-        listing_id = link.match(/([\d]+).htm[l]?/)[1] rescue nil
-        if listing_id.present?
-            mobile_link = "http://m.controller.com/Picture/Index?listingId=#{listing_id}"
-            mobile_content = fetch_cdc(mobile_link)
-            mobile_doc = Nokogiri::HTML(mobile_content)
-            images_list = mobile_doc.css(".cImgList img")
-            images_list.each_with_index do |img, index|
-                thumb = Accessory.new(:image => open(img.attr("src")))
-                img_id = img.attr("src").match(/id=([\d]*)/)[1] rescue index
-                thumb.image_file_name = "#{img_id}.jpg"
-                thumb.thumbnail = true if index == 0
-                thumb.save
-                airframe.accessories << thumb
-            end
-        end
+        # store images
+        content.scan(/Graphic_Id":([\d]*),.*?File_Path":"~(.*?)"/).each_with_index do |image, index|
+            thumb = Accessory.new(:image => open(URI::encode("http://www.aso.com/"+image[1]) ) )
+            img_id = image[0] rescue index
+            thumb.image_file_name = "#{img_id}.jpg"
+            thumb.thumbnail = true if index == 0
+            thumb.save
+            airframe.accessories << thumb
+        end        
 
-        return airframe.save
+        airframe.save
+
+        return airframe
 
     end
 

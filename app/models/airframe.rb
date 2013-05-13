@@ -1,7 +1,6 @@
 require "#{Rails.root}/app/models/lib/airframe_import_cdc"
-#require_relative 'lib/airframe_import_aso'
-#require_relative 'lib/airframe_import_tap'
-#require_relative 'lib/airframe_import_amp'
+require "#{Rails.root}/app/models/lib/airframe_import_aso"
+
 
 class Airframe < ActiveRecord::Base
 
@@ -53,11 +52,11 @@ class Airframe < ActiveRecord::Base
     # switch to correct parser
     case link
       when /[www\.]?controller\.com/
-        airframe = delay.import_cdc(user_id,link)
+        airframe = delay.import_cdc(user_id, link)
       when /[www\.]?aso\.com/
-        #airframe = import_aso(link)
+        airframe = delay.import_aso(user_id, link)
       when /[www\.]?trade-a-plane\.com/
-        #airframe = import_tap(link)
+        #airframe = import_tap(user_id, link)
       else 
         airframe = nil    
     end

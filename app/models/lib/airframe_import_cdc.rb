@@ -95,7 +95,8 @@ module AirframeImport
         airframe.asking_price   = page_details[:Price]
         airframe.description    = page_details[:DetailedDescription]
         airframe.tt             = page_details[:TotalTime]
-
+        airframe.save
+        
         # add thumbnail if available
         listing_id = link.match(/([\d]+).htm[l]?/)[1] rescue nil
         if listing_id.present?
