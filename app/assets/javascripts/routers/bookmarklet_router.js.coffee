@@ -20,4 +20,5 @@ class Jetdeck.Routers.BookmarkletRouter extends Backbone.Router
 
    duplicate: (airframe) ->
     @view = new Jetdeck.Views.Bookmarklet.DuplicateView(airframe)
-    jetdeck_$("#jetdeck").html(@view.render().el)    
+    jetdeck_$("#jetdeck").html(@view.render().el) 
+       
