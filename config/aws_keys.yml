@@ -1,3 +1,6 @@
+staging:
+  access_key_id: ***REMOVED***
+  secret_access_key: t72j+f9/***REMOVED***
 development:
   access_key_id: ***REMOVED***
   secret_access_key: t72j+f9/***REMOVED***
