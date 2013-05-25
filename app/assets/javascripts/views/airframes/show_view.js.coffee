@@ -89,15 +89,17 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     #@$("#airframe_spec_details").html(@spec.render().el)
     #@$("a[href='#"+lastSpecTab+"']").tab('show') if lastSpecTab
     
-    @send = new Jetdeck.Views.Airframes.ShowSend(model: @model)
-    @$("#airframe_send").html(@send.render().el)
-    
     @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#airframe_actions").html(@actions.render().el)
     
+    @send = new Jetdeck.Views.Airframes.ShowSend(model: @model)
+
     @leads = new Jetdeck.Views.Airframes.ShowLeads(model: @model)
     if @model.leads.length > 0
       @$("#airframe_leads").html(@leads.render().el)
+      @$("#airframe_send").html(@send.render().el)
+    else
+      @$("#airframe_leads").html(JST["templates/airframes/leads/empty"])
     
     @delete = new Jetdeck.Views.Airframes.ShowDelete(model: @model)
     @$("#airframe_delete").html(@delete.render().el)
