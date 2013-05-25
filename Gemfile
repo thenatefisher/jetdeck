@@ -30,7 +30,7 @@ gem 'jquery-ui-rails' # jquery ui
 gem 'less-rails' # less
 gem 'twitter-bootstrap-rails' # bootstrap
 gem 'bootstrap-wysihtml5-rails' # wysiwyg editor
-gem 'rails-backbone' #backbone (in coffee)
+gem 'rails-backbone' # backbone (in coffee)
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'jbuilder' # serves .json.jbuilder type files in views
 gem 'paperclip' # used for file uploads
