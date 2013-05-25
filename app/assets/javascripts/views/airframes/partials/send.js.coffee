@@ -79,7 +79,6 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
       $(@el).html(@template(@model.toJSON() ))
       
       $(@el).ready( => 
-        console.log @model.get('activity')
         $('#history').sparkline(@model.get('activity'), {
           type: 'bar',
           height: '45',
