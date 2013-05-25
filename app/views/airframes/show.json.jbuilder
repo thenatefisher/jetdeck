@@ -54,9 +54,11 @@ if (@airframe.creator && @airframe.creator.contact)
     })
 end
 
+views = Array.new
 json.leads @airframe.xspecs do |json, x|
 
     if x.recipient.present?
+
         json.id x.recipient.id
 
         json.email x.recipient.email
@@ -86,10 +88,26 @@ json.leads @airframe.xspecs do |json, x|
         json.xspec_id x.id
         
         json.recipientEmailField x.recipient.emailField
+
+        views += x.views
         
     end
     
 end
+
+activity = Array.new()
+now = Time.now()
+(1..14).each do |day_number|
+
+    start_date = now - day_number.day
+    end_date = now - (day_number-1).day
+
+    count = 0
+    views.each {|v| count += 1 if v.created_at < end_date and v.created_at > start_date}
+    activity << count
+
+end
+json.activity activity.reverse
 
 json.notes @airframe.notes do |json, x|
   json.title h x.title

@@ -5,8 +5,6 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
 
   intialize: ->
 
-
-
   events :
     "click #send_spec" : "send"
 
@@ -43,8 +41,12 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
         new_lead.name = m.recipient.first + " " + m.recipient.last
 
       @model.leads.add(new_lead)
-      window.router.view.leads.render()
-      @render()
+
+      if @model.leads.length > 1
+        window.router.view.leads.render()
+        @render()
+      else
+        window.router.view.render()
 
       if (!send)
         specModel = new Jetdeck.Models.Spec(m)
@@ -71,33 +73,41 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
     )
 
   render : ->
-    $(@el).html(@template(@model.toJSON() ))
-    
-    $(@el).ready( -> 
-      $('#history').sparkline([0,0,0,0,0,0,0,0,0,3,5,6,12,10], {
-        type: 'bar',
-        height: '45',
-        barWidth: 14,
-        barSpacing: 3,
-        zeroAxis: false,
-        barColor: '#34495E'
-      })
-    )
 
-    @$("#toggle_send").toggle(
-      => 
-        @$("#history_container").hide()
-        @$("#send_container").show()
-      ,
-      =>
+    if @model.leads.length > 0
+
+      $(@el).html(@template(@model.toJSON() ))
+      
+      $(@el).ready( => 
+        console.log @model.get('activity')
+        $('#history').sparkline(@model.get('activity'), {
+          type: 'bar',
+          height: '45',
+          barWidth: 14,
+          barSpacing: 3,
+          zeroAxis: false,
+          barColor: '#34495E'
+        })
+      )
+
+      @$("#toggle_send").toggle(
+        => 
+          @$("#history_container").hide()
+          @$("#send_container").show()
+        ,
+        =>
+          @$("#history_container").show()
+          @$("#send_container").hide()
+      )
+
+      @$("#cancel_send").click( =>
         @$("#history_container").show()
         @$("#send_container").hide()
-    )
+      )
 
-    @$("#cancel_send").click( =>
-      @$("#history_container").show()
-      @$("#send_container").hide()
-    )
+    else
+
+      $(@el).html(JST["templates/airframes/partials/first_send"](@model.toJSON() ))
         
     @$("#recipient_email").autocomplete({
        minLength: 2

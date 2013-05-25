@@ -1,8 +1,8 @@
 <div style="padding-top: 20px; background:rgb(236, 242, 245); border-bottom: 1px solid #CCC">
 
 <div class="span2 main-thumbnail airframe-thumbnail" style="height: 130px; margin-bottom: 20px;">
-<% if (typeof(avatar) != "undefined" && avatar != null && typeof(avatar.thumb) != "undefined") { %>
-  <a class="manage_images" href="#" onclick="return false;"><img src="<%= avatar.thumb %>"></a>
+<% if (avatar && avatar.thumb) { %>
+  <a class="manage_images" href="#" onclick="return false;"><img src="<%= avatar.thumb %>" onError="this.src = '/assets/placeholder/aircraft_default_avatar.png'"></a>
   <% } else { %>
   <a class="manage_images" href="#" onclick="return false;">
     <span style="position: absolute; margin-top: 45px; width: 140px; text-align: center">
