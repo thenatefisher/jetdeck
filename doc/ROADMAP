@@ -5,18 +5,31 @@ just create a few migrations to hold data from import scraping of controller
 
 next up:
 
-    1.5x  finish retail spec page, create carousel on click
+    2x      finish retail spec page, create carousel on click
 
-    2x    finish airframe show page, add analytics and editable details
+    2x      finish airframe show page, add analytics and editable details
+                - contact notes pagination
+                - actions add date
+                - contact aircraft list
+                - contact views history 
+                - contact send button
+                - contact header 
+                - airframe send config modal
+                - airframe spec edit boxes
+                - airframe fix bug with missing image
+                - airframe add associate
+                - airframe update MMS
+                - airframe leads pagination
+                - add mixpanel
 
-    1x    integrate payments
-    2x    marketing and signup brochure site
+    1x      integrate payments
 
-    1x    profile page and misc ui improvements
-    2x    contact page and actions page
+    2x      marketing and signup brochure site
 
-    .5x   check all services operational (s3, sendgrid, etc)
+    1x      profile page and misc ui improvements
 
+    2x      contact page and actions page
 
+    1x      check all services operational (s3, sendgrid, etc)
 
-
+    1x      write press release
