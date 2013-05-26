@@ -34,6 +34,7 @@ gem 'rails-backbone' # backbone (in coffee)
 gem 'bcrypt-ruby', :require => 'bcrypt'
 gem 'jbuilder' # serves .json.jbuilder type files in views
 gem 'paperclip' # used for file uploads
+gem 'jquery-fileupload-rails' # front-end file upload js
 gem 'thin' # webserver
 gem 'aws-sdk', '~> 1.3.4' # amazon toolkit for S3
 gem 'delayed_job_active_record' # delayed job

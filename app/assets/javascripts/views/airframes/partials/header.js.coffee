@@ -8,7 +8,6 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
 
   initialize: () ->
     @model.on('change', @updateHeadline)
-    @$('.fileinput-button').on('click', (e) -> e.preventDefault())
 
   updateHeadline: () =>
     headline = @model.get('year')
@@ -36,10 +35,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
 
   loadAccessories: () =>
 
-    # instantiate file uploader
-    @$('#airframe_image_upload').fileupload()
-
-    # uploader settings
+    # uploader instantiation and settings
     @$('#airframe_image_upload').fileupload({
         autoUpload: true
         url: '/accessories'
@@ -47,30 +43,35 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
         maxFileSize: 10490000 # 10MB
     })
 
-    @$('#airframe_image_upload').bind('fileuploaddestroyed', -> window.router.view.header.render())
+    # reflow header on image upload and delete
+    @$('#airframe_image_upload').bind('fileuploaddestroyed', => @reflow())
+    @$('#airframe_image_upload').bind('fileuploaddone', => @reflow())
 
-    # open edit box when adding via the button
-    @$('#airframe_image_upload').bind('fileuploadadd', ->
-      $("#changes").children().fadeIn()
-      $("#changes").slideDown()
-    )
-    
     # set some drag/drop events
     @$('#airframe_image_upload').bind('fileuploaddrop', =>
       $('#uploader').show()
       #mixpanel.track('Dropped Image Into Airframe')
     )
 
-    # get all existing images
-    $.getJSON('/accessories/?airframe=' + @model.get('id'),  (files) =>
-        fu = $('#airframe_image_upload').data('blueimpUIFileupload')
-        fu._renderDownload(files)
-            .appendTo($('#airframe_image_upload .files'))
-            .removeClass('fade')
-    )
+    # initial image readout
+    @reflow(false)
 
+    # set CSRF token
     token = $("meta[name='csrf-token']").attr("content")
     @$("#airframe_image_upload input[name='authenticity_token']").val(token)    
+    
+  reflow: (show_image_list=true) =>
+
+    # get all existing images
+    $('#airframe_image_upload .files').html("")
+    $.getJSON('/accessories/?airframe=' + @model.get('id'),  (files) =>
+        fu = $('#airframe_image_upload').data('blueimpFileupload')
+        fu._renderDownload(files)
+            .appendTo($('#airframe_image_upload .files'))
+            .removeClass('fade')       
+    )
+
+    $('#uploader').show() if show_image_list
     
   render: ->
   
