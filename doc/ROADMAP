@@ -8,6 +8,7 @@ ROADMAP TO LAUNCH:
                 - contact aircraft spec list
                 - contact views history 
                 - contact send button
+                - contact default view with no leads
                 x - contact aircraft associated list
                 x - contact header 
                 x - contact delete
@@ -20,15 +21,21 @@ ROADMAP TO LAUNCH:
                 x - airframe update MMS
                 x - airframe leads pagination
                 x - create alternate image list open/close buttons
+
+                - reformat spec email
                 
                 x - action due dates for aircraft and contacts
 
-    1x      integrate payments
+                - merge to master; push origin
 
-    2x      marketing and signup brochure site
+    1x      integrate payments
 
     1x      profile page and actions page
 
-    1x      check all services operational (s3, sendgrid, etc)
+    2x      marketing and signup brochure site   
+
+    1x      browser compatibilty check 
+
+    1x      push live and check all services operational (s3, sendgrid, etc)
 
     1x      write press release

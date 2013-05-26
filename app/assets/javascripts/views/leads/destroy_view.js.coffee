@@ -15,7 +15,7 @@ class Jetdeck.Views.Leads.DestroyView extends Backbone.View
     window.router.view.render()
     modalClose()
     mixpanel.track("Deleted Spec")
-    return this
+    return false
     
   render : ->
     $(@el).html(@template(@model.toJSON() ))

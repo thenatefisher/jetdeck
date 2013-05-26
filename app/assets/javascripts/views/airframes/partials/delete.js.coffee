@@ -23,6 +23,8 @@ class Jetdeck.Views.Airframes.ShowDelete extends Backbone.View
       $("#delete-button").show()
       $("#delete-section").hide()
 
+    return false
+
   render: ->
     $(@el).html(@template(@model.toJSON() ))
     return this
