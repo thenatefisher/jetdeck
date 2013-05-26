@@ -44,13 +44,13 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     })
 
     # reflow header on image upload and delete
-    @$('#airframe_image_upload').bind('fileuploaddestroyed', => @reflow())
-    @$('#airframe_image_upload').bind('fileuploaddone', => @reflow())
+    @$('#airframe_image_upload').bind('fileuploaddestroyed', => @reflow)
+    @$('#airframe_image_upload').bind('fileuploaddone', => @reflow)
 
     # set some drag/drop events
     @$('#airframe_image_upload').bind('fileuploaddrop', =>
-      $('#uploader').show()
-      #mixpanel.track('Dropped Image Into Airframe')
+        $('#uploader').show()
+        mixpanel.track('Added Image To Airframe', {method: 'drag-drop'})
     )
 
     # initial image readout
@@ -72,7 +72,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     )
 
     $('#uploader').show() if show_image_list
-    
+
   render: ->
   
     # render header

@@ -1,6 +1,7 @@
 <label class="checkbox <% if (past_due) { %>late<% } %>">
 
-  <input name="item" type="checkbox"></input> 
+  <input name="item" class="close-action" type="checkbox"></input> 
+  
   <span class="short-title"><%= list_title %></span>
   <span class="long-title hide"><%= title %></span>
   
@@ -9,8 +10,6 @@
     <small class="muted"><%= list_due_at %></small>
   </div>
   <% } %>  
-  
-  <a href="#" class="hide pull-right muted"><i class="icon-pencil"></i></a>
 
 </label>
 

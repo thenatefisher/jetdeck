@@ -3,16 +3,16 @@ Jetdeck.Views.Actions ||= {}
 class Jetdeck.Views.Actions.ActionItem extends Backbone.View
   template: JST["templates/actions/partials/action_item"]
 
-  initialize: ->
-    $(@el).click( =>
-      @model.save(
-        { is_completed: true }, 
-        success: => 
-          $(@el).fadeOut(300, => @trigger("deleted"))
-          mixpanel.track("Closed Action")
-      )
+  events: 
+    "click .close-action" : "close"
+    
+  close: =>
+    @model.save({is_completed: true}, success: => 
+      $(@el).fadeOut(300, => @trigger("deleted"))
+      mixpanel.track("Closed Action")
     )
-
+    
+  initialize: ->
     $(@el).hover( 
       => 
         @$(".action-buttons").show()
@@ -100,16 +100,18 @@ class Jetdeck.Views.Actions.ShowActions extends Backbone.View
         => @$("#add-action-fields").hide()
       )   
 
-    return this
+    @$('#due_at_string').datepicker().on('changeDate', (event) =>
 
-  datepicker: =>
-    @$('#due_at_datepicker').datepicker()
-    .on('changeDate', (event) =>
-      curr_date = event.date.getDate();
-      curr_month = event.date.getMonth() + 1;
+      curr_date = event.date.getUTCDate();
+      curr_month = event.date.getUTCMonth() + 1;
       curr_year = event.date.getFullYear();
-      dstring = curr_month + "/" + curr_date + "/" +  curr_year;  
-      @$("#due_at").val(curr_year + "-" + curr_month + "-" + curr_date;)  
-      @$("#due_at_datepicker span").html("Due: " + curr_month + "/" + curr_date + "/" +  curr_year;)
-      $(".datepicker.dropdown-menu").hide()
+
+      @$("#due_at").val(curr_year + "-" + curr_month + "-" + curr_date)  
+
+      @$("#due_at_string").html("Due: " + curr_month + "/" + curr_date + "/" +  curr_year)
+
+      $("#due_at_string").datepicker('hide')
+
     )      
+
+    return this

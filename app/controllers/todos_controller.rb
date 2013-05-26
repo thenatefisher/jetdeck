@@ -21,8 +21,12 @@ class TodosController < ApplicationController
       @action.actionable_id = params[:todo][:actionable_id]
       @action.due_at = Time.now + Integer(params[:todo][:interval]).months if 
         (params[:todo][:interval] && (Integer(params[:todo][:interval]) rescue false))
-      @action.due_at = params[:todo][:due_at] if params[:todo][:due_at]
       
+      if params[:todo][:due_at].present?
+        date_string = params[:todo][:due_at].split("-") rescue nil
+        @action.due_at = Time.new(date_string[0], date_string[1], date_string[2]) rescue nil
+      end
+
       respond_to do |format|
         if @action.save
           format.json {render :locals => {action: @action}, :template => "todos/show", :formats => [:json], :handlers => [:jbuilder]}

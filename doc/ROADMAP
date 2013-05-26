@@ -8,18 +8,24 @@ next up:
     2x      finish retail spec page, create carousel on click
 
     2x      finish airframe show page, add analytics and editable details
+
                 - contact notes pagination
                 - actions add date
                 - contact aircraft list
                 - contact views history 
                 - contact send button
                 - contact header 
+                - delete contact
+
                 - airframe send config modal
                 - airframe spec edit boxes
-                - airframe fix bug with missing image
+                x - airframe fix bug with missing image
                 - airframe add associate
-                - airframe update MMS
-                - airframe leads pagination
+                x - airframe update MMS
+                x - airframe leads pagination
+                - airframe update thumbnail on file upload
+                - create alternate image list open/close buttons
+                
                 - add mixpanel
 
     1x      integrate payments
