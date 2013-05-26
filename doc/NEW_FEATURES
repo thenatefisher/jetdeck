@@ -1,39 +1,38 @@
+== Product Improvements
 
-Airframe Photos
-    Crop Area - defer
+    Description field rich edit
+    Close account feature
+    Combine lead and xspec data types in front end
+    Straighten up user/contact schemas and model names
+    better error pages for app and heroku static (https://devcenter.heroku.com/articles/error-pages)
+    preload font-awesome graphics
+    use amazon cloud fron CDN
+    straighten up mixpanel hooks
 
-Airframe Send
-    Allow Analytics Code - defer
-    Re-send - defer
-    Permissions - defer
+    Airframe Photos
+        Crop Area - defer
 
-Searching - defer
-    Combine contacts and airframes in results
-    Apply new filters
-    Sorting
-    Quick search and autosuggest
+    Airframe Send
+        Allow Analytics Code - defer
+        Re-send - defer
+        Permissions - defer
 
-Contacts
-    Notes
-    Aiframes
-    Requirements
+    Searching - defer
+        Combine contacts and airframes in results
+        Apply new filters
+        Sorting
+        Quick search and autosuggest
 
-Mobile Views - defer
+    Mobile Views - defer
 
-Reading Emails (replied from recipients) - defer
+    Reading Emails (replied from recipients) - defer
 
-Tutorial
+    Need a tutorial
 
-Deactivate xspecs that have been sent, instead of deleting. then redirect users to a nice error page with broker contact info should they click on it. 
+    Deactivate xspecs that have been sent, instead of deleting. Then redirect users to a nice error page with broker contact info should they click on it. 
 
-Product Improvements
-
-  Description field rich edit
-  Close account feature 
-  Partial out the layouts
-  Combine lead and xspec data types in front end
-  Straighten up user/contact schemas and model names
-  better error pages for app and heroku static (https://devcenter.heroku.com/articles/error-pages)
-  preload font-awesome graphics
-  use amazon cloud fron CDN
   
+== Bugs
+  
+    update airframe thumbnail on file upload
+    remove contact stick note when note is deleted 
