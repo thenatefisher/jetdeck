@@ -6,13 +6,13 @@
                     class="icon-bolt"></i><% } %>
 </td>
 
-<td style="text-align:center;"><%= hits %> Views</td>
+<td style="text-align:center;"><%= hits %> <%= (hits == 1) ? "View" : "Views" %></td>
 
 <td style="text-align:center;">
 <% var dateString = ""; %>
 <% if (last_viewed != "") {
     var s = new Date(last_viewed);
-    dateString = "Last Seen on " + (s.getMonth()+1) +"/"+ s.getDate() +"/"+ s.getFullYear() +" "+ s.getHours() +":"+ s.getMinutes();
+    dateString = "Latest: " + (s.getMonth()+1) +"/"+ s.getDate() +"/"+ s.getFullYear() +" "+ s.getHours() +":"+ s.getMinutes();
     } %>
 <%= dateString %>
 </td>
