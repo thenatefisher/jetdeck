@@ -44,8 +44,8 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     })
 
     # reflow header on image upload and delete
-    @$('#airframe_image_upload').bind('fileuploaddestroyed', => @reflow)
-    @$('#airframe_image_upload').bind('fileuploaddone', => @reflow)
+    @$('#airframe_image_upload').bind('fileuploaddestroyed', => @reflow())
+    @$('#airframe_image_upload').bind('fileuploadfinished', => @reflow())
 
     # set some drag/drop events
     @$('#airframe_image_upload').bind('fileuploaddrop', =>
@@ -53,19 +53,19 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
         mixpanel.track('Added Image To Airframe', {method: 'drag-drop'})
     )
 
-    # initial image readout
-    @reflow(false)
-
     # set CSRF token
     token = $("meta[name='csrf-token']").attr("content")
     @$("#airframe_image_upload input[name='authenticity_token']").val(token)    
+
+    # initial image readout
+    @reflow(false)
     
   reflow: (show_image_list=true) =>
 
     # get all existing images
-    $('#airframe_image_upload .files').html("")
     $.getJSON('/accessories/?airframe=' + @model.get('id'),  (files) =>
         fu = $('#airframe_image_upload').data('blueimpFileupload')
+        $('#airframe_image_upload .files').html("")
         fu._renderDownload(files)
             .appendTo($('#airframe_image_upload .files'))
             .removeClass('fade')       

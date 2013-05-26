@@ -1,26 +1,26 @@
 <div style="padding-top: 20px; background:rgb(236, 242, 245); border-bottom: 1px solid #CCC">
 
-<div class="span2 main-thumbnail airframe-thumbnail" style="position:relative; height: 130px; margin-bottom: 20px;">
+  <div class="span2 main-thumbnail airframe-thumbnail" style="position:relative; height: 130px; margin-bottom: 20px;">
 
-  <% if (avatar && avatar.thumb) { %>
+    <% if (avatar && avatar.thumb) { %>
 
-    <a class="manage_images" href="#" onclick="return false;">
-      <span style="position: absolute; bottom: 0px; width: 140px; text-align: center; color: white; background: #2980B9">
-        <strong>Manage Images</strong>
-      </span>      
-      <img src="<%= avatar.thumb %>" onError="this.src = '/assets/placeholder/aircraft_default_avatar.png'"></a>
+      <a class="manage_images" href="#" onclick="return false;">
+        <span style="position: absolute; bottom: 0px; width: 140px; text-align: center; color: white; background: #2980B9">
+          <strong>Manage Images</strong>
+        </span>      
+        <img src="<%= avatar.thumb %>" onError="this.src = '/assets/placeholder/aircraft_default_avatar.png'"></a>
 
-  <% } else { %>
+    <% } else { %>
 
-    <a class="manage_images" href="#" onclick="return false;">
-      <span style="position: absolute; margin-top: 45px; width: 140px; text-align: center">
-        <strong>Upload Image</strong><br>
-        Drag Files Here
-      </span>
-      <img style="height: 129px" src="/assets/placeholder/aircraft_default_avatar.png">
-    </a>
+      <a class="manage_images" href="#" onclick="return false;">
+        <span style="position: absolute; margin-top: 45px; width: 140px; text-align: center">
+          <strong>Upload Image</strong><br>
+          Drag Files Here
+        </span>
+        <img style="height: 129px" src="/assets/placeholder/aircraft_default_avatar.png">
+      </a>
 
-  <% } %>
+    <% } %>
 
 </div>
 
@@ -51,15 +51,13 @@
 
       </div>
 
-
-      </div>
-
-
+    </div>
 
 </div> <!-- offset3 -->
 
 <form id="airframe_image_upload" action="/accessories" method="POST" enctype="multipart/form-data">
   <input type="hidden" name="authenticity_token">
+  <input type="hidden" name="airframe" value="<%= id %>" />
   <div id="uploader" class="hide">
 
       <!-- The loading indicator is shown during file processing -->
@@ -73,14 +71,25 @@
       <!-- The fileupload-buttonbar contains buttons to add/delete files and 
       start/cancel the upload -->
       <div class="fileupload-buttonbar" style="clear: both;">
-          <div class="span">
+          <div class="span" style="position: relative">
           
               <!-- The fileinput-button span is used to style the file input 
               field as button -->
  
-              <input type="file" name="files[image]" id="airframe-image-input" value="Add Files" multiple>
-              <input type="hidden" name="airframe" value="<%= id %>">
-                  
+              <div class="btn btn-primary">
+
+                <input type="file" name="files[image]" 
+                  id="airframe-image-input" 
+                  value="Add Files" 
+                  style="-moz-opacity:0; filter:alpha(opacity: 0); opacity: 0;" 
+                  multiple />
+                <span 
+                  style="position: absolute; left: 0px; top: 10px; z-index: 2; margin: 0 auto; width: 100%" 
+                  onclick="$('#airframe-image-input').click(); return false;">
+                  <strong>Add Images</strong></span>
+
+              </div>
+
           </div>
           <!-- The global progress information -->
           <div class="span3 fileupload-progress fade">

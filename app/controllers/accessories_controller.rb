@@ -28,12 +28,12 @@ class AccessoriesController < ApplicationController
     if @Assy.save
       respond_to do |format|
         format.html {
-          render :json => [@Assy.to_jq_upload].to_json,
-          :content_type => 'text/html',
-          :layout => false
+          render :json => {"files" => [@Assy.to_jq_upload]}.to_json,
+                  :content_type => 'text/html',
+                  :layout => false
         }
         format.json {
-          render :json => [@Assy.to_jq_upload].to_json
+          render :json => {"files" => [@Assy.to_jq_upload]}.to_json
         }
       end
     else
