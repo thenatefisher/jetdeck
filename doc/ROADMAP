@@ -10,12 +10,12 @@ next up:
     2x      finish airframe show page, add analytics and editable details
 
                 - contact notes pagination
-                - actions add date
-                - contact aircraft list
+                - contact aircraft spec list
+                - contact aircraft associated list
                 - contact views history 
                 - contact send button
                 - contact header 
-                - delete contact
+                - contact delete
 
                 - airframe send config modal
                 - airframe spec edit boxes
@@ -26,6 +26,8 @@ next up:
                 - airframe update thumbnail on file upload
                 - create alternate image list open/close buttons
                 
+                x - action due dates for aircraft and contacts
+
                 - add mixpanel
 
     1x      integrate payments

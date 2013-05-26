@@ -1,19 +1,27 @@
-<h3>&nbsp;</h3>
-<a href="#" id="delete-button" class="muted pull-right">Delete Contact</a><br><br>
-</div>
+<h3><br></h3>
 
-<div  class="hide">
-    <br>
+<span id="delete-section"> 
+  <button class="muted pull-right" style="border: 0; background: none;">Delete Contact</button>
+</span>
+
+<div id="delete-button" class="hide">
+
     <p> <strong> Warning! </strong> This will 
     <span class="label label-important">permanently delete</span> any data 
         and associations with this contact. This person will also no longer 
         be able to view any specs sent to them. Aircraft specs which have 
         this contact as a lead will not be deleted.</p>
-
-    <p>You may <a href="#" id="delete-cancel">close this message</a> to cancel the operation.</p>
             
     <button class="btn btn-danger" id="delete-confirm" style="width: 100%; margin-top: 6px;"> 
       <i class="icon-warning-sign icon-white"></i> Permanently Delete Contact
     </button>
+    
+    <br>
+    <a href="#delete-section" class="delete-cancel pull-right" style="margin-top: 5px;">Cancel and Close Message</a>
+    <br>
 
 </div>
+    
+<h5>&nbsp;</h5>
+
+

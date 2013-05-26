@@ -6,7 +6,7 @@ class Jetdeck.Views.Contacts.ShowDelete extends Backbone.View
   events:
     "click #delete-section"     : "toggleDelete"
     "click #delete-confirm"     : "delete"
-    "click #delete-cancel"      : "toggleDelete"
+    "click .delete-cancel"      : "toggleDelete"
     
   delete: () ->
     @model.destroy()
@@ -18,8 +18,10 @@ class Jetdeck.Views.Contacts.ShowDelete extends Backbone.View
   
     if $("#delete-button").is(":visible")
       $("#delete-button").hide()
+      $("#delete-section").show()
     else
       $("#delete-button").show()
+      $("#delete-section").hide()
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))
