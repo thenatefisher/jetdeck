@@ -23,11 +23,12 @@ ROADMAP TO LAUNCH:
                 x - airframe leads pagination
                 x - create alternate image list open/close buttons
 
-                - reformat spec email
-                
                 x - action due dates for aircraft and contacts
 
-                - merge to master; push origin
+                - login/signup page
+
+                - reformat spec email
+                - emails missing images
 
     1x      integrate payments
 

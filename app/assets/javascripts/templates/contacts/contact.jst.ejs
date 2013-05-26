@@ -7,11 +7,25 @@
           <div class="contact-index-missing-image"></div>
         <%}%>
 
+        
           <div class="caption" style="float:  left;">
-          <h5 style="margin-top: 0; font-size: 15px"><%= first %>&nbsp;<%= last %></h5>
-          <br><%= company %>
-          <br><br><%= email %>
+
+            <h5 style="margin-top: 0; font-size: 15px">
+
+              <% if (!first && !last) {%>
+              <%= email %>
+              <%} else {%> 
+              <%= first %>&nbsp;<%= last %>
+              <%} %>
+
+            </h5>
+
+            <br><%= company %>
+                    
+            <br><br><% if (first || last) {%> <%= email %> <%} %>   
+
           </div>
+          
           <div class="clearfix">&nbsp;</div>
 </a>
 </div>

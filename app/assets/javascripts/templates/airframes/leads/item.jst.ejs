@@ -1,21 +1,21 @@
 <td>
-<a href="/contacts/<%= id %>">
-    <%= (name != "") ? name : email %>
-</a>
-<% if (fire) { %><i style="color: #bd362f; font-weight: bold; margin-left: 5px;" 
-                    class="icon-bolt"></i><% } %>
+  <a href="/contacts/<%= id %>">
+      <%= (name != "") ? name : email %>
+  </a>
+  <% if (fire) { %><i style="color: #bd362f; font-weight: bold; margin-left: 5px;" 
+                      class="icon-bolt"></i><% } %>
 </td>
 
-<td style="text-align:center;"><%= hits %> <%= (hits == 1) ? "View" : "Views" %></td>
+<td style="text-align:center;"><%= hits %></td>
 
-<td style="text-align:center;">
 <% var dateString = ""; %>
 <% if (last_viewed != "") {
     var s = new Date(last_viewed);
-    dateString = "Latest: " + (s.getMonth()+1) +"/"+ s.getDate() +"/"+ s.getFullYear() +" "+ s.getHours() +":"+ s.getMinutes();
-    } %>
-<%= dateString %>
-</td>
+    dateString = (s.getMonth()+1) +"/"+ s.getDate() +"/"+ s.getFullYear() +" "+ s.getHours() +":"+ s.getMinutes();
+  } 
+%>
+
+<td style="text-align:left;"><%= dateString %></td>
 
 <td>
     <div class="lead_buttons btn-group pull-right" 

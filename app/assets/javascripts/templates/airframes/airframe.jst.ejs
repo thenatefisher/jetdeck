@@ -9,7 +9,7 @@
 
           <div class="caption" style="float:  left;">
           <h5 style="margin-top: 0; font-size: 15px"><%= to_s %>&nbsp;</h5>
-          Serial <%= serial %>  &nbsp; &nbsp; 
+          <% if (serial && serial != "") { %>Serial <%= serial %>  &nbsp; &nbsp; <% } %>
           <% if (registration && registration != "") { %>Reg. <%= registration %> <% } %>
           </div>
           <div class="clearfix">&nbsp;</div>

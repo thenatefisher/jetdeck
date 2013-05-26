@@ -10,7 +10,7 @@ class Jetdeck.Routers.ContactsRouter extends Backbone.Router
     ".*"       : "index"
 
   index: ->
-    contacts = new Jetdeck.Collections.ContactCollection(page_size: 15)
+    contacts = new Jetdeck.Collections.ContactCollection(page_size: 14)
     contacts.reset @options.contacts 
     @view = new Jetdeck.Views.Contacts.IndexView(contacts: contacts)
     $("#html_top").html(@view.render().el)
