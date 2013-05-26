@@ -131,8 +131,8 @@
 
     AircraftYMM.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
         tpl: '<div><input type="text" placeholder="Year" name="year" class="input-mini"> '+
-             '<div><input type="text" placeholder="Make" name="make" class="input"> '+
-             '<input type="text" placeholder="Model" name="modelName" class="input"></div>',
+             '<input type="text" placeholder="Make" name="make" class="input-medium"> '+
+             '<input type="text" placeholder="Model" name="modelName" class="input-medium"></div>',
              
         inputclass: 'editable-aircraft_ymm'
     });

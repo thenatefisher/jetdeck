@@ -28,7 +28,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
         success: => 
             @model.fetch(
                 success: => 
-                    window.router.view.cancel()
+                    window.router.view.header.render()
                     $('#uploader').show()
             )
         }
@@ -40,25 +40,14 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     @$('#airframe_image_upload').fileupload()
 
     # uploader settings
-    @$('#airframe_image_upload').fileupload('option', {
+    @$('#airframe_image_upload').fileupload({
         autoUpload: true
         url: '/accessories'
-        process: [
-            {
-                action: 'load',
-                fileTypes: /^image\/(gif|jpeg|png)$/,
-                maxFileSize: 50000000 # 50MB
-            },
-            {
-                action: 'resize',
-                maxWidth: 1440,
-                maxHeight: 900
-            },
-            {
-                action: 'save'
-            }
-        ]
+        acceptFileTypes: /^image\/(gif|jpeg|png)$/
+        maxFileSize: 10490000 # 10MB
     })
+
+    @$('#airframe_image_upload').bind('fileuploaddestroyed', -> window.router.view.header.render())
 
     # open edit box when adding via the button
     @$('#airframe_image_upload').bind('fileuploadadd', ->
@@ -69,22 +58,8 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     # set some drag/drop events
     @$('#airframe_image_upload').bind('fileuploaddrop', =>
       $('#uploader').show()
-      #$('#changes').children().fadeIn()
-      #$('#changes').slideDown()
-      $('.manage_images a').html('Hide Images')
       #mixpanel.track('Dropped Image Into Airframe')
     )
-
-    # upload server status check for browsers with CORS support:
-    if ($.support.cors)
-        $.ajax({
-            url: '/accessories',
-            type: 'HEAD'
-        }).fail( ->
-            $('<span class="alert alert-error"/>')
-                .text('Uploads Unavailable')
-                .appendTo('#airframe_image_upload')
-        )
 
     # get all existing images
     $.getJSON('/accessories/?airframe=' + @model.get('id'),  (files) =>

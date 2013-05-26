@@ -4,78 +4,16 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   template: JST["templates/airframes/show"]
 
   events:
-    "keydown .inline-edit"      : "edit"
     "click .manage_images"      : "manageImages"
-  
-  initialize: =>
-    $("#cancel-changes").on("click", @cancel)
-    $("#save-changes").on("click", @save)
-    
-  cancel: =>
-    that = this
-    @model.fetch(success: =>
-      @model.updateChildren()
-      $("#changes").children().fadeOut()
-      $("#changes").slideUp(->
-        that.render()  
-      )
-    )
 
   manageImages: () ->
     if $("#uploader").is(":visible")
       $("#uploader").hide()
-      $("a.manage_images_link").html("Manage Images")
     else
       $("#uploader").show()
-      $("a.manage_images_link").html("Hide Images")
-      
-  edit: (event) ->
-    if event
-        element = event.target || event.currentTarget 
-        $(element).addClass("changed")
-    $("#changes").children().fadeIn()
-    $("#changes").slideDown()
-  
-  save: (e) =>
-    $("#save-changes").prop('disabled', true)
-    self = this
-    imagesUploaded = false
-            
-    $(".inline-edit").each( ->
-      
-      # strip leading/trailing space
-      this.value = this.value.replace(/(^\s*)|(\s*$)/gi,"")
-      this.value = this.value.replace(/\n /,"\n")
-      
-      # format for money and thousands sep numbers
-      if $(this).hasClass('number')
-        this.value = parseInt(this.value.replace(/[^0-9]/g,""), 10)
-      else if $(this).hasClass('money')
-        this.value = parseInt(this.value.replace(/[^0-9]/g,""), 10)
-
-      self.model.set(this.name, this.value)  
-      
-    )
-    
-    @model.save(null,
-      success: (response) =>
-        $("#changes").children().fadeOut()
-        $("#changes").slideUp( =>
-          @model.updateChildren()
-          window.router.view.render()
-          alertSuccess("<i class='icon-ok icon-large'></i> Changes Saved!") 
-          @manageImages() if imagesUploaded
-          mixpanel.track("Airframe Updated")
-        )
-
-      error: =>
-        @cancel()
-        alertFailure("<i class='icon-warning-sign icon-large'></i> Error Saving Changes")      
-    )
-    
-    $("#save-changes").prop('disabled', false)
 
   render: =>
+
     lastSpecTab = null
     if $("#airframe_spec_details .tab-pane:visible").attr("id")
       lastSpecTab = $("#airframe_spec_details .tab-pane:visible").attr("id")
