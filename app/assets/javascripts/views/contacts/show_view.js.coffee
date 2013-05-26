@@ -81,8 +81,8 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     #if @model.specs.length > 0
     #  @$("#contact_specs").html(@specs.render().el) 
     
-    #@send = new Jetdeck.Views.Send.ShowSend(model: @model)
-    #@$("#contact_send").html(@send.render().el) 
+    @send = new Jetdeck.Views.Send.ShowSend(model: @model)
+    @$("#contact_send").html(@send.render().el) 
 
     @notes = new Jetdeck.Views.Notes.ShowNotes(model: @model)
     @$("#contact_notes").html(@notes.render().el)    
@@ -92,18 +92,14 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
       @notes.render() 
     )
 
-    @requirements = new Jetdeck.Views.Contacts.ShowRequirements(model: @model)
-    @$("#contact_requirements").html(@requirements.render().el)       
+    #@requirements = new Jetdeck.Views.Contacts.ShowRequirements(model: @model)
+    #@$("#contact_requirements").html(@requirements.render().el)       
 
     @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#contact_actions").html(@actions.render().el)  
     
     @delete = new Jetdeck.Views.Contacts.ShowDelete(model: @model)
     @$("#contact_delete").html(@delete.render().el)
-        
-    #@details = new Jetdeck.Views.Contacts.ShowDetails(model: @model)
-    #@$("#contact_details").html(@details.render().el)
-    #@$("a[href='#"+lastDetailTab+"']'").tab('show') if lastDetailTab  
     
     return this
 

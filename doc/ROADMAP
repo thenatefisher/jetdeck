@@ -15,6 +15,7 @@ ROADMAP TO LAUNCH:
 
                 - airframe send config modal
                 - airframe spec edit boxes
+                - aircraft create spec buttong
                 x - airframe default view with no leads
                 x - airframe fix bug with missing image
                 x - airframe add associate
@@ -39,3 +40,5 @@ ROADMAP TO LAUNCH:
     1x      push live and check all services operational (s3, sendgrid, etc)
 
     1x      write press release
+
+
