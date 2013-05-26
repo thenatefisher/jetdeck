@@ -51,79 +51,9 @@
 
       </div>
 
-        <div class="span4" style="margin: 5px 0px;">
-
-          <div style="margin: 0 0 5px 0px;">
-            <span class="muted">
-              Add <a href="#" id="add_associate" data-type="aircraft_associate">Associate</a>
-            </span>
-          </div> 
-
-          <div style="margin: 5px 0px">
-            <a href="/contacts/95"><span class="label label-info"><i class="icon-user icon-large"></i></span></a> Owner 
-            <a href="#" id="Owner_3" data-type="text" data-pk="1" data-name="email" data-original-title="Email Address">
-              Jackson Teller
-            </a>             
-            <a href="#" class="remove_detail"><i class="icon-remove"></i></a>
-          </div>
-
-        </div>
 
       </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div style="display: none; margin: 20px 0px 0px 0px; font-size: 110%">
-
-        <div><div style="line-height: 5px;"><br></div>
-        <strong class="span2" style="margin: 10px;">Serial Number</strong>
-        <input type="text" 
-            style="height: 20px; padding: 5px 10px; font-size: 16px;"
-            class="inline-edit airframe_field span2" 
-            value="<%= serial %>"
-            placeholder="<%= serial ? serial : '--' %>"
-            name="serial"></input>
-       </div>
-
-        <div><div style="line-height: 5px;"><br></div>
-        <strong class="span2" style="margin: 10px;">Registration</strong>
-        <input type="text" 
-            style="height: 20px; padding: 5px 10px; font-size: 16px;"
-            class="inline-edit airframe_field span2" 
-            value="<%= registration %>"
-            placeholder="<%= registration ? registration : '--' %>"
-            name="registration"></input>
-       </div>
-
-        <% if (location) { %>
-        <div><div style="line-height: 5px;"><br></div>
-          <strong class="span2" style="margin: 10px;">Location</strong>
-          <a href="<%= location.id %>"><%= location.icao %></a>
-          (<%= location.city %>, <%= location.state %>) </div>
-        <% } %>
-        
-        <div><div style="line-height: 5px;"><br></div>
-        <strong class="span2" style="margin: 10px;">Asking Price</strong>
-        <input type="text" 
-                style="height: 20px; padding: 5px 10px; font-size: 16px;"
-                class="inline-edit airframe_field money span2" 
-                value="<%= asking_price ? asking_price : '$--' %>" 
-                name="asking_price"></input>
-        </div>
-            
-    </div>
-    
 
 
 </div> <!-- offset3 -->
