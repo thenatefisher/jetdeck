@@ -18,10 +18,8 @@
         Permissions - defer
 
     Searching - defer
-        Combine contacts and airframes in results
         Apply new filters
         Sorting
-        Quick search and autosuggest
 
     Mobile Views - defer
 
@@ -34,5 +32,7 @@
   
 == Bugs
   
-    update airframe thumbnail on file upload
-    remove contact stick note when note is deleted 
+    Update airframe thumbnail on file upload
+    Remove contact stick note when note is deleted 
+    Dont nuke sparkline when deleting a lead
+

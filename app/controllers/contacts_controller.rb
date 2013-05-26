@@ -40,7 +40,6 @@ class ContactsController < ApplicationController
         @current_user.id]
     )
 
-    render :html => 'contacts/show', :layout => 'contact_mockup' 
   end
 
   # GET /contacts/new
