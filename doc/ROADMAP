@@ -2,7 +2,7 @@ ROADMAP TO LAUNCH:
 
     2x      finish retail spec page, create carousel on click
 
-    2x      finish airframe show page, add analytics and editable details
+    3x      finish internal application ui
 
                 - contact notes pagination
                 - contact aircraft spec list
@@ -25,14 +25,14 @@ ROADMAP TO LAUNCH:
 
                 x - action due dates for aircraft and contacts
 
+                - profile page and actions page
+
                 - login/signup page
 
                 - reformat spec email
                 - emails missing images
 
     1x      integrate payments
-
-    1x      profile page and actions page
 
     2x      marketing and signup brochure site   
 
@@ -41,5 +41,3 @@ ROADMAP TO LAUNCH:
     1x      push live and check all services operational (s3, sendgrid, etc)
 
     1x      write press release
-
-
