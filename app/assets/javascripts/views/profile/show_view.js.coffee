@@ -13,6 +13,13 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
     @$('#title').editable({url: (obj) => @model.attributes.contact[obj.name] = obj.value; @model.save()})
     @$('#phone').editable({url: (obj) => @model.attributes.contact[obj.name] = obj.value; @model.save()})
     @$('#signature').editable({url: (obj) => @model.attributes.contact[obj.name] = obj.value; @model.save()})
+    @$('#password').editable({
+      url: (obj) =>       
+        console.log obj
+        @model.set('password', obj.value.password)
+        @model.set('password_confirmation', obj.value.password_confirmation)  
+        @model.save()
+    })
     @$('#website').editable({
       url: (obj) => 
         website = obj.value.replace(/http\:\/\//, '')
