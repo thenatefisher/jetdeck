@@ -1,17 +1,5 @@
 class SessionsController < ApplicationController
 
-    def hn_demo
-    
-      #user = User.find(30)
-  
-      #cookies[:auth_token] = user.auth_token      
-     
-      #redirect_to airframes_url, :notice => actions_due_today(user), :alert => "hn"
-      
-      render :layout => 'login'
-      
-    end
-    
     def new
         
         if current_user.present? 
@@ -36,7 +24,9 @@ class SessionsController < ApplicationController
               cookies[:auth_token] = user.auth_token      
           end
           
-          redirect_to airframes_url, :notice => actions_due_today(user)
+          #redirect_to airframes_url, :notice => actions_due_today(user)
+
+          redirect_to airframes_url
           
         else
         

@@ -47,9 +47,7 @@ Jetdeck::Application.routes.draw do
   resources :accessories
   
   match "/search" => "search#navbar"
-  
-  match "/hn" => "sessions#hn_demo"
-  
+    
   match "/login" => "sessions#new"
 
   match "/authenticate" => "sessions#create"
@@ -68,6 +66,6 @@ Jetdeck::Application.routes.draw do
   
   match "/favicon.ico" => redirect("/assets/favicon.png")
 
-  root :to => 'sessions#new'
+  root "*" => 'sessions#new'
 
 end
