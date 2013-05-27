@@ -6,30 +6,32 @@
     Straighten up user/contact schemas and model names
     better error pages for app and heroku static (https://devcenter.heroku.com/articles/error-pages)
     preload font-awesome graphics
-    use amazon cloud fron CDN
+    use amazon cloud CDN
     straighten up mixpanel hooks
 
     Airframe Photos
-        Crop Area - defer
+        Crop Area
 
     Airframe Send
-        Allow Analytics Code - defer
-        Re-send - defer
-        Permissions - defer
+        Allow Analytics Code
+        Re-send
+        Permissions
 
-    Searching - defer
+    Searching
         Apply new filters
         Sorting
 
-    Mobile Views - defer
+    Mobile Views
 
-    Reading Emails (replied from recipients) - defer
+    Reading Emails (replied from recipients)
 
     Need a tutorial
 
-    Deactivate xspecs that have been sent, instead of deleting. Then redirect users to a nice error page with broker contact info should they click on it. 
+    Deactivate xspecs that have been sent, instead of deleting. 
+    Then redirect users to a nice error page with broker contact info should they click on it. 
 
-  
+    Actions page
+
 == Bugs
   
     Update airframe thumbnail on file upload

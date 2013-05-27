@@ -1,225 +1,124 @@
-  <div class="span2">
+<div style="height: 20px;"></div>
 
-      <div class="main-thumbnail profile-main-thumbnail">
-        <div><img src="/assets/missing.png" /></div>
-      </div>
+<div class="span2">
 
-      <table class="profile-stats">
-          <thead>
-            <tr>
-                <th></th>
-            </tr>
-          </thead>
+    <div class="main-thumbnail profile-main-thumbnail">
+      <div><img src="/assets/missing.png" /></div>
+    </div>
+
+    <h4>Usage Stats</h4>
+    <table>
+      <tbody style="font-weight: bold">
+        <tr>
+          <td style="width: 30px; text-align: center;"><%= airframes %></td>
+          <td>Aircraft</td>
+        </tr>
+        <tr>
+          <td style="width: 30px; text-align: center;"><%= contacts %></td>
+          <td>Contacts</td>
+        </tr>
+        <tr>
+          <td style="width: 30px; text-align: center;"><%= sent %></td>
+          <td>Specs Sent</td>
+        </tr>
+        <tr>
+          <td style="width: 30px; text-align: center;"><%= views %></td>
+          <td>Spec Views</td>
+        </tr>
+      </tbody>
+    </table>
+
+</div>
+
+<div class="offset2">
+
+    <div class="span7">
+      <table id="profile-table">
           <tbody>
-          <tr>
-            <td style="border-top: 0px; padding: 25px 0">
-                <h2 style="color: #aaa"><%= airframes %></h2>
-                <small style="color: #aaa">Aircraft </small>
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 25px 0">
-                <h2 style="color: #aaa"><%= contacts %></h2>
-                <small style="color: #aaa">Contacts </small>          
-            </td>
-          </tr>
-          <tr>
-            <td style="padding: 25px 0">
-                <h2 style="color: #aaa"><%= sent %></h2>
-                <small style="color: #aaa">Specs Sent </small>          
-            </td>          
-          </tr>
-          <tr>
-            <td style="padding: 25px 0">
-                <h2 style="color: #aaa"><%= views %></h2>
-                <small style="color: #aaa">Spec Views </small>          
-            </td>           
-          </tr>
+              <tr>
+                  <td colspan=2>
+                      <h1 style="margin-top: 0px;">
+                        <span data-pk="1" style="cursor: pointer" id="first" 
+                          data-type="text" data-pk="1" data-emptytext="none" data-original-title="First"><%= contact.first %></span> 
+                        <span data-pk="1" style="cursor: pointer" id="last" 
+                          data-type="text" data-pk="1" data-emptytext="none" data-original-title="Last"><%= contact.last %></span>
+                      </h1>
+                  </td>
+              </tr>
+              <tr>
+                  <td class="span3">
+                      Title
+                  </td>
+                  <td>
+                      <a href="#" id="title" data-type="text" data-pk="1" 
+                        data-emptytext="Click to Enter Title" data-original-title="Title"><%= contact.title %></a> 
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      Company
+                  </td>
+                  <td>
+                      <a href="#" id="company" data-type="text" data-pk="1" 
+                        data-emptytext="Click to Enter Company" data-original-title="Company"><%= contact.company %></a> 
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      Account Type
+                  </td>
+                  <td>
+                      Beta Free Trial
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      Phone Number
+                  </td>
+                  <td>
+                      <a href="#" id="phone" data-type="text" data-pk="1" 
+                        data-emptytext="Click to Enter Phone" data-original-title="Phone"><%= contact.phone %></a> 
+                  </td>
+              </tr>   
+              <tr>
+                  <td>
+                      Website
+                  </td>
+                  <td>
+                      <a href="#" id="website" data-type="text" data-pk="1" 
+                        data-emptytext="Click to Enter URL" data-original-title="Website"><%= contact.website %></a> 
+                  </td>
+              </tr> 
+              <tr>
+                  <td>
+                      Email Address
+                  </td>
+                  <td>
+                      <a href="#" id="email" data-type="text" data-pk="1" 
+                        data-emptytext="Click to Update Email" data-original-title="Email"><%= contact.email %></a> 
+                  </td>
+              </tr>    
+                            
+              <tr>
+                  <td>
+                      Password
+                  </td>
+                  <td>
+                      <a href="#" id="password" data-type="text" data-pk="1" 
+                        data-emptytext="Click to Update Password" data-original-title="Password">*******</a> 
+                  </td>
+              </tr>                  
+              <tr>
+                  <td>
+                      Email Signature
+                  </td>
+                  <td>
+                      <a href="#" id="signature" data-type="textarea" data-pk="1" 
+                        data-emptytext="Click to Enter Signature" data-original-title="Signature"><%= spec_disclaimer %></a> 
+                  </td>
+              </tr>                           
           </tbody>
       </table>
+    </div>
 
-  </div>
-  
-  <div class="offset2">
-     
-      <div class="span7">
-
-        <a href="#" id="first" data-type="text" data-pk="1" data-emptytext="none" data-original-title="First"><%= contact.first %></a> 
-
-        <a href="#" id="last" data-type="text" data-pk="1" data-emptytext="none" data-original-title="Last"><%= contact.last %></a> 
-
-        <a href="#" id="title" data-type="text" data-pk="1" data-emptytext="none" data-original-title="Title"><%= contact.title %></a> 
-
-        <a href="#" id="company" data-type="text" data-pk="1" data-emptytext="none" data-original-title="Company"><%= contact.company %></a> 
-      
-      </div>
-
-      <div class="row">
-      
-        <div id="profile_settings" class="span7" style="margin: 70px 0 40px 40px">
-              <table>
-                  <tbody>
-                      <tr>
-                          <td>
-                              <div class="profile-header-label span3">Account Type</div>
-                          </td>
-                          <td>
-                              <button style="float:right" class="btn span4" disabled>Beta / Trial</button>
-                          </td>
-                      </tr>
-                      
-                      <tr>
-                          <td>
-                              <div class="profile-header-label span3">Phone Number</div>
-                          </td>
-                          <td>
-
-                              <a href="#" id="phone" data-type="text" data-pk="1" 
-                              data-emptytext="none" data-original-title="Phone"><%= contact.phone %></a> 
-
-                              <div style="text-align: right; 
-                                          margin: -5px 0 0 0; 
-                                          float: right;
-                                          color: #777">
-                              (will be visible to customers as-entered)
-                              </div>                                            
-                          </td>
-                      </tr>   
-                          
-                      <tr>
-                          <td>
-                              <div class="profile-header-label span3">Website</div>
-                          </td>
-                          <td>
-                              <div class="input-prepend pull-right">
-                                <span class="add-on">http://</span><input 
-                                        type="text"
-                                        class="inline-edit"
-                                        style="width: 240px"
-                                        <% if (contact.website) { %>
-                                        value="<%= contact.website.replace('http://', '') %>"
-                                        <% } %>
-                                        name="website"
-                                        placeholder="www.website.com" />
-                            
-                               </div>
-                               <span for="website" 
-                                      class="help-inline error pull-right"></span> 
-                          </td>
-                      </tr> 
-                                                              
-                      <tr>
-                          <td>
-                              <div class="profile-header-label span3">Email Address</div>
-                          </td>
-                          <td>
-                              <input  type="text"
-                                      style="float:right" 
-                                      class="inline-edit span4"
-                                      value="<%= contact.email %>"
-                                      name="email"
-                                      placeholder="Email Address" />
-                           
-                              <input  type="text"
-                                      style="float:right" 
-                                      class="inline-edit span4"
-                                      name="email_confirmation"
-                                      placeholder="Confirm New Email" />
-                       
-                               <span for="email" 
-                                      class="help-inline error pull-right"></span> 
-       
-                          </td>
-                      </tr>    
-                                    
-                      <tr>
-                          <td>
-                              <div class="profile-header-label span3">Password</div>
-                          </td>
-                          <td>
-                              <input  type="password"
-                                      style="float:right" 
-                                      class="inline-edit span4"
-                                      name="password"
-                                      placeholder="New Password" />
-                            
-                              <input  type="password"
-                                      style="float:right" 
-                                      class="inline-edit  span4"
-                                      name="password_confirmation"
-                                      placeholder="Confirm New Password" />
-                                      
-                               <span for="password" 
-                                      class="help-inline error pull-right"></span>
-                          </td>
-                      </tr>                  
-                  
-                      <tr>
-                          <td>
-                              <div class="profile-header-label span3">Logo</div>
-                          </td>
-                          <td>
-                          
-                              <% if (typeof(logo) != "undefined" && logo != null) { %> 
-                                  <div class="span4" style="float: right; margin-bottom: 20px;">
-                                    <img style="float:right" src="<%= logo %>">
-
-                                  </div>
-                              <% } %>
-                              
-                              <div id="logo-help" style="text-align: right; 
-                                          margin-top: -10px; 
-                                          float: right;
-                                          width: 200px;
-                                          color: #777">
-                              Logo will be visible to customers.
-                              </div>
-                                                                  
-                              <form method="POST" action="/user_logos" enctype="multipart/form-data">
-                                <input type="hidden" name="authenticity_token" />
-                                <input type="file" 
-                                        id="logo" 
-                                        name="image"
-                                        style="display: none" />  
-                                
-                                <% if (typeof(logo) != "undefined" && logo != null) { %> 
-                                <button style="float:right; margin-left: 20px" 
-                                        id="delete"
-                                        class="btn span2">Delete Logo</button> 
-                                <% } %>
-                                                                                
-                                <button style="float: right; margin-left: 20px"
-                                        onclick="return false"
-                                        id="upload"
-                                        class="btn span2">Select Logo</button>   
-                                                                                                                                                 
-                              </form>
-                              
-                          </td>
-                          <tr>
-                          <td>
-                              <div class="profile-header-label span3">Disclaimer</div>
-                          </td>
-                          <td>
-                              <textarea type="text"
-                                      style="float:right" 
-                                      class="inline-edit span4"
-                                      name="spec_disclaimer"
-                                      placeholder="Disclaimer"><%= spec_disclaimer %></textarea>
-                               <div style="text-align: right; 
-                                          margin: -5px 0 0 0; 
-                                          float: right;
-                                          color: #777">
-                              Will be added to bottom of all specs.
-                              </div> 
-       
-                          </td>
-                      </tr>                           
-                      </tr>                  
-                  </tbody>
-              </table>
-              </div>
-        
-      </div>
-
-  </div> <!-- offset2 -->
+</div> <!-- offset2 -->

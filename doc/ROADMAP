@@ -1,8 +1,6 @@
 ROADMAP TO LAUNCH:
 
-    2x      finish retail spec page, create carousel on click
-
-    3x      finish internal application ui
+    4x      finish internal application ui
 
                 - contact notes pagination
                 - contact aircraft spec list
@@ -25,16 +23,20 @@ ROADMAP TO LAUNCH:
 
                 x - action due dates for aircraft and contacts
 
-                - profile page and actions page
+                - profile page password
+                - profile page email
 
                 - login/signup page
 
-                - reformat spec email
-                - emails missing images
+                - transaction emails missing images
 
-    1x      integrate payments
+                - error page
+
+    1x      Create in-line email; add image; create images page
 
     2x      marketing and signup brochure site   
+
+    1x      integrate payments    
 
     1x      browser compatibilty check 
 
