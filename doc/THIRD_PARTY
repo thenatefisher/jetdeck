@@ -11,6 +11,7 @@ Third Party Libraries
       jQueryUI AutoComplete
       jQuery Select2
       jQuery File Upload
+      kicksend mailcheck
 
   Back End:
       Rails
