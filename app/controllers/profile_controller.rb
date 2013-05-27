@@ -16,7 +16,7 @@ class ProfileController < ApplicationController
         
         if params[:profile][:contact]
         
-            if params[:profile][:contact][:spec_disclaimer]
+            if params[:profile][:contact][:spec_disclaimer].present?
               @current_user.spec_disclaimer = params[:profile][:contact][:spec_disclaimer]
               @current_user.save
             end

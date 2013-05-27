@@ -1,19 +1,19 @@
 (function ($) {
-    var Password = function (options) {
-        this.init('password', options, Password.defaults);
+    var Email = function (options) {
+        this.init('email', options, Email.defaults);
     };
 
     //inherit from Abstract input
-    $.fn.editableutils.inherit(Password, $.fn.editabletypes.abstractinput);
+    $.fn.editableutils.inherit(Email, $.fn.editabletypes.abstractinput);
 
-    $.extend(Password.prototype, {
+    $.extend(Email.prototype, {
         /**
         Renders input from tpl
 
         @method render() 
         **/        
         render: function() {
-            Password.superclass.render.call(this);
+            Email.superclass.render.call(this);
         },
         
         value2html: function(value, element) {
@@ -21,7 +21,7 @@
                 $(element).empty();
                 return; 
             }
-            var html = $('<div>').text('*******').html();
+            var html = $('<div>').text(value.email).html();
             $(element).html(html); 
         },
        
@@ -32,8 +32,8 @@
         @param {mixed} value
        **/         
        value2input: function(value) {
-           this.$input.find('input[name="password"]').val(value.password);
-           this.$input.find('input[name="password_confirmation"]').val(value.password_confirmation);
+           this.$input.find('input[name="email"]').val(value.email);
+           this.$input.find('input[name="email_confirmation"]').val(value.email_confirmation);
        },       
        
        /**
@@ -43,8 +43,8 @@
        **/          
        input2value: function() { 
            return {
-              password: this.$input.find('input[name="password"]').val(),
-              password_confirmation: this.$input.find('input[name="password_confirmation"]').val()
+              email: this.$input.find('input[name="email"]').val(),
+              email_confirmation: this.$input.find('input[name="email_confirmation"]').val()
            };
        },        
        
@@ -54,7 +54,7 @@
         @method activate() 
        **/        
        activate: function() {
-            this.$input.find('input[name="password"]').focus();
+            this.$input.find('input[name="email"]').focus();
        },  
        
        /**
@@ -71,13 +71,13 @@
        }       
     });
 
-    Password.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
-        tpl: '<div><input type="password" placeholder="Password" name="password" class="input"></div><br> ' +
-             '<div><input type="password" placeholder="Confirm Password" name="password_confirmation" class="input"></div>',
+    Email.defaults = $.extend({}, $.fn.editabletypes.abstractinput.defaults, {
+        tpl: '<div><input type="text" placeholder="Email" name="email" class="input"></div><br> ' +
+             '<div><input type="text" placeholder="Confirm Email" name="email_confirmation" class="input"></div>',
              
-        inputclass: 'editable-password'
+        inputclass: 'editable-email'
     });
 
-    $.fn.editabletypes.password = Password;
+    $.fn.editabletypes.email = Email;
 
 }(window.jQuery));

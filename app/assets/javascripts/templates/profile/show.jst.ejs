@@ -38,10 +38,9 @@
               <tr>
                   <td colspan=2>
                       <h1 style="margin-top: 0px;">
-                        <span data-pk="1" style="cursor: pointer" id="first" 
-                          data-type="text" data-pk="1" data-emptytext="none" data-original-title="First"><%= contact.first %></span> 
-                        <span data-pk="1" style="cursor: pointer" id="last" 
-                          data-type="text" data-pk="1" data-emptytext="none" data-original-title="Last"><%= contact.last %></span>
+                        <a data-pk="1" style="cursor: pointer" id="name" 
+                          data-pk="1" data-emptytext="What's Your Name?" data-type="fullname"><%= contact.first %> <%= contact.last %></a> 
+
                       </h1>
                   </td>
               </tr>
@@ -94,7 +93,7 @@
                       Email Address
                   </td>
                   <td>
-                      <a href="#" id="email" data-type="text" data-pk="1" 
+                      <a href="#" id="email" data-type="email" data-pk="1" 
                         data-emptytext="Click to Update Email" data-original-title="Email"><%= contact.email %></a> 
                   </td>
               </tr>    
