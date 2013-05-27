@@ -66,6 +66,6 @@ Jetdeck::Application.routes.draw do
   
   match "/favicon.ico" => redirect("/assets/favicon.png")
 
-  root "*" => 'sessions#new'
+  root :to => 'sessions#new'
 
 end
