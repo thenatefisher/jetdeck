@@ -13,37 +13,10 @@ json.import_url h @airframe.import_url
 
 json.title h(@airframe.to_s)
 
-json.engines @airframe.engines do |json, e|
-    json.id e.id
-    json.model_name h e.model_name
-    json.make h e.make
-    json.name h e.name
-    json.serial h e.serial
-    json.tt h e.tt
-    json.tc h e.tc
-    json.shsi h e.shsi
-    json.smoh h e.smoh
-    json.tbo h e.tbo
-    json.hsi h e.hsi
-    json.year h e.year
-end
-
 json.airframe_texts @airframe.airframe_texts do |json, i|
     json.body h i.body
     json.label h i.label
     json.id i.id
-end
-
-json.equipment @airframe.equipment do |json, i|
-    json.name h i.name
-    json.title h i.title
-    json.etype i.etype
-    json.id i.id
-end
-
-json.location @airframe.location do |json, i|
-    json.city h i.city
-    json.state h i.state_abbreviation
 end
 
 if (@airframe.creator && @airframe.creator.contact)
@@ -137,8 +110,3 @@ json.actions @airframe.actions do |json, c|
     json.list_title h c.title.truncate(35) if c.title
     json.past_due (c.due_at < Time.now()) if c.due_at      
 end
-
-# TODO create model methods for these
-#json.damage (true)
-#json.listed (true)
-#json.tags ([{:name => "April Research", :id => "1"}, {:name => "Previously Held", :id => "1"}])

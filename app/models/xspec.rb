@@ -5,11 +5,7 @@ class Xspec < ActiveRecord::Base
   belongs_to :recipient, :class_name => "Contact", :foreign_key => "recipient_id"
   belongs_to :sender, :class_name => "Contact", :foreign_key => "sender_id"
 
-  before_save :unique_recipients_per_airframe
-
   before_create :init
-
-  belongs_to :background, :class_name => "XspecBackground", :foreign_key => "background_id"
 
   validates_associated :airframe
   validates_associated :recipient
@@ -27,22 +23,6 @@ class Xspec < ActiveRecord::Base
       self.errors.add(:sender, "Please check account verification email")
       false
     end
-  end
-
-  def unique_recipients_per_airframe
-
-    if self.id.nil?
-      if Xspec.where("recipient_id = ? AND airframe_id = ?", self.recipient, self.airframe).length > 0
-        self.errors.add(:recipient, "is already on the lead list")
-        false
-      end
-    else
-      if Xspec.where("recipient_id = ? AND airframe_id = ? AND id != ?", self.recipient, self.airframe, self.id).length > 0
-        self.errors.add(:recipient, "is already on the lead list")
-        false
-      end
-    end
-
   end
 
   def send_spec

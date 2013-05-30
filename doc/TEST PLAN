@@ -1,0 +1,8 @@
+Check every action of every controller
+
+1) User creation
+    with invite
+    without invite
+2) forgotten password
+3) enumerate airframes in index
+4) Images import and upload

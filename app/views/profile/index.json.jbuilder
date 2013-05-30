@@ -15,8 +15,4 @@ json.sent @totalSent
 end
 json.views @totalViews
 
-if @user.logo
-  json.logo @user.logo.url  
-end
-
 json.spec_disclaimer h @user.spec_disclaimer

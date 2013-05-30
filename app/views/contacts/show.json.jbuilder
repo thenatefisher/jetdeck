@@ -12,12 +12,6 @@ json.ownerships @contact.ownerships do |json, x|
   json.id x.id
 end
 
-json.custom_details @contact.details do |json, x|
-  json.name h x.name  
-  json.value h x.value  
-  json.id x.id
-end
-
 json.notes @contact.notes do |json, x|
   json.title h x.title
   json.description h x.description  

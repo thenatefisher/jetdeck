@@ -9,17 +9,7 @@ class Airframe < ActiveRecord::Base
   # relationships
   has_many :actions, :as => :actionable
   
-  has_many :notes, :as => :notable
-  
-  belongs_to :location
-
-  has_many    :engines,
-              :foreign_key => "airframe_id",
-              :class_name => "Engine"
-              
-  has_many    :equipment,
-              :foreign_key => "airframe_id",
-              :class_name => "Equipment"              
+  has_many :notes, :as => :notable           
 
   has_many :accessories, :dependent => :destroy
 
@@ -28,10 +18,6 @@ class Airframe < ActiveRecord::Base
   accepts_nested_attributes_for :airframe_texts
 
   accepts_nested_attributes_for :accessories, :reject_if => lambda { |t| t['image'].nil? }
-
-  accepts_nested_attributes_for :engines, :allow_destroy => true
-  
-  accepts_nested_attributes_for :equipment, :allow_destroy => true
   
   has_many :xspecs, :dependent => :destroy
 

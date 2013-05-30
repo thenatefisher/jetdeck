@@ -3,7 +3,7 @@ class Accessory < ActiveRecord::Base
     belongs_to :airframe
 
     has_attached_file :image,
-                      :styles => {  :thumb => "140x130#", # ddisplayed on show page
+                      :styles => {  :thumb => "140x130#", # displayed on show page
                                     :mini => "80x60#", # on show page in picture list
                                     :slides => { :processors => [:cropper], :geometry => "NONE" },
                                     :listing => "75x75#" }, # on index page
@@ -22,7 +22,7 @@ class Accessory < ActiveRecord::Base
 
     attr_protected :image_file_name, :image_content_type, :image_size
 
-    validates_attachment_size :image, :less_than => 5.megabytes
+    validates_attachment_size :image, :less_than => 8.megabytes
 
     validates_attachment_content_type :image, :content_type =>
         ["image/png",

@@ -14,60 +14,11 @@ json.airframe_texts @airframe.airframe_texts do |json, i|
     json.id i.id
 end
 
-if @xspec.override_description.present?
-  json.description @xspec.override_description 
-else
-  json.description @airframe.description 
-end
-
-if @xspec.override_price.present?
-  asking_price = @xspec.override_price 
-else
-  asking_price =  number_to_currency @airframe.asking_price, :precision => 0 
-end
-
 json.asking_price (!@xspec.hide_price) ? asking_price : nil
 
 json.serial (!@xspec.hide_serial) ? @airframe.serial : nil
 
 json.registration (!@xspec.hide_registration) ? @airframe.registration : nil
-
-json.location @airframe.location if !@xspec.hide_location
-
-json.background @xspec.background if @xspec.background
-
-json.engines @airframe.engines do |json, e|
-    json.id e.id
-    json.model_name e.model_name
-    json.make e.make
-    json.name e.name
-    json.serial e.serial
-    json.tt e.tt
-    json.tc e.tc
-    json.shsi e.shsi
-    json.smoh e.smoh
-    json.tbo e.tbo
-    json.hsi e.hsi
-    json.year e.year
-end
-
-json.avionics @airframe.equipment.where("etype = 'avionics'") do |json, i|
-    json.name i.name
-    json.title i.title
-    json.id i.id
-end
-
-json.equipment @airframe.equipment.where("etype != 'avionics'") do |json, i|
-    json.name i.name
-    json.title i.title
-    json.etype i.etype
-    json.id i.id
-end
-
-json.location @airframe.location do |json, i|
-    json.city h i.city
-    json.state h i.state_abbreviation
-end
 
 if (@airframe.creator && @airframe.creator.contact)
     if (@airframe.creator.contact.first &&
@@ -82,16 +33,13 @@ if (@airframe.creator && @airframe.creator.contact)
     json.agent_phone h @airframe.creator.contact.phone
     json.agent_website h @airframe.creator.contact.website
     json.agent_company h @airframe.creator.contact.company
-    json.agent_email h @airframe.creator.contact.email
-    if @airframe.creator.logo
-      json.logo h @airframe.creator.logo.url  
-    end    
+    json.agent_email h @airframe.creator.contact.email  
     json.spec_disclaimer @airframe.creator.spec_disclaimer
 end
 
 json.recipient @xspec.recipient.email
 
-json.(@xspec, :url_code, :message, :salutation, :show_message, :headline1, :headline2, :headline3)
+json.(@xspec, :url_code, :message)
 
 json.images @airframe.accessories do |json, i|
     json.original "http://s3.amazonaws.com/" + Jetdeck::Application.config.aws_s3_bucket + "/images/#{i.id}/original/#{i.image_file_name}" if i.image_file_name

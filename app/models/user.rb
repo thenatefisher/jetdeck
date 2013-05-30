@@ -4,8 +4,6 @@ class User < ActiveRecord::Base
 
   has_many :actions, :foreign_key => "created_by"
   
-  has_one :logo, :class_name => "UserLogo", :foreign_key => "user_id"
-
   attr_accessible :password,
                   :password_confirmation,
                   :contact,
@@ -20,9 +18,7 @@ class User < ActiveRecord::Base
   before_create { set_defaults() }
 
   after_create :set_contact_owner_to_neg_1
-  
-  has_many :logins
-  
+    
   has_many :airframes, :dependent => :destroy
 
   has_many :contacts, :class_name => 'Contact', :foreign_key => "owner_id"

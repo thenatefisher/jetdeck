@@ -16,4 +16,5 @@ u = User.create()
 u.password = "asd123"
 u.password_confirmation = "asd123"
 u.contact_id = 1
+u.activated = true
 u.save
