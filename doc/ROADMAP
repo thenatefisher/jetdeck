@@ -7,24 +7,10 @@ ROADMAP TO LAUNCH:
                 - contact views history 
                 - contact send button
                 - contact default view with no leads
-                x - contact aircraft associated list
-                x - contact header 
-                x - contact delete
 
                 - airframe send config modal
                 - airframe spec edit boxes
                 - aircraft create spec button
-                x - airframe default view with no leads
-                x - airframe fix bug with missing image
-                x - airframe add associate
-                x - airframe update MMS
-                x - airframe leads pagination
-                x - create alternate image list open/close buttons
-
-                x - action due dates for aircraft and contacts
-
-                x - profile page password
-                x - profile page email
 
                 - login/signup page
 
@@ -34,7 +20,7 @@ ROADMAP TO LAUNCH:
 
     1x      Create in-line email; add image; create images page
 
-    2x      marketing and signup brochure site   
+    2x      marketing and signup brochure site
 
     1x      integrate payments    
 

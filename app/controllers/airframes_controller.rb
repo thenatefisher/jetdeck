@@ -47,7 +47,7 @@ class AirframesController < ApplicationController
     if params[:q]
       @airframes = Airframe.find(:all,
         :conditions => ["upper(make || ' ' || model_name) LIKE ?
-                             AND (baseline = 't' OR user_id = ?)",
+                             AND user_id = ?",
                           "%#{params[:q].to_s.upcase}%",
                           @current_user.id
                        ],
@@ -65,7 +65,7 @@ class AirframesController < ApplicationController
     if params[:term].present?
 
         @airframes = Airframe.where(
-          "upper(registration) like ? AND (baseline = 't' OR user_id = ?)",
+          "upper(registration) like ? AND user_id = ?",
           "%"+params[:term].to_s.upcase+"%",
           @current_user.id
         ).first(5)
@@ -94,28 +94,22 @@ class AirframesController < ApplicationController
   # POST /airframes
   # POST /airframes.json
   def create
-    whitelist = params[:airframe].slice(:registration, :serial, :year)
+
+    whitelist = params[:airframe].slice(:registration, :serial, :year, :import_url)
     whitelist[:user_id] = @current_user.id
     @airframe = Airframe.new(whitelist)
 
-    baseline = Airframe.new()
-    if params[:airframe][:baseline_id].present?
-        baseline = Airframe.find(:first, :conditions => [
-          "baseline = 't' AND id = ?",
-          params[:airframe][:baseline_id]])
-        if baseline
-            @airframe.model_name = baseline.model_name
-            @airframe.make = baseline.make
-            @airframe.baseline_id = baseline.id
-            baseline.engines.each do |e| 
-              new_eng = e.dup
-              new_eng.user_id = @current_user.id
-              @airframe.engines << new_eng 
-            end
-        end
+    # import photos
+    if params[:import_images].present? && params[:import_images_input].present?
+      @airframe.import_url = params[:import_images_input]
     end
 
-    if params[:airframe][:headline].present? && params[:airframe][:baseline].nil?
+    # add spec file
+    if params[:upload_spec].present? && params[:upload_spec_input].present?
+      #@airframe.import_url = params[:upload_spec]
+    end
+
+    if params[:airframe][:headline].present?
         headline = params[:airframe][:headline]
         headline = headline.split
         if headline.length == 1
@@ -126,7 +120,7 @@ class AirframesController < ApplicationController
             @airframe.model_name = headline.last(headline.length - 1).join(" ")
         end      
     end
-    
+
     respond_to do |format|
       if @airframe.save
         format.html { redirect_to @airframe, :notice => 'Airframe was successfully created.' }
@@ -173,22 +167,7 @@ class AirframesController < ApplicationController
                 :name, :year, :smoh, :shsi, :tbo, :hsi)
               newItem.update_attributes(eng_wl) if newItem     
                          
-              @engines << newItem if newItem             
-           elsif @baseline = Engine.find(
-                :first, 
-                :conditions => [
-                  "id = ? AND baseline = 't'", a[:id]])
-             
-                 newItem = @baseline.dup
-                 newItem.baseline = false
-                 newItem.user_id = @current_user.id
-                 newItem.baseline_id = a[:id]
-                  
-                 eng_wl = a.slice(:tt, :tc, :serial, :make, :modelName, 
-                  :name, :year, :smoh, :shsi, :tbo, :hsi)
-                 newItem.update_attributes(eng_wl) 
-                               
-                 @engines << newItem            
+              @engines << newItem if newItem                    
            else
            
               engine = Engine.find(:first, :conditions => [

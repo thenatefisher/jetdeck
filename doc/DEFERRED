@@ -33,11 +33,20 @@
 
     Get tab indexes correct
 
+    Fix primary button active/hover color
+
+    Allow activation email resend
+
+    Add help link everywhere / use get satisfaction
+
+    Disable bookmarklet for current domain; but add a helpful popup to drag it to bookmarks instead
+    Allow collapsing the bookmarklet instructions once bm is created
+
 == Bugs
   
     Update airframe thumbnail on file upload
     Remove contact stick note when note is deleted 
-    Dont nuke sparkline when deleting a lead
+    Enable close button on import error popup
 
 == Code Enhancements
 
@@ -45,5 +54,5 @@
     Straighten up user/contact schemas and model names
     preload font-awesome graphics
     use amazon cloud CDN
-    straighten up mixpanel hooks    
+    straighten up mixpanel hooks
     make front end event-driven

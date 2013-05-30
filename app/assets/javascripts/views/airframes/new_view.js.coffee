@@ -12,25 +12,40 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
   save: (e) =>
     e.preventDefault()
     e.stopPropagation()
-    mixpanel.track("Created Airframe",{ is_baseline: (@model.get("baseline_id") != null) })
-    if @$("input[name='airframe-create']").val == "find"
-      collection = new Jetdeck.Collections.AirframesCollection()
-      collection = window.router.airframes if window.router.airframes
-      collection.create(@model.toJSON(),
-        success: (airframe) =>
-          @model = airframe
-          window.location.href = "/airframes/#{@model.id}"
-          modalClose()
-
-        error: (airframe, jqXHR) =>
-          @model.set({errors: $.parseJSON(jqXHR.responseText)})
-      )
+    mixpanel.track("Created Airframe")
+    collection = new Jetdeck.Collections.AirframesCollection()
+    collection = window.router.airframes if window.router.airframes
+    collection.create(@model.toJSON(),
+      success: (airframe) =>
+        @model = airframe
+        window.location.href = "/airframes/#{@model.id}"
+        modalClose()
+      error: (airframe, jqXHR) =>
+        @model.set({errors: $.parseJSON(jqXHR.responseText)})
+        @$("#error-message").html();
+    )
 
   render: =>
     $(@el).html(@template($.merge(
         bookmarklet_url : window.bookmarklet_url, 
         @model.toJSON()) ))
     
+    @$("#import_images").bind('change', => 
+      if $("#import_images").is(':checked')
+        $("#import_images_input").show()
+      else
+        delete @model.attributes.import_images
+        $("#import_images_input").hide() 
+    )
+
+    @$("#upload_spec").bind('change', => 
+      if $("#upload_spec").is(':checked')
+        $("#upload_spec_input").show()
+      else
+        delete @model.attributes.upload_spec
+        $("#upload_spec_input").hide() 
+    )    
+
     @$("#airframe_headline").select2({
       placeholder: "Enter a Model",
       minimumInputLength: 3,
@@ -48,39 +63,6 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
       }
     })
     @$(".airframe-headline").css("width", "250px")
-
-    @$("#airframe_registration").autocomplete({
-       minLength: 2,
-       autofocus: true,
-       focus: (event, ui) =>
-          $("#airframe_registration").val(ui.item.registration) if ui.item.registration
-          $("#airframe_year").val(ui.item.year) if ui.item.year
-          $("#airframe_serial").val(ui.item.serial) if ui.item.serial
-          @model.set("baseline_id", ui.item.id)
-          @model.set("registration", ui.item.registration)
-          @model.set("year", ui.item.year)
-          @model.set("serial", ui.item.serial)
-          $(".select2-choice").children("span").html(ui.item.make + " " + ui.item.model_name)
-          event.preventDefault(); # Prevent the default focus behavior.
-       source: "/airframes",
-       select: ( event, ui ) =>
-          $("#airframe_registration").val(ui.item.registration) if ui.item.registration
-          $("#airframe_year").val(ui.item.year) if ui.item.year
-          $("#airframe_serial").val(ui.item.serial) if ui.item.serial
-          @model.set("baseline_id", ui.item.id)
-          @model.set("registration", ui.item.registration)
-          @model.set("year", ui.item.year)
-          @model.set("serial", ui.item.serial)
-          $(".select2-choice").children("span").html(ui.item.make + " " + ui.item.model_name)
-          return false
-    })
-    .data("uiAutocomplete")._renderItem = ( ul, item ) ->
-       ul.addClass("dropdown-menu");
-       ul.addClass("typeahead");
-       return $( "<li class=\"result\" style=\"cursor: pointer\"></li>" )
-	        .data( "item.autocomplete", item )
-	        .append( "<a><strong>" + item.registration + "</strong><br>" + item.to_s + "</a>" )
-	        .appendTo( ul );
 
     @$("form").backboneLink(@model)
 

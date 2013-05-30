@@ -5,10 +5,6 @@ class Jetdeck.Models.Airframe extends Backbone.Model
       serial: null
       registration: null
       year: ""
-      listed: false
-      damage: false
-      tags: []
-      location: null
       make: ""
       model_name: ""
       asking_price: 0
@@ -21,14 +17,6 @@ class Jetdeck.Models.Airframe extends Backbone.Model
       @leads = new Jetdeck.Collections.LeadsCollection(page_size: 5)
       @leads.airframe = this
       
-      ## equipment collection
-      @equipment = new Jetdeck.Collections.EquipmentCollection()
-      @equipment.airframe = this
-      
-      ## engines collection
-      @engines = new Jetdeck.Collections.EnginesCollection()
-      @engines.airframe = this
-      
       ## actions collection
       @actions = new Jetdeck.Collections.ActionsCollection()
       @actions.contact = this         
@@ -38,8 +26,6 @@ class Jetdeck.Models.Airframe extends Backbone.Model
         
     updateChildren : =>
       @leads.reset @get('leads')
-      @equipment.reset @get('equipment')
-      @engines.reset @get('engines')
       @actions.reset @get('actions')
   
 class Jetdeck.Collections.AirframesCollection extends Backbone.CollectionBook

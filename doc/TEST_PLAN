@@ -1,0 +1,15 @@
+== Check every action of every controller
+
+* User creation - with invite / without invite
+* forgotten password
+* enumerate airframes in index
+* Images import and upload
+
+== Usability scenarios
+
+* create aircraft with listing images
+* upload a spec file
+* send a spec file to a friend
+* track recipient activity
+* update spec file
+* send updated spec file to all leads

@@ -24,7 +24,23 @@ class Airframe < ActiveRecord::Base
   belongs_to :creator, :class_name => "User", :foreign_key => "user_id"
 
   validates_uniqueness_of :import_url, :scope => :user_id,
+                          :unless => Proc.new { |q| q.import_url.blank? }, 
                           :message => "Aircraft is already in deck."  
+
+  def import(link=nil)
+  
+    # require a url and owner
+    return nil if link.blank?
+
+    # if already imported...
+    return self if self.import_url == link
+
+    self.import_url = link
+    self.save!
+
+    return self
+
+  end
 
   def self.import(user_id=nil, link=nil)
 
