@@ -5,7 +5,7 @@
     <% if (avatar && avatar.thumb) { %>
 
       <a class="manage_images" href="#" onclick="return false;">
-        <span style="position: absolute; bottom: 0px; width: 140px; text-align: center; color: white; background: #2980B9">
+        <span style="position: absolute; bottom: 0px; width: 140px; text-align: center; color: white; background: #2C3E50">
           <strong>Manage Images</strong>
         </span>      
         <img src="<%= avatar.thumb %>" onError="this.src = '/assets/placeholder/aircraft_default_avatar.png'"></a>
@@ -71,7 +71,8 @@
         <!-- The fileupload-buttonbar contains buttons to add/delete files and 
         start/cancel the upload -->
         <div class="fileupload-buttonbar" style="clear: both;">
-            <div class="span" style="position: relative">
+
+            <div class="span pull-right" style="margin-right: 20px; position: relative">
             
                 <!-- The fileinput-button span is used to style the file input 
                 field as button -->
@@ -81,25 +82,33 @@
                   <input type="file" name="files[image]" 
                     id="airframe-image-input" 
                     value="Add Files" 
-                    style="-moz-opacity:0; filter:alpha(opacity: 0); opacity: 0;" 
+                    style="width: 65px; -moz-opacity:0; filter:alpha(opacity: 0); opacity: 0;" 
                     multiple />
                   <span 
                     style="position: absolute; left: 0px; top: 10px; z-index: 2; margin: 0 auto; width: 100%" 
                     onclick="$('#airframe-image-input').click(); return false;">
-                    <strong>Add Images</strong></span>
+                    <strong>Upload</strong></span>
 
                 </div>
 
             </div>
+
+            <div class="span pull-right" style="position: relative">
+                <div class="btn btn-primary" style="padding: 9px 20px;">
+                    <strong>Import From Listing</strong>
+                </div>
+            </div>
+
             <!-- The global progress information -->
-            <div class="span3 fileupload-progress fade">
+            <div class="span5 fileupload-progress fade" style="margin-bottom: 20px">
                 <!-- The global progress bar -->
-                <div class="progress progress-success progress-striped active">
+                <div class="progress progress-success progress-striped active" style="margin-bottom: 2px">
                     <div class="bar" style="width:0%;"></div>
                 </div>
                 <!-- The extended global progress information -->
                 <div class="progress-extended">&nbsp;</div>
             </div>
+
         </div>
 
     </div>
@@ -185,8 +194,8 @@
                   data-aid="{%= file.id %}">Set as Thumbnail</button>
                 {% } else { %} 
                 <button
-                  disabled class="btn set-thumbnail btn-success pull-right" 
-                  data-aid="{%= file.id %}">Current Thumbnail</button>                
+                  disabled class="btn set-thumbnail pull-right" 
+                  data-aid="{%= file.id %}">Set as Thumbnail</button>                
                 {% } %}  
               </td>
           {% } %}

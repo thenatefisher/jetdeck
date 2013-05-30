@@ -35,12 +35,33 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
 
   loadAccessories: () =>
 
+    $.widget('blueimp.fileupload', $.blueimp.fileupload, {
+        _renderExtendedProgress: (data) ->
+            this._formatPercentage(data.loaded / data.total) + '  (' + this._formatBitrate(data.bitrate) + ')'
+    })
+
     # uploader instantiation and settings
     @$('#airframe_image_upload').fileupload({
         autoUpload: true
         url: '/accessories'
         acceptFileTypes: /^image\/(gif|jpeg|png)$/
         maxFileSize: 10490000 # 10MB
+        progressall: (e, data) =>
+            progress = parseInt(data.loaded / data.total * 100, 10)
+            globalProgressNode = @$('.fileupload-progress')
+            extendedProgressNode = globalProgressNode.find('.progress-extended')
+            if (extendedProgressNode.length) 
+                extendedProgressNode.html(
+                    @$('#airframe_image_upload').data('blueimp-fileupload')._renderExtendedProgress(data)
+                )   
+            globalProgressNode
+                .find('.progress')
+                .attr('aria-valuenow', progress)
+                .find('.bar').css(
+                    'width',
+                    progress + '%'
+                )
+                         
     })
 
     # reflow header on image upload and delete

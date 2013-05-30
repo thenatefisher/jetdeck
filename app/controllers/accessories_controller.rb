@@ -4,7 +4,8 @@ class AccessoriesController < ApplicationController
   def index
   
     if params[:airframe] && Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]])
-      @assys = Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]]).accessories
+      @assys = Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]])
+                       .accessories.find(:all, :order => "created_at DESC")
       render :json => @assys.collect { |p| p.to_jq_upload }.to_json
     else
       render :json => true

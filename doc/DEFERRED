@@ -1,14 +1,11 @@
-== Product Improvements
+== Features
 
     Description field rich edit
-    Close account feature
-    Combine lead and xspec data types in front end
-    Straighten up user/contact schemas and model names
-    better error pages for app and heroku static (https://devcenter.heroku.com/articles/error-pages)
-    preload font-awesome graphics
-    use amazon cloud CDN
-    straighten up mixpanel hooks
 
+    Close account feature
+
+    better error pages for app and heroku static (https://devcenter.heroku.com/articles/error-pages)
+    
     Airframe Photos
         Crop Area
 
@@ -32,9 +29,19 @@
 
     Actions page
 
+    Email signature rich text
+
 == Bugs
   
     Update airframe thumbnail on file upload
     Remove contact stick note when note is deleted 
     Dont nuke sparkline when deleting a lead
 
+== Code Enhancements
+
+    Combine lead and xspec data types in front end
+    Straighten up user/contact schemas and model names
+    preload font-awesome graphics
+    use amazon cloud CDN
+    straighten up mixpanel hooks    
+    make front end event-driven
