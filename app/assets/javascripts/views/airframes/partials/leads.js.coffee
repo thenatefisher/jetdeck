@@ -76,16 +76,19 @@ class Jetdeck.Views.Airframes.ShowLeads extends Backbone.View
         view = new Jetdeck.Views.Leads.LeadView({model : lead})
         @$("tbody").append(view.render().el)
         
-  render : ->
-    params =
-        count : @model.leads.length
-        pages : @model.leads.pages()
-    $(@el).html("")
-    if @model.leads.length > 0
-        $(@el).html(@template(params))
-        @model.leads.turnTo(1)
-        @addAll()    
-        @$('.page[rel=1]').parent('li').addClass('active')
-    @$("[rel='tooltip']").tooltip()
+  render : =>
+    $(@el).html(JST["templates/airframes/partials/leads_temp"])
+    # remove top border on first table item in spec panes
+    @$("table").children('tbody').children('tr').first().children('td').css('border-top', '0px')
+    #params =
+    #    count : @model.leads.length
+    #    pages : @model.leads.pages()
+    #$(@el).html("")
+    #if @model.leads.length > 0
+    #    $(@el).html(@template(params))
+    #    @model.leads.turnTo(1)
+    #    @addAll()    
+    #    @$('.page[rel=1]').parent('li').addClass('active')
+    #
     return this
 

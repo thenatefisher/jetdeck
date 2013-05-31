@@ -1,4 +1,4 @@
-class Jetdeck.Models.Profile extends Backbone.Model
+class Jetdeck.Models.ProfileModel extends Backbone.Model
 
   paramRoot: 'profile'
 

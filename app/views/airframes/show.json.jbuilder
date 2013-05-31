@@ -13,12 +13,6 @@ json.import_url h @airframe.import_url
 
 json.title h(@airframe.to_s)
 
-json.airframe_texts @airframe.airframe_texts do |json, i|
-    json.body h i.body
-    json.label h i.label
-    json.id i.id
-end
-
 if (@airframe.creator && @airframe.creator.contact)
     json.agent ({
         :first => @airframe.creator.contact.first,
@@ -68,32 +62,7 @@ json.leads @airframe.xspecs do |json, x|
     
 end
 
-activity = Array.new()
-now = Time.now()
-(1..14).each do |day_number|
-
-    start_date = now - day_number.day
-    end_date = now - (day_number-1).day
-
-    count = 0
-    views.each {|v| count += 1 if v.created_at < end_date and v.created_at > start_date}
-    activity << count
-
-end
-json.activity activity.reverse
-
-json.notes @airframe.notes do |json, x|
-  json.title h x.title
-  json.description h x.description  
-  json.id x.id
-  json.created_at x.created_at.localtime if x.created_at
-  json.type x.notable_type
-  json.parent_name x.notable.to_s
-  json.author x.author.contact.fullName if x.author
-  json.date x.created_at.localtime.strftime("%a, %b %e")
-  json.time x.created_at.localtime.strftime("%l:%M%P %Z")
-  json.is_mine true if @current_user and (@current_user.id == x.created_by)
-end
+json.spec_files []
 
 json.actions @airframe.actions do |json, c|
     json.id c.id

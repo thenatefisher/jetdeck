@@ -7,7 +7,7 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
     "click #new_airframe": "save"
 
   initialize: () ->
-    @model = new Jetdeck.Models.Airframe()
+    @model = new Jetdeck.Models.AirframeModel()
 
   save: (e) =>
     e.preventDefault()
@@ -40,10 +40,10 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
 
     @$("#upload_spec").bind('change', => 
       if $("#upload_spec").is(':checked')
-        $("#upload_spec_input").show()
+        $("#upload_spec_input_container").show()
       else
         delete @model.attributes.upload_spec
-        $("#upload_spec_input").hide() 
+        $("#upload_spec_input_container").hide() 
     )    
 
     @$("#airframe_headline").select2({

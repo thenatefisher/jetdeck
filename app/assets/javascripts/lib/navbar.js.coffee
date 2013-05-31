@@ -20,14 +20,12 @@ $(->
 	        
     $("#new-quicksend").tooltip({placement: "bottom", delay: { show: 500, hide: 100 }})
     $("#new-quicksend").click( ->
-        #view = new Jetdeck.Views.Airframes.NewView()
-        #$(".new-spec").popover('hide')
-        #modal(view.render().el)
+        view = new Jetdeck.Views.Airframes.QuickSend()
+        modal(view.render().el)
     )
 
     $("#new-spec").click( ->
         view = new Jetdeck.Views.Airframes.NewView()
-        $(".new-spec").popover('hide')
         modal(view.render().el)
     )
 

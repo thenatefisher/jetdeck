@@ -1,4 +1,4 @@
-class Jetdeck.Models.Lead extends Backbone.Model
+class Jetdeck.Models.LeadModel extends Backbone.Model
   paramRoot: 'lead'
 
   defaults:
@@ -14,7 +14,7 @@ class Jetdeck.Models.Lead extends Backbone.Model
     recipientEmailField: ""
 
 class Jetdeck.Collections.LeadsCollection extends Backbone.CollectionBook
-  model: Jetdeck.Models.Lead
+  model: Jetdeck.Models.LeadModel
   url: '/xspecs'
 
   initialize : () =>

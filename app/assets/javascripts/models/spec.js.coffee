@@ -1,4 +1,4 @@
-class Jetdeck.Models.Spec extends Backbone.Model
+class Jetdeck.Models.SpecModel extends Backbone.Model
   paramRoot : 'spec'
 
   defaults :
@@ -28,7 +28,7 @@ class Jetdeck.Models.Spec extends Backbone.Model
     airframe_texts: []
     
 class Jetdeck.Collections.SpecsCollection extends Backbone.CollectionBook
-  model: Jetdeck.Models.Spec
+  model: Jetdeck.Models.SpecModel
   url: '/xspecs'    
   
   orderBy : (o) ->

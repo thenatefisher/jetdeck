@@ -1,4 +1,4 @@
-class Jetdeck.Models.Airframe extends Backbone.Model
+class Jetdeck.Models.AirframeModel extends Backbone.Model
     paramRoot : 'airframe'
 
     defaults :
@@ -18,19 +18,24 @@ class Jetdeck.Models.Airframe extends Backbone.Model
       @leads.airframe = this
       
       ## actions collection
-      @actions = new Jetdeck.Collections.ActionsCollection()
-      @actions.contact = this         
+      @actions = new Jetdeck.Collections.ActionsCollection(page_size: 9)
+      @actions.airframe = this
 
-      ## populate child collections
+      ## spec files collection
+      @spec_files = new Jetdeck.Collections.SpecFilesCollection(page_size: 9)
+      @spec_files.airframe = this  
+
+      ## populate child collections from data loaded with page
       @updateChildren()
         
     updateChildren : =>
       @leads.reset @get('leads')
       @actions.reset @get('actions')
+      @spec_files.reset @get('spec_files')
   
 class Jetdeck.Collections.AirframesCollection extends Backbone.CollectionBook
   
-    model: Jetdeck.Models.Airframe
+    model: Jetdeck.Models.AirframeModel
     
     url: '/airframes'
     

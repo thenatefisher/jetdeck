@@ -1,7 +1,7 @@
 class Jetdeck.Routers.ProfileRouter extends Backbone.Router
 
   initialize: (options) ->
-    @profile = new Jetdeck.Models.Profile(options.profile)
+    @profile = new Jetdeck.Models.ProfileModel(options.profile)
 
   routes:
     ".*"      : "show"

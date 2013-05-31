@@ -99,6 +99,34 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     # render header
     $(@el).html(@template(@model.toJSON() ))
     
+    @$("#chart").ready( =>
+        graph = new Rickshaw.Graph( {
+          element: document.querySelector("#chart")
+          width: 260
+          height: 80
+          renderer: 'area'
+          stroke: true
+          series: [ 
+              {
+                data: [ { x: 0, y: 0 },{ x: 1, y: 1 },{ x: 2, y: 2 },{ x: 3, y: 3 },{ x: 4, y: 6 },{ x: 5, y: 7 },{ x: 6, y: 7 }, 
+                    { x: 7, y: 7 },{ x: 8, y: 7 },{ x: 9, y: 8 },{ x: 10, y: 9 },{ x: 11, y: 10 },{ x: 12, y: 11 },{ x: 13, y: 12 }
+                ]
+                color: 'rgba(44, 62, 80,0.5)'
+                stroke: 'rgba(44, 62, 80,0.15)'
+                name: 'Downloads'
+              } 
+          ]
+        } )
+        hoverDetail = new Rickshaw.Graph.HoverDetail( {
+            graph: graph
+            xFormatter: (x) -> return "05/"+x+"/2013"
+            yFormatter: (y) -> return Math.floor(y) + " views" 
+        } )
+
+        graph.renderer.unstack = true
+        graph.render()        
+    )
+        
     # wait for this content to be loaded in DOM, then activate fileupload()
     $(() => @loadAccessories())
 

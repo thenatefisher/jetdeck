@@ -13,7 +13,7 @@ class Jetdeck.Views.Contacts.NewView extends Backbone.View
     e.preventDefault()
     e.stopPropagation()
     
-    collection = new Jetdeck.Collections.ContactCollection()
+    collection = new Jetdeck.Collections.ContactsCollection()
     collection = window.router.contacts if window.router.contacts
     collection.create(@model.toJSON(),
       success: (c) =>

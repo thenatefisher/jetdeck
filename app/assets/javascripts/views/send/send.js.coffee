@@ -42,7 +42,7 @@ class Jetdeck.Views.Send.ShowSend extends Backbone.View
       window.router.view.render()
 
       if (!send)
-        specModel = new Jetdeck.Models.Spec(m)
+        specModel = new Jetdeck.Models.SpecModel(m)
         specModel.collection = new Jetdeck.Collections.SpecsCollection()
         specView = new Jetdeck.Views.Spec.EditView(model: specModel)
         modal(specView.render().el)

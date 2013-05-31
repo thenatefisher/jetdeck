@@ -2,7 +2,7 @@ class Jetdeck.Routers.SpecRouter extends Backbone.Router
 
   initialize: (options) ->
     if options && options.spec
-      @spec = new Jetdeck.Models.Spec(options.spec)
+      @spec = new Jetdeck.Models.SpecModel(options.spec)
 
   routes:
     ".*"      : "show"

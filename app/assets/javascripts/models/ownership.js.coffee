@@ -7,7 +7,7 @@ class Jetdeck.Models.OwnershipModel extends Backbone.Model
       created_at: null
       assigned: false
 
-class Jetdeck.Collections.OwnershipCollection extends Backbone.CollectionBook
+class Jetdeck.Collections.OwnershipsCollection extends Backbone.CollectionBook
 
     model: Jetdeck.Models.OwnershipModel
     
