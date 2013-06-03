@@ -1,7 +1,7 @@
 Jetdeck.Views.Contacts ||= {}
 
 class Jetdeck.Views.Contacts.ShowSpecs extends Backbone.View
-  template: JST["templates/contacts/partials/specs"]
+  template: JST["templates/contacts/specs/index"]
 
   events : 
     "click a.next" : "next"
@@ -68,7 +68,7 @@ class Jetdeck.Views.Contacts.ShowSpecs extends Backbone.View
     
   addOne: (spec) => 
     if spec
-        view = new Jetdeck.Views.Specs.SpecView({model : spec})
+        view = new Jetdeck.Views.Contacts.SpecView({model : spec})
         @$("tbody").append(view.render().el)
         
   render : ->
@@ -84,3 +84,12 @@ class Jetdeck.Views.Contacts.ShowSpecs extends Backbone.View
     
     return this
 
+
+class Jetdeck.Views.Contacts.SpecView extends Backbone.View
+  template : JST["templates/contacts/specs/item"]
+  
+  tagName : "tr"
+      
+  render : ->
+    $(@el).html(@template(@model.toJSON() ))
+    return this       

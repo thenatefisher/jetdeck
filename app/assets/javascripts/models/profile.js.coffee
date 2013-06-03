@@ -5,7 +5,6 @@ class Jetdeck.Models.ProfileModel extends Backbone.Model
   url: '/profile'
 
   defaults:
-    type: null
     first: null
     last: null
     email: null
@@ -14,6 +13,4 @@ class Jetdeck.Models.ProfileModel extends Backbone.Model
     airframes: 0
     contacts: 0
     sent: 0
-    views: 0
-    spec_disclaimer: null
-    logo: null
+    signature: null

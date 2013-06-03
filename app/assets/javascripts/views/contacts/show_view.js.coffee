@@ -80,9 +80,6 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
     #@specs = new Jetdeck.Views.Contacts.ShowSpecs(model: @model)
     #if @model.specs.length > 0
     #  @$("#contact_specs").html(@specs.render().el) 
-    
-    @send = new Jetdeck.Views.Send.ShowSend(model: @model)
-    @$("#contact_send").html(@send.render().el) 
 
     @notes = new Jetdeck.Views.Notes.ShowNotes(model: @model)
     @$("#contact_notes").html(@notes.render().el)    
@@ -91,9 +88,6 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
       @model.set("sticky_id", null)
       @notes.render() 
     )
-
-    #@requirements = new Jetdeck.Views.Contacts.ShowRequirements(model: @model)
-    #@$("#contact_requirements").html(@requirements.render().el)       
 
     @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#contact_actions").html(@actions.render().el)  

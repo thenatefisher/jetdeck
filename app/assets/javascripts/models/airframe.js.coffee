@@ -10,28 +10,28 @@ class Jetdeck.Models.AirframeModel extends Backbone.Model
       asking_price: 0
       description: ""
       avatar: null
-      airframe_texts: []
 
     initialize : =>
+
       ## leads collection
-      @leads = new Jetdeck.Collections.LeadsCollection(page_size: 5)
-      @leads.airframe = this
+      #@leads = new Jetdeck.Collections.LeadsCollection(page_size: 5)
+      #@leads.airframe = this
       
       ## actions collection
       @actions = new Jetdeck.Collections.ActionsCollection(page_size: 9)
       @actions.airframe = this
 
       ## spec files collection
-      @spec_files = new Jetdeck.Collections.SpecFilesCollection(page_size: 9)
-      @spec_files.airframe = this  
+      @specs = new Jetdeck.Collections.SpecFilesCollection(page_size: 5)
+      @specs.airframe = this  
 
       ## populate child collections from data loaded with page
       @updateChildren()
         
     updateChildren : =>
-      @leads.reset @get('leads')
+      #@leads.reset @get('leads')
       @actions.reset @get('actions')
-      @spec_files.reset @get('spec_files')
+      @specs.reset @get('specs')
   
 class Jetdeck.Collections.AirframesCollection extends Backbone.CollectionBook
   

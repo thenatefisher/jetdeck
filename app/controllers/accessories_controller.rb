@@ -19,11 +19,15 @@ class AccessoriesController < ApplicationController
     if Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]]).present?
       @Assy.airframe_id = params[:airframe]
       @airframe = Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]])
-      @airframe.images.each do |t|
-        t.thumbnail = false
-        t.save
+      if @Assy.document_file_name.present?
+        @airframe.specs << @Assy
+      else
+        @airframe.images.each do |t|
+          t.thumbnail = false
+          t.save
+        end
+        @Assy.thumbnail = true
       end
-      @Assy.thumbnail = true
     end
 
     if @Assy.save
@@ -38,7 +42,7 @@ class AccessoriesController < ApplicationController
         }
       end
     else
-      render :json => [{:error => "custom_failure"}], :status => 304
+      render :json => @Assy.errors.to_json(), :status => 304
     end
 
   end

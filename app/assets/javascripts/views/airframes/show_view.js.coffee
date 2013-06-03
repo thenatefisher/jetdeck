@@ -22,18 +22,17 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#airframe_actions").html(@actions.render().el)
 
-    @leads = new Jetdeck.Views.Airframes.ShowLeads(model: @model)
-    @$("#leads_area").show()
-    @$("#airframe_leads").html(@leads.render().el)
+    #@leads = new Jetdeck.Views.Airframes.ShowLeads(model: @model)
+    #@$("#leads_area").show()
+    #@$("#airframe_leads").html(@leads.render().el)
     #if @model.leads.length > 0
     #  @$("#leads_area").show()
     
-    @specs = new Jetdeck.Views.Airframes.ShowSpec(model: @model)
-    @$("#airframe_specs").html(@specs.render().el)
-    #if @model.leads.length > 0
-    #  @$("#airframe_specs").html(@specs.render().el)
-    #else
-    #  @$("#airframe_specs").html(JST["templates/airframes/partials/specs_empty"])
+    @specs = new Jetdeck.Views.Airframes.ShowSpecs(model: @model)
+    if @model.specs.length > 0
+      @$("#airframe_specs").html(@specs.render().el)
+    else
+      @$("#airframe_specs").html(JST["templates/airframes/partials/specs_empty"])
 
     @delete = new Jetdeck.Views.Airframes.ShowDelete(model: @model)
     @$("#airframe_delete").html(@delete.render().el)

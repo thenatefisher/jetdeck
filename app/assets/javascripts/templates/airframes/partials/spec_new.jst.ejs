@@ -1,0 +1,104 @@
+<div class="modal-header">
+  <button class="close" data-dismiss="modal">×</button>
+  <h3>Add a New Aircraft</h3>
+</div>
+
+<div class="modal-body" style="max-height: 450px;">
+
+  <form name="airframe">
+
+    <label class="radio" for="airframe-create" style="cursor: auto; clear: both; color: #000">
+
+      <div>
+        <h4>Import From an Online Listing</h4>
+        <div class="pull-left" style="padding-right: 20px">
+          <ol>
+
+            <li style="line-height: 25px;"><strong>Drag</strong> button to bookmarks</li>
+
+            <li style="line-height: 25px;">Browse to listing<br></li>
+
+            <li style="line-height: 25px;">Click the bookmark<br></li>
+
+          </ol>
+        </div>
+        <div class="alert alert-info pull-right" style="padding: 10px">
+          <div style="text-align: center;" >
+            <a class="btn disabled btn-large" style="background: white" title="Drag, no clicky here!" onclick="return false;" href="javascript:(function(){document.getElementsByTagName('head')[0].appendChild(document.createElement('script')).src='<%=bookmarklet_url%>';})();"><i class="icon-download-alt icon-large"></i> Import Aircraft</a>
+            <br>
+            <small>Drag Me to Bookmarks!</small>
+          </div>     
+        </div>  
+
+      </div>
+
+      <div class="page-header"><div class="clearfix"><br></div></div>
+
+      <div class="offmarket_group" style="margin-top: 30px">
+      
+        <h4>Or Add an Off-Market Machine <small>All Fields Optional</small></h4>
+        <div style="margin-left: 10px; margin-top: 20px">
+          <input type="text" name="year" 
+            id="airframe_year" 
+            class="input-mini" 
+            placeholder="Year">
+
+          <input type="hidden" name="headline" 
+            id="airframe_headline" 
+            class="span3 airframe-headline">
+
+          <input type="text" name="serial" 
+            id="airframe_serial" 
+            class="input-small airframe-serial" 
+            placeholder="Serial No.">
+
+          <div class="clearfix"></div>
+
+          <div style="margin-top: 20px;">
+
+            <div style="margin-bottom: 15px;" id="upload_spec_input_container">
+
+              <div class="btn" style="position: relative;">
+                <input type="file" name="upload_spec_input" 
+                  id="upload_spec_input" 
+                  value="Select Spec File" 
+                  style="height: 14px; width: 230px; -moz-opacity:0; filter:alpha(opacity: 0); opacity: 0;"
+                  onchange="$(this).parent('.btn').hide(); $('#upload_spec_input_filename').show().html(/\\([^\\]*)$/.exec($(this).val())[1]); return false;" 
+                  multiple />
+                <span style="position: absolute; left: 0px; top: 4px; z-index: 2; margin: 0 auto; width: 100%" 
+                  onclick="$('#upload_spec_input').click(); return false;">
+                  <strong><i class="icon-cloud-upload"></i> Upload Spec <small>(.pdf, .doc or .docx)</small></strong></span>
+              </div>
+
+              <span id="upload_spec_input_filename" onclick="$('#upload_spec_input').click(); return false;" style="display: none; cursor: pointer;" class="btn btn-info disabled"></span>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </label>
+
+  </form>
+
+</div>
+
+<div class="modal-footer">
+  <span class="pull-left error span4" style="text-align: left;" id="error-message"></span>
+  <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+  <button id="new_airframe" class="btn btn-primary">Add Aircraft</button>
+</div>
+
+<style>
+  .offmarket_option {
+    display: none;
+  }
+  .offmarket_option_labels span {
+    font-weight: bold;
+  }
+  .offmarket_option_labels input {
+    margin-top: -2px;
+    margin-right: 15px;
+  }
+</style>

@@ -14,9 +14,9 @@ class Airframe < ActiveRecord::Base
 
   accepts_nested_attributes_for :images, :reject_if => lambda { |t| t['image'].nil? }
 
-  has_many :documents, :class_name => 'Accessory', :conditions => "document_file_name is not null", :dependent => :destroy
+  has_many :specs, :class_name => 'Accessory', :conditions => "document_file_name is not null", :dependent => :destroy
 
-  accepts_nested_attributes_for :documents, :reject_if => lambda { |t| t['document'].nil? }
+  accepts_nested_attributes_for :specs, :reject_if => lambda { |t| t['document'].nil? }
 
   has_many :airframe_texts
 
@@ -77,7 +77,7 @@ class Airframe < ActiveRecord::Base
   def avatar
 
     avatars = Hash.new()
-    assy = accessories.where(:thumbnail => true).first
+    assy = images.where(:thumbnail => true).first
     if assy.present?
 
         { :original => 

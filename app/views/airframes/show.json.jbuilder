@@ -56,9 +56,13 @@ end
 
 json.specs @airframe.specs do |json, x|
     json.file_name x.document_file_name
+    if x.document_file_name
+        json.file_name_t x.document_file_name.reverse.truncate(25).reverse 
+    end
     json.version x.version
     json.created_at x.created_at
     json.enabled x.enabled
+    json.link x.url
 end
 
 json.actions @airframe.actions do |json, c|

@@ -40,7 +40,7 @@ class Accessory < ActiveRecord::Base
 
     validate :validate_image_or_document
 
-    validates_presence_of :version
+    validates_presence_of :version, :if => 'document_file_name.present?'
     validate :validate_version_name_uniqueness
 
     validates_attachment_size :image, :less_than => 5.megabytes
@@ -49,7 +49,7 @@ class Accessory < ActiveRecord::Base
 
     validates_attachment_content_type :document, :content_type =>
         ["application/msword",
-        " application/pdf"]
+         "application/pdf"]
 
     validates_attachment_content_type :image, :content_type =>
         ["image/png",
@@ -77,11 +77,10 @@ class Accessory < ActiveRecord::Base
     def validate_version_name_uniqueness
 
       if document_file_name.present?
-        accys = Accessory.find(:all, :select => 'version', :conditions => ["airframe_id = ? AND 
-          (document_file_name IS NOT NULL AND document_file_name = ?)",
-          self.airframe_id, self.document_file_name]).map() {|code| code.downcase}
+        accys = Accessory.find(:all, :select => 'version', :conditions => ["airframe_id = ? AND document_file_name = ?",
+          self.airframe_id, self.document_file_name]).map() {|accy| accy.version.downcase if accy.version.present?}
 
-        if accys.include(self.version.downcase)
+        if self.version.present? && accys.include?(self.version.downcase)
           errors.add(:document, "version name must be unique for this file name")
         end
       end
@@ -105,7 +104,19 @@ class Accessory < ActiveRecord::Base
         false
       end
 
-    end        
+    end
+
+    def url
+      if self.image.present?
+        "https://s3.amazonaws.com/" + 
+          Jetdeck::Application.config.aws_s3_bucket + 
+          "/images/#{id}/original/#{image_file_name}"
+      else      
+        "https://s3.amazonaws.com/" + 
+          Jetdeck::Application.config.aws_s3_bucket + 
+          "/documents/#{id}/#{document_file_name}"
+      end
+    end
 
     #one convenient method to pass jq_upload the necessary information
     def to_jq_upload
@@ -143,12 +154,7 @@ class Accessory < ActiveRecord::Base
             "url" => 
               "https://s3.amazonaws.com/" + 
               Jetdeck::Application.config.aws_s3_bucket + 
-              "/documents/#{id}/original/#{document_file_name}",
-              
-            "thumbnail_url" => 
-              "https://s3.amazonaws.com/" +
-              Jetdeck::Application.config.aws_s3_bucket +
-              "/documents/#{id}/mini/#{document_file_name}",
+              "/documents/#{id}/#{document_file_name}",
               
             "delete_url" => "/accessories/#{id}",
             
