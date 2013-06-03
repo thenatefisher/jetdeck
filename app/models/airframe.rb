@@ -1,7 +1,6 @@
 require "#{Rails.root}/app/models/lib/airframe_import_cdc"
 require "#{Rails.root}/app/models/lib/airframe_import_aso"
 
-
 class Airframe < ActiveRecord::Base
 
   extend AirframeImport
@@ -11,15 +10,19 @@ class Airframe < ActiveRecord::Base
   
   has_many :notes, :as => :notable           
 
-  has_many :accessories, :dependent => :destroy
+  has_many :images, :class_name => 'Accessory', :conditions => "image_file_name is not null", :dependent => :destroy
+
+  accepts_nested_attributes_for :images, :reject_if => lambda { |t| t['image'].nil? }
+
+  has_many :documents, :class_name => 'Accessory', :conditions => "document_file_name is not null", :dependent => :destroy
+
+  accepts_nested_attributes_for :documents, :reject_if => lambda { |t| t['document'].nil? }
 
   has_many :airframe_texts
 
   accepts_nested_attributes_for :airframe_texts
 
-  accepts_nested_attributes_for :accessories, :reject_if => lambda { |t| t['image'].nil? }
-  
-  has_many :xspecs, :dependent => :destroy
+  has_many :leads, :dependent => :destroy
 
   belongs_to :creator, :class_name => "User", :foreign_key => "user_id"
 
@@ -27,20 +30,6 @@ class Airframe < ActiveRecord::Base
                           :unless => Proc.new { |q| q.import_url.blank? }, 
                           :message => "Aircraft is already in deck."  
 
-  def import(link=nil)
-  
-    # require a url and owner
-    return nil if link.blank?
-
-    # if already imported...
-    return self if self.import_url == link
-
-    self.import_url = link
-    self.save!
-
-    return self
-
-  end
 
   def self.import(user_id=nil, link=nil)
 
@@ -57,8 +46,6 @@ class Airframe < ActiveRecord::Base
         airframe = delay.import_cdc(user_id, link)
       when /[www\.]?aso\.com/
         airframe = delay.import_aso(user_id, link)
-      when /[www\.]?trade-a-plane\.com/
-        #airframe = import_tap(user_id, link)
       else 
         airframe = nil    
     end

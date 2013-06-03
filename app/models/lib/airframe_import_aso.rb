@@ -5,6 +5,26 @@ require_relative 'header_spoofer'
 
 module AirframeImport
 
+    def import_aso_images(airframe, link=nil)
+
+        return nil if airframe.blank? || link.blank?
+
+        include HeaderSpoofer
+        content = open(link,
+            "User-Agent" => HeaderSpoofer::header,
+            "Referer" => "https://www.google.com/webhp?sourceid=chrome-instant&ion=1&ie=UTF-8").read rescue nil
+
+        content.scan(/Graphic_Id":([\d]*),.*?File_Path":"~(.*?)"/).each_with_index do |image, index|
+            img_id = image[0] rescue index
+            thumb = Accessory.new(:image => open(URI::encode("http://www.aso.com/"+image[1]) ) )
+            thumb.image_file_name = "#{img_id}.jpg"
+            thumb.thumbnail = true if index == 0
+            thumb.save
+            airframe.accessories << thumb
+        end        
+
+    end
+
     def import_aso(user_id=nil, link=nil)
 
         # url is required
@@ -105,14 +125,7 @@ module AirframeImport
         airframe.tt             = page_details[:TotalTime]
 
         # store images
-        content.scan(/Graphic_Id":([\d]*),.*?File_Path":"~(.*?)"/).each_with_index do |image, index|
-            thumb = Accessory.new(:image => open(URI::encode("http://www.aso.com/"+image[1]) ) )
-            img_id = image[0] rescue index
-            thumb.image_file_name = "#{img_id}.jpg"
-            thumb.thumbnail = true if index == 0
-            thumb.save
-            airframe.accessories << thumb
-        end        
+        self.import_aso_images(airframe, link)
 
         airframe.save
 

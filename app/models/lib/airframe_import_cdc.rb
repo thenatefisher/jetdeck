@@ -5,6 +5,26 @@ require_relative 'header_spoofer'
 
 module AirframeImport
 
+    def import_cdc_images(airframe, link=nil)
+        return nil if airframe.blank? || link.blank?
+        # add images
+        listing_id = link.match(/([\d]+).htm[l]?/)[1] rescue nil
+        if listing_id.present?
+            mobile_link = "http://m.controller.com/Picture/Index?listingId=#{listing_id}"
+            mobile_content = fetch_cdc(mobile_link)
+            mobile_doc = Nokogiri::HTML(mobile_content)
+            images_list = mobile_doc.css(".cImgList img")
+            images_list.each_with_index do |img, index|
+                img_id = img.attr("src").match(/id=([\d]*)/)[1] rescue index
+                thumb = Accessory.new(:image => open(img.attr("src")))
+                thumb.image_file_name = "#{img_id}.jpg"
+                thumb.thumbnail = true if index == 0
+                thumb.save
+                airframe.images << thumb
+            end
+        end
+    end
+
     def import_cdc(user_id=nil, link=nil)
 
         # url is required
@@ -97,22 +117,7 @@ module AirframeImport
         airframe.tt             = page_details[:TotalTime]
         airframe.save
         
-        # add thumbnail if available
-        listing_id = link.match(/([\d]+).htm[l]?/)[1] rescue nil
-        if listing_id.present?
-            mobile_link = "http://m.controller.com/Picture/Index?listingId=#{listing_id}"
-            mobile_content = fetch_cdc(mobile_link)
-            mobile_doc = Nokogiri::HTML(mobile_content)
-            images_list = mobile_doc.css(".cImgList img")
-            images_list.each_with_index do |img, index|
-                thumb = Accessory.new(:image => open(img.attr("src")))
-                img_id = img.attr("src").match(/id=([\d]*)/)[1] rescue index
-                thumb.image_file_name = "#{img_id}.jpg"
-                thumb.thumbnail = true if index == 0
-                thumb.save
-                airframe.accessories << thumb
-            end
-        end
+        self.import_cdc_images(airframe, link)
 
         return airframe.save
 

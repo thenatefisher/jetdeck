@@ -6,12 +6,12 @@ class Contact < ActiveRecord::Base
   
   has_many :notes, :as => :notable, :dependent => :destroy
   
-  has_many :specsSent,
-      :class_name => "Xspec",
+  has_many :files_sent,
+      :class_name => "Lead",
       :foreign_key => "sender_id"
 
-  has_many :specsReceived,
-      :class_name => "Xspec",
+  has_many :files_received,
+      :class_name => "Lead",
       :foreign_key => "recipient_id",
       :dependent => :destroy
 

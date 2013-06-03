@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130530022927) do
+ActiveRecord::Schema.define(:version => 20130603005429) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -28,6 +28,8 @@ ActiveRecord::Schema.define(:version => 20130530022927) do
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
     t.boolean  "thumbnail"
+    t.string   "version"
+    t.boolean  "enabled"
   end
 
   create_table "actions", :force => true do |t|
@@ -110,6 +112,28 @@ ActiveRecord::Schema.define(:version => 20130530022927) do
     t.string   "email"
   end
 
+  create_table "lead_status_enums", :force => true do |t|
+    t.string "status"
+  end
+
+  create_table "leads", :force => true do |t|
+    t.integer  "recipient_id"
+    t.integer  "sender_id"
+    t.integer  "airframe_id"
+    t.integer  "status_id"
+    t.datetime "status_date"
+    t.integer  "spec_id"
+    t.boolean  "photos_enabled"
+    t.boolean  "spec_enabled"
+    t.string   "override_file_name"
+    t.string   "photos_url_code"
+    t.string   "spec_url_code"
+    t.text     "body"
+    t.text     "subject"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
   create_table "notes", :force => true do |t|
     t.string   "title"
     t.text     "description"
@@ -150,27 +174,13 @@ ActiveRecord::Schema.define(:version => 20130530022927) do
     t.string   "auth_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"
-    t.text     "spec_disclaimer"
     t.integer  "invites"
     t.string   "activation_token"
     t.boolean  "activated"
     t.string   "bookmarklet_token"
+    t.text     "signature"
   end
 
   add_index "users", ["contact_id"], :name => "indexusers_on_contact_id"
-
-  create_table "xspecs", :force => true do |t|
-    t.integer  "airframe_id"
-    t.integer  "recipient_id"
-    t.integer  "sender_id"
-    t.datetime "sent"
-    t.text     "message"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.string   "url_code"
-    t.boolean  "photos_enabled"
-    t.boolean  "spec_enabled"
-    t.integer  "document_id"
-  end
 
 end

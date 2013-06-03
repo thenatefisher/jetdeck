@@ -83,15 +83,7 @@ class ContactsController < ApplicationController
 
     @contact = Contact.find(:first, :conditions =>
       ["id = ? AND owner_id = ?", params[:id], @current_user.id])
-    
-    if !params[:contact][:custom_details].blank?
-      details = Array.new()
-      params[:contact][:custom_details].each do |e|
-        details << e.slice(:name, :value, :id)
-      end
-      params[:contact][:details_attributes] = details 
-    end
-    
+        
     whitelist = params[:contact].slice(
         :id,
         :first,
@@ -100,7 +92,6 @@ class ContactsController < ApplicationController
         :phone,
         :email, 
         :email_confirmation,
-        :details_attributes,
         :sticky_id
       )
 

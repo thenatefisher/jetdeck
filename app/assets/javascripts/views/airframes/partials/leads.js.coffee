@@ -78,8 +78,14 @@ class Jetdeck.Views.Airframes.ShowLeads extends Backbone.View
         
   render : =>
     $(@el).html(JST["templates/airframes/partials/leads_temp"])
+
+    @$(".send").click( =>
+        modal(JST["templates/airframes/partials/send_temp"])
+    )
+
     # remove top border on first table item in spec panes
     @$("table").children('tbody').children('tr').first().children('td').css('border-top', '0px')
+
     #params =
     #    count : @model.leads.length
     #    pages : @model.leads.pages()

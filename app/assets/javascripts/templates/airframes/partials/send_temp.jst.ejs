@@ -1,0 +1,89 @@
+<div class="modal-header">
+  <button class="close" data-dismiss="modal">×</button>
+  <h3>Send Spec</h3>
+</div>
+
+<div class="modal-body" style="max-height: 450px;">
+
+<form class="form-horizontal" id="spec-send">
+  <div class="control-group">
+    <label class="control-label" for="spec-send-email">To: </label>
+    <div class="controls">
+      <input type="text" id="spec-send-email" class="input span5" placeholder="Email">
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="spec-send-spec">Spec: </label>
+    <div class="controls">
+      <select class="span spec_input"><option>Aircraft</option></select>
+      <select class="span spec_input"><option>Spec</option></select>
+      <label for="" class="checkbox" style="margin-top: 10px;">
+        <input type="checkbox" checked> Include Pictures
+      </label>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="spec-send-subject">Subject: </label>
+    <div class="controls">
+      <input type="text" id="spec-send-subject" class="input span5" placeholder="Subject">
+    </div>
+  </div>
+  <div class="controls">
+      <textarea class="input span5" name="spec-send-body" style="min-height: 130px; "></textarea>
+      <div id="spec-send-filename" class="span5">
+        <div class="well">
+          <div class="span" style="height: 25px; margin-left: 5px; padding: 0px">
+            <img src="https://s3.amazonaws.com/jetdeck_dev/images/6/thumb/1451245.jpg" onerror="this.src = '/assets/placeholder/aircraft_default_avatar.png'" height="64" style="height: 64px;">
+          </div> 
+          <div class="span">
+            <span style="height: 25px;"> Filename.pdf <small>(380kb)</small></span>
+            <br><span style="height: 25px;"> <small><a href='#'>View Photos</a></small></span>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+  </div>
+
+
+</form>
+
+</div>
+
+<div class="modal-footer">
+  <span class="pull-left error span4" style="text-align: left;" id="error-message"></span>
+  <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+  <button id="send" class="btn btn-primary">Send</button>
+</div>
+
+<style type="text/css">
+#spec-send .spec_input {
+  width: 188px;
+}
+#spec-send textarea {
+  -webkit-border-radius: 4px 4px 0 0;
+  -moz-border-radius:  4px 4px 0 0;
+  border-radius:  4px 4px 0 0;  
+}
+#spec-send-filename {
+  margin-left: 0;
+}
+#spec-send-filename div {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0; 
+  padding: 10px 7px;
+  -webkit-box-shadow: 0;
+  -moz-box-shadow: 0;
+  box-shadow: 0;
+  font-weight: bold;
+}
+#spec-send-filename div small {
+  color: #555555;
+}
+.form-horizontal .controls {
+  margin-left: 124px;
+}
+.form-horizontal .control-label {
+  width: 100px;
+}
+</style>

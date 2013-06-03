@@ -21,10 +21,10 @@ if (@airframe.creator && @airframe.creator.contact)
     })
 end
 
-views = Array.new
-json.leads @airframe.xspecs do |json, x|
 
-    if x.recipient.present?
+json.leads @airframe.leads do |json, x|
+
+    if x.recipient.present? && x.spec
 
         json.id x.recipient.id
 
@@ -38,31 +38,28 @@ json.leads @airframe.xspecs do |json, x|
           json.company x.recipient.company
         end
 
-        json.hits x.hits
-
         json.recipient_id x.recipient.id
 
-        if x.hits > 0 && x.views
-            json.last_viewed x.views.last.created_at
-        else
-            json.last_viewed ""
-        end
-
-        json.fire x.fire || false
-
-        json.url "/s/" + x.url_code
-        
-        json.xspec_id x.id
-        
         json.recipientEmailField x.recipient.emailField
 
-        views += x.views
+        json.photos_url_code "/s/" + x.photos_url_code
+        json.spec_url_code "/s/" + x.spec_url_code
         
+        json.status x.status
+        json.status_date x.status_date
+        
+        json.spec "#{x.spec.document_file_name} (#{x.spec.version.upcase})"
+
     end
     
 end
 
-json.spec_files []
+json.specs @airframe.specs do |json, x|
+    json.file_name x.document_file_name
+    json.version x.version
+    json.created_at x.created_at
+    json.enabled x.enabled
+end
 
 json.actions @airframe.actions do |json, c|
     json.id c.id

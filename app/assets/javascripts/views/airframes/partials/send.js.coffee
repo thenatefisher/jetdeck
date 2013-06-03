@@ -74,39 +74,7 @@ class Jetdeck.Views.Airframes.ShowSend extends Backbone.View
 
   render : ->
 
-    if @model.leads.length > 0
-
-      $(@el).html(@template(@model.toJSON() ))
-      
-      $(@el).ready( => 
-        $('#history').sparkline(@model.get('activity'), {
-          type: 'bar',
-          height: '45',
-          barWidth: 14,
-          barSpacing: 3,
-          zeroAxis: false,
-          barColor: '#34495E'
-        })
-      )
-
-      @$("#toggle_send").toggle(
-        => 
-          @$("#history_container").hide()
-          @$("#send_container").show()
-        ,
-        =>
-          @$("#history_container").show()
-          @$("#send_container").hide()
-      )
-
-      @$("#cancel_send").click( =>
-        @$("#history_container").show()
-        @$("#send_container").hide()
-      )
-
-    else
-
-      $(@el).html(JST["templates/airframes/partials/first_send"](@model.toJSON() ))
+    $(@el).html(JST["templates/airframes/partials/new_send"](@model.toJSON() ))
         
     @$("#recipient_email").autocomplete({
        minLength: 2

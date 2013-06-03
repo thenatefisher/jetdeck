@@ -41,20 +41,18 @@ json.actions @contact.actions do |json, c|
     json.past_due (c.due_at < Time.now()) if c.due_at   
 end
 
-json.specs @contact.specsReceived do |json, x|
+json.specs @contact.files_received do |json, x|
 
-        json.hits x.hits
+    if x.spec
 
-        if x.hits > 0 && x.views
-            json.last_viewed x.views.last.created_at
-        else
-            json.last_viewed ""
-        end
-
-        json.fire x.fire || false
-
-        json.url "/s/" + x.url_code
+        json.photos_url_code "/s/" + x.photos_url_code
+        json.spec_url_code "/s/" + x.spec_url_code
         
+        json.status x.status
+        json.status_date x.status_date
+        
+        json.spec "#{x.spec.document_file_name} (#{x.spec.version.upcase})"
+
         if x.airframe
         
           json.id             x.airframe.id
@@ -66,6 +64,8 @@ json.specs @contact.specsReceived do |json, x|
           json.avatar         x.airframe.avatar
           
         end
+
+    end
 
 end
 

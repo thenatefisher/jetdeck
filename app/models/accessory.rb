@@ -1,6 +1,7 @@
 class Accessory < ActiveRecord::Base
 
     belongs_to :airframe
+    has_one :lead, :foreign_key => :spec_id, :class_name => "Lead"
 
     has_attached_file :image,
                       :styles => {  :thumb => "140x130#", # displayed on show page
@@ -37,6 +38,11 @@ class Accessory < ActiveRecord::Base
     attr_protected :image_file_name, :image_content_type, :image_size, 
                     :document_file_name, :document_content_type, :document_size
 
+    validate :validate_image_or_document
+
+    validates_presence_of :version
+    validate :validate_version_name_uniqueness
+
     validates_attachment_size :image, :less_than => 5.megabytes
 
     validates_attachment_size :document, :less_than => 10.megabytes
@@ -56,24 +62,55 @@ class Accessory < ActiveRecord::Base
 
     before_destroy :next_thumbnail
 
+    before_create :init
+
+    # validate before save cannot have both image and doc
+    def validate_image_or_document
+      if image_file_name && document_file_name
+        errors.add(:image, " cannot be in same accessory as a document")
+        errors.add(:document, " cannot be in same accessory as an image")
+      end
+    end
+
+    # validate before save version must be present and must 
+    # have unique version for airframe+filename pair
+    def validate_version_name_uniqueness
+
+      if document_file_name.present?
+        accys = Accessory.find(:all, :select => 'version', :conditions => ["airframe_id = ? AND 
+          (document_file_name IS NOT NULL AND document_file_name = ?)",
+          self.airframe_id, self.document_file_name]).map() {|code| code.downcase}
+
+        if accys.include(self.version.downcase)
+          errors.add(:document, "version name must be unique for this file name")
+        end
+      end
+
+    end
+
+    def init
+      self.enabled ||= true
+    end
+
+    # select another thumbnail if it is deleted
     def next_thumbnail
 
-        if self.image.present? && self.thumbnail
-            new_thumb = self.airframe.accessories.where("image_file_name IS NOT null AND thumbnail = 'f'").first
-            if new_thumb
-                new_thumb.thumbnail = true
-                new_thumb.save()
-            end
-        else
-          false
-        end
+      if self.image.present? && self.thumbnail
+          new_thumb = self.airframe.accessories.where("image_file_name IS NOT null AND thumbnail = 'f'").first
+          if new_thumb
+              new_thumb.thumbnail = true
+              new_thumb.save()
+          end
+      else
+        false
+      end
 
     end        
 
     #one convenient method to pass jq_upload the necessary information
     def to_jq_upload
 
-        if self.image.present?
+      if self.image.present?
           {
             "name" => self.image_file_name,
             
@@ -97,7 +134,7 @@ class Accessory < ActiveRecord::Base
             
             "id" => self.id
           }
-        else
+      else
           {
             "name" => self.document_file_name,
             
@@ -121,7 +158,8 @@ class Accessory < ActiveRecord::Base
             
             "id" => self.id
           } 
-        end    
+      end    
+
     end
 
 end

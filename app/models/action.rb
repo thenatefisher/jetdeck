@@ -15,6 +15,7 @@ class Action < ActiveRecord::Base
     else
       self.completed_at = nil
     end  
+    
   end
 
 end

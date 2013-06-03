@@ -1,7 +1,7 @@
 Jetdeck.Views.Send ||= {}
 
 class Jetdeck.Views.Send.ShowSend extends Backbone.View
-  template: JST["templates/airframes/partials/send"]
+  template: JST["templates/airframes/partials/send_temp"]
 
   events :
     "click #send_spec" : "send"
