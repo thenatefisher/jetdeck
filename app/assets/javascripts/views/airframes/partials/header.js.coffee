@@ -44,7 +44,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     @$('#airframe_image_upload').fileupload({
         autoUpload: true
         url: '/accessories'
-        acceptFileTypes: /^image\/(gif|jpeg|png)$/
+        acceptFileTypes: /(\.|\/)(gif|png|jpg|jpeg)$/i
         maxFileSize: 10490000 # 10MB
         progressall: (e, data) =>
             progress = parseInt(data.loaded / data.total * 100, 10)

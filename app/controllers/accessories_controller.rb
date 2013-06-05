@@ -16,17 +16,20 @@ class AccessoriesController < ApplicationController
   def create
 
     @Assy = Accessory.new(params[:files])
-    if Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]]).present?
-      @Assy.airframe_id = params[:airframe]
+    if Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]]).present?     
       @airframe = Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]])
-      if @Assy.document_file_name.present?
-        @airframe.specs << @Assy
-      else
-        @airframe.images.each do |t|
-          t.thumbnail = false
-          t.save
+      if @airframe.present?
+        @Assy.airframe_id = @airframe.id
+        
+        if @Assy.document_file_name.present?
+          @airframe.specs << @Assy
+        else
+          @airframe.images.each do |t|
+            t.thumbnail = false
+            t.save
+          end
+          @Assy.thumbnail = true
         end
-        @Assy.thumbnail = true
       end
     end
 

@@ -47,6 +47,7 @@
     Update airframe thumbnail on file upload
     Remove contact stick note when note is deleted 
     Enable close button on import error popup
+    Obfuscate S3 file locations
 
 == Code Enhancements
 

@@ -1,89 +1,184 @@
 <ul class="breadcrumb subsection">
+  
   <li style="text-shadow: none"> 
     <strong>
       <i class="icon-folder-open"></i> Specs
     </strong> 
   </li>
-  <a href="#" class="pull-right" style="margin-left: 15px"> Add </a> 
+  
+  <a href="#" class="pull-right add-spec" style="margin-left: 15px"> Add </a> 
+
   <!--<a href="#" class="pull-right"> Show Hidden </a>-->
+
 </ul>
 
-<div style="margin-left: 0px; margin-bottom: 0px;">
+<form id="airframe_document_upload" action="/accessories" 
+  style="margin: 0;" method="POST" enctype="multipart/form-data"
+  data-upload-template-id="document-upload"
+  data-download-template-id="document-download">  
 
-<table class="table table-hover table-condensed">
-  <tbody>
+  <input type="hidden" name="authenticity_token">
+  <input type="hidden" name="airframe" value="<%= id %>" />
 
-    <!--<tr>
-      <td colspan=2><i class="icon-caret-down"></i> Beechcraft_king_air.pdf</td>
-      <td></td>
-      <td><button class="btn btn-mini pull-right">Update</button></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><a href="">BRAVO</a> <span class="label">9</span></td>
-      <td><small>5/23/2013 3:23pm</small></td>
-      <td>
-        <div class="btn-group pull-right">
-          <button class="btn btn-mini">Send</button>
-         <button class="btn btn-mini">X</button>
-        </div>     
-      </td>
-    </tr>
-    <tr>
-      <td></td>
-      <td><a href="">ALPHA</a> <span class="label">17</span></td>
-      <td><small>5/23/2013 3:23pm</small></td>
-      <td>
-        <div class="btn-group pull-right">
-          <button class="btn btn-mini">Send</button>
-         <button class="btn btn-mini">X</button>
-        </div>     
-      </td>
-    </tr>        
-    <tr class="muted">
-      <td colspan=2>bogus_spec.pdf <span class="label">2</span></td>
-      <td><small>5/14/2013 3:23pm</small></td>
-      <td>
-        <div class="btn-group pull-right">
-          <button class="btn btn-mini">Enable</button>
-         <button class="btn btn-mini">X</button>
-        </div>     
-      </td>
-    </tr>
-    <tr>
-      <td colspan=2><a href="">log_files.pdf</a> <span class="label">2</span></td>
-      <td><small>5/14/2013 3:23pm</small></td>
-      <td>
-        <div class="btn-group pull-right">
-          <button class="btn btn-mini">Send</button>
-          <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href=""><i class="icon-refresh"></i>  Update</a></li>
-            <li><a href=""><i class="icon-pause"></i> Disable</a></li>
-          </ul>
-        </div>   
-      </td>
-    </tr>
-    <tr>      
-      <td colspan=2><i class="icon-caret-right"></i> <a href="">original_spec.pdf</a> <span class="label">7</span></td>
-      <td><small>5/23/2013 3:23pm</small></td>
-      <td>
-        <div class="btn-group pull-right">
-          <button class="btn btn-mini">Send</button>
-          <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu">
-            <li><a href=""><i class="icon-refresh"></i>  Update</a></li>
-            <li><a href=""><i class="icon-pause"></i> Disable</a></li>
-          </ul>
-        </div>
-      </td>
-    </tr>-->
-  </tbody>
-</table>
+  <!-- The table listing the files available for upload/download -->
+  <div id="new-spec-well" class="hide" style="margin-left: 0px; margin-bottom: 20px;">
+    <div class="alert alert-block" style="padding-right: 14px; margin-bottom: 0">
+        <table class="table" id="new-spec-table" style="margin: 0; padding: 0">
+            <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+        </table>
+        <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
+  </div>
 
+  <input 
+    type="file" 
+    name="files[document]" 
+    id="airframe-document-input" 
+    style="width: 0px; height: 0px; position: absolute; top: -9999px; left: -9999px; -moz-opacity:0; filter:alpha(opacity: 0); opacity: 0;"
+    multiple>
+
+</form>
+
+<div id="specs-empty" class="hide">
+
+  <div style="margin-left: 0px; margin-bottom: 0px;">
+
+      <div class="alert alert-block" style="margin-bottom: 0">
+
+          <div class="span5" style="margin-left: 0px;">
+
+            <button class="add-spec btn btn-success btn-large span3" style="margin: 0px auto;">
+              Upload a Spec File
+            </button>
+
+            <div class="clearfix"></div>
+
+            <p style="line-height: 24px; color: #2C3E50; margin-top: 20px;">This aircraft does not yet have any specs uploaded. Add one now and start sending to leads. Once you send specs, lead viewing activity will be shown on this page. </p>
+
+          </div>
+
+          <div class="clearfix"></div>
+
+      </div>
+
+  </div>
 </div>
 
+<div id="specs-populated" class="hide">
+  <div style="margin-left: 0px; margin-bottom: 0px;">
+    <table id="specs-table" class="table table-hover table-condensed">
+      <tbody>
+
+        <!--<tr>
+          <td colspan=2><i class="icon-caret-down"></i> Beechcraft_king_air.pdf</td>
+          <td></td>
+          <td><button class="btn btn-mini pull-right">Update</button></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><a href="">BRAVO</a> <span class="label">9</span></td>
+          <td><small>5/23/2013 3:23pm</small></td>
+          <td>
+            <div class="btn-group pull-right">
+              <button class="btn btn-mini">Send</button>
+             <button class="btn btn-mini">X</button>
+            </div>     
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><a href="">ALPHA</a> <span class="label">17</span></td>
+          <td><small>5/23/2013 3:23pm</small></td>
+          <td>
+            <div class="btn-group pull-right">
+              <button class="btn btn-mini">Send</button>
+             <button class="btn btn-mini">X</button>
+            </div>     
+          </td>
+        </tr>        
+        <tr class="muted">
+          <td colspan=2>bogus_spec.pdf <span class="label">2</span></td>
+          <td><small>5/14/2013 3:23pm</small></td>
+          <td>
+            <div class="btn-group pull-right">
+              <button class="btn btn-mini">Enable</button>
+             <button class="btn btn-mini">X</button>
+            </div>     
+          </td>
+        </tr>
+        <tr>
+          <td colspan=2><a href="">log_files.pdf</a> <span class="label">2</span></td>
+          <td><small>5/14/2013 3:23pm</small></td>
+          <td>
+            <div class="btn-group pull-right">
+              <button class="btn btn-mini">Send</button>
+              <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href=""><i class="icon-refresh"></i>  Update</a></li>
+                <li><a href=""><i class="icon-pause"></i> Disable</a></li>
+              </ul>
+            </div>   
+          </td>
+        </tr>
+        <tr>      
+          <td colspan=2><i class="icon-caret-right"></i> <a href="">original_spec.pdf</a> <span class="label">7</span></td>
+          <td><small>5/23/2013 3:23pm</small></td>
+          <td>
+            <div class="btn-group pull-right">
+              <button class="btn btn-mini">Send</button>
+              <button class="btn btn-mini dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href=""><i class="icon-refresh"></i>  Update</a></li>
+                <li><a href=""><i class="icon-pause"></i> Disable</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>-->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+  <!-- The document to display files available for upload -->
+  <style>#new-spec-table td {border-top: 0px;}</style>
+  <script id="document-upload" type="text/x-tmpl">
+  {% for (var i=0, file; file=o.files[i]; i++) { %}
+      <tr class="document-upload fade">
+          <td class="name" style="vertical-align: middle"><span>{%=file.name.rtrunc(15)%}</span></td>
+          {% if (file.error) { %}
+              <td class="error" style="vertical-align: middle">
+                <span class="label label-important">
+                {%=locale.fileupload.error%}</span> 
+                {%=locale.fileupload.errors[file.error] || file.error%}
+              </td>
+          {% } else if (o.files.valid && !i) { %}
+              <td style="vertical-align: middle">
+                  <div class="span1 progress progress-success progress-striped active"
+                    style="margin: 10px auto;">
+                    <div class="bar" style="width:0%;"></div>
+                  </div>
+              </td>
+
+          {% } else { %}
+              <td></td>
+          {% } %}        
+          <td class="cancel" style="vertical-align: middle; width: 95px;">
+          {% if (!i) { %}
+           
+              <button class="btn pull-right cancel" style="margin: 0px;">
+                  <i class="icon-ban-circle"></i>
+                  <span>Cancel</span>
+              </button>
+          {% } %}
+          </td>
+      </tr>
+  {% } %}
+  </script>
+
+  <!-- The document to display files available for download -->
+  <script id="document-download" type="text/x-tmpl"> </script>

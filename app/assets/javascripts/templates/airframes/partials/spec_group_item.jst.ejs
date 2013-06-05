@@ -1,4 +1,12 @@
 <td></td>
-<td><a href="<%= link %>"><%= version %></a></td>
+<td>
+    <a href="<%= link %>">
+        <% if (parseInt(version)==0) { %>
+        Original
+        <% } else { %>
+        Revision <%= version %>
+        <% } %>
+    </a>
+</td>
 <td><small><%= updated %></small></td>
-<td></td>
+<td><button class="btn btn-mini pull-right">Send</button></td>

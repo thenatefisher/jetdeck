@@ -29,10 +29,7 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     #  @$("#leads_area").show()
     
     @specs = new Jetdeck.Views.Airframes.ShowSpecs(model: @model)
-    if @model.specs.length > 0
-      @$("#airframe_specs").html(@specs.render().el)
-    else
-      @$("#airframe_specs").html(JST["templates/airframes/partials/specs_empty"])
+    @$("#airframe_specs").html(@specs.render().el)
 
     @delete = new Jetdeck.Views.Airframes.ShowDelete(model: @model)
     @$("#airframe_delete").html(@delete.render().el)

@@ -28,7 +28,8 @@ ActiveRecord::Schema.define(:version => 20130603005429) do
     t.integer  "document_file_size"
     t.datetime "document_updated_at"
     t.boolean  "thumbnail"
-    t.string   "version"
+    t.integer  "version"
+    t.string   "file_hash"
     t.boolean  "enabled"
   end
 
