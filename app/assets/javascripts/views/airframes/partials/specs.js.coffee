@@ -6,6 +6,11 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
   events:
     "click .add-spec" : "add"
     "click .cancel" : "refresh_view"
+    "click .send" : "send"
+
+  send: ->
+    view = new Jetdeck.Views.Specs.Send()
+    modal(view.render().el)
 
   add: ->
     @$("#new-spec-well").show()
