@@ -26,7 +26,7 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       @updateChildren()
     
     updateChildren : =>
-      @specs.reset @get('specs')
+      #@specs.reset @get('specs')
       @actions.reset @get('actions')
       @notes.reset @get('notes')
       

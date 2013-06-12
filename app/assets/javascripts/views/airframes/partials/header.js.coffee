@@ -14,6 +14,10 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     headline += ' ' + @model.get('make')
     headline += ' ' + @model.get('model_name')
     $('#spec_headline').html(headline)
+    if headline.length >= 25
+      $('#spec_headline').css('fontSize', '33px')
+    else
+      $('#spec_headline').css('fontSize', '39px')
     return this
       
   setThumbnail: (event) ->
@@ -99,6 +103,8 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     # render header
     $(@el).html(@template(@model.toJSON() ))
     
+    @updateHeadline()
+
     @$("#chart").ready( =>
         graph = new Rickshaw.Graph( {
           element: document.querySelector("#chart")

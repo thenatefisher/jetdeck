@@ -6,12 +6,6 @@ json.phone h @contact.phone
 json.id @contact.id
 json.sticky_id @contact.sticky_id
 
-json.ownerships @contact.ownerships do |json, x|
-  json.description h x.description  
-  json.assoc h x.assoc  
-  json.id x.id
-end
-
 json.notes @contact.notes do |json, x|
   json.title h x.title
   json.description h x.description  

@@ -1,10 +1,10 @@
 /* FontAwesome, only in non-test modes */
 <% if (Jetdeck::Application.config.font_awesome) %>
-@fontAwesomeEotPath:  '<%= asset_path 'font/fontawesome-webfont.eot' %>';
-@fontAwesomeWoffPath: '<%= asset_path 'font/fontawesome-webfont.woff' %>';
-@fontAwesomeTtfPath:  '<%= asset_path 'font/fontawesome-webfont.ttf' %>';
-@fontAwesomeSvgzPath: '<%= asset_path 'font/fontawesome-webfont.svgz' %>';
-@fontAwesomeSvgPath:  '<%= asset_path 'font/fontawesome-webfont.svg' %>';
-@fontAwesomeEotPath_iefix: '<%= asset_path 'font/fontawesome-webfont.eot#iefix' %>';
-@import "fontawesome";
+@fontAwesomeEotPath: url("<%= asset_path 'fontawesome-webfont.eot' %>");
+@fontAwesomeEotPath_iefix: url("<%= asset_path 'fontawesome-webfont.eot#iefix' %>");
+@fontAwesomeWoffPath: url("<%= asset_path 'fontawesome-webfont.woff' %>");
+@fontAwesomeTtfPath: url("<%= asset_path 'fontawesome-webfont.ttf' %>");
+@fontAwesomeSvgPath: url("<%= asset_path 'fontawesome-webfont.svg#fontawesomeregular' %>");
+@import "fontawesome/font-awesome";
+@import "fontawesome/font-awesome-ie7";
 <% end %>
