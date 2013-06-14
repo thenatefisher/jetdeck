@@ -1,7 +1,7 @@
 Jetdeck.Views.Airframes ||= {}
 
 class Jetdeck.Views.Airframes.ShowLeads extends Backbone.View
-  template: JST["templates/airframes/partials/leads"]
+  template: JST["templates/airframes/leads/leads"]
 
   initialize: () ->
     @on('add', @addAll, @model.leads)
@@ -77,11 +77,7 @@ class Jetdeck.Views.Airframes.ShowLeads extends Backbone.View
         @$("tbody").append(view.render().el)
         
   render : =>
-    $(@el).html(JST["templates/airframes/partials/leads_temp"])
-
-    @$(".send").click( =>
-        modal(JST["templates/airframes/partials/send_temp"])
-    )
+    $(@el).html(JST["templates/airframes/leads/leads_temp"])
 
     # remove top border on first table item in spec panes
     @$("table").children('tbody').children('tr').first().children('td').css('border-top', '0px')

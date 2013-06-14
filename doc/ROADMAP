@@ -2,21 +2,22 @@ ROADMAP TO LAUNCH:
 
     4x      finish internal application ui
 
+                - spec send modal
+                - quick send
+                - add spec on aircraft create
+                - email signature needs rich formatting
+                - contact specs listing
+                - activity chart in header
+
                 - contact notes pagination
                 - contact aircraft spec list
                 - contact default view with no leads
 
-                - spec send modal
-                - quick send
-                - add spec on aircraft create
-                - contact specs listing
-
-                - transaction emails missing images
-
-    1x      create in-line email; add image; create images page
-
+                - create in-line email
                 - track email activity
                 - create images page
+
+                - transaction emails missing images                
 
     2x      marketing and signup brochure site
 

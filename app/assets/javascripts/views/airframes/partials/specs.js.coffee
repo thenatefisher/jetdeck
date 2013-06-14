@@ -1,7 +1,7 @@
 Jetdeck.Views.Airframes ||= {}
 
 class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
-  template: JST["templates/airframes/partials/specs"]
+  template: JST["templates/airframes/specs/specs"]
 
   events:
     "click .add-spec" : "add"
@@ -93,7 +93,7 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
 
 # each spec item
 class Jetdeck.Views.Airframes.SpecGroupHeader extends Backbone.View
-  template: JST["templates/airframes/partials/spec_group"]
+  template: JST["templates/airframes/specs/spec_group"]
 
   tagName: "tr"
 
@@ -126,7 +126,7 @@ class Jetdeck.Views.Airframes.SpecGroupHeader extends Backbone.View
     return this
 
 class Jetdeck.Views.Airframes.SpecGroupItem extends Backbone.View
-  template: JST["templates/airframes/partials/spec_group_item"]
+  template: JST["templates/airframes/specs/spec_group_item"]
 
   tagName: "tr"
 
@@ -141,7 +141,7 @@ class Jetdeck.Views.Airframes.SpecGroupItem extends Backbone.View
 
 
 class Jetdeck.Views.Airframes.Spec extends Backbone.View
-  template: JST["templates/airframes/partials/spec_item"]
+  template: JST["templates/airframes/specs/spec_item"]
 
   tagName: "tr"
 
@@ -154,7 +154,7 @@ class Jetdeck.Views.Airframes.Spec extends Backbone.View
     return this
 
 class Jetdeck.Views.Airframes.NewSpec extends Backbone.View
-  template: JST["templates/airframes/partials/spec_new"]
+  template: JST["templates/airframes/specs/spec_new"]
 
   events:
     "click submit" : "submit"
