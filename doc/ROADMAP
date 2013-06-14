@@ -6,7 +6,9 @@ ROADMAP TO LAUNCH:
                 - contact aircraft spec list
                 - contact default view with no leads
 
-                - airframe send config modal
+                - spec send modal
+                - quick send
+                - add spec on aircraft create
 
                 - login/signup page
 
@@ -14,7 +16,7 @@ ROADMAP TO LAUNCH:
 
                 - error pages
 
-    1x      Create in-line email; add image; create images page
+    1x      create in-line email; add image; create images page
 
     2x      marketing and signup brochure site
 
@@ -22,6 +24,9 @@ ROADMAP TO LAUNCH:
 
     1x      browser compatibilty check 
 
+    1x      fix bugs
+
     1x      push live and check all services operational (s3, sendgrid, etc)
+            crank shit up that needs it
 
     1x      write press release
