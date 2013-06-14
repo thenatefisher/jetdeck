@@ -103,9 +103,19 @@ class Airframe < ActiveRecord::Base
 
   def to_s
     retval =   ''
-    retval +=  self.year.to_s + " " if self.year
-    retval +=  self.make + " " if self.make
-    retval +=  self.model_name if self.model_name
+    retval +=  self.year.to_s + " " if self.year.present?
+    retval +=  self.make + " " if self.make.present?
+    retval +=  self.model_name if self.model_name.present?
+    retval
+  end
+
+  def long
+    retval =   ''
+    retval +=  self.year.to_s + " " if self.year.present?
+    retval +=  self.make + " " if self.make.present?
+    retval +=  self.model_name if self.model_name.present?
+    retval +=  " SN#{self.serial}" if self.serial.present?
+    retval +=  " (#{self.registration})" if self.registration.present?
     retval
   end
 

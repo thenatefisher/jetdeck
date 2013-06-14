@@ -63,6 +63,7 @@ json.specs @airframe.specs do |json, x|
     json.created_at x.created_at
     json.enabled x.enabled
     json.link x.url
+    json.id x.id
 end
 
 json.actions @airframe.actions do |json, c|

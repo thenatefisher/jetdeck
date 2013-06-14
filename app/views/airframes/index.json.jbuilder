@@ -1,6 +1,7 @@
 json.array! @airframes do |json, a|
     json.id a.id
-    json.to_s truncate(h(a.to_s), :length => 25)
+    json.to_s h(a.to_s)
+    json.long h(a.long)
     json.serial h a.serial
     json.registration h a.registration
     json.year h a.year
