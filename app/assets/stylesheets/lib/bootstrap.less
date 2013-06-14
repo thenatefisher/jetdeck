@@ -92,6 +92,15 @@ input:-moz-placeholder {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
   background-color: #2C3E50;
 }
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.btn-primary.disabled,
+.btn-primary[disabled] {
   background-color: #34495E;
+}
+.btn-primary:active,
+.btn-primary.active {
+  background-color: #003399 \9;
 }
