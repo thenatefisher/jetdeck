@@ -16,8 +16,8 @@ class ProfileController < ApplicationController
         
         if params[:profile][:contact]
         
-            if params[:profile][:contact][:signature].present?
-              @current_user.signature = params[:profile][:contact][:signature]
+            if params[:profile][:signature].present?
+              @current_user.signature = params[:profile][:signature]
               @current_user.save
             end
             

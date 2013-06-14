@@ -24,7 +24,7 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
     @$('#company').editable({url: (obj) => @model.attributes.contact[obj.name] = obj.value; @model.save()})
     @$('#title').editable({url: (obj) => @model.attributes.contact[obj.name] = obj.value; @model.save()})
     @$('#phone').editable({url: (obj) => @model.attributes.contact[obj.name] = obj.value; @model.save()})
-    @$('#signature').editable({url: (obj) => @model.attributes.contact['spec_disclaimer'] = obj.value; @model.save()})
+    @$('#signature').editable({url: (obj) => @model.set('signature', obj.value); @model.save()})
     @$('#email').editable({
       url: (obj) =>       
         @model.attributes.contact['email'] = obj.value.email
