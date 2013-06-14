@@ -4,12 +4,14 @@ class Jetdeck.Models.AirframeModel extends Backbone.Model
     defaults :
       serial: null
       registration: null
-      year: ""
-      make: ""
-      model_name: ""
+      year: null
+      make: null
+      model_name: null
       asking_price: 0
-      description: ""
+      description: null
       avatar: null
+      to_s: null
+      long: null
 
     initialize : =>
 
@@ -22,7 +24,7 @@ class Jetdeck.Models.AirframeModel extends Backbone.Model
       @actions.airframe = this
 
       ## spec files collection
-      @specs = new Jetdeck.Collections.SpecFilesCollection(page_size: 5)
+      @specs = new Jetdeck.Collections.SpecFilesCollection()
       @specs.airframe = this  
 
       ## populate child collections from data loaded with page

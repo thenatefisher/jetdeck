@@ -3,87 +3,106 @@
   <h3>Send Spec</h3>
 </div>
 
-<div class="modal-body" style="max-height: 450px;">
+<div class="modal-body" style="max-height: 485px;">
 
-<form class="form-horizontal" id="spec-send">
-  <div class="control-group">
-    <label class="control-label" for="spec-send-email">To: </label>
-    <div class="controls">
-      <input type="text" id="spec-send-email" class="input span5" placeholder="Email">
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="spec-send-spec">Spec: </label>
-    <div class="controls">
-      <input type="hidden" id="spec-send-airframe" style="width: 180px"/>
-      <select class="span spec_input"><option>Spec</option></select>
-      <label for="" class="checkbox" style="margin-top: 10px;">
-        <input type="checkbox" checked> Include Pictures
-      </label>
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="spec-send-subject">Subject: </label>
-    <div class="controls">
-      <input type="text" id="spec-send-subject" class="input span5" placeholder="Subject">
-    </div>
-  </div>
-  <div class="controls">
-      <textarea class="input span5" name="spec-send-body" style="min-height: 130px; "></textarea>
-      <div id="spec-send-filename" class="span5">
-        <div class="well">
-          <div class="span" style="height: 25px; margin-left: 5px; padding: 0px">
-            <img src="https://s3.amazonaws.com/jetdeck_dev/images/6/thumb/1451245.jpg" onerror="this.src = '/assets/placeholder/aircraft_default_avatar.png'" height="64" style="height: 64px;">
-          </div> 
-          <div class="span">
-            <span style="height: 25px;"> Filename.pdf <small>(380kb)</small></span>
-            <br><span style="height: 25px;"> <small><a href='#'>View Photos</a></small></span>
-          </div>
-          <div class="clearfix"></div>
-        </div>
+  <form class="form-horizontal">
+
+    <div class="control-group">
+      <label class="control-label" for="email">To: </label>
+      <div class="controls">
+        <input type="text" id="email" name="email" class="input span5" placeholder="Email">
       </div>
-  </div>
+    </div>
 
+    <div class="control-group">
+      <label class="control-label">Spec: </label>
+      <div class="controls">
 
-</form>
+        <input type="hidden" id="airframe" name="airframe" />
+
+        <input type="hidden" id="spec" name="spec" />
+
+        <label for="include-photos" class="checkbox hide" style="margin-top: 10px;">
+          <input type="checkbox" id="include-photos" name="include-photos" checked> Include Pictures
+        </label>
+
+      </div>
+    </div>
+
+    <div class="control-group">
+      <label class="control-label" for="subject">Subject: </label>
+      <div class="controls">
+        <input type="text" id="subject" name="subject" class="input span5" placeholder="Subject">
+      </div>
+    </div>
+
+    <div class="controls" style="margin-left: 44px">
+        <textarea class="input span6" id="message-body" name="message-body" style="min-height: 140px;"></textarea>
+        <div id="attachment" class="span6">
+          <div class="well" style="min-height: 0; padding-bottom: 0">
+            <div class="span hide" id="attachment-icon" style="margin-left: 5px; padding: 0px">
+              <i class="icon-large icon-paper-clip"></i>
+            </div> 
+            <div class="span" style="margin-left: 10px; padding: 0px;">
+              <span style="height: 25px;" id="attachment-filename"> Select a Spec File to Send <i class="icon-circle-arrow-up"></i></span>
+              <br>
+              <span style="height: 25px;" class="hide" id="attachment-photos-link"> 
+                <small><a href='#'>View Photos</a></small>
+              </span>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+    </div>
+
+  </form>
 
 </div>
 
 <div class="modal-footer">
   <span class="pull-left error span4" style="text-align: left;" id="error-message"></span>
   <a href="#" class="btn" data-dismiss="modal">Cancel</a>
-  <button id="send" class="btn btn-primary">Send</button>
+  <button id="send" class="btn btn-primary" disabled>Send</button>
 </div>
 
 <style type="text/css">
-#spec-send .spec_input {
-  width: 188px;
-}
-#spec-send textarea {
-  -webkit-border-radius: 4px 4px 0 0;
-  -moz-border-radius:  4px 4px 0 0;
-  border-radius:  4px 4px 0 0;  
-}
-#spec-send-filename {
-  margin-left: 0;
-}
-#spec-send-filename div {
-  -webkit-border-radius: 0;
-  -moz-border-radius: 0;
-  border-radius: 0; 
-  padding: 10px 7px;
-  -webkit-box-shadow: 0;
-  -moz-box-shadow: 0;
-  box-shadow: 0;
-  font-weight: bold;
-}
-#spec-send-filename div small {
-  color: #555555;
-}
-.form-horizontal .controls {
-  margin-left: 124px;
-}
-.form-horizontal .control-label {
-  width: 100px;
-}
+  #s2id_spec { margin-top: 10px; }
+  #airframe, #spec {
+    width: 379px;
+  }
+  #message-body {
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius:  4px 4px 0 0;
+    border-radius:  4px 4px 0 0;  
+  }
+  #attachment {
+    margin-left: 0;
+  }
+  #attachment div {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0; 
+    padding: 10px 7px;
+    -webkit-box-shadow: 0;
+    -moz-box-shadow: 0;
+    box-shadow: 0;
+    font-weight: bold;
+  }
+  #attachment-filename {
+    color: #999;
+    font-style: italic;
+  }
+  #attachment-filename.selected{
+    color: #2C3E50;
+    font-style: normal;
+  }  
+  #attachment div small {
+    color: #555555;
+  }
+  .form-horizontal .controls {
+    margin-left: 124px;
+  }
+  .form-horizontal .control-label {
+    width: 100px;
+  }
 </style>

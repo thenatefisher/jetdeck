@@ -46,13 +46,13 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
         $("#upload_spec_input_container").hide() 
     )    
 
-    @$("#airframe_headline").select2({
+    @$("#airframe_headline").select2(
       placeholder: "Enter a Model",
       minimumInputLength: 3,
       id: (o) -> o.text,
       createSearchChoice: (term) ->
         return { id: term, text: term }
-      ajax: {
+      ajax: 
         url: "/airframes/models.json",
         dataType: "json",
         quietMillis: 100,
@@ -60,8 +60,7 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
           return { q: term }
         results: (data) ->
           return { results: data }
-      }
-    })
+    )
     @$(".airframe-headline").css("width", "250px")
 
     @$("form").backboneLink(@model)
