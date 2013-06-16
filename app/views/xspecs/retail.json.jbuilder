@@ -8,7 +8,7 @@ json.(@airframe,
   :year
 )
 
-json.airframe_texts @airframe.airframe_texts do |json, i|
+json.airframe_texts @airframe.airframe_texts do |i|
     json.body i.body
     json.label i.label
     json.id i.id

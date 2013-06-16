@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
          
     private
 
-    helper_method :current_user, :actions_due_count # makes the data available in views
+    helper_method :current_user, :airframes_index, :actions_due_count # makes the data available in views
     
     def sanitize_params
     
@@ -38,6 +38,12 @@ class ApplicationController < ActionController::Base
     
         @current_user ||= User.find_by_auth_token(cookies[:auth_token]) if cookies[:auth_token]
         
+    end
+
+    def airframes_index
+
+        Airframe.find(:all, :conditions => ["user_id = ?", @current_user.id], :order => "created_at DESC")
+
     end
     
     def actions_due_count

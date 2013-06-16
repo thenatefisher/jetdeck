@@ -6,7 +6,7 @@ json.phone h @contact.phone
 json.id @contact.id
 json.sticky_id @contact.sticky_id
 
-json.notes @contact.notes do |json, x|
+json.notes @contact.notes do |x|
   json.title h x.title
   json.description h x.description  
   json.id x.id
@@ -19,7 +19,7 @@ json.notes @contact.notes do |json, x|
   json.is_mine true if @current_user and (@current_user.id == x.created_by)
 end
 
-json.actions @contact.actions do |json, c|
+json.actions @contact.actions do |c|
     json.id c.id
     json.title h c.title
     json.description h c.description
@@ -35,7 +35,7 @@ json.actions @contact.actions do |json, c|
     json.past_due (c.due_at < Time.now()) if c.due_at   
 end
 
-json.specs @contact.files_received do |json, x|
+json.specs @contact.files_received do |x|
 
     if x.spec
 

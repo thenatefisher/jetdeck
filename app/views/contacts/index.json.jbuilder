@@ -1,4 +1,4 @@
-json.array! @contacts do |json, c|
+json.array! @contacts do |c|
     json.id c.id
     json.company h c.company
     json.first h c.first

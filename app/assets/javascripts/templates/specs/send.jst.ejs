@@ -7,6 +7,7 @@
 
   <form class="form-horizontal">
 
+    <!-- to -->
     <div class="control-group">
       <label class="control-label" for="email">To: </label>
       <div class="controls">
@@ -14,11 +15,12 @@
       </div>
     </div>
 
+    <!-- spec -->
     <div class="control-group">
       <label class="control-label">Spec: </label>
-      <div class="controls">
+      <div id ="spec-controls" class="controls">
 
-        <input type="hidden" id="airframe" name="airframe_id" />
+        <input type="hidden" id="airframe" class="airframe" name="airframe_id" />
 
         <span id="nospecs" class="hide error" style="margin-top: 10px;"><em>There are no specs for this aircraft</em></span>
 
@@ -29,8 +31,10 @@
         </label>
 
       </div>
+      
     </div>
 
+    <!-- subject -->
     <div class="control-group">
       <label class="control-label" for="message-subject">Subject: </label>
       <div class="controls">
@@ -38,6 +42,7 @@
       </div>
     </div>
 
+    <!-- body -->
     <div class="controls" style="margin-left: 44px">
         <textarea class="input span6" id="message-body" name="message_body" style="min-height: 140px;"></textarea>
         <div id="attachment" class="span6">

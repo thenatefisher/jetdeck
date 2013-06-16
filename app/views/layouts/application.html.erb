@@ -22,20 +22,9 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
     <!-- javascript -->
     <%= javascript_include_tag "application" %>
-
-    <script src="//www.google.com/jsapi"></script>
-    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,900' rel='stylesheet' type='text/css'>
-
-    <% if flash[:notice] %>
-    <script type="text/javascript"> 
-      $(function() { alertFailure("<%= flash[:notice] %>"); });
-    </script>
-    <% end %>
-
-    <script type="text/javascript">
-    window.bookmarklet_url = '<%= "http://#{request.host_with_port}/b/#{current_user.bookmarklet_token}" %>';
-    </script>
         
+    <%= render "layouts/partials/railsjs" %>
+
   </head>
 
   <body>

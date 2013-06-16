@@ -1,0 +1,20 @@
+<% if flash[:notice] %>
+
+    <script type="text/javascript"> 
+      $(function() { alertFailure("<%= flash[:notice] %>"); });
+    </script>
+
+<% end %>
+
+<script type="text/javascript">
+
+  window.bookmarklet_url = '<%= "http://#{request.host_with_port}/b/#{current_user.bookmarklet_token}" %>';
+
+  window.data = new Object();
+  window.data.signature = "<%= current_user.signature %>";
+  window.data.aircraft_index_json = <%= render(   template: 'airframes/index',
+                                 handlers: [:jbuilder],
+                                 formats: [:json],  
+                                 locals: { airframes: airframes_index}).html_safe %> 
+
+</script>

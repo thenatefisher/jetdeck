@@ -24,25 +24,22 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
                 .appendTo( ul )
 
     setupAircraftField: =>
-        aircraft_collection = new Jetdeck.Collections.AirframesCollection()
-        aircraft_collection.fetch(success: =>
+        ac_collection_data = @aircraft_collection.reduce(
+            (a,b) -> 
+                return a.concat({
+                    id: b.get('id'), 
+                    text: b.get('long'),
+                    airframe: b
+                }) 
+            , [])
 
-            data = aircraft_collection.reduce(
-                (a,b) -> 
-                    return a.concat({
-                        id: b.get('id'), 
-                        text: b.get('long'),
-                        airframe: b
-                    }) 
-                , [])
-
+        @$("#airframe").ready( =>
             @$("#airframe").select2(
                 placeholder: "Aircraft"
-                data: data
+                data: ac_collection_data
             )
-
+            @$(".airframe").css('width', '380px')
             @$("#airframe").on("select2-selecting", (val) => @airframeSelected(val))
-
         )
 
     reset: () =>
@@ -152,17 +149,21 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
         message += "Please review the attached document regarding the #{@airframe.get('to_s')}. Thank you,\n\n" if (@airframe and @airframe.get('to_s')?)
         # enter signature into message body
         message = "\n\n\n" if message == ""
-        message += @profile.get('signature') if @profile.get('signature')?
+        message += @signature if @signature?
         # enter body if user hasnt edited it
         @$("#message-body").val(message) if !(@touchedBody)
 
     initialize: =>
+        # state
         @airframe = null
         @recipient = null
         @touchedSubject = false
         @touchedBody = false
-        @profile = new Jetdeck.Models.ProfileModel()
-        @profile.fetch(success: => @setupEmailFields())
+        # setup a/c collection 
+        @aircraft_collection = new Jetdeck.Collections.AirframesCollection()
+        @aircraft_collection.reset window.data.aircraft_index_json        
+        # signature
+        @signature = window.data.signature
 
     render: =>
         $(@el).html(@template())

@@ -59,7 +59,8 @@ class AirframesController < ApplicationController
   # GET /airframes
   # GET /airframes.json
   def index
-    @airframes = Airframe.find(:all, :conditions => ["user_id = ?", @current_user.id], :order => "created_at DESC")
+    
+    @airframes = airframes_index()
 
     # registration number search
     if params[:term].present?

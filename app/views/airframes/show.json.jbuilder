@@ -20,7 +20,7 @@ if (@airframe.creator && @airframe.creator.contact)
     })
 end
 
-json.leads @airframe.leads do |json, x|
+json.leads @airframe.leads do |x|
     json.id x.id
     json.recipient x.recipient
     json.photos_url_code "/s/" + x.photos_url_code
@@ -30,7 +30,7 @@ json.leads @airframe.leads do |json, x|
     json.spec x.spec
 end
 
-json.specs @airframe.specs do |json, x|
+json.specs @airframe.specs do |x|
     json.file_name x.document_file_name
     if x.document_file_name
         json.file_name_t x.document_file_name.reverse.truncate(25).reverse 
@@ -42,7 +42,7 @@ json.specs @airframe.specs do |json, x|
     json.id x.id
 end
 
-json.actions @airframe.actions do |json, c|
+json.actions @airframe.actions do |c|
     json.id c.id
     json.title h c.title
     json.description h c.description
