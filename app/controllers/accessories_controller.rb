@@ -16,6 +16,7 @@ class AccessoriesController < ApplicationController
   def create
 
     @Assy = Accessory.new(params[:files])
+    @Assy.creator = @current_user
     if Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]]).present?     
       @airframe = Airframe.find(:first, :conditions => ["user_id = ? AND id = ?", @current_user.id, params[:airframe]])
       if @airframe.present?

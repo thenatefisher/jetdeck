@@ -18,14 +18,14 @@
       <label class="control-label">Spec: </label>
       <div class="controls">
 
-        <input type="hidden" id="airframe" name="airframe" />
+        <input type="hidden" id="airframe" name="airframe_id" />
 
         <span id="nospecs" class="hide error" style="margin-top: 10px;"><em>There are no specs for this aircraft</em></span>
 
-        <input type="hidden" id="spec" name="spec" />
+        <input type="hidden" id="spec" name="spec_id" />
 
         <label for="include-photos" class="checkbox hide" style="margin-top: 10px;">
-          <input type="checkbox" id="include-photos" name="include-photos" checked> Include Pictures
+          <input type="checkbox" id="include-photos" name="include_photos" checked> Include Pictures
         </label>
 
       </div>
@@ -34,12 +34,12 @@
     <div class="control-group">
       <label class="control-label" for="message-subject">Subject: </label>
       <div class="controls">
-        <input type="text" id="message-subject" name="message-subject" class="input span5" placeholder="Subject">
+        <input type="text" id="message-subject" name="message_subject" class="input span5" placeholder="Subject">
       </div>
     </div>
 
     <div class="controls" style="margin-left: 44px">
-        <textarea class="input span6" id="message-body" name="message-body" style="min-height: 140px;"></textarea>
+        <textarea class="input span6" id="message-body" name="message_body" style="min-height: 140px;"></textarea>
         <div id="attachment" class="span6">
           <div class="well" style="min-height: 0; padding-bottom: 0">
             <div class="span hide" id="attachment-icon" style="margin-left: 5px; padding: 0px">
@@ -64,7 +64,7 @@
 <div class="modal-footer">
   <span class="pull-left error span4" style="text-align: left;" id="error-message"></span>
   <a href="#" class="btn" data-dismiss="modal">Cancel</a>
-  <button id="send" class="btn btn-primary" disabled>Send</button>
+  <button id="send" class="btn btn-primary" data-loading-text="Sending..." disabled>Send</button>
 </div>
 
 <style type="text/css">

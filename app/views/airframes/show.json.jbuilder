@@ -10,7 +10,6 @@ json.model_name h @airframe.model_name
 json.year h @airframe.year
 json.description h @airframe.description
 json.import_url h @airframe.import_url
-
 json.title h(@airframe.to_s)
 
 if (@airframe.creator && @airframe.creator.contact)
@@ -21,37 +20,14 @@ if (@airframe.creator && @airframe.creator.contact)
     })
 end
 
-
 json.leads @airframe.leads do |json, x|
-
-    if x.recipient.present? && x.spec
-
-        json.id x.recipient.id
-
-        json.email x.recipient.email
-
-        if x.recipient.first && x.recipient.last
-          json.name x.recipient.first + " " + x.recipient.last
-        end
-
-        if x.recipient.company
-          json.company x.recipient.company
-        end
-
-        json.recipient_id x.recipient.id
-
-        json.recipientEmailField x.recipient.emailField
-
-        json.photos_url_code "/s/" + x.photos_url_code
-        json.spec_url_code "/s/" + x.spec_url_code
-        
-        json.status x.status
-        json.status_date x.status_date
-        
-        json.spec "#{x.spec.document_file_name} (#{x.spec.version.upcase})"
-
-    end
-    
+    json.id x.id
+    json.recipient x.recipient
+    json.photos_url_code "/s/" + x.photos_url_code
+    json.spec_url_code "/s/" + x.spec_url_code
+    json.status x.status
+    json.status_date x.status_date
+    json.spec x.spec
 end
 
 json.specs @airframe.specs do |json, x|

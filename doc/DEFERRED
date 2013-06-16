@@ -45,6 +45,9 @@
     Allow collapsing the bookmarklet instructions once bm is created
 
     Require user types 'DELETE' to delete a contact or aircraft
+    
+    spec send dialog - preload profile and aircraft before rending to modal
+    spec send dialog - cache the aircraft listing and profile data for quicker reloads
 
 == Bugs
   

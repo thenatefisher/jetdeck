@@ -3,39 +3,49 @@ class Lead < ActiveRecord::Base
   belongs_to :spec, :foreign_key => :spec_id, :class_name => "Accessory"
   belongs_to :airframe
   belongs_to :recipient, :class_name => "Contact", :foreign_key => "recipient_id"
-  belongs_to :sender, :class_name => "Contact", :foreign_key => "sender_id"
+  belongs_to :sender, :class_name => "User", :foreign_key => "sender_id"
   belongs_to :status_enum, :class_name => "LeadStatusEnum", :foreign_key => "status_id"
 
   before_create :init
 
   validates_associated :airframe
+  validates_presence_of :airframe
   validates_associated :recipient
+  validates_presence_of :recipient
   validates_associated :sender
+  validates_presence_of :sender
   validates_associated :spec
+  validates_presence_of :spec, :message => "is required"
 
   def init
     generate_url_codes()
     require_user_activation()
-    self.status = "Sent"
   end
 
   def require_user_activation
-    if !self.sender.user || self.sender.user.activated != true
+    if !self.sender || self.sender.activated != true
       self.errors.add(:sender, "Please check account verification email")
       false
     end
   end
 
-  def send
-    XSpecMailer.sendRetail(self, self.recipient).deliver
+  def send_spec
+    #XSpecMailer.sendRetail(self, self.recipient).deliver
   end
 
   # Sent, Bounced, Opened, Downloaded
   def status
-    status_enum.status
+    if self.status_enum.blank?
+      self.status_enum = LeadStatusEnum.find_or_create_by_status("Unkown")
+      self.status_date = Time.now()
+      self.save
+    end
+    self.status_enum.status
   end
   def status=(code)
-    status_enum = LeadStatusEnum.find_or_create_by_status(code)
+    self.status_enum = LeadStatusEnum.find_or_create_by_status(code)
+    self.status_date = Time.now()
+    self.save
   end  
 
   private

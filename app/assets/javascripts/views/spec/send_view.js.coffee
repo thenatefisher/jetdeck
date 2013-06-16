@@ -46,6 +46,10 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
         )
 
     reset: () =>
+        # reset send button
+        @$("#send").button('reset')           
+        # clear errors
+        @$("#error-message").html("")
         # disabled send button
         @validateForm()
         # clear spec selected
@@ -175,15 +179,42 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
           @$("#spec").on("change", => @validateForm())
           @$("#email").on("change keyup", => @validateForm())
           @$("label[for='include-photos'] input").on("change", => @showPhotosLink())
+          @$("#send").on("click", => @send())
 
         )
+
+        # create a lead and connect form fields to it
+        @lead = new Jetdeck.Models.LeadModel()
+        @$("form").backboneLink(@lead)
 
         return this
         
     send: =>
         # todo - start default state from a send button
         # todo - handle errors on send
-        # todo - preload profile and aircraft before rending to modal
-        # todo - cache the aircraft listing and profile data for quicker reloads
+
+        # set send button to spinner
+        @$("#send").button('loading')
+
+        @lead.set(
+            "recipient_email"   : @$("#email").val()
+            "message_subject"   : @$("#message-subject").val()
+            "message_body"      : @$("#message-body").val()
+            "include_photos"    : @$("#include-photos").is(":checked") 
+        )
+
+        leads_collection = new Jetdeck.Collections.LeadsCollection()
+        leads_collection.create(@lead,
+            success: =>
+                # reset send button
+                @$("#send").button('reset')
+                window.modalClose()   
+            error: (o,response) =>
+                errors = $.parseJSON(response.responseText)
+                @$("#error-message").html(errors[0])
+                # reset send button
+                @$("#send").button('reset')                   
+        )
+
         return this
 

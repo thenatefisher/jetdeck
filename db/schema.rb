@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130603005429) do
+ActiveRecord::Schema.define(:version => 20130615233021) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20130603005429) do
     t.integer  "version"
     t.string   "file_hash"
     t.boolean  "enabled"
+    t.integer  "creator_id"
   end
 
   create_table "actions", :force => true do |t|

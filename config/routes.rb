@@ -1,14 +1,8 @@
 Jetdeck::Application.routes.draw do
-
-  resources :details, :only => [:destroy]
   
   resources :invites, :only => [:create]
-  
-  resources :ownerships
-  
+    
   resources :notes
-  
-  match "/actions" => "todos#index"
   
   resources :todos
   
@@ -24,10 +18,6 @@ Jetdeck::Application.routes.draw do
 
   resources :airframes
 
-  resources :xspecs
-  
-  resources :engines
-
   resources :password_resets
   
   match "/signup/:token" => "users#new"
@@ -39,10 +29,6 @@ Jetdeck::Application.routes.draw do
   resources :users, :only => [:create]
   
   resources :invites, :only => [:create]
-  
-  resources :user_logos 
-  
-  resources :equipment, :only => [:destroy]
 
   resources :accessories
   
@@ -58,11 +44,11 @@ Jetdeck::Application.routes.draw do
 
   match "/profile" => "profile#update", :via => "put"
 
-  match "/s/:code" => "xspecs#retail"
+  match "/s/:code" => "leads#photos"
 
-  match "/s" => "xspecs#recordTimeOnPage"
-  
-  match "/xspecs/send_spec/:id" => "xspecs#send_spec"
+  match "/s" => "leads#recordTimeOnPage"
+
+  resources :leads
   
   match "/favicon.ico" => redirect("/assets/favicon.png")
 

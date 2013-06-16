@@ -2,11 +2,14 @@ class Accessory < ActiveRecord::Base
 
     belongs_to :airframe
     has_one :lead, :foreign_key => :spec_id, :class_name => "Lead"
+    belongs_to :creator, :foreign_key => :creator_id, :class_name => "User"
 
     has_attached_file :image,
                       :styles => {  :thumb => "140x130#", # displayed on show page
                                     :mini => "80x60#", # on show page in picture list
-                                    :slides => { :processors => [:cropper], :geometry => "NONE" },
+                                    :slides => { 
+                                      :processors => [:cropper], 
+                                      :geometry => "NONE" },
                                     :listing => "75x75#" }, # on index page
                       :s3_credentials => "#{Rails.root}/config/aws_keys.yml",
                       :storage => :s3,
