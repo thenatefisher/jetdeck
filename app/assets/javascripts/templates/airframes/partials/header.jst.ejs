@@ -8,7 +8,7 @@
         <span style="position: absolute; bottom: 0px; width: 140px; text-align: center; color: white; background: #2C3E50">
           <strong>Manage Images</strong>
         </span>      
-        <img src="<%= avatar.thumb %>" onError="this.src = '/assets/placeholder/aircraft_default_avatar.png'"></a>
+        <img id="avatar" src="<%= avatar.thumb %>" onError="this.src = '/assets/placeholder/aircraft_default_avatar.png'"></a>
 
     <% } else { %>
 
@@ -17,7 +17,7 @@
           <strong>Upload Image</strong><br>
           Drag Files Here
         </span>
-        <img style="height: 129px" src="/assets/placeholder/aircraft_default_avatar.png">
+        <img id="avatar" style="height: 129px" src="/assets/placeholder/aircraft_default_avatar.png">
       </a>
 
     <% } %>

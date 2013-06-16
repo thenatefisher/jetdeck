@@ -12,6 +12,8 @@
         Re-send
         Permissions
 
+    Airframe thumbnail should show without reloading when uploading an image for the first time
+
     Searching
         Apply new filters
         Sorting
@@ -46,7 +48,6 @@
 
     Require user types 'DELETE' to delete a contact or aircraft
     
-    spec send dialog - preload profile and aircraft before rending to modal
     spec send dialog - cache the aircraft listing and profile data for quicker reloads
 
 == Bugs

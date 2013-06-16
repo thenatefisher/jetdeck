@@ -35,16 +35,31 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
 
         @$("#airframe").ready( =>
             @$("#airframe").select2(
-                placeholder: "Aircraft"
+                placeholder: "Select Aircraft"
                 data: ac_collection_data
+                initSelection: (element, callback) =>
+                    id = parseInt(element.val())
+                    airframe = @aircraft_collection.where({id: id})[0]
+                    if airframe?
+                        text = airframe.get('long')
+                    else
+                        text = "Select Aircraft"
+                        $("#airframe").select2("val", null)                    
+                    data = 
+                        id: id
+                        text: text
+                        airframe: airframe
+                    callback(data)
             )
             @$(".airframe").css('width', '380px')
-            @$("#airframe").on("select2-selecting", (val) => @airframeSelected(val))
+            @$("#airframe").on("select2-selecting", (val) => @airframeSelected(val.object.airframe))
+            if (@options && @options.airframe) 
+                # select airframe
+                @$("#airframe").select2("val", @options.airframe.get("id"))
+                @airframeSelected(@options.airframe)
         )
 
     reset: () =>
-        # reset send button
-        @$("#send").button('reset')           
         # clear errors
         @$("#error-message").html("")
         # disabled send button
@@ -65,7 +80,7 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
         # reset form state
         @reset()
         # fetch aircraft and act accordingly
-        @airframe = val.object.airframe
+        @airframe = val
         @airframe.fetch(success: =>
             @airframe.updateChildren()
             @setupEmailFields()
@@ -76,8 +91,10 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
                 if @airframe.get('avatar')
                     # show photos include checkbox if photos exist
                     @$("label[for='include-photos']").show()   
+                    $("#attachment-photos-link").show() 
             else
                 @$("#nospecs").show()
+            @validateForm()
         )
 
     setupSpecField: (airframe) =>
@@ -85,17 +102,34 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
             (a,b) -> 
                 return a.concat({
                     id: b.get('id'), 
-                    filename: b.get('file_name'), 
+                    spec: b, 
                     text: b.get('file_name').trunc(40) + " v" + (parseInt(b.get('version'))+1)
                 }) 
             , [])
 
         @$("#spec").select2(
-            placeholder: "Spec"
+            placeholder: "Select Spec File"
             data: data
+            initSelection: (element, callback) =>
+                id = parseInt(element.val())
+                spec = airframe.specs.where({id: id})[0]
+                if spec?
+                    text = spec.get('file_name').trunc(40) + " v" + (parseInt(spec.get('version'))+1)
+                else
+                    text = "Select Spec File"
+                    $("#spec").select2("val", null)
+                data = 
+                    id: id
+                    text: text
+                    spec: spec
+                callback(data)
         )
 
-        @$("#spec").on("select2-selecting", (val) => @specSelected(val))
+        @$("#spec").on("select2-selecting", (val) => @specSelected(val.object.spec))
+        if (@useDefaultSpec && @options && @options.spec) 
+            @useDefaultSpec = false
+            @$("#spec").select2("val", @options.spec.get("id"))
+            @specSelected(@options.spec)        
 
     clearSpecSelected: (val) =>
         # update spec file indicator class
@@ -111,16 +145,19 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
         # update spec file indicator class
         @$("#attachment-filename").addClass("selected")
         # and content
-        @$("#attachment-filename").html(val.object.filename.rtrunc(38))
+        @$("#attachment-filename").html(val.get('file_name').rtrunc(38))
         # show attachment icon
         @$("#attachment-icon").show()
         # fill in email content fields
         @setupEmailFields()
         # show images link
         @showPhotosLink()
+        # validate
+        @validateForm()
 
     showPhotosLink: =>
-        if $("label[for='include-photos'] input").is(":checked")
+        if $("label[for='include-photos'] input").is(":visible") && 
+          $("label[for='include-photos'] input").is(":checked")
             $("#attachment-photos-link").show() 
         else
             $("#attachment-photos-link").hide() 
@@ -155,7 +192,8 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
 
     initialize: =>
         # state
-        @airframe = null
+        @useDefaultSpec = true
+        @airframe = null 
         @recipient = null
         @touchedSubject = false
         @touchedBody = false
@@ -191,17 +229,16 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
         return this
         
     send: =>
-        # todo - start default state from a send button
-        # todo - handle errors on send
-
         # set send button to spinner
         @$("#send").button('loading')
 
         @lead.set(
             "recipient_email"   : @$("#email").val()
+            "airframe_id"       : @$("#airframe").val()
+            "spec_id"           : @$("#spec").val()
             "message_subject"   : @$("#message-subject").val()
             "message_body"      : @$("#message-body").val()
-            "include_photos"    : @$("#include-photos").is(":checked") 
+            "include_photos"    : @$("#include-photos").is(":checked") && @$("#include-photos").is(":visible") 
         )
 
         leads_collection = new Jetdeck.Collections.LeadsCollection()

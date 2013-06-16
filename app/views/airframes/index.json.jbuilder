@@ -1,4 +1,4 @@
-json.array! @airframes do |json, a|
+json.array! @airframes do |a|
     json.id a.id
     json.to_s h(a.to_s)
     json.long h(a.long)

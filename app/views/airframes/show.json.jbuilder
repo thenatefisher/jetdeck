@@ -11,6 +11,8 @@ json.year h @airframe.year
 json.description h @airframe.description
 json.import_url h @airframe.import_url
 json.title h(@airframe.to_s)
+json.to_s h(@airframe.to_s)
+json.long h(@airframe.long)
 
 if (@airframe.creator && @airframe.creator.contact)
     json.agent ({

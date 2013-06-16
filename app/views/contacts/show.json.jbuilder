@@ -45,7 +45,7 @@ json.specs @contact.files_received do |x|
         json.status x.status
         json.status_date x.status_date
         
-        json.spec "#{x.spec.document_file_name} (#{x.spec.version.upcase})"
+        json.spec "#{x.spec.document_file_name} (#{x.spec.version})"
 
         if x.airframe
         

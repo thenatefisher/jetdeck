@@ -80,23 +80,6 @@ class LeadsController < ApplicationController
     
     @lead = Lead.where("id = ? and sender_id = ?", params[:id], @current_user.id).first
 
-    params[:lead]['recipient_email'].strip!
-    recipient = Contact.where(
-      "email = ? AND owner_id = ?", 
-      params[:lead]['recipient_email'], 
-      @current_user.id).first
-    # create a contact record if none found
-    if recipient.nil?
-        recipient = Contact.create(:email => params[:lead]['recipient_email'])
-        recipient.owner_id = @current_user.id if recipient.present?
-        recipient.save
-    end
-    
-    airframe = Airframe.find(:first, 
-      :conditions => ["id = ? AND user_id = ?", params[:lead]['airframe_id'], @current_user.id])
-
-    @lead.recipient = recipient
-    @lead.airframe = airframe
     @lead.photos_enabled = (params[:lead]['include_photos'])
 
     respond_to do |format|
@@ -130,11 +113,15 @@ class LeadsController < ApplicationController
         recipient.save
     end
     
-    airframe = Airframe.find(:first, 
-      :conditions => ["id = ? AND user_id = ?", params[:lead]['airframe_id'], @current_user.id])
+    if params[:lead]['airframe_id'].present?
+      airframe = Airframe.find(:first, 
+        :conditions => ["id = ? AND user_id = ?", params[:lead]['airframe_id'], @current_user.id])
+    end
 
-    spec = Accessory.find(:first, 
-      :conditions => ["id = ? AND creator_id = ?", params[:lead]['spec_id'], @current_user.id])
+    if airframe && params[:lead]['spec_id'].present?
+      spec = Accessory.find(:first, 
+        :conditions => ["id = ? AND creator_id = ? AND airframe_id = ?", params[:lead]['spec_id'], @current_user.id, airframe.id])
+    end
 
     @lead = Lead.new(
       :recipient => recipient, 
@@ -151,11 +138,7 @@ class LeadsController < ApplicationController
     
       if @lead.save
 
-        if params[:lead]['send'] == "true"
-        
-          XSpecMailer.sendRetail(@lead, @lead.recipient).deliver
-          
-        end
+        #XSpecMailer.sendRetail(@lead, @lead.recipient).deliver
 
         format.json { render( template: 'leads/show',
                               handlers: [:jbuilder],

@@ -1,5 +1,5 @@
 class AirframesController < ApplicationController
-  before_filter :authorize, :sanitize_params
+  before_filter :authorize, :sanitize_params, :airframes_index
 
   def import
 

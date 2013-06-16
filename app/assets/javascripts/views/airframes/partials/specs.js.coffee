@@ -6,10 +6,9 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
   events:
     "click .add-spec" : "add"
     "click .cancel" : "refresh_view"
-    "click .send" : "send"
 
-  send: ->
-    view = new Jetdeck.Views.Specs.Send()
+  send: (spec) =>
+    view = new Jetdeck.Views.Specs.Send(airframe: @model, spec: spec)
     modal(view.render().el)
 
   add: ->
@@ -72,16 +71,19 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
 
                   # render the header
                   view = new Jetdeck.Views.Airframes.SpecGroupHeader({model : spec})
+                  view.on("clicked-send", (data) => @send(data))
                   @$("#specs-table tbody").append(view.render().el) if view
 
                   # render each nested spec
                   collection.each((spec_group_item) =>
                       spec_group_item_view = new Jetdeck.Views.Airframes.SpecGroupItem({model : spec_group_item}) 
+                      spec_group_item_view.on("clicked-send", (data) => @send(data))
                       @$("#specs-table tbody").append(spec_group_item_view.render().el) if view
                   )
 
               else
                   view = new Jetdeck.Views.Airframes.Spec({model : spec})
+                  view.on("clicked-send", (data) => @send(data))
                   @$("#specs-table tbody").append(view.render().el) if view
 
       )
@@ -99,7 +101,7 @@ class Jetdeck.Views.Airframes.SpecGroupHeader extends Backbone.View
 
   initialize: =>
     $(@el).on("click", @toggle)
-
+    
   toggle: =>
     if $(@el).find('.open').first().is(':hidden')
         $(@el).find('.open').show()
@@ -122,6 +124,7 @@ class Jetdeck.Views.Airframes.SpecGroupHeader extends Backbone.View
   render: ->
     $(@el).html(@template(@model.toJSON() ))
     $(@el).addClass("group_header")
+    @$(".send").on("click", => @trigger("clicked-send", @model))
 
     return this
 
@@ -136,6 +139,7 @@ class Jetdeck.Views.Airframes.SpecGroupItem extends Backbone.View
 
     $(@el).html(@template(@model.toJSON() ))
     $(@el).addClass("nested_item")
+    @$(".send").on("click", => @trigger("clicked-send", @model))
 
     return this
 
@@ -150,6 +154,7 @@ class Jetdeck.Views.Airframes.Spec extends Backbone.View
     @model.set('updated', updated_string)  
 
     $(@el).html(@template(@model.toJSON() ))
+    @$(".send").on("click", => @trigger("clicked-send", @model))
 
     return this
 
