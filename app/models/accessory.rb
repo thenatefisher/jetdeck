@@ -21,7 +21,7 @@ class Accessory < ActiveRecord::Base
                         Jetdeck::Application.config.aws_s3_bucket + 
                         ".s3.amazonaws.com",
                       :bucket => Jetdeck::Application.config.aws_s3_bucket,
-                      :s3_permissions => :public_read,
+                      :s3_permissions => :authenticated_read,
                       :path => ":attachment/:id/:style/:basename.:extension"
 
     has_attached_file :document,
@@ -35,7 +35,7 @@ class Accessory < ActiveRecord::Base
                         Jetdeck::Application.config.aws_s3_bucket + 
                         ".s3.amazonaws.com",
                       :bucket => Jetdeck::Application.config.aws_s3_bucket,
-                      :s3_permissions => :public_read,
+                      :s3_permissions => :authenticated_read,
                       :path => ":attachment/:id/:basename.:extension"                      
 
     attr_protected :version, :image_file_name, :image_content_type, :image_size, 
@@ -107,15 +107,11 @@ class Accessory < ActiveRecord::Base
 
     end
 
-    def url
+    def url(style="original", expires_in = 30.minutes)
       if self.image.present?
-        "https://s3.amazonaws.com/" + 
-          Jetdeck::Application.config.aws_s3_bucket + 
-          "/images/#{id}/original/#{image_file_name}"
+        self.image.s3_object(style).url_for(:read, :secure => true, :expires => expires_in).to_s
       else      
-        "https://s3.amazonaws.com/" + 
-          Jetdeck::Application.config.aws_s3_bucket + 
-          "/documents/#{id}/#{document_file_name}"
+        self.document.s3_object().url_for(:read, :secure => true, :expires => expires_in).to_s
       end
     end
 
@@ -128,15 +124,9 @@ class Accessory < ActiveRecord::Base
             
             "size" => self.image_file_size,
             
-            "url" => 
-              "https://s3.amazonaws.com/" + 
-              Jetdeck::Application.config.aws_s3_bucket + 
-              "/images/#{id}/original/#{image_file_name}",
+            "url" => self.image.s3_object("original").url_for(:read, :secure => true, :expires => 1.day).to_s,
               
-            "thumbnail_url" => 
-              "https://s3.amazonaws.com/" +
-              Jetdeck::Application.config.aws_s3_bucket +
-              "/images/#{id}/mini/#{image_file_name}",
+            "thumbnail_url" => self.image.s3_object("mini").url_for(:read, :secure => true, :expires => 1.day).to_s,
               
             "delete_url" => "/accessories/#{id}",
             
@@ -152,10 +142,7 @@ class Accessory < ActiveRecord::Base
             
             "size" => self.document_file_size,
             
-            "url" => 
-              "https://s3.amazonaws.com/" + 
-              Jetdeck::Application.config.aws_s3_bucket + 
-              "/documents/#{id}/#{document_file_name}",
+            "url" => self.document.s3_object("original").url_for(:read, :secure => true, :expires => 1.day).to_s,
               
             "delete_url" => "/accessories/#{id}",
             

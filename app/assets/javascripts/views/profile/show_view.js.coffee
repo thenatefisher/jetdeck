@@ -6,6 +6,16 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
   render: ->
     $(@el).html(@template(@model.toJSON() ))
 
+    # resend activation email
+    @$(".resend").on("click", =>
+      $.get("/resend_activation",
+        success: =>
+          @$("#activation-msg").html("Activation email resent. Please check your inbox for a new email.")
+          @$("#activation-msg").removeClass("alert-danger")
+          @$("#activation-msg").addClass("alert-success")
+      )
+    )
+
     # setup editable fields
     @$('#name').editable({
       title: 'Enter Your Full Name',

@@ -8,6 +8,13 @@ class ProfileController < ApplicationController
       @user = @current_user
     end
 
+    def resendActivation
+      # send activation email
+      ActivationMailer.activation(@current_user).deliver
+      render :json => @current_user 
+    end
+
+
     # PUT /profile/1
     # PUT /profile/1.json
     def update

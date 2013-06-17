@@ -76,10 +76,6 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
 
     @header = new Jetdeck.Views.Contacts.ShowHeaderView(model: @model)
     @$("#contact_show_header").html(@header.render().el)
-    
-    #@specs = new Jetdeck.Views.Contacts.ShowSpecs(model: @model)
-    #if @model.specs.length > 0
-    #  @$("#contact_specs").html(@specs.render().el) 
 
     @notes = new Jetdeck.Views.Notes.ShowNotes(model: @model)
     @$("#contact_notes").html(@notes.render().el)    

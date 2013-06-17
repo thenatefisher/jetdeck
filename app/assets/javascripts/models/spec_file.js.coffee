@@ -5,7 +5,7 @@ class Jetdeck.Models.SpecFileModel extends Backbone.Model
     file_name: null
     version: null
     created_at: null
-    enabled: null
+    enabled: true
 
 class Jetdeck.Collections.SpecFilesCollection extends Backbone.Collection
   model: Jetdeck.Models.SpecFileModel

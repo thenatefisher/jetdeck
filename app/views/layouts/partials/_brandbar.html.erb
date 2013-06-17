@@ -9,15 +9,20 @@
 
         Welcome, 
 
-        <a href="/profile">
+        <a href="/profile" <% if !current_user.activated %> 
+          id="activation-tooltip"
+          data-placement="bottom"
+          data-title="Activate Your Account"
+          data-html="Activate Your Account"<% end %>>
 
           
             <% if current_user.contact.first == "" && %>
             <strong>Member</strong>    
             <% else %>
-            <strong>
+            <strong <% if !current_user.activated %> style="color: #e74c3c"<% end %>>
               <%= current_user.contact.first %> 
               <%= current_user.contact.last %>
+              <% if !current_user.activated %> <i class="icon-warning-sign"></i><% end %>
             </strong>                              
             <% end %>
           

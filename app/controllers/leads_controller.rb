@@ -12,10 +12,11 @@ class LeadsController < ApplicationController
       
       if @lead
 
-        subject = "subject of message"
-        body = "body of message"
+        @lead.subject = "subject of message"
+        @lead.body = "body of message"
+        @lead.save
 
-        LeadMailer.sendSpec(@lead, subject, body).deliver
+        LeadMailer.sendSpec(@lead).deliver
         
         render :json => @lead.to_json()
       
@@ -23,41 +24,41 @@ class LeadsController < ApplicationController
       
   end
 
-  def recordTimeOnPage
-
-    xspec = Xspec.where(:url_code => params[:code]).first
-
-    if xspec.present?
-        specView = xspec.views.where(
-            :ip => request.remote_ip
-        ).last
-
-        if specView.present?
-            specView.time_on_page = params[:time] if params[:time].present?
-            specView.save()
-        end
-    end
-
-    render :nothing => true
-
+  # GET /i/:code
+  def tracking_image
+    @lead = Lead.find_by_tracking_image_url_code(params[:code])
+    @lead.status = "Opened"
+    send_data open("#{Rails.root}/app/assets/images/favicon.png", "rb") { |f| f.read }
   end
 
   # GET /s/:code
-  def photos
+  def spec
 
-    @xspec = Xspec.find_by_url_code!(params[:code])
-    @airframe = @xspec.airframe
+    lead = Lead.find_by_spec_url_code(params[:code])
+    lead.status = "Downloaded"
+    @spec = lead.spec
 
-    if @xspec.nil? then
-        redirect_to "/"
+    if lead.nil? || @spec.nil? then
+        redirect_to "/", :status => 404
         return
-    else
-      if current_user.nil? 
-        @xspec.views << SpecView.create(:agent => request.user_agent, :ip => request.remote_ip)
-      end
     end
 
-    render :layout => 'retail'
+    redirect_to @spec.url(nil, 5.minutes).to_s
+
+  end
+
+  # GET /p/:code
+  def photos
+
+    @lead = Lead.find_by_photos_url_code(params[:code])
+    @airframe = @lead.airframe
+
+    if @lead.nil? then
+        redirect_to "/"
+        return
+    end
+
+    render :layout => 'photos'
 
   end
 
@@ -136,17 +137,18 @@ class LeadsController < ApplicationController
 
     respond_to do |format|
     
-      if @lead.save
-
-        #XSpecMailer.sendRetail(@lead, @lead.recipient).deliver
+      if @lead.save && LeadMailer.sendSpec(@lead).deliver
 
         format.json { render( template: 'leads/show',
                               handlers: [:jbuilder],
                               formats: [:json],
                               locals: { lead: @lead} ) }
       else
-      
-        format.json { render :json => @lead.errors.full_messages, :status => :unprocessable_entity }
+        
+        errors = @lead.errors.full_messages 
+        errors = ["Server Error - Could not send spec"] if @lead.errors.full_messages.empty?
+
+        format.json { render :json => errors, :status => :unprocessable_entity }
         
       end
       

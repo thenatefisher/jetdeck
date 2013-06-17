@@ -2,26 +2,12 @@ ROADMAP TO LAUNCH:
 
     3x      finish internal application ui
 
-                - spec send modal
-                - finish specs listing buttons (disable/archive) 
-                - add spec on aircraft create
-                - lead list listing
-                - activity chart in header
+                x- enable adding a spec file in aircraft create dialog
+                x- lead list listing
+                x- activity chart in header
 
-                - create in-line email
-                - track email activity
-                - from field should be broker
-
-                - profile signature field
-                - profile allow resend of activation email
-
-                - contact notes pagination
-                - contact aircraft spec list
-                - contact default view with no leads
-
-                - create images page
-
-                - transaction emails missing images
+                x- contact aircraft spec list
+                x- contact default view with no leads
 
     2x      marketing and signup brochure site
 

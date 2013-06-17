@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130615233021) do
+ActiveRecord::Schema.define(:version => 20130617062110) do
 
   create_table "accessories", :force => true do |t|
     t.string   "name"
@@ -132,8 +132,9 @@ ActiveRecord::Schema.define(:version => 20130615233021) do
     t.string   "spec_url_code"
     t.text     "body"
     t.text     "subject"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+    t.string   "tracking_image_url_code"
   end
 
   create_table "notes", :force => true do |t|

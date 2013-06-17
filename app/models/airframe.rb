@@ -80,22 +80,10 @@ class Airframe < ActiveRecord::Base
     assy = images.where(:thumbnail => true).first
     if assy.present?
 
-        { :original => 
-            "https://s3.amazonaws.com/" +
-            Jetdeck::Application.config.aws_s3_bucket + 
-            "/images/#{assy.id}/original/#{assy.image_file_name}",
-          :listing => 
-            "https://s3.amazonaws.com/" +
-            Jetdeck::Application.config.aws_s3_bucket +
-            "/images/#{assy.id}/listing/#{assy.image_file_name}",
-          :mini => 
-            "https://s3.amazonaws.com/" +
-            Jetdeck::Application.config.aws_s3_bucket +
-            "/images/#{assy.id}/mini/#{assy.image_file_name}",
-          :thumb => 
-            "https://s3.amazonaws.com/" +
-            Jetdeck::Application.config.aws_s3_bucket +
-            "/images/#{assy.id}/thumb/#{assy.image_file_name}" }
+        { :original => assy.url("original"),
+          :listing => assy.url("listing"),
+          :mini => assy.url("mini"),
+          :thumb => assy.url("thumb") }
 
     end
 

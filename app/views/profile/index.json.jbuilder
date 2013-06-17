@@ -1,4 +1,4 @@
-json.(@user, :id)
+json.(@user, :id, :activated)
 
 json.contact (@user.contact)
 

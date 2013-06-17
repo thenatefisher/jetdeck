@@ -12,9 +12,12 @@
 
   window.data = new Object();
   window.data.signature = "<%= current_user.signature %>";
+  window.data.activated = "<%= current_user.signature %>";
   window.data.aircraft_index_json = <%= render(   template: 'airframes/index',
                                  handlers: [:jbuilder],
                                  formats: [:json],  
                                  locals: { airframes: airframes_index}).html_safe %> 
+
+  $(function() { $("#activation-tooltip").tooltip(); });
 
 </script>

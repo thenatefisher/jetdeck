@@ -61,7 +61,7 @@ class AccessoriesController < ApplicationController
       end
 
       respond_to do |format|
-        if @Assy.update_attributes(params[:accessory])
+        if @Assy.update_attributes(params[:accessory].slice(:enabled))
           format.json { head :no_content }
         else
           format.html { render :action => "edit" }

@@ -11,6 +11,10 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     view = new Jetdeck.Views.Specs.Send(airframe: @model, spec: spec)
     modal(view.render().el)
 
+  disable: (spec) =>
+    enabled = spec.get('enabled')
+    spec.save({enabled: !enabled}, success: => @render())
+
   add: ->
     @$("#new-spec-well").show()
     @$("#airframe-document-input").click()
@@ -38,10 +42,21 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
       @render() 
     )
 
+  initialize: =>
+    @showHidden = false
+
+  show: =>
+    console.log 'show'
+    @showHidden = true
+    @render()
+
   render: ->
     # render out main template
     $(@el).html(@template(@model.toJSON()))
   
+    # show hidden button
+    @$(".show-hidden").on("click", => @show())
+
     # setup file uploader when DOM is ready
     @$("#new-spec-well").hide()
     $(() => @renderUploader())
@@ -70,20 +85,23 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
                   collection.reset spec_group
 
                   # render the header
-                  view = new Jetdeck.Views.Airframes.SpecGroupHeader({model : spec})
+                  view = new Jetdeck.Views.Airframes.SpecGroupHeader({model : spec, showHidden: @showHidden})
                   view.on("clicked-send", (data) => @send(data))
+                  view.on("clicked-disable", (data) => @disable(data))
                   @$("#specs-table tbody").append(view.render().el) if view
 
                   # render each nested spec
                   collection.each((spec_group_item) =>
-                      spec_group_item_view = new Jetdeck.Views.Airframes.SpecGroupItem({model : spec_group_item}) 
+                      spec_group_item_view = new Jetdeck.Views.Airframes.SpecGroupItem({model : spec_group_item, showHidden: @showHidden}) 
                       spec_group_item_view.on("clicked-send", (data) => @send(data))
+                      spec_group_item_view.on("clicked-disable", (data) => @disable(data))
                       @$("#specs-table tbody").append(spec_group_item_view.render().el) if view
                   )
 
               else
-                  view = new Jetdeck.Views.Airframes.Spec({model : spec})
+                  view = new Jetdeck.Views.Airframes.Spec({model : spec, showHidden: @showHidden})
                   view.on("clicked-send", (data) => @send(data))
+                  view.on("clicked-disable", (data) => @disable(data))
                   @$("#specs-table tbody").append(view.render().el) if view
 
       )
@@ -122,9 +140,15 @@ class Jetdeck.Views.Airframes.SpecGroupHeader extends Backbone.View
         tr = tr.next()
 
   render: ->
-    $(@el).html(@template(@model.toJSON() ))
-    $(@el).addClass("group_header")
-    @$(".send").on("click", => @trigger("clicked-send", @model))
+    if @model.get('enabled') || (@options && @options.showHidden)
+      $(@el).html(@template(@model.toJSON() ))
+      $(@el).addClass("group_header")
+      @$(".send").on("click", => @trigger("clicked-send", @model))
+      @$(".disable").on("click", => @trigger("clicked-disable", @model))
+      if !@model.get('enabled')
+        $(@el).addClass("error") 
+        @$(".disable").html("Enable")
+        @$(".send").attr("disabled", "disabled")
 
     return this
 
@@ -134,12 +158,18 @@ class Jetdeck.Views.Airframes.SpecGroupItem extends Backbone.View
   tagName: "tr"
 
   render: ->
-    updated_string = convert_time(@model.get('created_at'))
-    @model.set('updated', updated_string)    
+    if @model.get('enabled') || (@options && @options.showHidden)
+      updated_string = convert_time(@model.get('created_at'))
+      @model.set('updated', updated_string)    
 
-    $(@el).html(@template(@model.toJSON() ))
-    $(@el).addClass("nested_item")
-    @$(".send").on("click", => @trigger("clicked-send", @model))
+      $(@el).html(@template(@model.toJSON() ))
+      $(@el).addClass("nested_item")
+      @$(".send").on("click", => @trigger("clicked-send", @model))
+      @$(".disable").on("click", => @trigger("clicked-disable", @model))
+      if !@model.get('enabled')
+        $(@el).addClass("error") 
+        @$(".disable").html("Enable")
+        @$(".send").attr("disabled", "disabled")
 
     return this
 
@@ -150,11 +180,16 @@ class Jetdeck.Views.Airframes.Spec extends Backbone.View
   tagName: "tr"
 
   render: ->
-    updated_string = convert_time(@model.get('created_at'))
-    @model.set('updated', updated_string)  
-
-    $(@el).html(@template(@model.toJSON() ))
-    @$(".send").on("click", => @trigger("clicked-send", @model))
+    if @model.get('enabled') || (@options && @options.showHidden)
+      updated_string = convert_time(@model.get('created_at'))
+      @model.set('updated', updated_string)  
+      $(@el).html(@template(@model.toJSON() ))
+      @$(".send").on("click", => @trigger("clicked-send", @model))
+      @$(".disable").on("click", => @trigger("clicked-disable", @model))
+      if !@model.get('enabled')
+        $(@el).addClass("error") 
+        @$(".disable").html("Enable")
+        @$(".send").attr("disabled", "disabled")
 
     return this
 

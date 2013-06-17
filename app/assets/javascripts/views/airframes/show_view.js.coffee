@@ -21,12 +21,6 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     
     @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#airframe_actions").html(@actions.render().el)
-
-    #@leads = new Jetdeck.Views.Airframes.ShowLeads(model: @model)
-    #@$("#leads_area").show()
-    #@$("#airframe_leads").html(@leads.render().el)
-    #if @model.leads.length > 0
-    #  @$("#leads_area").show()
     
     @specs = new Jetdeck.Views.Airframes.ShowSpecs(model: @model)
     @$("#airframe_specs").html(@specs.render().el)

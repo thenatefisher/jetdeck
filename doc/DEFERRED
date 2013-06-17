@@ -37,10 +37,6 @@
 
     Get tab indexes correct on all form fields
 
-    Fix primary button active/hover color
-
-    Allow activation email resend
-
     Add help link everywhere / use get satisfaction
 
     Disable bookmarklet for current domain; but add a helpful popup to drag it to bookmarks instead
@@ -55,8 +51,7 @@
     Update airframe thumbnail on file upload
     Remove contact stick note when note is deleted 
     Enable close button on import error popup
-    Obfuscate S3 file locations
-    Adding information in header kills aircraft headline and chart
+    Transaction emails missing images   
 
 == Code Enhancements
 

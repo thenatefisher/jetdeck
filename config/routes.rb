@@ -40,11 +40,17 @@ Jetdeck::Application.routes.draw do
 
   match "/logout" => "sessions#destroy"
  
+  match "/resend_activation" => "profile#resendActivation"
+
   match "/profile" => "profile#index", :via => "get"
 
   match "/profile" => "profile#update", :via => "put"
 
-  match "/s/:code" => "leads#photos"
+  match "/s/:code" => "leads#spec"
+
+  match "/p/:code" => "leads#photos"
+
+  match "/i/:code" => "leads#tracking_image"
 
   match "/s" => "leads#recordTimeOnPage"
 

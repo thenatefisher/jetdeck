@@ -105,7 +105,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     
     @updateHeadline()
 
-    @$("#chart").ready( =>
+    """@$("#chart").ready( =>
         graph = new Rickshaw.Graph( {
           element: document.querySelector("#chart")
           width: 260
@@ -131,7 +131,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
 
         graph.renderer.unstack = true
         graph.render()        
-    )
+    )"""
         
     # wait for this content to be loaded in DOM, then activate fileupload()
     $(() => @loadAccessories())

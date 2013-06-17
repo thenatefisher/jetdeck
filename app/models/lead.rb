@@ -29,10 +29,6 @@ class Lead < ActiveRecord::Base
     end
   end
 
-  def send_spec
-    #XSpecMailer.sendRetail(self, self.recipient).deliver
-  end
-
   # Sent, Bounced, Opened, Downloaded
   def status
     if self.status_enum.blank?
@@ -61,6 +57,11 @@ class Lead < ActiveRecord::Base
     self.photos_url_code = create_code
     while (Lead.where(:photos_url_code => self.photos_url_code).count > 0)
         self.photos_url_code = create_code
+    end
+
+    self.tracking_image_url_code = create_code
+    while (Lead.where(:photos_url_code => self.tracking_image_url_code).count > 0)
+        self.tracking_image_url_code = create_code
     end    
 
   end

@@ -29,7 +29,7 @@
 <div class="offset2">
 
     <div class="span7">
-      <table id="profile-table">
+      <table id="profile-table" class="span7">
           <tbody>
               <tr>
                   <td colspan=2>
@@ -40,6 +40,17 @@
                       </h1>
                   </td>
               </tr>
+              <% if (!activated) { %>
+              <tr>
+                <td colspan=2>
+                  <div id="activation-msg" class="alert alert-danger">
+                    <strong>Emails Disabled Pending Activation</strong>
+                    <p><br>All emails from your account will be disabled (invites and specs) until your account is activated. Check your inbox for a message from JetDeck and click the link. If you didn't receive an email, you can have it <a href="#" class="resend">resent</a> or contact <a href="mailto:support@jetdeck.co">support@jetdeck.co</a></p>
+                  </div>
+                </td>
+              </tr>
+              <% } %>
+
               <tr>
                   <td class="span3">
                       Title
