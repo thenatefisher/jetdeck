@@ -16,7 +16,7 @@ module AirframeImport
             images_list = mobile_doc.css(".cImgList img")
             images_list.each_with_index do |img, index|
                 img_id = img.attr("src").match(/id=([\d]*)/)[1] rescue index
-                thumb = Accessory.new(:image => open(img.attr("src")))
+                thumb = AirframeImage.new(:image => open(img.attr("src")))
                 thumb.image_file_name = "#{img_id}.jpg"
                 thumb.thumbnail = true if index == 0
                 thumb.save
@@ -96,17 +96,9 @@ module AirframeImport
 
         airframe = Airframe.new()
 
-        # for each parameter, remove all escapes and strip it
-        page_details.each do |key, val|
-            if val.present?
-                page_details[key] = val.gsub(/[\r\n\t]/, "").strip 
-                airframe.airframe_texts << AirframeText.create(:label => key, :body => val)
-            end
-        end
-
         # store airframe details        
         airframe.import_url     = link
-        airframe.user_id        = user_id
+        airframe.created_by     = user_id
         airframe.serial         = page_details[:SerialNumber]
         airframe.registration   = page_details[:RegistrationNumber]
         airframe.make           = page_details[:Manufacturer]
@@ -114,7 +106,6 @@ module AirframeImport
         airframe.year           = page_details[:Year]
         airframe.asking_price   = page_details[:Price]
         airframe.description    = page_details[:DetailedDescription]
-        airframe.tt             = page_details[:TotalTime]
         airframe.save
         
         self.import_cdc_images(airframe, link)

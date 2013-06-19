@@ -16,7 +16,7 @@ module AirframeImport
 
         content.scan(/Graphic_Id":([\d]*),.*?File_Path":"~(.*?)"/).each_with_index do |image, index|
             img_id = image[0] rescue index
-            thumb = Accessory.new(:image => open(URI::encode("http://www.aso.com/"+image[1]) ) )
+            thumb = AirframeImage.new(:image => open(URI::encode("http://www.aso.com/"+image[1]) ) )
             thumb.image_file_name = "#{img_id}.jpg"
             thumb.thumbnail = true if index == 0
             thumb.save
@@ -70,13 +70,6 @@ module AirframeImport
             end
         end
 
-        # enter text blocks into airframe record
-        page_details.each do |key, val|
-            if val.present?
-                airframe.airframe_texts << AirframeText.create(:label => key, :body => val)
-            end
-        end
-
         # general parameters
         mms                                 = doc.css(".adSpecView-header-Descr div")[0].content rescue nil
 
@@ -115,14 +108,13 @@ module AirframeImport
 
         # airframe parameters
         airframe.import_url     = link
-        airframe.user_id        = user_id
+        airframe.created_by     = user_id
         airframe.serial         = page_details[:SerialNumber]
         airframe.registration   = page_details[:RegistrationNumber]
         airframe.make           = page_details[:Manufacturer]
         airframe.model_name     = page_details[:Model]
         airframe.year           = page_details[:Year]
         airframe.asking_price   = page_details[:Price]
-        airframe.tt             = page_details[:TotalTime]
 
         # store images
         self.import_aso_images(airframe, link)

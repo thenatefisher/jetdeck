@@ -74,7 +74,10 @@ class AirframesController < ApplicationController
         if @airframes.nil?
             render :layout => false, :nothing => true
         else
-            render :json => @airframes.to_json( :methods => [:model, :make, :to_s] )
+            render :json => {:locals => { airframe: @airframe }, 
+                    :template => 'airframes/search', 
+                    :formats => [:json],
+                    :handlers => [:jbuilder] }
         end
 
     end

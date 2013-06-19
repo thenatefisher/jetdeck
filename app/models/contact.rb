@@ -1,23 +1,26 @@
 class Contact < ActiveRecord::Base
-
-  has_many :ownerships, :dependent => :destroy
   
   has_many :actions, :as => :actionable, :dependent => :destroy
   
   has_many :notes, :as => :notable, :dependent => :destroy
   
-  has_many :files_sent,
-      :class_name => "Lead",
-      :foreign_key => "sender_id"
+  has_many :messages_sent,
+      :class_name => "AirframeMessage",
+      :foreign_key => "created_by"
 
-  has_many :files_received,
-      :class_name => "Lead",
+  has_many :messags_received,
+      :class_name => "AirframeMessage",
       :foreign_key => "recipient_id",
+      :dependent => :destroy
+
+  has_many :leads,
+      :class_name => "Lead",
+      :foreign_key => "contact_id",
       :dependent => :destroy
 
   belongs_to :owner,
       :class_name => 'User',
-      :foreign_key => 'owner_id'
+      :foreign_key => 'created_by'
 
   has_one :user,
       :class_name => 'User',
@@ -57,29 +60,20 @@ class Contact < ActiveRecord::Base
     self.email.gsub!(" ", "") if self.email
   end       
   
-  def search_url
-    "/contacts/#{id}"
-  end
-  
-  def search_desc
-    self.company
-  end
-  
-  def search_label
-    "<i class=\"icon-user\"></i> #{self.fullName}"
-  end
-  
+  # "<joe@usa.gov>"
+  # "Joe <joe@usa.gov>"
+  # "Joe America <joe@usa.gov>"
   def emailField
   
     sender_field = "<#{self.email}>"    
     
     if self.first.present?
     
-      sender_field = "#{self.first} <#{self.email}>" 
+      sender_field = "#{self.first.capitalize} <#{self.email}>" 
       
       if self.last.present?
       
-        sender_field = "#{self.first} #{self.last} <#{self.email}>" 
+        sender_field = "#{self.first.capitalize} #{self.last.capitalize} <#{self.email}>" 
       
       end
     
@@ -89,6 +83,9 @@ class Contact < ActiveRecord::Base
     
   end       
   
+  # "joe@usa.gov"
+  # "Joe"
+  # "Joe America"
   def to_s
   
     sender_field = "#{self.email}"    
@@ -108,7 +105,10 @@ class Contact < ActiveRecord::Base
     return sender_field
     
   end  
-    
+  
+  # ""
+  # "Joe"
+  # "Joe America"
   def fullName
   
     fullName = ""    

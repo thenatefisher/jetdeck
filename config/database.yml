@@ -17,11 +17,11 @@ test:
 
 purple:
   adapter: postgresql
-  host: ec2-54-227-255-156.compute-1.amazonaws.com
-  database: d7o37s4bl99nr2
-  username: xetqpmgxwxgjth
+  encoding: unicode
+  pool: 5
+  database: d2h41ktomgt213
+  username: bljpnmesdmuyee
+  password: uemUOEP1Zi53i-bxsynk1wVIOK
+  host: ec2-107-20-224-218.compute-1.amazonaws.com
   port: 5432
-  password: P1zndQbyx4a3hYMmATlc5aKxRt
-  timeout: 5000
-
 

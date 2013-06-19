@@ -1,0 +1,11 @@
+  def search_url
+    "/contacts/#{id}"
+  end
+  
+  def search_desc
+    self.company
+  end
+  
+  def search_label
+    "<i class=\"icon-user\"></i> #{self.fullName}"
+  end
