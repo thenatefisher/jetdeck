@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
 
     def airframes_index
 
-        @airframes = Airframe.find(:all, :conditions => ["user_id = ?", @current_user.id], :order => "created_at DESC")
+        @airframes = Airframe.find(:all, :conditions => ["created_by = ?", @current_user.id], :order => "created_at DESC")
 
     end
     

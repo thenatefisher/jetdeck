@@ -13,11 +13,10 @@ class User < ActiveRecord::Base
 
   before_save :encrypt_password
   before_create :set_defaults
-  after_create :set_contact_owner_to_neg_1
     
   has_many :actions, :foreign_key => "created_by", :dependent => :destroy
   has_many :airframes, :dependent => :destroy
-  has_many :contacts, :class_name => 'Contact', :foreign_key => "owner_id", :dependent => :destroy
+  has_many :contacts, :class_name => 'Contact', :foreign_key => "created_by", :dependent => :destroy
   belongs_to :contact, :dependent => :destroy
 
   validates_associated :contact
@@ -36,13 +35,6 @@ class User < ActiveRecord::Base
             :if => "password.present?"
 
   private
-
-  def set_contact_owner_to_neg_1
-    if self.contact
-      self.contact.created_by = -1
-      self.contact.save
-    end
-  end
   
   def set_defaults
 
@@ -81,8 +73,10 @@ class User < ActiveRecord::Base
 
   def self.authenticate(email, password)
 
+    return nil if email.blank? || password.blank?
+
     user = User.find(:first, :include => :contact, 
-      :conditions => ["user.active = true AND lower(contact.email) = ?", email.downcase])
+      :conditions => ["active = true AND lower(contacts.email) = ?", email.downcase])
 
     if user.present? && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
       user

@@ -47,7 +47,7 @@ class AirframesController < ApplicationController
     if params[:q]
       @airframes = Airframe.find(:all,
         :conditions => ["upper(make || ' ' || model_name) LIKE ?
-                             AND user_id = ?",
+                             AND created_by = ?",
                           "%#{params[:q].to_s.upcase}%",
                           @current_user.id
                        ],
@@ -66,7 +66,7 @@ class AirframesController < ApplicationController
     if params[:term].present?
 
         @airframes = Airframe.where(
-          "upper(registration) like ? AND user_id = ?",
+          "upper(registration) like ? AND created_by = ?",
           "%"+params[:term].to_s.upcase+"%",
           @current_user.id
         ).first(5)
@@ -90,7 +90,9 @@ class AirframesController < ApplicationController
 
     if params[:id].present?
         @airframe = Airframe.find(:first, :conditions =>
-          ["id = ? AND user_id = ?", params[:id], @current_user.id])
+          ["id = ? AND created_by = ?", params[:id], @current_user.id])
+    else
+      format.json { render :json => ["You do not have access to this aircraft"], :status => :unauthorized }
     end
 
   end
@@ -100,7 +102,7 @@ class AirframesController < ApplicationController
   def create
 
     whitelist = params[:airframe].slice(:registration, :serial, :year, :import_url)
-    whitelist[:user_id] = @current_user.id
+    whitelist[:created_by] = @current_user.id
     @airframe = Airframe.new(whitelist)
 
     # import photos
@@ -128,7 +130,7 @@ class AirframesController < ApplicationController
 
     respond_to do |format|
       if @airframe.save
-        format.html { redirect_to @airframe, :notice => 'Airframe was successfully created.' }
+        format.html { redirect_to @airframe, :notice => 'Airframe was successfully created' }
         format.json { render :json => @airframe, :status => :created, :location => @airframe }
       else
         format.html { render :action => "new" }
@@ -142,24 +144,23 @@ class AirframesController < ApplicationController
   def update
 
     @airframe = Airframe.find(:first, :conditions =>
-      ["id = ? AND user_id = ?", params[:id], @current_user.id])
+      ["id = ? AND created_by = ?", params[:id], @current_user.id])
         
     whitelist = params[:airframe].slice(
-        :asking_price, :description,
-        :serial, :registration, :tt, 
-        :tc, :year, :make, :model_name)
+        :asking_price, :description, :serial, :registration, :year, 
+        :make, :model_name, :actions, :notes, :images, :specs, :leads)
 
     respond_to do |format|
       if @airframe.update_attributes(whitelist)
         format.html { redirect_to @airframe, 
-          :notice => 'Airframe was successfully updated.' }
+          :notice => 'Airframe was successfully updated' }
         format.json { render  :locals => { airframe: @airframe }, 
                               :template => 'airframes/show', 
                               :formats => [:json],
                               :handlers => [:jbuilder] }
       else
         format.html { render :action => "edit" }
-        format.json { render :json => @airframe.errors, :status => :unprocessable_entity }
+        format.json { render :json => @airframe.errors.full_text, :status => :unprocessable_entity }
       end
     end
   end
@@ -168,11 +169,16 @@ class AirframesController < ApplicationController
   # DELETE /airframes/1.json
   def destroy
     @airframe = Airframe.find(:first, :conditions =>
-      ["id = ? AND user_id = ?", params[:id], @current_user.id])
-    @airframe.destroy
-    respond_to do |format|
-      format.html { redirect_to airframes_url }
-      format.json { head :no_content }
+      ["id = ? AND created_by = ?", params[:id], @current_user.id])
+    if @airframe.present? 
+      @airframe.destroy
+      respond_to do |format|
+        format.html { redirect_to airframes_url }
+        format.json { head :no_content }
+      end
+    else
+        format.json { render :json => ["Cannot delete an aircraft that does not exist"], :status => :unprocessable_entity }
     end
+
   end
 end

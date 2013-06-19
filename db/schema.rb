@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20120313064834) do
     t.integer  "created_by"
   end
 
-  create_table "airframe_spec_messages", :force => true do |t|
+  create_table "airframe_messages", :force => true do |t|
     t.integer  "created_by"
     t.integer  "recipient_id"
     t.integer  "status_id"
@@ -46,13 +46,12 @@ ActiveRecord::Schema.define(:version => 20120313064834) do
     t.integer  "airframe_spec_id"
     t.boolean  "photos_enabled"
     t.boolean  "spec_enabled"
-    t.string   "override_file_name"
     t.string   "photos_url_code"
     t.string   "spec_url_code"
     t.text     "body"
     t.text     "subject"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "airframe_specs", :force => true do |t|

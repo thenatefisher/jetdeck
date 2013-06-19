@@ -19,9 +19,9 @@ purple:
   adapter: postgresql
   encoding: unicode
   pool: 5
-  database: d2h41ktomgt213
-  username: bljpnmesdmuyee
-  password: uemUOEP1Zi53i-bxsynk1wVIOK
+  database: d844foankboomq
+  username: jhgfwdaqywypgu
+  password: X5ZrVFSOVRJrm9rORtcJ2coKCo
   host: ec2-107-20-224-218.compute-1.amazonaws.com
   port: 5432
 

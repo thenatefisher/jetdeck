@@ -2,7 +2,7 @@ class AirframeSpec < ActiveRecord::Base
 
     belongs_to :airframe
     belongs_to :creator, :foreign_key => :created_by, :class_name => "User"
-
+    has_many :airframe_messages
     has_attached_file :spec,
                       :s3_credentials => "#{Rails.root}/config/aws_keys.yml",
                       :storage => :s3,
