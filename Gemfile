@@ -23,16 +23,19 @@ group :test, :development do
   gem 'better_errors' # replaces standard error page with better errors
   gem 'binding_of_caller' # used by better errors for advanced features
   gem 'debugger' # real time debugging
+  gem 'spork-rails' # run rspec tests real fast!
+  gem 'faker' # creates fake data for tests
+  gem 'launchy' # launches browser when tests fail
 end
 
 gem 'json'
-gem 'jquery-rails'
+gem 'jquery-rails' # so we dont have to manage jquery, i guess that's cool
 gem 'jquery-ui-rails' # jquery ui
-gem 'less-rails' # less
-gem 'twitter-bootstrap-rails' # bootstrap
+gem 'less-rails' # less css preprocessor
+gem 'twitter-bootstrap-rails' # bootstrap. boom.
 gem 'bootstrap-wysihtml5-rails' # wysiwyg editor
 gem 'rails-backbone' # backbone (in coffee)
-gem 'bcrypt-ruby', :require => 'bcrypt'
+gem 'bcrypt-ruby', :require => 'bcrypt' # slick crypto shit
 gem 'jbuilder' # serves .json.jbuilder type files in views
 gem 'paperclip' # used for file uploads
 gem 'jquery-fileupload-rails' # front-end file upload js

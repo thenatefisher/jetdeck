@@ -1,21 +1,15 @@
 FactoryGirl.define do
 
-    domains = %w[gmail aol msn att yahoo hotmail]
-
-    sequence :email, domains.cycle do |d|
-        "test@#{d}.com"
-    end
-
     factory :contact do
-        email { generate(:email) }
+        email {Faker::Internet.email}
         email_confirmation { email }
     end
 
     factory :contact_with_data, parent: :contact  do
-        first "FIRST"
-        last "LAST"
-        company "COMPANY"
-        phone "(333) 444-2222"
+        first {Faker::Name.first_name}
+        last {Faker::Name.last_name}
+        company {Faker::Company.name}
+        phone {Faker::PhoneNumber.phone_number}
     end
 
 end

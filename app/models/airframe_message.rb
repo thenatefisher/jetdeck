@@ -21,7 +21,8 @@ class AirframeMessage < ActiveRecord::Base
         self.photos_enabled ||= true
         self.spec_enabled ||= true
         generate_url_codes()
-        require_user_activation()        
+        require_user_activation()
+        nil
     end
 
     # Sent, Bounced, Opened, Downloaded

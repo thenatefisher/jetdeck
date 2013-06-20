@@ -7,7 +7,9 @@ class User < ActiveRecord::Base
                   :contact,
                   :contact_id,
                   :airframes,
-                  :enabled
+                  :enabled,
+                  :storage_quota,
+                  :invites
 
   attr_accessor  :password, :password_confirmation
 
@@ -17,8 +19,8 @@ class User < ActiveRecord::Base
   has_many :todos, :foreign_key => "created_by", :dependent => :destroy
   has_many :airframes, :dependent => :destroy
   has_many :contacts, :class_name => 'Contact', :foreign_key => "created_by", :dependent => :destroy
-  has_many :airframe_specs, :foreign_key => "created_by"
-  has_many :airframe_images, :foreign_key => "created_by"
+  has_many :airframe_specs, :class_name => 'AirframeSpec', :foreign_key => "created_by"
+  has_many :airframe_images, :class_name => 'AirframeImage', :foreign_key => "created_by"
 
   belongs_to :contact, :dependent => :destroy
   validates_associated :contact
@@ -36,27 +38,27 @@ class User < ActiveRecord::Base
             { :minimum => 6, :message => "Password must be at least 6 chars" }, 
             :if => "password.present?"
 
-  def storage_amount
+  def storage_usage
     specs = self.airframe_specs.reduce(0){|sum, spec| sum += spec.spec_file_size}
     images = self.airframe_images.reduce(0){|sum, image| sum += image.image_file_size}
     images+specs
   end
 
   def over_storage_quota?
-    (self.storage_amount > self.storage_quote) 
+    (self.storage_usage > self.storage_quota) 
   end
 
   private
   
   def set_defaults
 
-    # in bytes, set storage quota to 100Mb
-    self.storage_amount = 104857600
+    # in bytes, set storage quota to 100Mb if not mass assigned
+    self.storage_quota ||= 104857600
 
-    # set 10 invites
-    self.invites = 10
+    # set 10 invites if not mass assigned
+    self.invites ||= 10
 
-    # default to enabled status
+    # default to enabled status if not mass assigned
     self.enabled ||= true
     
     # default to not activated

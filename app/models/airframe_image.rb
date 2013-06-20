@@ -1,6 +1,6 @@
 class AirframeImage < ActiveRecord::Base
 
-    attr_protected :image_file_name, :image_content_type, :image_size
+    attr_protected :image_file_name, :image_content_type, :image_file_size, :creator, :image
 
     belongs_to :airframe
     validates_associated :airframe
@@ -27,6 +27,7 @@ class AirframeImage < ActiveRecord::Base
                       :s3_permissions => :authenticated_read,
                       :path => ":attachment/:id/:style/:basename.:extension"      
     validates_attachment_size :image, :less_than => 5.megabytes
+    validates_presence_of :image
     validates_attachment_content_type :image, :content_type =>
         ["image/png",
         "image/jpg",
@@ -35,17 +36,20 @@ class AirframeImage < ActiveRecord::Base
         "image/bmp",
         "image/targa",
         "image/gif"]
+    validate :validate_space_available
 
     before_destroy :next_thumbnail
     before_create :init
 
     def init
       self.thumbnail ||= false
-      self.validate_quota()
     end
 
-    def validate_quota
-      creator.over_storage_quota?
+    # do not create a spec if use is over quota
+    def validate_space_available
+      if (self.creator.storage_usage + self.image_file_size) >= self.creator.storage_quota
+        self.errors.add :image, "exceeds account storage allowance"
+      end
     end
 
     # select another thumbnail if it is deleted

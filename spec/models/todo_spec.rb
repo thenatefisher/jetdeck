@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Todo do
 
-  it "..." do
+  xit "..." do
   end
 
 end

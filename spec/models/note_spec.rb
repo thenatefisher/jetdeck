@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Note do
 
-  it "..." do
+  xit "..." do
   end
   
 end

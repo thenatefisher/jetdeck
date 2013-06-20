@@ -1,6 +1,6 @@
 class AirframeSpec < ActiveRecord::Base
 
-    attr_protected :spec_file_name, :spec_content_type, :spec_size
+    attr_protected :spec_file_name, :spec_content_type, :spec_file_size, :creator, :spec
 
     belongs_to :airframe
     validates_associated :airframe
@@ -26,19 +26,24 @@ class AirframeSpec < ActiveRecord::Base
                       :s3_permissions => :authenticated_read,
                       :path => ":attachment/:id/:basename.:extension"   
     validates_attachment_size :spec, :less_than => 10.megabytes
+    validates_presence_of :spec
     validates_attachment_content_type :spec, :content_type =>
         ["application/msword",
          "application/pdf"]
+    validate :validate_space_available
 
     before_create :init
 
     def init
       self.enabled ||= true
-      self.validate_quota()
     end
 
-    def validate_quota
-      creator.over_storage_quota?
+    # do not create a spec if use is over quota
+    def validate_space_available
+      if (self.creator.storage_usage + self.spec_file_size) >= self.creator.storage_quota
+        self.errors.add :spec, "exceeds account storage allowance"
+        return false
+      end
     end
 
     # one convenient method to get an AWS s3 url

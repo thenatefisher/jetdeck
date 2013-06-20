@@ -8,23 +8,15 @@ development:
   password: jetdeck
   timeout: 5000
 
-test:
+test: &test
   adapter: postgresql
   encoding: unicode
   pool: 5
-  database: d844foankboomq
-  username: jhgfwdaqywypgu
-  password: X5ZrVFSOVRJrm9rORtcJ2coKCo
+  database: de17nkkuc07r94
+  username: zhmxejgfyctmnz
+  password: y0Gg3rt_tYrzBftMGmDBU6cjgQ
   host: ec2-107-20-224-218.compute-1.amazonaws.com
   port: 5432
 
 purple:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  database: d844foankboomq
-  username: jhgfwdaqywypgu
-  password: X5ZrVFSOVRJrm9rORtcJ2coKCo
-  host: ec2-107-20-224-218.compute-1.amazonaws.com
-  port: 5432
-
+  <<: *test

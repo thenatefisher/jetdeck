@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Lead do
 
-  it "..." do
+  xit "..." do
   end
   
 end
