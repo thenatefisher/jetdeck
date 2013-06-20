@@ -1,7 +1,14 @@
 class AirframeImage < ActiveRecord::Base
 
+    attr_protected :image_file_name, :image_content_type, :image_size
+
     belongs_to :airframe
+    validates_associated :airframe
+    validates_presence_of :airframe
+
     belongs_to :creator, :foreign_key => :created_by, :class_name => "User"
+    validates_associated :creator
+    validates_presence_of :creator
 
     has_attached_file :image,
                       :styles => {  :thumb => "140x130#", # displayed on show page
@@ -19,14 +26,7 @@ class AirframeImage < ActiveRecord::Base
                       :bucket => Jetdeck::Application.config.aws_s3_bucket,
                       :s3_permissions => :authenticated_read,
                       :path => ":attachment/:id/:style/:basename.:extension"      
-
-    attr_protected :image_file_name, :image_content_type, :image_size
-   
-    validates_associated :airframe
-    validates_presence_of :airframe
-
     validates_attachment_size :image, :less_than => 5.megabytes
-
     validates_attachment_content_type :image, :content_type =>
         ["image/png",
         "image/jpg",
@@ -37,6 +37,16 @@ class AirframeImage < ActiveRecord::Base
         "image/gif"]
 
     before_destroy :next_thumbnail
+    before_create :init
+
+    def init
+      self.thumbnail ||= false
+      self.validate_quota()
+    end
+
+    def validate_quota
+      creator.over_storage_quota?
+    end
 
     # select another thumbnail if it is deleted
     def next_thumbnail

@@ -1,14 +1,20 @@
 class Contact < ActiveRecord::Base
   
-  has_many :actions, :as => :actionable, :dependent => :destroy
+  attr_accessible :phone, :sticky_id, :notes, :todos,
+        :first, :last, :email, :email_confirmation, :company, 
+        :title, :description, :website
+
+  has_many :todos, :foreign_key => :actionable_id, :as => :actionable, :dependent => :destroy
+  accepts_nested_attributes_for :todos
   
   has_many :notes, :as => :notable, :dependent => :destroy
-  
+  accepts_nested_attributes_for :notes
+
   has_many :messages_sent,
       :class_name => "AirframeMessage",
       :foreign_key => "created_by"
 
-  has_many :messags_received,
+  has_many :messages_received,
       :class_name => "AirframeMessage",
       :foreign_key => "recipient_id",
       :dependent => :destroy
@@ -25,11 +31,6 @@ class Contact < ActiveRecord::Base
   has_one :user,
       :class_name => 'User',
       :foreign_key => 'contact_id'
-  
-  attr_accessible :phone, :sticky_id,
-        :first, :last, :source, :email, 
-        :email_confirmation, :company, :details_attributes,
-        :title, :description, :website, :emailFrom, :fullName
 
   validates_presence_of :email,
                         :message => "Email address is required"

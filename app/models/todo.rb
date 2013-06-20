@@ -1,17 +1,17 @@
-class Action < ActiveRecord::Base
+ class Todo < ActiveRecord::Base
 
   belongs_to :actionable, :polymorphic => true
   before_save :completed_time
   
   validates_associated :actionable
   validates_presence_of :actionable
+  validates_presence_of :title
 
   def url
     "/#{actionable_type.downcase}s/#{actionable_id}"
   end
   
   def completed_time
-  
     self.is_completed ||= false
     
     if self.is_completed
@@ -19,7 +19,6 @@ class Action < ActiveRecord::Base
     else
       self.completed_at = nil
     end  
-    
   end
 
 end

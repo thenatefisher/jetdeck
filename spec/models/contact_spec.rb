@@ -1,7 +1,7 @@
 require 'spec_helper'
 
-describe AirframeImage do
-
+describe Contact do
+ 
   it "..." do
   end
   

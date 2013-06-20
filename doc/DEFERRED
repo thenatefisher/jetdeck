@@ -1,5 +1,13 @@
 == Features
 
+    Enable adding a spec file in aircraft create dialog
+    
+    Aircraf lead list listing
+    
+    Aircraft activity chart in header
+
+    Contact aircraft spec lead list and default view with no leads
+
     Close account feature
 
     better error pages for app and heroku static (https://devcenter.heroku.com/articles/error-pages)

@@ -7,18 +7,20 @@ class User < ActiveRecord::Base
                   :contact,
                   :contact_id,
                   :airframes,
-                  :active
+                  :enabled
 
   attr_accessor  :password, :password_confirmation
 
   before_save :encrypt_password
   before_create :set_defaults
     
-  has_many :actions, :foreign_key => "created_by", :dependent => :destroy
+  has_many :todos, :foreign_key => "created_by", :dependent => :destroy
   has_many :airframes, :dependent => :destroy
   has_many :contacts, :class_name => 'Contact', :foreign_key => "created_by", :dependent => :destroy
-  belongs_to :contact, :dependent => :destroy
+  has_many :airframe_specs, :foreign_key => "created_by"
+  has_many :airframe_images, :foreign_key => "created_by"
 
+  belongs_to :contact, :dependent => :destroy
   validates_associated :contact
   validates_presence_of :contact
   validates_uniqueness_of :contact_id
@@ -34,15 +36,28 @@ class User < ActiveRecord::Base
             { :minimum => 6, :message => "Password must be at least 6 chars" }, 
             :if => "password.present?"
 
+  def storage_amount
+    specs = self.airframe_specs.reduce(0){|sum, spec| sum += spec.spec_file_size}
+    images = self.airframe_images.reduce(0){|sum, image| sum += image.image_file_size}
+    images+specs
+  end
+
+  def over_storage_quota?
+    (self.storage_amount > self.storage_quote) 
+  end
+
   private
   
   def set_defaults
 
+    # in bytes, set storage quota to 100Mb
+    self.storage_amount = 104857600
+
     # set 10 invites
     self.invites = 10
 
-    # default to active status
-    self.active ||= true
+    # default to enabled status
+    self.enabled ||= true
     
     # default to not activated
     self.activated = false
@@ -76,13 +91,14 @@ class User < ActiveRecord::Base
     return nil if email.blank? || password.blank?
 
     user = User.find(:first, :include => :contact, 
-      :conditions => ["active = true AND lower(contacts.email) = ?", email.downcase])
+      :conditions => ["enabled = true AND lower(contacts.email) = ?", email.downcase])
 
     if user.present? && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
       user
     else
       nil
     end
+    
   end
 
   def send_password_reset

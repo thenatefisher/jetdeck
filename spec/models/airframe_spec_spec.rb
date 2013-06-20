@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Note do
+describe AirframeSpec do
 
   it "..." do
   end
-  
+
 end

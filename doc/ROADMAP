@@ -1,17 +1,26 @@
 ROADMAP TO LAUNCH:
 
+    3x      create tests 
+                - model specs
+                - request specs
+                - js jasmin specs
+
+    1x      browser compatibilty check with auto tests
+
     3x      finish internal application ui
+                - cleanup rails controllers
+                - cleanup rails views
+                - refactor backbone routers
+                - refactor backbone models
+                - refactor backbone views
+                - refactor backbone templates
+                - integrate mixpanel
 
-                x- enable adding a spec file in aircraft create dialog
-                x- lead list listing
-                x- activity chart in header
-
-                x- contact aircraft spec list
-                x- contact default view with no leads
+    1x      create bank account
 
     2x      marketing and signup brochure site
 
-    1x      integrate payments    
+    1x      integrate stripe payments    
 
     1x      browser compatibilty check 
 

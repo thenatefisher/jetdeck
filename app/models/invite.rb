@@ -1,7 +1,6 @@
 class Invite < ActiveRecord::Base
 
   belongs_to :sender, :class_name => "User", :foreign_key => "created_by"
-  
   validates_associated :sender
   validates_presence_of :sender
 

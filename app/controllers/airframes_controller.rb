@@ -1,6 +1,7 @@
 class AirframesController < ApplicationController
   before_filter :authorize, :sanitize_params, :airframes_index
 
+  # GET /airframes/import
   def import
 
     # defaults
@@ -56,8 +57,6 @@ class AirframesController < ApplicationController
     end
   end
 
-  # GET /airframes
-  # GET /airframes.json
   def index
     
     @airframes = airframes_index()
@@ -84,8 +83,6 @@ class AirframesController < ApplicationController
 
   end
 
-  # GET /airframes/1
-  # GET /airframes/1.json
   def show
 
     if params[:id].present?
@@ -97,8 +94,6 @@ class AirframesController < ApplicationController
 
   end
 
-  # POST /airframes
-  # POST /airframes.json
   def create
 
     whitelist = params[:airframe].slice(:registration, :serial, :year, :import_url)
@@ -139,8 +134,6 @@ class AirframesController < ApplicationController
     end
   end
 
-  # PUT /airframes/1
-  # PUT /airframes/1.json
   def update
 
     @airframe = Airframe.find(:first, :conditions =>
@@ -165,8 +158,6 @@ class AirframesController < ApplicationController
     end
   end
 
-  # DELETE /airframes/1
-  # DELETE /airframes/1.json
   def destroy
     @airframe = Airframe.find(:first, :conditions =>
       ["id = ? AND created_by = ?", params[:id], @current_user.id])

@@ -10,10 +10,13 @@ development:
 
 test:
   adapter: postgresql
-  database: jetdeck_test
-  username: jetdeck
-  password: jetdeck
-  timeout: 5000
+  encoding: unicode
+  pool: 5
+  database: d844foankboomq
+  username: jhgfwdaqywypgu
+  password: X5ZrVFSOVRJrm9rORtcJ2coKCo
+  host: ec2-107-20-224-218.compute-1.amazonaws.com
+  port: 5432
 
 purple:
   adapter: postgresql

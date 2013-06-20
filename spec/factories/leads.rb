@@ -1,6 +1,7 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :lead do
+  	association :airframe, factory: :airframe
+	association :contact, factory: :contact
+	association :creator, factory: :user  
   end
 end

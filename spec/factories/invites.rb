@@ -1,10 +1,14 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
-  factory :invite do
-    from_user_id 1
-    to_contact_id 1
-    activated false
-    message "MyText"
-  end
+
+	domains = %w[gmail aol msn att yahoo hotmail]
+
+	sequence :email, domains.cycle do |d|
+	    "test@#{d}.com"
+	end
+
+	factory :invite do
+		association :sender, factory: :user
+		email {generate(:email)}
+	end
+
 end

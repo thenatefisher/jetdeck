@@ -18,8 +18,6 @@ class ContactsController < ApplicationController
 
   end
   
-  # GET /contacts
-  # GET /contacts.json
   def index
     @contacts = @current_user.contacts
 
@@ -29,8 +27,6 @@ class ContactsController < ApplicationController
     end
   end
 
-  # GET /contacts/1
-  # GET /contacts/1.json
   def show
 
     @contact = Contact.find(:first, 
@@ -42,8 +38,6 @@ class ContactsController < ApplicationController
 
   end
 
-  # GET /contacts/new
-  # GET /contacts/new.json
   def new
     @contact = Contact.new
 
@@ -53,13 +47,10 @@ class ContactsController < ApplicationController
     end
   end
 
-  # GET /contacts/1/edit
   def edit
     @contact = Contact.find(params[:id])
   end
 
-  # POST /contacts
-  # POST /contacts.json
   def create
     whitelist = params[:contact].slice(:first, :last, :company, :email, :phone)
 
@@ -77,8 +68,6 @@ class ContactsController < ApplicationController
     end
   end
 
-  # PUT /contacts/1
-  # PUT /contacts/1.json
   def update
 
     @contact = Contact.find(:first, :conditions =>
@@ -105,8 +94,6 @@ class ContactsController < ApplicationController
 
   end
 
-  # DELETE /contacts/1
-  # DELETE /contacts/1.json
   def destroy
     @contact = Contact.find(:first, :conditions =>
       ["id = ? AND owner_id = ?", params[:id], @current_user.id])

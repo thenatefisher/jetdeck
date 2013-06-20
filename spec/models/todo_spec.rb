@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Note do
+describe Todo do
 
   it "..." do
   end
-  
+
 end

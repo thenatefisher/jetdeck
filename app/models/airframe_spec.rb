@@ -1,8 +1,17 @@
 class AirframeSpec < ActiveRecord::Base
 
+    attr_protected :spec_file_name, :spec_content_type, :spec_size
+
     belongs_to :airframe
+    validates_associated :airframe
+    validates_presence_of :airframe
+
     belongs_to :creator, :foreign_key => :created_by, :class_name => "User"
+    validates_associated :creator
+    validates_presence_of :creator
+
     has_many :airframe_messages
+
     has_attached_file :spec,
                       :s3_credentials => "#{Rails.root}/config/aws_keys.yml",
                       :storage => :s3,
@@ -16,20 +25,20 @@ class AirframeSpec < ActiveRecord::Base
                       :bucket => Jetdeck::Application.config.aws_s3_bucket,
                       :s3_permissions => :authenticated_read,
                       :path => ":attachment/:id/:basename.:extension"   
-
-    attr_protected :spec_file_name, :spec_content_type, :spec_size
-   
-    validates_associated :airframe
-    validates_presence_of :airframe
-
     validates_attachment_size :spec, :less_than => 10.megabytes
-
     validates_attachment_content_type :spec, :content_type =>
         ["application/msword",
          "application/pdf"]
 
+    before_create :init
+
     def init
       self.enabled ||= true
+      self.validate_quota()
+    end
+
+    def validate_quota
+      creator.over_storage_quota?
     end
 
     # one convenient method to get an AWS s3 url

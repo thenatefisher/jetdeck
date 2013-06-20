@@ -13,7 +13,7 @@ class CreateSchema < ActiveRecord::Migration
     t.integer  "created_by"
   end
 
-  create_table "actions", :force => true do |t|
+  create_table "todos", :force => true do |t|
     t.string   "title"
     t.text     "description"
     t.datetime "due_at"
@@ -88,6 +88,7 @@ class CreateSchema < ActiveRecord::Migration
     t.integer  "status_id"
     t.datetime "status_date"
     t.integer  "airframe_spec_id"
+    t.integer  "airframe_id"
     t.boolean  "photos_enabled"
     t.boolean  "spec_enabled"
     t.string   "photos_url_code"
@@ -131,11 +132,12 @@ class CreateSchema < ActiveRecord::Migration
   create_table "users", :force => true do |t|
     t.integer  "type"
     t.integer  "contact_id"
+    t.integer  "storage_quota"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
     t.string   "password_hash"
     t.string   "password_salt"
-    t.boolean  "active"
+    t.boolean  "enabled"
     t.string   "auth_token"
     t.string   "password_reset_token"
     t.datetime "password_reset_sent_at"

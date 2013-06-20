@@ -3,7 +3,7 @@ class AirframeMessage < ActiveRecord::Base
     belongs_to :airframe
     belongs_to :airframe_spec
     belongs_to :creator, :foreign_key => :created_by, :class_name => "User"
-    belongs_to :recipient, :foreign_key => :recipient_id, :class_name => "User"
+    belongs_to :recipient, :foreign_key => :recipient_id, :class_name => "Contact"
 
     validates_presence_of :subject
     validates_associated :airframe
@@ -12,8 +12,6 @@ class AirframeMessage < ActiveRecord::Base
     validates_presence_of :recipient
     validates_associated :creator
     validates_presence_of :creator
-    validates_associated :airframe_spec
-    validates_presence_of :airframe_spec, :message => "is required"
 
     before_create :init
 

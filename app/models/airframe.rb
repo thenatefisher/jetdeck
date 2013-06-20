@@ -6,8 +6,8 @@ class Airframe < ActiveRecord::Base
   extend AirframeImport
 
   # relationships
-  has_many :actions, :as => :actionable, :dependent => :destroy
-  accepts_nested_attributes_for :actions
+  has_many :todos, :foreign_key => :actionable_id, :as => :actionable, :dependent => :destroy
+  accepts_nested_attributes_for :todos
 
   has_many :notes, :as => :notable, :dependent => :destroy
   accepts_nested_attributes_for :notes
