@@ -12,12 +12,13 @@ group :assets do
 end
 
 group :test, :development do
-  gem 'rspec-rails', '~> 2.6' # rspec
+  gem 'rspec-rails' # rspec
   gem 'factory_girl_rails' # makes testing easier by creating factories for models
-  gem 'capybara' # acceptance testing language
-  gem 'guard-rspec' # auto runs rspces
+  gem 'capybara' # acceptance testing language, makes rspecs easier to write
+  gem 'guard-rspec' # auto runs rspecs
+  gem 'jasmine' # behavior-driven development framework for testing JavaScript code
   gem 'poltergeist' # phantom js driver for capybara headless testing
-  gem 'capybara-webkit' # headless testing JS interpreter
+  gem 'capybara-webkit' # another headless testing JS interpreter
   gem 'database_cleaner' # used by test framework
   gem 'better_errors' # replaces standard error page with better errors
   gem 'binding_of_caller' # used by better errors for advanced features
@@ -36,6 +37,6 @@ gem 'jbuilder' # serves .json.jbuilder type files in views
 gem 'paperclip' # used for file uploads
 gem 'jquery-fileupload-rails' # front-end file upload js
 gem 'thin' # webserver
-gem 'aws-sdk', '~> 1.3.4' # amazon toolkit for S3
+gem 'aws-sdk' # amazon toolkit for S3
 gem 'delayed_job_active_record' # delayed job
 
