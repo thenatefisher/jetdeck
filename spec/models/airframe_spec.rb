@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Airframe do
 
+  it "can be created" do
+    FactoryGirl.build(:airframe).should be_valid
+  end
+
   xit "can have images" do
   end
 
@@ -21,6 +25,7 @@ describe Airframe do
   end
 
   xit "has a long response that matches details" do
+    FactoryGirl.build(:airframe)
   end
 
   xit "has a to_s response that matches details" do

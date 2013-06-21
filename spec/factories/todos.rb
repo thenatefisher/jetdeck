@@ -1,4 +1,8 @@
 FactoryGirl.define do
+
+  factory :todo do
+  end
+
   factory :contact_todo, parent: :todo do
     title "Contact Todo"
     association :actionable, factory: :contact

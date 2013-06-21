@@ -8,7 +8,7 @@ class Note < ActiveRecord::Base
   validates_associated :author
   validates_presence_of :author
 
-  validates_presence_of :body
+  validates_presence_of :description
 
   def url
     "/#{notable_type.tolower}s/#{notable_id}"

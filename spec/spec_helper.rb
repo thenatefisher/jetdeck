@@ -46,8 +46,8 @@ Spork.prefork do
     config.include Paperclip::Shoulda::Matchers
 
     # macros
-    config.include(UserLogin)
-    config.include(ScreenShot) 
+    config.include UserLogin
+    config.include ScreenShot 
 
     # run once before each 'describe' group
     config.before(:suite) do
@@ -56,9 +56,16 @@ Spork.prefork do
     end
 
     config.after(:suite) do
-      DatabaseCleaner.clean
+      DatabaseCleaner.clean    
     end
-    
+
+    config.after(:all) do
+      # clean up tmp files
+      if File::directory?("tmp/fixtures")
+        FileUtils.rm_rf(DIR["tmp/fixtures"]) 
+      end  
+    end
+
   end
 
 end

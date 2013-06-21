@@ -16,7 +16,7 @@ class AirframeMessage < ActiveRecord::Base
     before_create :init
 
     def init
-        self.status_id ||= 0
+        self.status_id  ||= 0
         self.status_date ||= Time.now()
         self.photos_enabled ||= true
         self.spec_enabled ||= true
@@ -25,19 +25,40 @@ class AirframeMessage < ActiveRecord::Base
         nil
     end
 
+    def send_message
+
+    end
+
     # Sent, Bounced, Opened, Downloaded
     def status
-        if self.status_enum.blank?
-            self.status_enum = LeadStatusEnum.find_or_create_by_status("Unkown")
-            self.status_date = Time.now()
-            self.save
+        case status_id
+            when 1; "Sending"
+            when 2; "Sent"
+            when 3; "Bounced"
+            when 4; "Opened"
+            when 5; "Downloaded"
+            else;   "Unknown"
         end
-        self.status_enum.status
     end
+
     def status=(code)
-        self.status_enum = LeadStatusEnum.find_or_create_by_status(code)
-        self.status_date = Time.now()
-        self.save
+
+        new_status_id = self.status_id
+
+        case code.downcase
+            when "sending";      new_status_id = 1
+            when "sent";         new_status_id = 2
+            when "bounced";      new_status_id = 3
+            when "opened";       new_status_id = 4
+            when "downloaded";   new_status_id = 5
+            else;                new_status_id = 0
+        end
+
+        if new_status_id != self.status_id
+            status_date = Time.now()
+            self.status_id = new_status_id
+        end
+
     end  
 
     private
@@ -46,12 +67,12 @@ class AirframeMessage < ActiveRecord::Base
     def generate_url_codes
 
         self.spec_url_code = create_code
-        while (Lead.where(:spec_url_code => self.spec_url_code).count > 0)
+        while (AirframeMessage.where(:spec_url_code => self.spec_url_code).count > 0)
             self.spec_url_code = create_code
         end
 
         self.photos_url_code = create_code
-        while (Lead.where(:photos_url_code => self.photos_url_code).count > 0)
+        while (AirframeMessage.where(:photos_url_code => self.photos_url_code).count > 0)
             self.photos_url_code = create_code
         end
 

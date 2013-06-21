@@ -1,6 +1,7 @@
 class AirframeImage < ActiveRecord::Base
 
-    attr_protected :image_file_name, :image_content_type, :image_file_size, :creator, :image
+    attr_protected :image_file_name, :image_content_type, :image_file_size
+    attr_accessible :creator, :image, :airframe
 
     belongs_to :airframe
     validates_associated :airframe
@@ -39,15 +40,19 @@ class AirframeImage < ActiveRecord::Base
     validate :validate_space_available
 
     before_destroy :next_thumbnail
+    
     before_create :init
 
     def init
       self.thumbnail ||= false
+      nil
     end
 
     # do not create a spec if use is over quota
     def validate_space_available
-      if (self.creator.storage_usage + self.image_file_size) >= self.creator.storage_quota
+      if image_file_size.blank?
+        self.errors.add :image, "file is not valid"
+      elsif self.creator && ((self.creator.storage_usage + self.image_file_size) >= self.creator.storage_quota)
         self.errors.add :image, "exceeds account storage allowance"
       end
     end

@@ -1,6 +1,7 @@
 class AirframeSpec < ActiveRecord::Base
 
-    attr_protected :spec_file_name, :spec_content_type, :spec_file_size, :creator, :spec
+    attr_protected :spec_file_name, :spec_content_type, :spec_file_size
+    attr_accessible :creator, :spec, :airframe
 
     belongs_to :airframe
     validates_associated :airframe
@@ -29,10 +30,11 @@ class AirframeSpec < ActiveRecord::Base
     validates_presence_of :spec
     validates_attachment_content_type :spec, :content_type =>
         ["application/msword",
+         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
          "application/pdf"]
     validate :validate_space_available
 
-    before_create :init
+    before_validation :init
 
     def init
       self.enabled ||= true
@@ -40,9 +42,10 @@ class AirframeSpec < ActiveRecord::Base
 
     # do not create a spec if use is over quota
     def validate_space_available
-      if (self.creator.storage_usage + self.spec_file_size) >= self.creator.storage_quota
+      if spec_file_size.blank?
+        self.errors.add :spec, "file is not valid"
+      elsif self.creator && ((self.creator.storage_usage + self.spec_file_size) >= self.creator.storage_quota)
         self.errors.add :spec, "exceeds account storage allowance"
-        return false
       end
     end
 
@@ -57,11 +60,10 @@ class AirframeSpec < ActiveRecord::Base
       {
         "name" => self.spec_file_name,
         "size" => self.spec_file_size,
-        "url" => self.url("original", 1.day),
-        "thumbnail_url" => self.url("mini"),
+        "url" => self.url(1.day),
+        "thumbnail_url" => self.url(),
         "delete_url" => "/airframe_specs/#{id}",
         "delete_type" => "DELETE",
-        "is_thumbnail" => self.thumbnail,
         "id" => self.id
       }
 

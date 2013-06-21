@@ -4,8 +4,8 @@ FactoryGirl.define do
   # fallocate -l 5G somefile.jpg
 
   factory :airframe_image do
-    image File.new("spec/fixtures/favicon.png")
+    creator {FactoryGirl.create(:user)}
     association :airframe, factory: :airframe
-    association :creator, factory: :user
+    image File.new("spec/fixtures/favicon.png")
   end
 end

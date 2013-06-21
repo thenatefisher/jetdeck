@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe User do
  
+  it "can be created" do
+    FactoryGirl.build(:user).should be_valid  
+  end
+
   xit "can be creator of airframe_specs" do
   
   end

@@ -4,11 +4,11 @@
 development:
   adapter: postgresql
   database: jetdeck_development
-  username: jetdeck
-  password: jetdeck
+  username: postgres
+  password: postgres
   timeout: 5000
 
-test: &test
+heroku: &heroku
   adapter: postgresql
   encoding: unicode
   pool: 5
@@ -18,5 +18,13 @@ test: &test
   host: ec2-107-20-224-218.compute-1.amazonaws.com
   port: 5432
 
+test: 
+  adapter: postgresql
+  database: jetdeck_test
+  username: postgres
+  password: postgres
+  timeout: 5000
+  encoding: LATIN1
+
 purple:
-  <<: *test
+  <<: *heroku

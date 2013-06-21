@@ -4,8 +4,8 @@ FactoryGirl.define do
   # fallocate -l 10G somefile.pdf
 
   factory :airframe_spec do
-    spec File.new("spec/fixtures/f1040.pdf")
-    association :airframe, factory: :airframe
-    association :creator, factory: :user
+  	creator {FactoryGirl.create(:user)}
+  	association :airframe, factory: :airframe
+    spec File.open("spec/fixtures/f1040.pdf")
   end
 end
