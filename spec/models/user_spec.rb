@@ -102,4 +102,12 @@ describe User do
   
   end  
   
+  xit "must have a unique email address"
+  
+  end
+
+  xit "can have the same email address as another user's contacts"
+  
+  end
+
 end

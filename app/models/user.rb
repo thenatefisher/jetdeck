@@ -22,6 +22,10 @@ class User < ActiveRecord::Base
   has_many :airframe_specs, :class_name => 'AirframeSpec', :foreign_key => "created_by"
   has_many :airframe_images, :class_name => 'AirframeImage', :foreign_key => "created_by"
 
+  has_many :messages_sent,
+      :class_name => "AirframeMessage",
+      :foreign_key => "created_by"
+
   belongs_to :contact, :dependent => :destroy
   validates_associated :contact
   validates_presence_of :contact

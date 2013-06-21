@@ -10,10 +10,6 @@ class Contact < ActiveRecord::Base
   has_many :notes, :as => :notable, :dependent => :destroy
   accepts_nested_attributes_for :notes
 
-  has_many :messages_sent,
-      :class_name => "AirframeMessage",
-      :foreign_key => "created_by"
-
   has_many :messages_received,
       :class_name => "AirframeMessage",
       :foreign_key => "recipient_id",
