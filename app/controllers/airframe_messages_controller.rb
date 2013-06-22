@@ -1,4 +1,5 @@
 class AirframeMessagesController < ApplicationController
+  skip_before_filter :verify_authenticity_token
 
   def sendgrid
   
@@ -7,7 +8,5 @@ class AirframeMessagesController < ApplicationController
 	render :nothing => true
 
   end
-
-
 
 end
