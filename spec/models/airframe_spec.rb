@@ -2,13 +2,39 @@ require 'spec_helper'
 
 describe Airframe do
 
-  it "has at least one thumbnail" do
+  it "can be created" do
+    FactoryGirl.build(:airframe).should be_valid
   end
-  
-  it "has an avatar" do
+
+  xit "can have images" do
   end
-  
-  it "can have engines" do
+
+  xit "can have specs" do
   end
-  
+
+  xit "can have todos" do
+  end
+
+  xit "can have notes" do
+  end
+
+  xit "can have leads" do
+  end
+
+  xit "has a creator" do
+  end
+
+  xit "has a long response that matches details" do
+    FactoryGirl.build(:airframe)
+  end
+
+  xit "has a to_s response that matches details" do
+  end
+
+  xit "has at least one thumbnail if images exist" do
+  end
+
+  xit "has an avatar with all image style urls if thumbnail exists" do
+  end  
+
 end

@@ -1,13 +1,13 @@
-Third Party Libraries
+Third Party Libraries and Services
 
   Front End:
       Bootstrap
       bootstrap wysihtml5
       bootstrap datepicker
       bootstrap editable
-      jquery sparkline
       Backbone.js
-      jQuery MultiSelect
+      D3.js
+      rickshaw
       jQueryUI AutoComplete
       jQuery Select2
       jQuery File Upload
@@ -21,14 +21,13 @@ Third Party Libraries
       jBuilder gem
       Factory Girl
       rspec-rails
+      jasmine
       Delayed Job
       Capybara
       
   Hosting / Infrastructure:
       Heroku
-      Amazon S3 (for image hosting)
+      Amazon S3
       SendGrid
       MixPanel
       Stripe (planned)
-      
-    

@@ -1,0 +1,19 @@
+  def search_url
+    "/airframes/#{id}"
+  end
+  
+  def search_desc
+    self.to_s
+  end
+  
+  def search_label
+    label = self.serial
+    if self.registration.present? && self.serial.present?
+      label += " (#{self.registration.upcase})"
+    else
+      label = self.registration.upcase
+    end
+   
+    label = "<i class=\"icon-plane\"></i> #{label}"
+     
+  end

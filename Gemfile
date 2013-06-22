@@ -12,30 +12,34 @@ group :assets do
 end
 
 group :test, :development do
-  gem 'rspec-rails', '~> 2.6' # rspec
+  gem 'rspec-rails' # rspec
   gem 'factory_girl_rails' # makes testing easier by creating factories for models
-  gem 'capybara' # acceptance testing language
-  gem 'guard-rspec' # auto runs rspces
+  gem 'capybara' # acceptance testing language, makes rspecs easier to write
+  gem 'guard-rspec' # auto runs rspecs
+  gem 'jasmine' # behavior-driven development framework for testing JavaScript code
   gem 'poltergeist' # phantom js driver for capybara headless testing
-  gem 'capybara-webkit' # headless testing JS interpreter
+  gem 'capybara-webkit' # another headless testing JS interpreter
   gem 'database_cleaner' # used by test framework
   gem 'better_errors' # replaces standard error page with better errors
   gem 'binding_of_caller' # used by better errors for advanced features
   gem 'debugger' # real time debugging
+  gem 'spork-rails' # run rspec tests real fast!
+  gem 'faker' # creates fake data for tests
+  gem 'launchy' # launches browser when tests fail
 end
 
 gem 'json'
-gem 'jquery-rails'
+gem 'jquery-rails' # so we dont have to manage jquery, i guess that's cool
 gem 'jquery-ui-rails' # jquery ui
-gem 'less-rails' # less
-gem 'twitter-bootstrap-rails' # bootstrap
+gem 'less-rails' # less css preprocessor
+gem 'twitter-bootstrap-rails' # bootstrap. boom.
 gem 'bootstrap-wysihtml5-rails' # wysiwyg editor
 gem 'rails-backbone' # backbone (in coffee)
-gem 'bcrypt-ruby', :require => 'bcrypt'
+gem 'bcrypt-ruby', :require => 'bcrypt' # slick crypto shit
 gem 'jbuilder' # serves .json.jbuilder type files in views
 gem 'paperclip' # used for file uploads
 gem 'jquery-fileupload-rails' # front-end file upload js
 gem 'thin' # webserver
-gem 'aws-sdk', '~> 1.3.4' # amazon toolkit for S3
+gem 'aws-sdk' # amazon toolkit for S3
 gem 'delayed_job_active_record' # delayed job
-
+gem 'sendgrid' # sendgrid tools

@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Lead do
-  pending "add some examples to (or delete) #{__FILE__}"
+
+  it "can be created" do
+  	FactoryGirl.build(:lead).should be_valid 
+  end
+  
 end
