@@ -50,7 +50,7 @@ Jetdeck::Application.routes.draw do
 
   match "/p/:code" => "leads#photos"
 
-  match "/i/:code" => "leads#tracking_image"
+  match "/sendgrid" => "airframe_messages#sendgrid"
 
   match "/s" => "leads#recordTimeOnPage"
 

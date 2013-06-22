@@ -61,8 +61,8 @@ Spork.prefork do
 
     config.after(:all) do
       # clean up tmp files
-      if File::directory?("tmp/fixtures")
-        FileUtils.rm_rf(DIR["tmp/fixtures"]) 
+      if File::directory? "tmp/fixtures"
+    #    FileUtils.rm_rf "tmp/fixtures"
       end  
     end
 

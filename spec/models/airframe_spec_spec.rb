@@ -17,10 +17,10 @@ describe AirframeSpec do
     FactoryGirl.build(:airframe_spec, :creator => nil).should_not be_valid
   end
 
-  it "is required to have an airframe" do
+  it "is required to have an  airframe" do
     FactoryGirl.build(:airframe_spec, :airframe => nil).should_not be_valid  
   end
-
+ 
   it "is enabled by default" do 
     FactoryGirl.build(:airframe_spec).enabled.should == true
   end

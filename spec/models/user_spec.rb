@@ -102,11 +102,11 @@ describe User do
   
   end  
   
-  xit "must have a unique email address"
+  xit "must have a unique email address" do
   
   end
 
-  xit "can have the same email address as another user's contacts"
+  xit "can have the same email address as another user's contacts" do
   
   end
 

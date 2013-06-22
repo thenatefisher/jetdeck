@@ -1,8 +1,12 @@
-class LeadMailer < ActionMailer::Base
+class AirframeSpecMailer < ActionMailer::Base
   default from: "JetDeck.co <noreply@jetdeck.co>"
+  sendgrid_enable :ganalytics
 
-  def sendSpec(lead)
-    
+  def sendSpec(airframe_message)
+    sendgrid_enable :opentrack, :clicktrack
+    sendgrid_category "activation"
+    sendgrid_unique_args :airframe_message_id => "newvalue2"
+
     @filename = lead.spec.document_file_name
     @filesize = "#{(lead.spec.document_file_size / 1000).to_i}Kb"
     @body = lead.body

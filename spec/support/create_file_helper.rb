@@ -4,12 +4,12 @@ module CreateFileHelper
   session_dir = Faker::Internet.domain_word.upcase + "_#{rand(99999)}"
   # create dir structure
   @@tmp_directory = File::join(Rails.root, "tmp")
-  Dir::mkdir(@@tmp_directory) if !File::exists?(@@tmp_directory)
+  Dir::mkdir(@@tmp_directory) if !File::directory?(@@tmp_directory)
   @@tmp_directory = File::join(@@tmp_directory, "fixtures")
-  Dir::mkdir(@@tmp_directory) if !File::exists?(@@tmp_directory)
+  Dir::mkdir(@@tmp_directory) if !File::directory?(@@tmp_directory)
   @@tmp_directory = File::join(@@tmp_directory, session_dir)
-  Dir::mkdir(@@tmp_directory) if !File::exists?(@@tmp_directory)  
- 
+  Dir::mkdir(@@tmp_directory) if !File::directory?(@@tmp_directory)  
+
   def create_file(extension="pdf", size=50)
     begin
       file_name = Faker::Internet.domain_word + ".#{extension}"
@@ -22,7 +22,7 @@ module CreateFileHelper
     return file_handler
   end
 
-  def create_image_file(extension="png", size=500000)
+  def create_image_file(extension="png", size=50)
     
     begin
       file_name = Faker::Internet.domain_word + ".#{extension}"

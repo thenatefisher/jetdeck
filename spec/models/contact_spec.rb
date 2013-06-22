@@ -42,10 +42,10 @@ describe Contact do
   xit "has a unique email address per contact in user address book" do
   end
 
-  xit "has a valid full name"
+  xit "has a valid full name" do
   end
 
-  xit "can be converted to a string"
+  xit "can be converted to a string" do
   end
 
 end
