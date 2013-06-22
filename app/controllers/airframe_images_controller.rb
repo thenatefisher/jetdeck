@@ -1,6 +1,15 @@
 class AirframeImagesController < ApplicationController
   before_filter :authorize
   
+  def sendgrid
+
+	logger = Rails.logger
+	logger.info params.inspect
+
+  end
+
+
+
   def index
   
     if params[:airframe] && Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe]])
