@@ -76,12 +76,13 @@ describe AirframeMessage do
   end
 
   xit "shows 'Unknown' status by default and status date is when created" do
+
   end  
 
   xit "hides photos link in email if this.photos_enabled is false" do
     message = FactoryGirl.create(:airframe_message, :photos_enabled => false)
     ActionMailer::Base.deliveries = []
-    message.send_message
+    message.send_message 
     ActionMailer::Base.deliveries.should_not be_empty
     ActionMailer::Base.deliveries.last.content.match(/"href='\/p\/(.*?)'"/).should be_empty
   end

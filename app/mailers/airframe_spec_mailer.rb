@@ -1,4 +1,5 @@
 class AirframeSpecMailer < ActionMailer::Base
+  include SendGrid
   default from: "JetDeck.co <noreply@jetdeck.co>"
   sendgrid_enable :ganalytics
 

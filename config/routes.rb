@@ -50,8 +50,6 @@ Jetdeck::Application.routes.draw do
 
   match "/p/:code" => "leads#photos"
 
-  match "/sendgrid" => "airframe_messages#sendgrid"
-
   match "/s" => "leads#recordTimeOnPage"
 
   resources :leads

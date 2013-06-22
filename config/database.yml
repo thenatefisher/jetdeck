@@ -8,7 +8,7 @@ development:
   password: postgres
   timeout: 5000
 
-heroku: &heroku
+myheroku: &myheroku
   adapter: postgresql
   encoding: unicode
   pool: 5
@@ -27,7 +27,7 @@ test_local: &test_local
   encoding: LATIN1
 
 test:
-  <<: *heroku
+  <<: *myheroku
 
 purple:
-  <<: *heroku
+  <<: *myheroku
