@@ -12,7 +12,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :purple, :test, :development do
+group :test, :development do
   gem 'rspec-rails' # rspec
   gem 'factory_girl_rails' # makes testing easier by creating factories for models
   gem 'capybara' # acceptance testing language, makes rspecs easier to write

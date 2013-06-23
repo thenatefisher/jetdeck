@@ -13,7 +13,7 @@ class EmailEventProcessor
                     message.status = "opened"
                 when "bounced"
                     message.status_date = Time.now
-                    message.status = "bounced"
+                    message.status = "bounce"
                 when "dropped"
                     message.status_date = Time.now
                     message.status = "failed"
