@@ -44,3 +44,4 @@ gem 'thin' # webserver
 gem 'aws-sdk' # amazon toolkit for S3
 gem 'delayed_job_active_record' # delayed job
 gem 'sendgrid' # sendgrid tools
+gem 'gridhook' # sendgrid webhook helper
