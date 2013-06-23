@@ -5,6 +5,7 @@
   config.event_processor = proc do |event|
     # event is a Gridhook::Event object
     #EmailEvent.create! event.attributes
-    puts "from sendgrid: #{event.attributes}"
+    logger = Logger.new(STDOUT)
+    logger.warn "from sendgrid: #{event.attributes}"
   end
 end
