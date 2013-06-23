@@ -5,7 +5,7 @@ class AirframeMessagesController < ApplicationController
   
   	logger = Rails.logger
 	logger.info params.inspect
-	render :status => 200, :test => "test"
+	render :status => 200, :text => "test"
 
   end
 
