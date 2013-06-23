@@ -2,10 +2,6 @@
   # The path we want to receive events
   config.event_receive_path = '/sendgrid/event'
 
-  config.event_processor = proc do |event|
-    # event is a Gridhook::Event object
-    #EmailEvent.create! event.attributes
-    logger = Logger.new(STDOUT)
-    logger.warn "from sendgrid: #{event.attributes}"
-  end
+  config.event_processor = EmailEventProcessor.new
+
 end
