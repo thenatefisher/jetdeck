@@ -4,7 +4,7 @@ class AirframeMessagesController < ApplicationController
   def sendgrid
   
   	logger = Rails.logger
-	logger.info params.inspect
+	logger.warn "From Sendgrid: #{params.inspect}"
 	render :status => 200, :text => "test"
 
   end
