@@ -12,21 +12,23 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-group :test, :development do
+group :purple, :test, :development do
   gem 'rspec-rails' # rspec
   gem 'factory_girl_rails' # makes testing easier by creating factories for models
   gem 'capybara' # acceptance testing language, makes rspecs easier to write
-  gem 'guard-rspec' # auto runs rspecs
   gem 'jasmine' # behavior-driven development framework for testing JavaScript code
   gem 'poltergeist' # phantom js driver for capybara headless testing
   gem 'capybara-webkit' # another headless testing JS interpreter
   gem 'database_cleaner' # used by test framework
+  gem 'guard' # auto runs rspecs
+  gem 'guard-rspec' # auto runs rspecs
+  gem 'faker' # creates fake data for tests
+  gem 'launchy' # launches browser when tests fail
   gem 'better_errors' # replaces standard error page with better errors
   gem 'binding_of_caller' # used by better errors for advanced features
   gem 'debugger' # real time debugging
-  gem 'spork-rails' # run rspec tests real fast!
-  gem 'faker' # creates fake data for tests
-  gem 'launchy' # launches browser when tests fail
+  gem 'spring' # faster rspec tests
+  gem 'libnotify' # growl-like notification
 end
 
 gem 'json'

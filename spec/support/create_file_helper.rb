@@ -14,7 +14,7 @@ module CreateFileHelper
     begin
       file_name = Faker::Internet.domain_word + ".#{extension}"
       file_path = File::join(@@tmp_directory, file_name)    
-      `dd if=/dev/zero of=#{file_path} bs=#{size} count=1`
+      `dd if=/dev/zero of=#{file_path} bs=#{size} count=1 > /dev/null`
       file_handler = File.open(file_path)
     rescue => exception
       raise exception
@@ -29,8 +29,8 @@ module CreateFileHelper
       file_path = File::join(@@tmp_directory, file_name) 
 
       favicon = File::join(Rails.root, "spec", "fixtures", "favicon.png")
-      `dd if=/dev/zero of=#{file_path} bs=#{size} count=1`
-      `dd if=#{favicon} of=#{file_path} conv=notrunc` 
+      `dd if=/dev/zero of=#{file_path} bs=#{size} count=1 > /dev/null`
+      `dd if=#{favicon} of=#{file_path} conv=notrunc > /dev/null` 
 
       file_handler = File.open(file_path)
     rescue => exception

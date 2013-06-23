@@ -8,23 +8,50 @@ describe Note do
   end
   
   it "requires a description be entered" do
- 	FactoryGirl.build(:airframe_note, :description => nil).should_not be_valid 
- 	FactoryGirl.build(:contact_note, :description => nil).should_not be_valid 
+    FactoryGirl.build(:airframe_note, :description => nil).should_not be_valid 
+    FactoryGirl.build(:contact_note, :description => nil).should_not be_valid 
   end
 
   it "can be attached to a contact" do 
   	contact = FactoryGirl.build(:contact)
-        contact.notes << FactoryGirl.build(:note)
-	contact.notes.count.should == 1
+    note = Note.create(
+      :author => FactoryGirl.build(:user),
+      :description => "Contact Note"
+    )
+    contact.notes << note
+    contact.notes.first.should == note
   end
 
-  xit "can be attached to an airframe" do 
-        airframe = FactoryGirl.build(:airframe)
-        airframe.notes << FactoryGirl.build(:note)
-	airframe.notes.count.should == 1
+  it "can be attached to an airframe" do 
+    airframe = FactoryGirl.build(:airframe)
+    note = Note.create(
+      :author => FactoryGirl.build(:user),
+      :description => "Airframe Note"
+    )
+    airframe.notes << note
+    airframe.notes.first.should == note
   end
 
-  xit "is deleted with its parent" do
+  it "is deleted with its airframe parent" do
+    airframe = FactoryGirl.build(:airframe)
+    note = Note.create(
+      :author => FactoryGirl.build(:user),
+      :description => "Airframe Note"
+    )
+    airframe.notes << note
+    airframe.destroy
+    note.should == nil
+  end
+
+  it "is deleted with its contact parent" do
+    contact = FactoryGirl.build(:contact)
+    note = Note.create(
+      :author => FactoryGirl.build(:user),
+      :description => "Contact Note"
+    )
+    contact.notes << note
+    contact.destroy
+    note.should == nil
   end
 
 end

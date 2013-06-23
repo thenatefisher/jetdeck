@@ -11,7 +11,7 @@ describe AirframeMessage do
     message = FactoryGirl.create(:airframe_message)
     message.send_message
     ActionMailer::Base.deliveries.should_not be_empty
-    ActionMailer::Base.deliveries.last.to.should == message.recipient.emailField
+    ActionMailer::Base.deliveries.last.to.first.should == message.recipient.email
   end
 
   it "requires an airframe" do
@@ -33,6 +33,7 @@ describe AirframeMessage do
   it "cannot be sent without user activation" do
     ActionMailer::Base.deliveries = []
     message = FactoryGirl.create(:airframe_message)
+    message.creator.activated = false
     message.send_message.should == false
     ActionMailer::Base.deliveries.should be_empty    
   end
@@ -55,31 +56,24 @@ describe AirframeMessage do
 
   it "does not send specs that are disabled" do
     spec = FactoryGirl.create(:airframe_spec, :enabled => false)
+    spec.enabled = false
     message = FactoryGirl.create(:airframe_message, :airframe_spec => spec)
-
     ActionMailer::Base.deliveries = []
     message.send_message.should == false
     ActionMailer::Base.deliveries.should be_empty   
   end
 
-  it "shows 'Sent' status and date when message is sent" do
+  it "shows 'Sending' status and date when message is sent" do
     message = FactoryGirl.create(:airframe_message)
     message.send_message
-    message.status.should == "Sent"
+    message.status.should == "Sending"
     (message.status_date < Time.now() && message.status_date > 5.minutes.ago).should == true
   end
 
-  xit "shows 'Opened' status and date when message is opened" do
-  end
+  ## other status codes tested in request specs
+  ## (status is from SendGrid webhook callback)
 
-  xit "shows 'Downloaded' status and date when message is downloaded" do
-  end
-
-  xit "shows 'Unknown' status by default and status date is when created" do
-
-  end  
-
-  xit "hides photos link in email if this.photos_enabled is false" do
+  it "hides photos link in email if this.photos_enabled is false" do
     message = FactoryGirl.create(:airframe_message, :photos_enabled => false)
     ActionMailer::Base.deliveries = []
     message.send_message 
@@ -87,11 +81,16 @@ describe AirframeMessage do
     ActionMailer::Base.deliveries.last.content.match(/"href='\/p\/(.*?)'"/).should be_empty
   end
   
-  xit "hides spec link in email if this.spec_enabled is false" do
+  it "hides spec link in email if this.spec_enabled is false" do
+    message = FactoryGirl.create(:airframe_message, :spec_enabled => false)
+    ActionMailer::Base.deliveries = []
+    message.send_message 
+    ActionMailer::Base.deliveries.should_not be_empty
+    ActionMailer::Base.deliveries.last.content.match(/"href='\/s\/(.*?)'"/).should be_empty    
   end
 
-  xit "does not require a spec to be associated" do
-    FactoryGirl.create(:airframe_message, :airframe_spec => null).should be_valid
+  it "does not require a spec to be associated" do
+    FactoryGirl.create(:airframe_message, :airframe_spec => nil).should be_valid
   end
 
 end

@@ -44,6 +44,7 @@ class AirframeImage < ActiveRecord::Base
     before_create :init
 
     def init
+      self.thumbnail = true if self.airframe && self.airframe.images.empty?
       self.thumbnail ||= false
       nil
     end
@@ -57,7 +58,7 @@ class AirframeImage < ActiveRecord::Base
       end
     end
 
-    # select another thumbnail if it is deleted
+    # select another thumbnail if it is deleted or none available for the airframe
     def next_thumbnail
       if self.thumbnail
           new_thumb = self.airframe.images.where("image_file_name IS NOT null AND thumbnail = 'f'").first

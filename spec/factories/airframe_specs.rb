@@ -6,6 +6,6 @@ FactoryGirl.define do
   factory :airframe_spec do
   	creator {FactoryGirl.create(:user)}
   	association :airframe, factory: :airframe
-    spec File.open("spec/fixtures/f1040.pdf")
+    spec File.new("spec/fixtures/f1040.pdf")
   end
 end

@@ -8,9 +8,9 @@ describe AirframeImage do
     # dont actually upload to s3
     AirframeSpec.any_instance.stub(:save_attached_files).and_return(true)     
   end
-
+ 
   it "can be created" do
-    FactoryGirl.build(:airframe_image).should be_valid        
+    FactoryGirl.build(:airframe_image).should be_valid         
   end
 
   it "is required to have a creator" do

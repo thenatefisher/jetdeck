@@ -145,6 +145,8 @@ GEM
     less-rails (2.3.3)
       actionpack (>= 3.1)
       less (~> 2.3.1)
+    libnotify (0.8.0)
+      ffi (>= 1.0.11)
     libv8 (3.3.10.4)
     listen (1.1.6)
       rb-fsevent (>= 0.9.3)
@@ -236,10 +238,7 @@ GEM
     sendgrid (1.2.0)
       json
     slop (3.4.5)
-    spork (1.0.0rc3)
-    spork-rails (3.2.1)
-      rails (>= 3.0.0, < 3.3.0)
-      spork (>= 1.0rc0)
+    spring (0.0.10)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -289,6 +288,7 @@ DEPENDENCIES
   factory_girl_rails
   faker
   gridhook
+  guard
   guard-rspec
   jasmine
   jbuilder
@@ -298,6 +298,7 @@ DEPENDENCIES
   json
   launchy
   less-rails
+  libnotify
   paperclip
   pg
   poltergeist
@@ -305,7 +306,7 @@ DEPENDENCIES
   rails-backbone
   rspec-rails
   sendgrid
-  spork-rails
+  spring
   therubyracer (= 0.10.2)
   thin
   twitter-bootstrap-rails

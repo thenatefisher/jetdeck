@@ -12,8 +12,9 @@ class AirframeMessage < ActiveRecord::Base
     validates_presence_of :recipient
     validates_associated :creator
     validates_presence_of :creator
-
+ 
     before_create :init
+    validate :require_user_activation
 
     def init
         self.status_id  ||= 0
@@ -21,12 +22,14 @@ class AirframeMessage < ActiveRecord::Base
         self.photos_enabled ||= true
         self.spec_enabled ||= true
         generate_url_codes()
-        require_user_activation()
         nil
     end
 
     def send_message
-
+        success = false
+        if self.creator.activated && self.airframe_spec.enabled
+            success = AirframeMessageMailer.sendMessage(self).deliver 
+        end
     end
 
     # Sent, Bounced, Opened, Downloaded
@@ -37,6 +40,7 @@ class AirframeMessage < ActiveRecord::Base
             when 3; "Bounced"
             when 4; "Opened"
             when 5; "Downloaded"
+            when 6; "Send Failed"
             else;   "Unknown"
         end
     end
@@ -51,6 +55,7 @@ class AirframeMessage < ActiveRecord::Base
             when "bounced";      new_status_id = 3
             when "opened";       new_status_id = 4
             when "downloaded";   new_status_id = 5
+            when "failed";       new_status_id = 6
             else;                new_status_id = 0
         end
 

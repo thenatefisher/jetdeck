@@ -34,6 +34,7 @@ Jetdeck::Application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { :host => "localhost:3000" }
 
   # Raise exception on mass assignment protection for Active Record models
@@ -47,5 +48,8 @@ Jetdeck::Application.configure do
   
   # disable mixpanel 
   config.mixpanel_token = ""
+
+  # shutup paperclip in rspec tests
+  Paperclip.options[:log] = false
   
 end

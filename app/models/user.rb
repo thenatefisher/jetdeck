@@ -66,7 +66,7 @@ class User < ActiveRecord::Base
     self.enabled ||= true
     
     # default to not activated
-    self.activated = false
+    self.activated ||= false
 
     # generate auth token
     generate_token(:auth_token)

@@ -41,8 +41,8 @@ Jetdeck::Application.configure do
   # Paperclip config path
   Paperclip.options[:command_path] = "/usr/bin/"
 
-  # send emails in dev mode!!
-  config.action_mailer.perform_deliveries = true
+  # actually send emails 
+  config.action_mailer.delivery_method = :test
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { :host => "localhost:3000" }
   

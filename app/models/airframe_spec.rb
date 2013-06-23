@@ -12,6 +12,7 @@ class AirframeSpec < ActiveRecord::Base
     validates_presence_of :creator
 
     has_many :airframe_messages
+    validates_associated :airframe_messages
 
     has_attached_file :spec,
                       :s3_credentials => "#{Rails.root}/config/aws_keys.yml",

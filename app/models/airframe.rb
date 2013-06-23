@@ -21,6 +21,8 @@ class Airframe < ActiveRecord::Base
   has_many :leads, :dependent => :destroy
 
   belongs_to :creator, :class_name => "User", :foreign_key => "created_by"
+  validates_associated :creator
+  validates_presence_of :creator
 
   # static method to create a new airframe from listing URL
   def self.import(user_id=nil, link=nil)

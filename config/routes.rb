@@ -46,11 +46,9 @@ Jetdeck::Application.routes.draw do
 
   match "/profile" => "profile#update", :via => "put"
 
-  match "/s/:code" => "leads#spec"
+  match "/s/:code" => "airframe_messages#spec"
 
-  match "/p/:code" => "leads#photos"
-
-  match "/s" => "leads#recordTimeOnPage"
+  match "/p/:code" => "airframe_messages#photos"
 
   resources :leads
   
