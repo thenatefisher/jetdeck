@@ -12,9 +12,32 @@ Contact.create(
   :email_confirmation => "***REMOVED***"
   )
 
-u = User.create()
-u.password = "asd123"
-u.password_confirmation = "asd123"
-u.contact_id = 1
-u.activated = true
-u.save
+user = User.create()
+    user.password = "asd123"
+    user.password_confirmation = "asd123"
+    user.contact_id = 1
+    user.activated = true
+    user.save
+
+recipient = Contact.create(
+    :email => "***REMOVED***",
+    :email_confirmation => "***REMOVED***" 
+)
+
+airframe = Airframe.create(:creator => user)
+
+airframe_spec = AirframeSpec.create(
+    :creator => user,
+    :airframe => airframe,
+    :spec => File.new("#{Rails.root}/spec/fixtures/f1040.pdf")
+)
+
+airframe_message = AirframeMessage.create(
+    :subject => "Test Subject",
+    :airframe_spec => airframe_spec,
+    :airframe => airframe,
+    :creator => user,
+    :recipient => recipient
+)
+
+airframe_message.send_message()
