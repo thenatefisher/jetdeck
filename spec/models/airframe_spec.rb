@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe Airframe do
 
-  before(:each) do 
+  before(:each) do
     # dont actually upload to s3
-    AirframeSpec.any_instance.stub(:save_attached_files).and_return(true)     
+    AirframeSpec.any_instance.stub(:save_attached_files).and_return(true)
   end
 
   it "can be created" do
@@ -14,7 +14,7 @@ describe Airframe do
   it "can have images" do
     airframe = FactoryGirl.build(:airframe)
     image = AirframeImage.create(
-      :creator => FactoryGirl.create(:user), 
+      :creator => FactoryGirl.create(:user),
       :image => File.new("spec/fixtures/favicon.png")
     )
     airframe.images << image
@@ -24,7 +24,7 @@ describe Airframe do
   it "can have specs" do
     airframe = FactoryGirl.create(:airframe)
     spec = AirframeSpec.create(
-      :creator => FactoryGirl.create(:user), 
+      :creator => FactoryGirl.create(:user),
       :spec => File.new("spec/fixtures/f1040.pdf")
     )
     airframe.specs << spec
@@ -42,7 +42,7 @@ describe Airframe do
     airframe = FactoryGirl.build(:airframe)
     note = Note.create(:notable => airframe)
     airframe.notes << note
-    airframe.notes.first.should == note  
+    airframe.notes.first.should == note
   end
 
   it "can have leads" do
@@ -52,7 +52,7 @@ describe Airframe do
       :creator => FactoryGirl.build(:user)
     )
     airframe.leads << lead
-    airframe.leads.first.should == lead  
+    airframe.leads.first.should == lead
   end
 
   it "has a creator" do
@@ -67,12 +67,12 @@ describe Airframe do
     serial = "#{Faker::Lorem.word.upcase} #{rand(999999)}"
     registration = Faker::Lorem.word.upcase
     airframe = FactoryGirl.build(:airframe,
-      :year => year,
-      :make => make,
-      :model_name => model_name,
-      :serial => serial,
-      :registration => registration
-    )
+                                 :year => year,
+                                 :make => make,
+                                 :model_name => model_name,
+                                 :serial => serial,
+                                 :registration => registration
+                                 )
     airframe.long.match(/#{year}/).should_not == nil
     airframe.long.match(/#{model_name}/).should_not == nil
     airframe.long.match(/#{make}/).should_not == nil
@@ -85,10 +85,10 @@ describe Airframe do
     make = Faker::Company.name
     model_name = Faker::Name.last_name
     airframe = FactoryGirl.build(:airframe,
-      :year => year,
-      :make => make,
-      :model_name => model_name
-    )
+                                 :year => year,
+                                 :make => make,
+                                 :model_name => model_name
+                                 )
     airframe.to_s.match(/#{year}/).should_not == nil
     airframe.to_s.match(/#{model_name}/).should_not == nil
     airframe.to_s.match(/#{make}/).should_not == nil
@@ -97,18 +97,18 @@ describe Airframe do
   it "has at least one thumbnail if images exist" do
     airframe = FactoryGirl.build(:airframe)
     image = AirframeImage.create(
-      :creator => FactoryGirl.create(:user), 
+      :creator => FactoryGirl.create(:user),
       :image => File.new("spec/fixtures/favicon.png")
     )
     image.thumbnail.should_not == true
     airframe.images << image
     image.thumbnail.should == true
-  end 
+  end
 
   it "has an avatar with all image style urls if thumbnail exists" do
     airframe = FactoryGirl.create(:airframe)
     image = AirframeImage.create(
-      :creator => FactoryGirl.create(:user), 
+      :creator => FactoryGirl.create(:user),
       :image => File.new("spec/fixtures/favicon.png")
     )
     airframe.images << image
@@ -116,6 +116,6 @@ describe Airframe do
     airframe.avatar.should include(:listing)
     airframe.avatar.should include(:mini)
     airframe.avatar.should include(:thumb)
-  end  
+  end
 
 end

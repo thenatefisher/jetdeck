@@ -10,5 +10,5 @@ FactoryGirl.define do
   factory :airframe_todo, parent: :todo do
     title "Airframe Todo"
     association :actionable, factory: :airframe
-  end  
+  end
 end

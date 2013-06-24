@@ -1,18 +1,18 @@
 namespace :crawler do
-	
-	task :pull do
-	
-	url = "http://www.controller.com/listingsdetail/aircraft-for-sale/BEECHCRAFT-KING-AIR-F90/1981-BEECHCRAFT-KING-AIR-F90/1258449.htm"
 
-	require 'nokogiri'
-	require 'open-uri'
+  task :pull do
 
-	doc = Nokogiri::HTML(open(url))
+    url = "http://www.controller.com/listingsdetail/aircraft-for-sale/BEECHCRAFT-KING-AIR-F90/1981-BEECHCRAFT-KING-AIR-F90/1258449.htm"
 
-	doc.css('.detailstablecell').each do |link|
-		puts link.content
-	end	
+    require 'nokogiri'
+    require 'open-uri'
 
-	end
+    doc = Nokogiri::HTML(open(url))
+
+    doc.css('.detailstablecell').each do |link|
+      puts link.content
+    end
+
+  end
 
 end

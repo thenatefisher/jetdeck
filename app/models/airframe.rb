@@ -36,12 +36,12 @@ class Airframe < ActiveRecord::Base
 
     # switch to correct parser
     case link
-      when /[www\.]?controller\.com/
-        airframe = delay.import_cdc(user_id, link)
-      when /[www\.]?aso\.com/
-        airframe = delay.import_aso(user_id, link)
-      else 
-        airframe = nil    
+    when /[www\.]?controller\.com/
+      airframe = delay.import_cdc(user_id, link)
+    when /[www\.]?aso\.com/
+      airframe = delay.import_aso(user_id, link)
+    else
+      airframe = nil
     end
 
     return airframe
@@ -51,10 +51,10 @@ class Airframe < ActiveRecord::Base
   # the aircraft default thumbnail
   def avatar
     images.where(:thumbnail => true).first do |image|
-        { :original => image.url("original"),
-          :listing => image.url("listing"),
-          :mini => image.url("mini"),
-          :thumb => image.url("thumb") }
+      { :original => image.url("original"),
+        :listing => image.url("listing"),
+        :mini => image.url("mini"),
+        :thumb => image.url("thumb") }
     end
   end
 

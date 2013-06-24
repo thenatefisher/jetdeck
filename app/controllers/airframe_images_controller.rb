@@ -1,85 +1,75 @@
 class AirframeImagesController < ApplicationController
-  before_filter :authorize
+  before_filter :authorize, :sanitize_params
 
   def index
-  
-    if params[:airframe] && Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe]])
-      @assys = Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe]])
-                       .images.find(:all, :order => "created_at DESC")
-      render :json => @assys.collect { |p| p.to_jq_upload }.to_json
+
+    if params[:airframe_image][:airframe] && Airframe.find(
+        :first, :conditions => ["created_by = ? AND id = ?",
+                                @current_user.id, params[:airframe_image][:airframe]])
+
+      @images = Airframe.find(:first,
+                              :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe_image][:airframe]])
+      .images.find(:all, :order => "created_at DESC")
+      render :json => @images.collect { |p| p.to_jq_upload }.to_json
+
     else
       render :json => true
     end
-    
+
   end
 
   def create
 
-    @Assy = Accessory.new(params[:files])
-    @Assy.creator = @current_user
-    if Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe]]).present?     
-      @airframe = Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe]])
+    @image = AirframeImage.new(params[:airframe_image][:files])
+    @image.creator = @current_user
+
+    if Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe_image][:airframe]]).present?
+      @airframe = Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe_image][:airframe]])
       if @airframe.present?
-        @Assy.airframe_id = @airframe.id
-        
-        if @Assy.document_file_name.present?
-          @airframe.specs << @Assy
-        else
-          @airframe.images.each do |t|
-            t.thumbnail = false
-            t.save
-          end
-          @Assy.thumbnail = true
-        end
+        @image.airframe_id = @airframe.id
       end
     end
 
-    if @Assy.save
-      respond_to do |format|
-        format.html {
-          render :json => {"files" => [@Assy.to_jq_upload]}.to_json,
-                  :content_type => 'text/html',
-                  :layout => false
-        }
-        format.json {
-          render :json => {"files" => [@Assy.to_jq_upload]}.to_json
-        }
-      end
+    if @image.save
+      render :json => {"files" => [@image.to_jq_upload]}.to_json
     else
-      render :json => @Assy.errors.to_json(), :status => 304
+      render :json => @image.errors.full_messages, :status => :unprocessable_entity
     end
 
   end
 
   def update
-  
-    @Assy = Accessory.find(params[:id])
-    if @Assy.airframe.created_by == @current_user.id
-      if params[:thumbnail] && @Assy.present?
-          @Assy.airframe.images.each { |a| a.thumbnail = false; a.save }
-          @Assy.thumbnail = true
+
+    @image = AirframeImage.find(params[:id], :created_by => current_user.id)
+    if @image.present?
+
+      if params[:airframe_image][:thumbnail]
+        # make all other images NOT the thumbnail
+        @image.airframe.images.each { |a| a.thumbnail = false; a.save }
+        # select this one as thumbnail
+        @image.thumbnail = true
       end
 
-      respond_to do |format|
-        if @Assy.update_attributes(params[:accessory].slice(:enabled))
-          format.json { head :no_content }
-        else
-          format.html { render :action => "edit" }
-          format.json { render :json => @Assy.errors, :status => :unprocessable_entity }
-        end
+      if @image.update_attributes(params[:airframe_image].slice(:enabled))
+        render :json => @spec, :status => 200
+      else
+        render :json => @image.full_messages, :status => :unprocessable_entity
       end
+
     end
-    
+
   end
 
   def destroy
-    
-    @Assy = Accessory.find(params[:id])
-    if @Assy.airframe.created_by == @current_user.id
-      @Assy.destroy
-      render :json => true
+
+    @image = AirframeImage.find(params[:id], :created_by => current_user.id)
+    if @image.present?
+      @image.destroy
+      render :json => true, :status => 200
+    else
+      render :json => ['You are not Authorized to delete this image'], :status => :unprocessable_entity
     end
-    
+
   end
-  
+
 end

@@ -12,5 +12,5 @@ FactoryGirl.define do
     association :author, factory: :user
     association :notable, factory: :contact
     description "A contact note"
-  end  
+  end
 end

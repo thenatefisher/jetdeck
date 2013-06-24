@@ -1,16 +1,16 @@
 require 'spec_helper'
 
 describe Contact do
- 
+
   it "can be created" do
-  	FactoryGirl.build(:contact).should be_valid 
+    FactoryGirl.build(:contact).should be_valid
   end
 
   it "can have notes" do
     contact = FactoryGirl.build(:contact)
     note = Note.create(:notable => contact)
     contact.notes << note
-    contact.notes.first.should == note  
+    contact.notes.first.should == note
   end
 
   it "can have todos" do
@@ -27,7 +27,7 @@ describe Contact do
       :creator => FactoryGirl.build(:user)
     )
     contact.leads << lead
-    contact.leads.first.should == lead  
+    contact.leads.first.should == lead
   end
 
   it "requires website url be valid" do
@@ -38,20 +38,20 @@ describe Contact do
   it "can have valid website url" do
     FactoryGirl.build(:contact, :website => "http://www.jetdeck.co").should be_valid
     FactoryGirl.build(:contact, :website => Faker::Internet.url).should be_valid
-  end  
+  end
 
   it "must belong to an owner XOR have a user" do
     FactoryGirl.build(:contact, :user => nil, :owner => nil).should_not be_valid
-    FactoryGirl.build(:contact, 
-      :user => FactoryGirl.build(:user), 
-      :owner => FactoryGirl.build(:user)).should_not be_valid
+    FactoryGirl.build(:contact,
+                      :user => FactoryGirl.build(:user),
+                      :owner => FactoryGirl.build(:user)).should_not be_valid
   end
 
   it "can have messages received" do
     contact = FactoryGirl.build(:contact)
     message = FactoryGirl.build(:airframe_message, :recipient => nil)
     contact.messages_received << message
-    contact.messages_received.first.should == message  
+    contact.messages_received.first.should == message
   end
 
   it "has a valid email field output" do

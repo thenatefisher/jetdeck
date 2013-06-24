@@ -18,20 +18,20 @@ class AirframeMessageMailer < ActionMailer::Base
     if airframe_message.photos_enabled
       @filename = airframe_message.airframe_spec.spec_file_name
       @filesize = "#{(airframe_message.airframe_spec.spec_file_size / 1000).to_i}Kb"
-      @photos_link = (airframe_message.photos_enabled) ? 
+      @photos_link = (airframe_message.photos_enabled) ?
         "#{root_url}p/#{airframe_message.photos_url_code}" : nil
     end
-    
+
     @favicon = "#{root_url}/assets/favicon.png"
     @body = airframe_message.body
 
     status = mail(:to => airframe_message.recipient.emailField,
-                 :subject => airframe_message.subject,
-                 :from => airframe_message.creator.contact.emailField) do |format|
+                  :subject => airframe_message.subject,
+    :from => airframe_message.creator.contact.emailField) do |format|
       format.text
       format.html
     end
-    
+
     airframe_message.status = "sending"
     airframe_message.save!
 

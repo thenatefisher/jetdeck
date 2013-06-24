@@ -39,7 +39,7 @@ module Jetdeck
 
     # Used to precompile assets in heroku
     config.assets.initialize_on_precompile = false
-    
+
     # enable font awesome by default
     # disabled in test becuase it crashes phantomJs
     config.font_awesome = true

@@ -3,17 +3,17 @@ require 'spec_helper'
 describe Note do
 
   it "can be created" do
-  	FactoryGirl.build(:contact_note).should be_valid 
-  	FactoryGirl.build(:airframe_note).should be_valid 
-  end
-  
-  it "requires a description be entered" do
-    FactoryGirl.build(:airframe_note, :description => nil).should_not be_valid 
-    FactoryGirl.build(:contact_note, :description => nil).should_not be_valid 
+    FactoryGirl.build(:contact_note).should be_valid
+    FactoryGirl.build(:airframe_note).should be_valid
   end
 
-  it "can be attached to a contact" do 
-  	contact = FactoryGirl.build(:contact)
+  it "requires a description be entered" do
+    FactoryGirl.build(:airframe_note, :description => nil).should_not be_valid
+    FactoryGirl.build(:contact_note, :description => nil).should_not be_valid
+  end
+
+  it "can be attached to a contact" do
+    contact = FactoryGirl.build(:contact)
     note = Note.create(
       :author => FactoryGirl.build(:user),
       :description => "Contact Note"
@@ -22,7 +22,7 @@ describe Note do
     contact.notes.first.should == note
   end
 
-  it "can be attached to an airframe" do 
+  it "can be attached to an airframe" do
     airframe = FactoryGirl.build(:airframe)
     note = Note.create(
       :author => FactoryGirl.build(:user),

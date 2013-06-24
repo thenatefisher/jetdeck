@@ -13,5 +13,5 @@ class Note < ActiveRecord::Base
   def url
     "/#{notable_type.tolower}s/#{notable_id}"
   end
-  
+
 end

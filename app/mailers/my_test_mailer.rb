@@ -2,7 +2,6 @@ class MyTestMailer < ActionMailer::Base
   include SendGrid
   default from: "JetDeck.co <noreply@jetdeck.co>"
 
-
   def mailer(to)
     sendgrid_enable :opentrack, :clicktrack
     sendgrid_category "test"

@@ -7,17 +7,16 @@ class ContactsController < ApplicationController
 
     if params[:term]
       @contacts = Contact.find(:all,
-        :conditions => ["upper(first || ' ' || last || ' ' || email) LIKE ?
-                             AND owner_id = ?",
-                          "%#{params[:term].to_s.upcase}%",
-                          @current_user.id
-                       ],
-         :select => "DISTINCT ON (id) id, *"
-      ).first(4)
+                               :conditions => ["upper(first || ' ' || last || ' ' || email) LIKE ? AND creator_id = ?",
+                                               "%#{params[:term].to_s.upcase}%",
+                                               @current_user.id
+                                               ],
+                               :select => "DISTINCT ON (id) id, *"
+                               ).first(4)
     end
 
   end
-  
+
   def index
     @contacts = @current_user.contacts
 
@@ -29,22 +28,17 @@ class ContactsController < ApplicationController
 
   def show
 
-    @contact = Contact.find(:first, 
-      :conditions => [
-        "id = ? AND owner_id = ?", 
-        params[:id], 
-        @current_user.id]
-    )
+    @contact = Contact.find(:first,
+                            :conditions => ["id = ? AND creator_id = ?",
+                                            params[:id],
+                                            @current_user.id]
+                            )
 
   end
 
   def new
     @contact = Contact.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @contact }
-    end
+    render :json => @contact
   end
 
   def edit
@@ -55,7 +49,7 @@ class ContactsController < ApplicationController
     whitelist = params[:contact].slice(:first, :last, :company, :email, :phone)
 
     @contact = Contact.new(whitelist)
-    @contact.owner_id = @current_user.id
+    @contact.creator_id = @current_user.id
 
     respond_to do |format|
       if @contact.save
@@ -71,38 +65,36 @@ class ContactsController < ApplicationController
   def update
 
     @contact = Contact.find(:first, :conditions =>
-      ["id = ? AND owner_id = ?", params[:id], @current_user.id])
-        
-    whitelist = params[:contact].slice(
-        :id,
-        :first,
-        :last,
-        :company,
-        :phone,
-        :email, 
-        :email_confirmation,
-        :sticky_id
-      )
+                            ["id = ? AND creator_id = ?", params[:id], @current_user.id])
 
-    respond_to do |format|
-      if @contact.update_attributes(whitelist)
-        format.json { render :json => @contact }
-      else
-        format.json { render :json => @contact.errors, :status => :unprocessable_entity }
-      end
+    whitelist = params[:contact].slice(
+      :id,
+      :first,
+      :last,
+      :company,
+      :phone,
+      :email,
+      :email_confirmation,
+      :sticky_id
+    )
+
+
+    if @contact.update_attributes(whitelist)
+      render :json => @contact
+    else
+      render :json => @contact.errors.full_messages, :status => :unprocessable_entity
     end
+
 
   end
 
   def destroy
     @contact = Contact.find(:first, :conditions =>
-      ["id = ? AND owner_id = ?", params[:id], @current_user.id])
-      
+                            ["id = ? AND creator_id = ?", params[:id], @current_user.id])
+
     @contact.destroy
 
-    respond_to do |format|
-      format.html { redirect_to contacts_url }
-      format.json { head :no_content }
-    end
+    format.html { redirect_to contacts_url }
+
   end
 end
