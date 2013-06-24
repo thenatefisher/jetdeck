@@ -1,8 +1,5 @@
 class LeadsController < ApplicationController
-
-  before_filter :sanitize_params
-
-  include ActionView::Helpers::NumberHelper
+  before_filter :authorize, :sanitize_params
   
   def send_spec
 
@@ -22,44 +19,6 @@ class LeadsController < ApplicationController
       
       end
       
-  end
-
-  # GET /i/:code
-  def tracking_image
-    @lead = Lead.find_by_tracking_image_url_code(params[:code])
-    @lead.status = "Opened"
-    send_data open("#{Rails.root}/app/assets/images/favicon.png", "rb") { |f| f.read }
-  end
-
-  # GET /s/:code
-  def spec
-
-    lead = Lead.find_by_spec_url_code(params[:code])
-    lead.status = "Downloaded"
-    @spec = lead.spec
-
-    if lead.nil? || @spec.nil? then
-        redirect_to "/", :status => 404
-        return
-    end
-
-    redirect_to @spec.url(nil, 5.minutes).to_s
-
-  end
-
-  # GET /p/:code
-  def photos
-
-    @lead = Lead.find_by_photos_url_code(params[:code])
-    @airframe = @lead.airframe
-
-    if @lead.nil? then
-        redirect_to "/"
-        return
-    end
-
-    render :layout => 'photos'
-
   end
 
   def show

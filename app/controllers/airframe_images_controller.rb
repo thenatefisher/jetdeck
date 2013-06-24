@@ -1,14 +1,5 @@
 class AirframeImagesController < ApplicationController
   before_filter :authorize
-  
-  def sendgrid
-
-	logger = Rails.logger
-	logger.info params.inspect
-
-  end
-
-
 
   def index
   

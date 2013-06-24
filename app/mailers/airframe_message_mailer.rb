@@ -22,6 +22,7 @@ class AirframeMessageMailer < ActionMailer::Base
         "#{root_url}p/#{airframe_message.photos_url_code}" : nil
     end
     
+    @favicon = "#{root_url}/assets/favicon.png"
     @body = airframe_message.body
 
     status = mail(:to => airframe_message.recipient.emailField,
