@@ -1,6 +1,6 @@
 class ProfileController < ApplicationController
 
-  before_filter :authorize, :sanitize_params, :airframes_index
+  before_filter :authorize, :sanitize_params
 
   def index
     @user = @current_user

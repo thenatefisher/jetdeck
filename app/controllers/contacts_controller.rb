@@ -1,13 +1,13 @@
 class ContactsController < ApplicationController
 
-  before_filter :authorize, :sanitize_params, :airframes_index
+  before_filter :authorize, :sanitize_params
 
   # GET /contacts/search
   def search
 
     if params[:term]
       @contacts = Contact.find(:all,
-                               :conditions => ["upper(first || ' ' || last || ' ' || email) LIKE ? AND creator_id = ?",
+                               :conditions => ["upper(first || ' ' || last || ' ' || email) LIKE ? AND created_by = ?",
                                                "%#{params[:term].to_s.upcase}%",
                                                @current_user.id
                                                ],
@@ -29,7 +29,7 @@ class ContactsController < ApplicationController
   def show
 
     @contact = Contact.find(:first,
-                            :conditions => ["id = ? AND creator_id = ?",
+                            :conditions => ["id = ? AND created_by = ?",
                                             params[:id],
                                             @current_user.id]
                             )
@@ -49,7 +49,7 @@ class ContactsController < ApplicationController
     whitelist = params[:contact].slice(:first, :last, :company, :email, :phone)
 
     @contact = Contact.new(whitelist)
-    @contact.creator_id = @current_user.id
+    @contact.created_by = @current_user.id
 
     respond_to do |format|
       if @contact.save
@@ -65,7 +65,7 @@ class ContactsController < ApplicationController
   def update
 
     @contact = Contact.find(:first, :conditions =>
-                            ["id = ? AND creator_id = ?", params[:id], @current_user.id])
+                            ["id = ? AND created_by = ?", params[:id], @current_user.id])
 
     whitelist = params[:contact].slice(
       :id,
@@ -90,7 +90,7 @@ class ContactsController < ApplicationController
 
   def destroy
     @contact = Contact.find(:first, :conditions =>
-                            ["id = ? AND creator_id = ?", params[:id], @current_user.id])
+                            ["id = ? AND created_by = ?", params[:id], @current_user.id])
 
     @contact.destroy
 

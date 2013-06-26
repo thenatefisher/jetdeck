@@ -30,8 +30,7 @@ GEM
       multi_json (~> 1.0)
     addressable (2.3.4)
     arel (3.0.2)
-    aws-sdk (1.3.9)
-      httparty (~> 0.7)
+    aws-sdk (1.11.1)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
       uuidtools (~> 2.1)
@@ -103,20 +102,17 @@ GEM
     gridhook (0.1.4)
       rails (>= 3.1.0)
       yajl-ruby (~> 1.1.0)
-    guard (1.8.0)
+    guard (1.8.1)
       formatador (>= 0.2.4)
       listen (>= 1.0.0)
       lumberjack (>= 1.0.2)
       pry (>= 0.9.10)
       thor (>= 0.14.6)
-    guard-rspec (3.0.1)
+    guard-rspec (3.0.2)
       guard (>= 1.8)
       rspec (~> 2.13)
     hike (1.2.3)
     http_parser.rb (0.5.3)
-    httparty (0.11.0)
-      multi_json (~> 1.0)
-      multi_xml (>= 0.5.2)
     i18n (0.6.1)
     jasmine (1.3.2)
       jasmine-core (~> 1.3.1)
@@ -145,10 +141,8 @@ GEM
     less-rails (2.3.3)
       actionpack (>= 3.1)
       less (~> 2.3.1)
-    libnotify (0.8.0)
-      ffi (>= 1.0.11)
     libv8 (3.3.10.4)
-    listen (1.1.6)
+    listen (1.2.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
@@ -159,8 +153,7 @@ GEM
     method_source (0.8.1)
     mime-types (1.23)
     mini_portile (0.5.0)
-    multi_json (1.7.6)
-    multi_xml (0.5.4)
+    multi_json (1.7.7)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     paperclip (3.4.2)
@@ -206,7 +199,7 @@ GEM
       rake (>= 0.8.7)
       rdoc (~> 3.4)
       thor (>= 0.14.6, < 2.0)
-    rake (10.0.4)
+    rake (10.1.0)
     rb-fsevent (0.9.3)
     rb-inotify (0.9.0)
       ffi (>= 0.5.0)
@@ -236,6 +229,7 @@ GEM
       rubyzip
       websocket (~> 1.0.4)
     sendgrid (1.2.0)
+      json
       json
     slop (3.4.5)
     spring (0.0.10)
@@ -298,7 +292,6 @@ DEPENDENCIES
   json
   launchy
   less-rails
-  libnotify
   paperclip
   pg
   poltergeist

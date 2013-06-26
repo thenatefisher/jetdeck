@@ -9,12 +9,16 @@
 
         Welcome, 
 
-        <a href="/profile" <% if !current_user.activated %> 
-          id="activation-tooltip"
-          data-placement="bottom"
-          data-title="Activate Your Account"
-          data-html="Activate Your Account"<% end %>>
-
+        <% if !current_user.activated %> 
+          <a href="/profile"
+            id="activation-tooltip"
+            data-placement="bottom"
+            data-title="Activate Your Account"
+            data-html="Activate Your Account">
+          <script type="text/javascript"> $(function(){ $("#activation-tooltip").tooltip(); });</script>
+        <% else %>
+          <a href="/profile">
+        <% end %>
           
             <% if current_user.contact.first == "" && %>
             <strong>Member</strong>    

@@ -10,18 +10,7 @@
     <li >
       <a href="/contacts">  <span class="label"><i class="icon-book" style="margin: 0 2px 0 1px;"></i></span>
         Contacts </a>
-    </li>
-
-    <li class="hide">
-      <a href="/actions" <% if (actions_due_count && actions_due_count > 0) %>
-        data-placement="bottom" 
-        rel="tooltip" 
-        title="<%= actions_due_count %> Action(s) Past Due<% end %>"> 
-
-        <span class="label"><i class="icon-ok"></i></span> Actions 
-        <% if (actions_due_count && actions_due_count > 0) %><small>(<%= actions_due_count %>)</small><% end %>
-      </a>
-    </li>     
+    </li> 
 
     <% if current_user.invites > 0 %>
     <li id="invite-sidebar">

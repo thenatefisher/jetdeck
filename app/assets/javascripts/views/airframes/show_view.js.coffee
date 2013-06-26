@@ -25,7 +25,7 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     @specs = new Jetdeck.Views.Airframes.ShowSpecs(model: @model)
     @$("#airframe_specs").html(@specs.render().el)
 
-    @delete = new Jetdeck.Views.Airframes.ShowDelete(model: @model)
+    @delete = new Jetdeck.Views.Delete.ShowDelete(model: @model)
     @$("#airframe_delete").html(@delete.render().el)
     
     @$(".number").each(->

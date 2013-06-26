@@ -30,6 +30,7 @@ class AirframeMessage < ActiveRecord::Base
     if self.creator.activated && self.airframe_spec.enabled
       success = AirframeMessageMailer.sendMessage(self).deliver
     end
+    return success
   end
 
   # Sent, Bounced, Opened, Downloaded

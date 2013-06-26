@@ -1,5 +1,5 @@
 class AirframesController < ApplicationController
-  before_filter :authorize, :sanitize_params, :airframes_index
+  before_filter :authorize, :sanitize_params
 
   # GET /airframes/import
   def import
@@ -58,7 +58,7 @@ class AirframesController < ApplicationController
 
   def index
 
-    @airframes = airframes_index()
+    @airframes = @airframes_index
 
     # registration number search
     if params[:term].present?
@@ -72,7 +72,7 @@ class AirframesController < ApplicationController
       if @airframes.nil?
         render :layout => false, :nothing => true
       else
-        render :json => {:locals => { airframe: @airframe },
+        render :json => {:locals => { airframes: @airframes },
                          :template => 'airframes/search',
                          :formats => [:json],
                          :handlers => [:jbuilder] }
@@ -162,7 +162,7 @@ class AirframesController < ApplicationController
                               ["id = ? AND created_by = ?", params[:id], @current_user.id])
     if @airframe.present?
       @airframe.destroy
-      render :html => redirect_to airframes_url
+      #render :html => redirect_to airframes_url
     else
       render :json => ["Cannot delete an aircraft that does not exist"], :status => :unprocessable_entity
     end

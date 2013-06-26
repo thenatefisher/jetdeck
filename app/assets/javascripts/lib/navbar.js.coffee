@@ -24,7 +24,7 @@ $(->
         modal(view.render().el)
     )
 
-    $("#new-spec").click( ->
+    $("#new-airframe").click( ->
         view = new Jetdeck.Views.Airframes.NewView()
         modal(view.render().el)
     )

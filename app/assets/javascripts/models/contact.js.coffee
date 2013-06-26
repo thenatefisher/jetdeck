@@ -9,11 +9,6 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       phone: null
         
     initialize : =>
-
-      ## specs collection
-      #@specs = new Jetdeck.Collections.SpecsCollection(page_size: 10)
-      #@specs.contact = this
-      
       ## actions collection
       @actions = new Jetdeck.Collections.ActionsCollection()
       @actions.contact = this      
@@ -26,7 +21,6 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       @updateChildren()
     
     updateChildren : =>
-      #@specs.reset @get('specs')
       @actions.reset @get('actions')
       @notes.reset @get('notes')
       

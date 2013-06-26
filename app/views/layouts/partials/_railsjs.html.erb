@@ -1,23 +1,8 @@
-<% if flash[:notice] %>
-
-    <script type="text/javascript"> 
-      $(function() { alertFailure("<%= flash[:notice] %>"); });
-    </script>
-
-<% end %>
-
 <script type="text/javascript">
-
-  window.bookmarklet_url = '<%= "http://#{request.host_with_port}/b/#{current_user.bookmarklet_token}" %>';
-
-  window.data = new Object();
-  window.data.signature = "<%= current_user.signature %>";
-  window.data.activated = "<%= current_user.signature %>";
-  window.data.aircraft_index_json = <%= render(   template: 'airframes/index',
-                                 handlers: [:jbuilder],
-                                 formats: [:json],  
-                                 locals: { airframes: airframes_index}).html_safe %> 
-
-  $(function() { $("#activation-tooltip").tooltip(); });
-
+	window.bookmarklet_url = "<%= @bookmarklet_url %>";
+	window.data = new Object();
+	window.data.signature = "<%= @current_user.signature %>";
+	window.data.activated = "<%= @current_user.activated %>";
+	window.data.help_enabled = "<%= @current_user.help_enabled %>";
+	window.data.airframe_index = <%= @airframes_index.reduce(Array.new) {|output, airframe| output.push airframe.as_json(:include => [:specs])}.to_json.html_safe %> 
 </script>

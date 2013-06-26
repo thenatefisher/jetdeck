@@ -15,6 +15,8 @@ ROADMAP TO LAUNCH:
                 - refactor backbone views
                 - refactor backbone templates
                 - integrate mixpanel
+                - integrate help_enabled windows
+                - remove BETA flags
 
     1x      create bank account
 

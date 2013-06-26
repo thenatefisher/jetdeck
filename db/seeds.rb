@@ -12,12 +12,12 @@ Contact.create(
   :email_confirmation => "***REMOVED***"
   )
 
-user = User.create()
-    user.password = "asd123"
-    user.password_confirmation = "asd123"
-    user.contact_id = 1
-    user.activated = true
-    user.save
+user = User.create({
+    :password => "asd123",
+    :password_confirmation => "asd123",
+    :contact_id => 1,
+    :activated => true
+})
 
 recipient = Contact.create(
     :email => "***REMOVED***",

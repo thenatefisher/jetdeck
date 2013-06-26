@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-    helper_method :current_user, :airframes_index, :actions_due_count # makes the data available in views
+    # makes the data available in views
+    helper_method :current_user, :airframes_index, :bookmarklet_url
 
     def sanitize_params
       sanitize_array(params)
@@ -34,38 +35,12 @@ class ApplicationController < ActionController::Base
       @current_user ||= User.find_by_auth_token(cookies[:auth_token]) if cookies[:auth_token]
     end
 
-    def airframes_index
-      @airframes = Airframe.find(:all, :conditions => ["creator_id = ?", @current_user.id], :order => "created_at DESC")
-    end
-
-    def actions_due_count
-      @actions_due_count = @current_user.todos.find(:all, :conditions =>
-                                                    ["is_completed != 'true' AND DATE(due_at) < DATE(?)", Time.now()]).count if @current_user.present?
-    end
-
-    def todos_due_today(user = null)
-
-      retval = false
-
-      if user.present?
-
-        @todos_due_today = user.todos.find(:all, :conditions =>
-                                           ["is_completed != 'true' AND DATE(due_at) = DATE(?)", Time.now()]).count
-
-        if @todos_due_today == 1
-          retval = "You have an action due today"
-        elsif @todos_due_today > 1
-          retval = "You have #{@todos_due_today} actions due today"
-        end
-
-      end
-
-      retval
-
-    end
-
     def authorize
       redirect_to login_url, alert: "Not authorized" if current_user.nil?
+
+      # for the railsjs partial; loads on every page
+      @airframes_index = Airframe.find(:all, :conditions => ["created_by = ?", @current_user.id], :order => "created_at DESC")
+      @bookmarklet_url = "http://#{request.host_with_port}/b/#{@current_user.bookmarklet_token}"
     end
 
 end

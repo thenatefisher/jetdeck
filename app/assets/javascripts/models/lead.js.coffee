@@ -13,7 +13,6 @@ class Jetdeck.Models.LeadModel extends Backbone.Model
       message_body: null
       include_photos: null
 
-  
 class Jetdeck.Collections.LeadsCollection extends Backbone.Collection
   
     model: Jetdeck.Models.LeadModel

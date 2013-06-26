@@ -27,7 +27,7 @@ test_local: &test_local
   encoding: LATIN1
 
 test:
-  <<: *myheroku
+  <<: *test_local
 
 purple:
   <<: *myheroku

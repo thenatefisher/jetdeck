@@ -146,6 +146,7 @@ class CreateSchema < ActiveRecord::Migration
       t.boolean  "activated"
       t.string   "bookmarklet_token"
       t.text     "signature"
+      t.boolean  "help_enabled"
     end
 
     add_index "users", ["contact_id"], :name => "indexusers_on_contact_id"

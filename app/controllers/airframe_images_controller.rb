@@ -51,7 +51,7 @@ class AirframeImagesController < ApplicationController
       end
 
       if @image.update_attributes(params[:airframe_image].slice(:enabled))
-        render :json => @spec, :status => 200
+        render :json => @image, :status => :ok
       else
         render :json => @image.full_messages, :status => :unprocessable_entity
       end
@@ -65,7 +65,7 @@ class AirframeImagesController < ApplicationController
     @image = AirframeImage.find(params[:id], :created_by => current_user.id)
     if @image.present?
       @image.destroy
-      render :json => true, :status => 200
+      render :json => true, :status => :ok
     else
       render :json => ['You are not Authorized to delete this image'], :status => :unprocessable_entity
     end

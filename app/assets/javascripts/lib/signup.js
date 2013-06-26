@@ -1,13 +1,6 @@
 // field validation
 $(function() {
 
-    $('#beta').popover({
-      animation: true,
-      placement: "bottom",
-      title: "JetDeck is a Beta!",
-      content: "This means it's not a commercial product yet and may have a few bugs here and there. We appreciate your feedback when something isn't perfect. In exchange for any inconvenience, you get to use all the features of JetDeck for free while we keep making it better. Fair trade, right?"
-    })   
-
   // set input fields from DOM
   var email_field = $("input[name='email']");
   var password_field = $("input[name='password']");

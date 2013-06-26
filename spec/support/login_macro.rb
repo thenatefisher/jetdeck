@@ -32,12 +32,10 @@ module UserLogin
     visit "/login"
 
     # uncomment for debugging the spec
-    # screenshot('prelogin')
+    screenshot('prelogin')
 
     fill_in "email", :with => email
-
     fill_in "password", :with => "secret"
-
     click_button "Log In"
 
     {:email => contact[:email], :password => user[:password]}

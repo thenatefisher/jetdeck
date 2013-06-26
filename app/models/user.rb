@@ -2,22 +2,13 @@ require 'bcrypt'
 
 class User < ActiveRecord::Base
 
-  attr_accessible :password,
-    :password_confirmation,
-    :contact,
-    :contact_id,
-    :airframes,
-    :enabled,
-    :storage_quota,
-    :invites
-
   attr_accessor  :password, :password_confirmation
 
   before_save :encrypt_password
   before_create :set_defaults
 
   has_many :todos, :foreign_key => "created_by", :dependent => :destroy
-  has_many :airframes, :dependent => :destroy
+  has_many :airframes, :foreign_key => "created_by", :dependent => :destroy
   has_many :contacts, :class_name => 'Contact', :foreign_key => "created_by", :dependent => :destroy
   has_many :airframe_specs, :class_name => 'AirframeSpec', :foreign_key => "created_by"
   has_many :airframe_images, :class_name => 'AirframeImage', :foreign_key => "created_by"
@@ -61,6 +52,9 @@ class User < ActiveRecord::Base
 
       # set 10 invites if not mass assigned
       self.invites ||= 10
+
+      # default tutorial enabled status if not mass assigned
+      self.help_enabled ||= true
 
       # default to enabled status if not mass assigned
       self.enabled ||= true

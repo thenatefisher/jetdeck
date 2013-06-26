@@ -35,6 +35,8 @@ class AirframeMessageMailer < ActionMailer::Base
     airframe_message.status = "sending"
     airframe_message.save!
 
+    return status
+
   end
 
 end
