@@ -6,7 +6,7 @@ class Jetdeck.Views.Airframes.ShowAvatar extends Backbone.View
 
   render: =>
     $(@el).html(@tmpl_empty())
-    if @model && @model.get("avatar") != null
+    if @model && @model.get("avatar")
         $(@el).html(@tmpl_filled({avatar: @model.get("avatar")}))
     return this
 
@@ -119,6 +119,12 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
                     progress + '%'
                 )
     })
+
+    # reflow avatar thumbnail
+    @$('#airframe_image_upload').bind('fileuploaddestroyed', => 
+        @model.unset('avatar'); @model.fetch(complete: => @renderAvatar()))
+    @$('#airframe_image_upload').bind('fileuploadfinished', => 
+        @model.unset('avatar'); @model.fetch(complete: => @renderAvatar()))
 
     # set some drag/drop events
     @$('#airframe_image_upload').bind('fileuploaddrop', =>
