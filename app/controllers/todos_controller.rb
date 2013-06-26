@@ -57,10 +57,11 @@ class TodosController < ApplicationController
   end
 
   def destroy
-
-    @action = Action.find(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
-    @action.destroy
-    render :json => true
-
+    @todo = Todo.first(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
+    if @todo && @todo.destroy()
+      render :json => :true, :status => :ok
+    else
+      render :json => ['Not authorized to delete'], :status => :unprocessable_entity
+    end
   end
 end

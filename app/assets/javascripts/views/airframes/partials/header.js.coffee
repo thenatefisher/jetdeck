@@ -6,15 +6,22 @@ class Jetdeck.Views.Airframes.ShowAvatar extends Backbone.View
 
   render: =>
     $(@el).html(@tmpl_empty())
-    if @model.get("avatar") != null && @model.get("avatar").thumb != null
-        $(@el).html(@tmpl_filled({avatar: @model.get("avatar").thumb}))
+    if @model && @model.get("avatar") != null
+        $(@el).html(@tmpl_filled({avatar: @model.get("avatar")}))
     return this
 
 class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
   template: JST['templates/airframes/partials/header']
 
   events:
-    'click .set-thumbnail' : 'setThumbnail'
+    'click .set-thumbnail'      : 'setThumbnail'
+    "click .manage_images"      : "manageImages"
+
+  manageImages: () ->
+    if $("#uploader").is(":visible")
+      $("#uploader").hide()
+    else
+      $("#uploader").show()
 
   initialize: () ->
     @model.on('change', @renderHeadline)
@@ -23,13 +30,13 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     e = event.target || event.currentTarget
     event.preventDefault()
     image_id = $(e).data('aid')
-    image = @model.images.findWhere({id: image_id})
+    image = @model.images.find({id: image_id})
     image.set({thumbnail: true})
     @model.save(null, {patch: true, success: => @renderAvatar()})
 
   renderAvatar: =>
-    avatar_view = new Jetdeck.Views.Airframes.ShowAvatar(@model)
-    @$("#avatar").html(avatar_view.render().el)
+    avatar_view = new Jetdeck.Views.Airframes.ShowAvatar(model: @model)
+    @$(".airframe-thumbnail").html(avatar_view.render().el)
 
   renderHeadline: () =>
     headline = @model.get('year')
@@ -90,7 +97,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     # uploader instantiation and settings
     @$('#airframe_image_upload').fileupload({
         autoUpload: true
-        url: '/accessories'
+        url: '/airframe_images'
         acceptFileTypes: /(\.|\/)(gif|png|jpg|jpeg)$/i
         maxFileSize: 10490000 # 10MB
         progressall: (e, data) =>
@@ -111,8 +118,8 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     })
 
     # reflow header on image upload and delete
-    @$('#airframe_image_upload').bind('fileuploaddestroyed', => @renderImagesList())
-    @$('#airframe_image_upload').bind('fileuploadfinished', => @renderImagesList())
+    @$('#airframe_image_upload').bind('fileuploaddestroyed', (d1, d2, d3) => @removeImage(d1, d2, d3))
+    @$('#airframe_image_upload').bind('fileuploadfinished', (jqEvent,object) => @addImage(object))
 
     # set some drag/drop events
     @$('#airframe_image_upload').bind('fileuploaddrop', =>
@@ -124,17 +131,25 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     token = $("meta[name='csrf-token']").attr("content")
     @$("#airframe_image_upload input[name='authenticity_token']").val(token)    
 
-  renderImagesList: (show_uploader=true) =>
+  addImage: (newImage) =>
+    # add image to model
+    if newImage
+        @model.images.add(JSON.parse(newImage.jqXHR.responseText).files[0])
+    # reflow the image list
+    @renderImagesList()
+
+  removeImage: (d1,d2,d3) =>
+    window.nate = [d1,d2,d3]
+
+  renderImagesList: () =>
     # clear list
     uploader = $('#airframe_image_upload').data('blueimpFileupload')
     $('#airframe_image_upload .files').html("")
 
     # add all images
-    uploader._renderDownload(@model.images.toJSON)
+    uploader._renderDownload(@model.images.toJSON())
         .appendTo($('#airframe_image_upload .files'))
         .removeClass('fade')       
-
-    $('#uploader').show() if show_uploader
 
   render: ->
     # render header container
@@ -151,7 +166,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
         # init image uploader
         @initializeImagesUploader()
         # render images list
-        @renderImagesList(false)
+        @renderImagesList()
     )
 
     return this    

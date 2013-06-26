@@ -3,15 +3,6 @@ Jetdeck.Views.Airframes ||= {}
 class Jetdeck.Views.Airframes.ShowView extends Backbone.View
   template: JST["templates/airframes/show"]
 
-  events:
-    "click .manage_images"      : "manageImages"
-
-  manageImages: () ->
-    if $("#uploader").is(":visible")
-      $("#uploader").hide()
-    else
-      $("#uploader").show()
-
   render: =>
       
     $(@el).html(@template(@model.toJSON() ))

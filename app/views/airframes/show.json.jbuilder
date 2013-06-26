@@ -1,5 +1,4 @@
 json.id @airframe.id
-json.avatar @airframe.avatar
 json.serial h @airframe.serial
 json.asking_price h @airframe.asking_price
 json.registration h @airframe.registration
@@ -10,6 +9,8 @@ json.description h @airframe.description
 json.import_url h @airframe.import_url
 json.to_s h(@airframe.to_s)
 json.long h(@airframe.long)
+
+json.avatar @airframe.avatar.url("thumb") if @airframe.avatar.present?
 
 json.leads @airframe.leads do |x|
     json.contact x.contact
@@ -22,6 +23,17 @@ json.specs @airframe.specs do |x|
     json.link x.url
     json.id x.id
     json.airframe_messages x.airframe_messages
+end
+
+json.images @airframe.images do |x|
+    json.delete_type "DELETE"
+    json.delete_url "/airframe_images/#{x.id}"
+    json.id x.id
+    json.name x.image_file_name
+    json.size x.image_file_size
+    json.thumbnail_url x.url("mini")
+    json.url x.url("original", 1.day)
+    json.thumbnail x.thumbnail
 end
 
 json.actions @airframe.todos do |c|

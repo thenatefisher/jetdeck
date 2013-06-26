@@ -1,28 +1,6 @@
 <div style="padding-top: 20px; background:rgb(236, 242, 245); border-bottom: 1px solid #CCC">
 
-  <div class="span2 main-thumbnail airframe-thumbnail" style="position:relative; height: 130px; margin-bottom: 20px;">
-
-    <% if (avatar && avatar.thumb) { %>
-
-      <a class="manage_images" href="#" onclick="return false;">
-        <span style="position: absolute; bottom: 0px; width: 140px; text-align: center; color: white; background: #2C3E50">
-          <strong>Manage Images</strong>
-        </span>      
-        <img id="avatar" src="<%= avatar.thumb %>" onError="this.src = '/assets/placeholder/aircraft_default_avatar.png'"></a>
-
-    <% } else { %>
-
-      <a class="manage_images" href="#" onclick="return false;">
-        <span style="position: absolute; margin-top: 45px; width: 140px; text-align: center">
-          <strong>Upload Image</strong><br>
-          Drag Files Here
-        </span>
-        <img id="avatar" style="height: 129px" src="/assets/placeholder/aircraft_default_avatar.png">
-      </a>
-
-    <% } %>
-
-  </div>
+  <div class="span2 main-thumbnail airframe-thumbnail" style="position:relative; height: 130px; margin-bottom: 20px;"></div>
 
   <div class="offset2">
 

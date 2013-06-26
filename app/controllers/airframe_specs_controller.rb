@@ -46,7 +46,7 @@ class AirframeSpecsController < ApplicationController
       @spec.enabled = (params[:airframe_spec][:enabled]) if params[:airframe_spec][:enabled]
 
       if @spec.save
-        render :json => @spec, :status => 200
+        render :json => @spec, :status => :ok
       else
         render :json => @spec.full_messages, :status => :unprocessable_entity
       end
@@ -55,16 +55,12 @@ class AirframeSpecsController < ApplicationController
   end
 
   def destroy
-
     @spec = AirframeSpec.find(params[:id], :created_by => current_user.id)
-
-    if @spec.present?
-      @spec.destroy
-      render :json => true, :status => 200
+    if @spec.present? && @spec.destroy
+      render :json => true, :status => :ok
     else
-      render :json => ['You are not Authorized to delete this spec'], :status => :unprocessable_entity
+      render :json => ['Not authorized to delete'], :status => :unprocessable_entity
     end
-
   end
 
 end

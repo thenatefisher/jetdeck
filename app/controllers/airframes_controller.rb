@@ -146,13 +146,11 @@ class AirframesController < ApplicationController
   end
 
   def destroy
-    @airframe = Airframe.find(:first, :conditions =>
-                              ["id = ? AND created_by = ?", params[:id], @current_user.id])
+    @airframe = Airframe.find(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
     if @airframe.present? && @airframe.destroy
-      render :text => "OK", :status => :ok
+      render :json => true, :status => :ok
     else
       render :json => ["Cannot delete an aircraft that does not exist"], :status => :unprocessable_entity
     end
-
   end
 end

@@ -89,12 +89,11 @@ class ContactsController < ApplicationController
   end
 
   def destroy
-    @contact = Contact.find(:first, :conditions =>
-                            ["id = ? AND created_by = ?", params[:id], @current_user.id])
-
-    @contact.destroy
-
-    format.html { redirect_to contacts_url }
-
+    @contact = Contact.find(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
+    if @contact && @contact.destroy
+      render :json => true, :status => :ok
+    else
+      render :json => ['Not authorized to delete'], :status => :unprocessable_entity
+    end
   end
 end

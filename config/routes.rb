@@ -18,6 +18,10 @@ Jetdeck::Application.routes.draw do
 
   resources :airframes
 
+  resources :airframe_specs
+
+  resources :airframe_images
+
   resources :password_resets
 
   match "/signup/:token" => "users#new"

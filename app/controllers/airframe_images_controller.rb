@@ -19,12 +19,12 @@ class AirframeImagesController < ApplicationController
   end
 
   def create
-
-    @image = AirframeImage.new(params[:airframe_image][:files])
+    logger.warn params.inspect
+    @image = AirframeImage.new(params[:files])
     @image.creator = @current_user
 
-    if Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe_image][:airframe]]).present?
-      @airframe = Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe_image][:airframe]])
+    if Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe]]).present?
+      @airframe = Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe]])
       if @airframe.present?
         @image.airframe_id = @airframe.id
       end
@@ -40,7 +40,7 @@ class AirframeImagesController < ApplicationController
 
   def update
 
-    @image = AirframeImage.find(params[:id], :created_by => current_user.id)
+    @image = AirframeImage.find(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
     if @image.present?
 
       if params[:airframe_image][:thumbnail]
@@ -61,15 +61,12 @@ class AirframeImagesController < ApplicationController
   end
 
   def destroy
-
-    @image = AirframeImage.find(params[:id], :created_by => current_user.id)
-    if @image.present?
-      @image.destroy
+    @image = AirframeImage.find(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
+    if @image.present? && @image.destroy
       render :json => true, :status => :ok
     else
-      render :json => ['You are not Authorized to delete this image'], :status => :unprocessable_entity
+      render :json => ['Not authorized to delete'], :status => :unprocessable_entity
     end
-
   end
 
 end
