@@ -1,7 +1,7 @@
 class CreateSchema < ActiveRecord::Migration
   def change
 
-    create_table "airframe_images", :force => true do |t|
+    create_table "airframe_images" do |t|
       t.integer  "airframe_id"
       t.datetime "created_at",            :null => false
       t.datetime "updated_at",            :null => false
@@ -13,7 +13,7 @@ class CreateSchema < ActiveRecord::Migration
       t.integer  "created_by"
     end
 
-    create_table "todos", :force => true do |t|
+    create_table "todos" do |t|
       t.string   "title"
       t.text     "description"
       t.datetime "due_at"
@@ -26,7 +26,7 @@ class CreateSchema < ActiveRecord::Migration
       t.datetime "updated_at",      :null => false
     end
 
-    create_table "airframes", :force => true do |t|
+    create_table "airframes" do |t|
       t.string   "serial"
       t.string   "registration"
       t.string   "make"
@@ -40,7 +40,7 @@ class CreateSchema < ActiveRecord::Migration
       t.text     "import_url"
     end
 
-    create_table "contacts", :force => true do |t|
+    create_table "contacts" do |t|
       t.string   "first"
       t.string   "last"
       t.string   "email"
@@ -55,7 +55,7 @@ class CreateSchema < ActiveRecord::Migration
       t.integer  "sticky_id"
     end
 
-    create_table "delayed_jobs", :force => true do |t|
+    create_table "delayed_jobs" do |t|
       t.integer  "priority",   :default => 0
       t.integer  "attempts",   :default => 0
       t.text     "handler"
@@ -71,7 +71,7 @@ class CreateSchema < ActiveRecord::Migration
 
     add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
-    create_table "invites", :force => true do |t|
+    create_table "invites" do |t|
       t.integer  "created_by"
       t.boolean  "activated"
       t.text     "message"
@@ -82,7 +82,7 @@ class CreateSchema < ActiveRecord::Migration
       t.string   "email"
     end
 
-    create_table "airframe_messages", :force => true do |t|
+    create_table "airframe_messages" do |t|
       t.integer  "created_by"
       t.integer  "recipient_id"
       t.integer  "status_id"
@@ -99,7 +99,7 @@ class CreateSchema < ActiveRecord::Migration
       t.datetime "updated_at",              :null => false
     end
 
-    create_table "airframe_specs", :force => true do |t|
+    create_table "airframe_specs" do |t|
       t.integer  "created_by"
       t.string   "spec_file_name"
       t.string   "spec_content_type"
@@ -111,15 +111,12 @@ class CreateSchema < ActiveRecord::Migration
       t.datetime "updated_at",              :null => false
     end
 
-    create_table "leads", :force => true do |t|
+    create_table "leads", :id => false do |t|
       t.integer  "airframe_id"
-      t.integer  "created_by"
       t.integer  "contact_id"
-      t.datetime "created_at",              :null => false
-      t.datetime "updated_at",              :null => false
     end
 
-    create_table "notes", :force => true do |t|
+    create_table "notes" do |t|
       t.string   "title"
       t.text     "description"
       t.integer  "created_by"
@@ -129,7 +126,7 @@ class CreateSchema < ActiveRecord::Migration
       t.datetime "updated_at",   :null => false
     end
 
-    create_table "users", :force => true do |t|
+    create_table "users" do |t|
       t.integer  "type"
       t.integer  "contact_id"
       t.integer  "storage_quota"

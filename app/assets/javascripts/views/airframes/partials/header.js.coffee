@@ -6,7 +6,7 @@ class Jetdeck.Views.Airframes.ShowAvatar extends Backbone.View
 
   render: =>
     $(@el).html(@tmpl_empty())
-    if @model.get("avatar") != null @model.get("avatar").thumb != null
+    if @model.get("avatar") != null && @model.get("avatar").thumb != null
         $(@el).html(@tmpl_filled({avatar: @model.get("avatar").thumb}))
     return this
 
@@ -25,7 +25,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
     image_id = $(e).data('aid')
     image = @model.images.findWhere({id: image_id})
     image.set({thumbnail: true})
-    @model.save(null, {patch: true, success: => @renderAvatar()))
+    @model.save(null, {patch: true, success: => @renderAvatar()})
 
   renderAvatar: =>
     avatar_view = new Jetdeck.Views.Airframes.ShowAvatar(@model)

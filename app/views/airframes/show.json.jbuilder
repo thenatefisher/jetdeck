@@ -12,7 +12,6 @@ json.to_s h(@airframe.to_s)
 json.long h(@airframe.long)
 
 json.leads @airframe.leads do |x|
-    json.id x.id
     json.contact x.contact
 end
 
@@ -25,7 +24,7 @@ json.specs @airframe.specs do |x|
     json.airframe_messages x.airframe_messages
 end
 
-json.actions @airframe.actions do |c|
+json.actions @airframe.todos do |c|
     json.id c.id
     json.title h c.title
     json.description h c.description

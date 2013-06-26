@@ -18,7 +18,8 @@ class Airframe < ActiveRecord::Base
   has_many :specs, :class_name => 'AirframeSpec', :conditions => "spec_file_name is not null", :dependent => :destroy
   accepts_nested_attributes_for :specs, :reject_if => lambda { |t| t['spec'].nil? }
 
-  has_many :leads, :dependent => :destroy
+  has_and_belongs_to_many :leads, :class_name => 'Contact', :join_table => 'leads'
+  accepts_nested_attributes_for :leads
 
   belongs_to :creator, :class_name => "User", :foreign_key => "created_by"
   validates_associated :creator

@@ -14,6 +14,8 @@ class Jetdeck.Views.Delete.ShowDelete extends Backbone.View
       mixpanel.track("Deleted " + @model.get("type"), {}, ->
         window.location.href = "/" +  @model.get("type").toLowerCase() + "s"
       )
+    else
+      @$(".help-message").html("Type DELETE to confirm.").show()
     
   toggleDeleteMessage: ->
     if $("#delete-button").is(":visible")
@@ -26,4 +28,5 @@ class Jetdeck.Views.Delete.ShowDelete extends Backbone.View
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))
+    @$(".help-message").hide()
     return this

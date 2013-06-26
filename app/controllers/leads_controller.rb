@@ -8,16 +8,15 @@ class LeadsController < ApplicationController
 
   def destroy
     
-    @xspec = Lead.where("id = ? AND sender_id = ?", params[:id], @current_user.id).first
+    @Lead = Lead.where("id = ? AND sender_id = ?", params[:id], @current_user.id).first
     
-    if @xspec
-       @xspec.destroy()
+    if @Lead
+       @Lead.destroy()
+       render :json => "OK", :status => :ok
+    else
+       render :json => ["You do have have permissions to delete this lead."], :status => :unprocessable_entity
     end
-    
-    respond_to do |format|
-      format.json { head :no_content }
-    end
-    
+
   end
   
 end

@@ -5,7 +5,7 @@
 
 
 
-Contact.create(
+contact = Contact.create(
   :first => "Nate",
   :last => "Fisher",
   :email => "***REMOVED***",
@@ -15,7 +15,7 @@ Contact.create(
 user = User.create({
     :password => "asd123",
     :password_confirmation => "asd123",
-    :contact_id => 1,
+    :contact_id => contact.id,
     :activated => true
 })
 

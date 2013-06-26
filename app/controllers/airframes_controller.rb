@@ -72,10 +72,7 @@ class AirframesController < ApplicationController
       if @airframes.nil?
         render :layout => false, :nothing => true
       else
-        render :json => {:locals => { airframes: @airframes },
-                         :template => 'airframes/search',
-                         :formats => [:json],
-                         :handlers => [:jbuilder] }
+        render :json, :template => 'airframes/search'
       end
 
     end
@@ -87,10 +84,7 @@ class AirframesController < ApplicationController
     if params[:id].present?
       @airframe = Airframe.find(:first, :conditions =>
                                 ["id = ? AND created_by = ?", params[:id], @current_user.id])
-      render :json => {:locals => { airframe: @airframe },
-                       :template => 'airframes/show`',
-                       :formats => [:json],
-                       :handlers => [:jbuilder] }
+      render :json, :template => 'airframes/show'
     else
       render :json => ["You do not have access to this aircraft"], :status => :unauthorized
     end
@@ -127,7 +121,7 @@ class AirframesController < ApplicationController
     end
 
     if @airframe.save
-      render :json => @airframe, :status => :created, :location => @airframe
+      render :json, :template => 'airframes/show', :status => :created
     else
       render :json => @airframe.errors.full_messages, :status => :unprocessable_entity
     end
@@ -144,14 +138,8 @@ class AirframesController < ApplicationController
 
     respond_to do |format|
       if @airframe.update_attributes(whitelist)
-        format.html { redirect_to @airframe,
-                      :notice => 'Airframe was successfully updated' }
-        format.json { render  :locals => { airframe: @airframe },
-                      :template => 'airframes/show',
-                      :formats => [:json],
-                      :handlers => [:jbuilder] }
+        format.json { render :template => 'airframes/show', :handlers => [:jbuilder] }
       else
-        format.html { render :action => "edit" }
         format.json { render :json => @airframe.errors.full_messages, :status => :unprocessable_entity }
       end
     end
@@ -160,9 +148,8 @@ class AirframesController < ApplicationController
   def destroy
     @airframe = Airframe.find(:first, :conditions =>
                               ["id = ? AND created_by = ?", params[:id], @current_user.id])
-    if @airframe.present?
-      @airframe.destroy
-      #render :html => redirect_to airframes_url
+    if @airframe.present? && @airframe.destroy
+      render :text => "OK", :status => :ok
     else
       render :json => ["Cannot delete an aircraft that does not exist"], :status => :unprocessable_entity
     end

@@ -23,7 +23,7 @@ class Jetdeck.Models.AirframeModel extends Backbone.Model
       @actions.airframe = this
 
       ## spec files collection
-      @specs = new Jetdeck.Collections.SpecsCollection()
+      @specs = new Jetdeck.Collections.AirframeSpecsCollection()
       @specs.airframe = this 
 
       ## images collection
