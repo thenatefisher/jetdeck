@@ -19,7 +19,7 @@ json.notes @contact.notes do |x|
   json.is_mine true if @current_user and (@current_user.id == x.created_by)
 end
 
-json.actions @contact.actions do |c|
+json.todos @contact.todos do |c|
     json.id c.id
     json.title h c.title
     json.description h c.description
@@ -38,17 +38,12 @@ end
 json.specs @contact.files_received do |x|
 
     if x.spec
-
         json.photos_url_code "/s/" + x.photos_url_code
         json.spec_url_code "/s/" + x.spec_url_code
-        
         json.status x.status
         json.status_date x.status_date
-        
         json.spec "#{x.spec.document_file_name} (#{x.spec.version})"
-
         if x.airframe
-        
           json.id             x.airframe.id
           json.registration   x.airframe.registration
           json.serial         x.airframe.serial
@@ -56,9 +51,7 @@ json.specs @contact.files_received do |x|
           json.make           x.airframe.make
           json.model_name     x.airframe.model_name
           json.avatar         x.airframe.avatar
-          
         end
-
     end
 
 end

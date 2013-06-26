@@ -19,8 +19,8 @@ class Jetdeck.Models.AirframeModel extends Backbone.Model
       @leads.airframe = this
       
       ## actions collection
-      @actions = new Jetdeck.Collections.ActionsCollection(page_size: 9)
-      @actions.airframe = this
+      @todos = new Jetdeck.Collections.TodosCollection(page_size: 9)
+      @todos.airframe = this
 
       ## spec files collection
       @specs = new Jetdeck.Collections.AirframeSpecsCollection()
@@ -35,7 +35,7 @@ class Jetdeck.Models.AirframeModel extends Backbone.Model
         
     updateChildren : =>
       @leads.reset @get('leads')
-      @actions.reset @get('actions')
+      @todos.reset @get('todos')
       @specs.reset @get('specs')
       @images.reset @get('images')
   

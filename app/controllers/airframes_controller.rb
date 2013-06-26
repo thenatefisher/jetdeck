@@ -129,20 +129,33 @@ class AirframesController < ApplicationController
 
   def update
 
-    @airframe = Airframe.find(:first, :conditions =>
-                              ["id = ? AND created_by = ?", params[:id], @current_user.id])
+    @airframe = Airframe.find(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
 
-    whitelist = params[:airframe].slice(
-      :asking_price, :description, :serial, :registration, :year,
-    :make, :model_name, :actions, :notes, :images, :specs, :leads)
+    whitelist = params[:airframe].slice(:asking_price, :description, :serial, :registration, :year, :make, :model_name)
 
-    respond_to do |format|
-      if @airframe.update_attributes(whitelist)
-        format.json { render :template => 'airframes/show', :handlers => [:jbuilder] }
-      else
-        format.json { render :json => @airframe.errors.full_messages, :status => :unprocessable_entity }
-      end
+    if params[:airframe][:images].present?
+      whitelist[:images_attributes] = params[:airframe][:images].map{|x| x.slice(:id, :thumbnail)}
+      logger.warn whitelist[:images_attributes]
     end
+
+    if params[:airframe][:leads].present?
+      whitelist[:leads_attributes] = params[:airframe][:leads].map{|x| x.slice(:id)}
+    end
+
+    if params[:airframe][:todos].present?
+      whitelist[:todos_attributes] = params[:airframe][:todos].map{|x| x.slice(:id)}
+    end
+
+    if params[:airframe][:specs].present?
+      whitelist[:specs_attributes] = params[:airframe][:specs].map{|x| x.slice(:id)}
+    end
+
+    if @airframe.update_attributes(whitelist)
+      render :json, :template => 'airframes/show'
+    else
+      render :json => @airframe.errors.full_messages, :status => :unprocessable_entity
+    end
+
   end
 
   def destroy

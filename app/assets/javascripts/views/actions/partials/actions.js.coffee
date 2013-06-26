@@ -49,8 +49,8 @@ class Jetdeck.Views.Actions.ShowActions extends Backbone.View
     e = event.target || event.currentTarget
     interval = $(e).data("interval")
     
-    action = new Jetdeck.Models.ActionModel()
-    action.collection = @model.actions
+    action = new Jetdeck.Models.TodoModel()
+    action.collection = @model.todos
     action.save({
       title: "Follow Up " + @fup_name, 
       interval: interval,
@@ -58,7 +58,7 @@ class Jetdeck.Views.Actions.ShowActions extends Backbone.View
       actionable_id: @model.get('id')
     }, success: (m) => 
       mixpanel.track "Created Canned Action", {type: @type}
-      @model.actions.add(m)
+      @model.todos.add(m)
       @render()
     )  
     
@@ -67,8 +67,8 @@ class Jetdeck.Views.Actions.ShowActions extends Backbone.View
       @$(".control-group").addClass("error")
       return 
       
-    action = new Jetdeck.Models.ActionModel()
-    action.collection = @model.actions
+    action = new Jetdeck.Models.TodoModel()
+    action.collection = @model.todos
     action.set({
       title: @$("textarea").val(), 
       actionable_type: @type, 
@@ -78,21 +78,21 @@ class Jetdeck.Views.Actions.ShowActions extends Backbone.View
     action.save(null, 
       success: (m) => 
         mixpanel.track "Created Action", {type: @type}
-        @model.actions.add(m)
+        @model.todos.add(m)
         @render()
     )
         
   render : =>
     $(@el).html(@template())
 
-    @model.actions.sort()
-    @model.actions.each( (action) =>
+    @model.todos.sort()
+    @model.todos.each( (action) =>
       item = new Jetdeck.Views.Actions.ActionItem(model: action)
       @$("#actions").append(item.render().el) if action.get('is_completed') != true
       item.on("deleted", @render)
     )
 
-    if @model.actions.where({is_completed: false}).length == 0
+    if @model.todos.where({is_completed: false}).length == 0
       @$("#add-action-fields").show()
     else
       @$(".subsection").toggle(

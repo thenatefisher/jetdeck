@@ -36,7 +36,7 @@ json.images @airframe.images do |x|
     json.thumbnail x.thumbnail
 end
 
-json.actions @airframe.todos do |c|
+json.todos @airframe.todos do |c|
     json.id c.id
     json.title h c.title
     json.description h c.description

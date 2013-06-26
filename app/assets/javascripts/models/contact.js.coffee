@@ -10,8 +10,8 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
         
     initialize : =>
       ## actions collection
-      @actions = new Jetdeck.Collections.ActionsCollection()
-      @actions.contact = this      
+      @todos = new Jetdeck.Collections.TodosCollection(page_size: 9)
+      @todos.airframe = this
 
       ## notes collection
       @notes = new Jetdeck.Collections.NotesCollection(page_size: 3)
@@ -21,7 +21,7 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       @updateChildren()
     
     updateChildren : =>
-      @actions.reset @get('actions')
+      @todos.reset @get('todos')
       @notes.reset @get('notes')
       
 class Jetdeck.Collections.ContactsCollection extends Backbone.CollectionBook

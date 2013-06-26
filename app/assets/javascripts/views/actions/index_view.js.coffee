@@ -4,7 +4,7 @@ class Jetdeck.Views.Actions.IndexView extends Backbone.View
   template: JST["templates/actions/index"]
 
   initialize: ->
-    @options.actions.bind('reset', @addAll)
+    @options.todos.bind('reset', @addAll)
     
   events : 
     "click a.next" : "next"
@@ -19,9 +19,9 @@ class Jetdeck.Views.Actions.IndexView extends Backbone.View
     direction = $(e).data('dir')  
     
     # perform the sort
-    @options.actions.orderBy(sort)
-    @options.actions.direction(direction)
-    @options.actions.sort()  
+    @options.todos.orderBy(sort)
+    @options.todos.direction(direction)
+    @options.todos.sort()  
     
     # set the sort button styles
     @$('.sort').parent("li").removeClass('active')
@@ -37,7 +37,7 @@ class Jetdeck.Views.Actions.IndexView extends Backbone.View
     $(e).data('dir', 'asc') if direction == "desc"    
         
     # go back to first page  
-    @options.actions.turnTo(1)
+    @options.todos.turnTo(1)
     @addAll()
     @$('a.page').parent('li').removeClass('active')
     @$('.page[rel=1]').parent('li').addClass('active')
@@ -45,28 +45,28 @@ class Jetdeck.Views.Actions.IndexView extends Backbone.View
   page : (event) ->
     e = event.target || event.currentTarget
     n = $(e).attr('rel')
-    @options.actions.turnTo(n)
+    @options.todos.turnTo(n)
     @addAll()
     @$('a.page').parent('li').removeClass('active')
     $(e).parent('li').addClass('active')
     
   next : ->
-    @options.actions.next()
+    @options.todos.next()
     @addAll()
     @$('a.page').parent('li').removeClass('active')
-    p = @options.actions.currentPage()
+    p = @options.todos.currentPage()
     @$('.page[rel='+p+']').parent('li').addClass('active')    
 
   prev : ->
-    @options.actions.prev()
+    @options.todos.prev()
     @addAll()
     @$('a.page').parent('li').removeClass('active')
-    p = @options.actions.currentPage()
+    p = @options.todos.currentPage()
     @$('.page[rel='+p+']').parent('li').addClass('active')    
 
   addAll: =>
     @clear()
-    @options.actions.eachOnPage(@addOne)
+    @options.todos.eachOnPage(@addOne)
 
   clear : ->
     @$("#actions").html('')
@@ -78,15 +78,15 @@ class Jetdeck.Views.Actions.IndexView extends Backbone.View
 
   render: =>  
     params =
-        count : @options.actions.length
-        pages : @options.actions.pages()
+        count : @options.todos.length
+        pages : @options.todos.pages()
     $(@el).html(@template(params))
     
     # add all actions
     @addAll()    
     
     #today's actions stay on top
-    @options.actions.eachOnPage( (action) =>
+    @options.todos.eachOnPage( (action) =>
       if action && action.get("due_today")
         @$("#todays_actions").show()
         view = new Jetdeck.Views.Actions.ActionView({model : action})

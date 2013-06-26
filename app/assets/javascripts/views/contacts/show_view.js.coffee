@@ -85,8 +85,8 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
       @notes.render() 
     )
 
-    @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
-    @$("#contact_actions").html(@actions.render().el)  
+    @todos = new Jetdeck.Views.Actions.ShowActions(model: @model)
+    @$("#contact_actions").html(@todos.render().el)  
     
     @delete = new Jetdeck.Views.Delete.ShowDelete(model: @model)
     @$("#contact_delete").html(@delete.render().el)
