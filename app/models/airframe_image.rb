@@ -1,7 +1,6 @@
 class AirframeImage < ActiveRecord::Base
 
   attr_protected :image_file_name, :image_content_type, :image_file_size
-  attr_accessible :creator, :image, :airframe
 
   belongs_to :airframe
   validates_associated :airframe

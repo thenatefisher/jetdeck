@@ -13,10 +13,10 @@ class Airframe < ActiveRecord::Base
   accepts_nested_attributes_for :notes
 
   has_many :images, :class_name => 'AirframeImage', :conditions => "image_file_name is not null", :dependent => :destroy
-  accepts_nested_attributes_for :images, :reject_if => lambda { |t| t['image'].nil? }
+  accepts_nested_attributes_for :images
 
   has_many :specs, :class_name => 'AirframeSpec', :conditions => "spec_file_name is not null", :dependent => :destroy
-  accepts_nested_attributes_for :specs, :reject_if => lambda { |t| t['spec'].nil? }
+  accepts_nested_attributes_for :specs
 
   has_many :leads, :dependent => :destroy
 

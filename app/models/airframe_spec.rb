@@ -1,7 +1,6 @@
 class AirframeSpec < ActiveRecord::Base
 
   attr_protected :spec_file_name, :spec_content_type, :spec_file_size
-  attr_accessible :creator, :spec, :airframe
 
   belongs_to :airframe
   validates_associated :airframe

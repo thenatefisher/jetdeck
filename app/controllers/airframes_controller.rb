@@ -135,7 +135,6 @@ class AirframesController < ApplicationController
 
     if params[:airframe][:images].present?
       whitelist[:images_attributes] = params[:airframe][:images].map{|x| x.slice(:id, :thumbnail)}
-      logger.warn whitelist[:images_attributes]
     end
 
     if params[:airframe][:leads].present?
