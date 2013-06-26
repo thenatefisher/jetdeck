@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"setTh",
+				"setThumbnailHelper"
+			],
+			[
 				"image",
 				"image_id"
 			],
@@ -172,42 +176,34 @@
 	"buffers":
 	[
 		{
+			"file": "app/assets/javascripts/views/airframes/partials/specs.js.coffee",
+			"settings":
+			{
+				"buffer_size": 3045,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "app/assets/javascripts/views/airframes/partials/header.js.coffee",
 			"settings":
 			{
-				"buffer_size": 5372,
+				"buffer_size": 6669,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/controllers/airframe_images_controller.rb",
+			"file": "app/assets/javascripts/views/specs/send_view.js.coffee",
 			"settings":
 			{
-				"buffer_size": 2256,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/assets/javascripts/views/delete/delete_view.js.coffee",
-			"settings":
-			{
-				"buffer_size": 854,
+				"buffer_size": 9553,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/assets/javascripts/views/airframes/show_view.js.coffee",
+			"file": "app/models/airframe_image.rb",
 			"settings":
 			{
-				"buffer_size": 1325,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/assets/javascripts/views/contacts/show_view.js.coffee",
-			"settings":
-			{
-				"buffer_size": 6169,
+				"buffer_size": 2823,
 				"line_ending": "Unix"
 			}
 		}
@@ -215,9 +211,13 @@
 	"build_system": "Packages/C++/C++.sublime-build",
 	"command_palette":
 	{
-		"height": 81.0,
+		"height": 311.0,
 		"selected_items":
 		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
 			[
 				"beauti",
 				"BeautifyRuby"
@@ -587,7 +587,7 @@
 				"Git: Status"
 			]
 		],
-		"width": 472.0
+		"width": 464.0
 	},
 	"console":
 	{
@@ -604,14 +604,66 @@
 	},
 	"file_history":
 	[
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/airframes/partials/header.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/contacts/partials/header.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/contacts/show_view.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/views/contacts/search.json",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/contacts/contact_view.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/contacts/index_view.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/templates/contacts/header/editable.jst.ejs",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/templates/contacts/header/header.jst.ejs",
+		"/C/Users/E570487/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/templates/airframes/partials/avatar_filled.jst.ejs",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/templates/airframes/partials/avatar_empty.jst.ejs",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/airframes/show_view.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/notes/notes_view.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/actions/actions_view.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/airframes/airframe_view.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/airframes/index_view.js.coffee.erb",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/airframes/new_view.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/views/airframes/search.json.jbuilder",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/templates/airframes/header/header.jst.ejs",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/templates/airframes/partials/header.jst.ejs",
+		"/C/Users/E570487/AppData/Roaming/Sublime Text 2/Packages/User/Plain text.sublime-settings",
+		"/C/Users/E570487/projects/jetdeck/app/assets/stylesheets/controllers/airframes.less",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/templates/airframes/header/editable.jst.ejs",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/airframe.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/airframe_image.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/airframe_spec.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/contact.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/lead.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/profile.js.coffee",
+		"/C/Users/E570487/projects/jetdeck/app/models/lib/airframe_import_aso.rb",
+		"/C/Users/E570487/projects/jetdeck/app/controllers/airframe_messages_controller.rb",
+		"/C/Users/E570487/projects/jetdeck/app/controllers/airframe_specs_controller.rb",
+		"/C/Users/E570487/projects/jetdeck/app/controllers/airframes_controller.rb",
+		"/C/Users/E570487/projects/jetdeck/app/controllers/bookmarklet_controller.rb",
+		"/C/Users/E570487/projects/jetdeck/app/controllers/contacts_controller.rb",
+		"/C/Users/E570487/projects/jetdeck/app/controllers/notes_controller.rb",
+		"/C/Users/E570487/projects/jetdeck/app/controllers/search_controller.rb",
+		"/C/Users/E570487/projects/jetdeck/app/controllers/sessions_controller.rb",
+		"/C/Users/E570487/projects/jetdeck/app/controllers/todos_controller.rb",
+		"/C/Users/E570487/projects/jetdeck/app/controllers/airframe_images_controller.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/lib/airframe_import_cdc.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/lib/airframe_import_tap.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/lib/header_spoofer.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/note.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/todo.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/user.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/airframe.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/airframe_image.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/airframe_message.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/airframe_spec.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/contact.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/invite.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/lead.rb",
+		"/C/Users/E570487/projects/jetdeck/app/models/lib/airframe_import_amp.rb",
+		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/delete/delete_view.js.coffee",
 		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/airframes/partials/delete.js.coffee",
 		"/C/Users/E570487/projects/jetdeck/app/controllers/application_controller.rb",
-		"/C/Users/E570487/projects/jetdeck/app/controllers/airframes_controller.rb",
 		"/C/Users/E570487/projects/jetdeck/app/views/profile/index.json.jbuilder",
 		"/C/Users/E570487/projects/jetdeck/app/controllers/profile_controller.rb",
-		"/C/Users/E570487/projects/jetdeck/app/models/user.rb",
 		"/C/Users/E570487/projects/jetdeck/app/views/layouts/partials/_brandbar.html.erb",
-		"/C/Users/E570487/projects/jetdeck/app/controllers/contacts_controller.rb",
 		"/C/Users/E570487/projects/jetdeck/app/views/layouts/partials/_leftnav.html.erb",
 		"/C/Users/E570487/projects/jetdeck/app/views/layouts/application.html.erb",
 		"/C/Users/E570487/projects/jetdeck/app/views/layouts/partials/_railsjs.html.erb",
@@ -620,26 +672,18 @@
 		"/C/Users/E570487/projects/jetdeck/doc/ROADMAP",
 		"/C/Users/E570487/projects/jetdeck/db/migrate/20120313064834_create_schema.rb",
 		"/C/Users/E570487/projects/jetdeck/app/views/airframes/index.json.jbuilder",
-		"/C/Users/E570487/projects/jetdeck/app/controllers/sessions_controller.rb",
 		"/C/Users/E570487/projects/jetdeck/config/database.yml",
 		"/C/Users/E570487/projects/jetdeck/db/seeds.rb",
 		"/C/Users/E570487/projects/jetdeck/app/views/layouts/partials/_notifications.html.erb",
 		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/lib/navbar.js.coffee",
-		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/profile.js.coffee",
 		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/lib/signup.js",
 		"/C/Users/E570487/projects/jetdeck/app/controllers/password_resets_controller.rb",
 		"/C/Users/E570487/projects/jetdeck/app/views/layouts/partials/_searchbar.html.erb",
 		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/views/bookmarklet/index.js.coffee",
 		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/routers/bookmarklet_router.js.coffee",
-		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/lead.js.coffee",
-		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/contact.js.coffee",
-		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/airframe_spec.js.coffee",
-		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/airframe_image.js.coffee",
-		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/airframe.js.coffee",
 		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/action.js.coffee",
 		"/C/Users/E570487/projects/jetdeck/app/assets/javascripts/models/note.js.coffee",
 		"/C/Users/E570487/projects/jetdeck/app/controllers/users_controller.rb",
-		"/C/Users/E570487/projects/jetdeck/app/controllers/airframe_messages_controller.rb",
 		"/C/Users/E570487/AppData/Roaming/Sublime Text 2/Packages/BeautifyRuby/BeautifyRuby.sublime-settings",
 		"/C/Users/E570487/AppData/Roaming/Sublime Text 2/Packages/BeautifyRuby/Default (Windows).sublime-keymap",
 		"/C/Users/E570487/projects/jetdeck/spec/support/login_macro.rb",
@@ -648,11 +692,8 @@
 		"/C/Users/E570487/projects/jetdeck/spec/models/airframe_message_spec.rb",
 		"/C/Users/E570487/projects/jetdeck/spec/spec_helper.rb",
 		"/C/Users/E570487/projects/jetdeck/.rspec",
-		"/C/Users/E570487/AppData/Roaming/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
 		"/C/Users/E570487/AppData/Roaming/Sublime Text 2/Packages/User/Preferences.sublime-settings",
-		"/C/Users/E570487/projects/jetdeck/app/models/airframe_message.rb",
 		"/C/Users/E570487/projects/jetdeck/app/mailers/airframe_message_mailer.rb",
-		"/C/Users/E570487/projects/jetdeck/app/controllers/airframe_images_controller.rb",
 		"/C/Users/E570487/projects/jetdeck/app/views/layouts/error.html.erb",
 		"/C/Users/E570487/projects/jetdeck/app/views/layouts/login.html.erb",
 		"/C/Users/E570487/projects/jetdeck/app/views/layouts/signup.html.erb",
@@ -679,7 +720,6 @@
 		"/E/jetdeck/spec/javascripts/airframe_spec.js.coffee",
 		"/C/Users/E570487/projects/jetdeck/spec/models/contact_spec.rb",
 		"/C/Users/E570487/projects/jetdeck/spec/models/user_spec.rb",
-		"/C/Users/E570487/projects/jetdeck/app/models/contact.rb",
 		"/C/Users/E570487/jetdeck/Guardfile",
 		"/C/Users/E570487/jetdeck/spec/models/airframe_message_spec.rb",
 		"/C/Users/E570487/jetdeck/spec/models/airframe_spec_spec.rb",
@@ -691,47 +731,7 @@
 		"/C/Users/E570487/jetdeck/spec/models/airframe_image_spec.rb",
 		"/C/Users/E570487/jetdeck/spec/models/invite_spec.rb",
 		"/C/Users/E570487/jetdeck/spec/models/lead_spec.rb",
-		"/C/Users/E570487/jetdeck/spec/models/note_spec.rb",
-		"/C/Users/E570487/jetdeck/spec/models/contact_spec.rb",
-		"/C/Users/E570487/jetdeck/spec/models/todo_spec.rb",
-		"/C/Users/E570487/jetdeck/spec/models/user_spec.rb",
-		"/C/Users/E570487/jetdeck/spec/factories/todos.rb",
-		"/C/Users/E570487/jetdeck/spec/factories/airframe_messages.rb",
-		"/C/Users/E570487/jetdeck/app/models/airframe_image.rb",
-		"/C/Users/E570487/jetdeck/config/environments/test.rb",
-		"/C/Users/E570487/jetdeck/spec/support/create_file_helper.rb",
-		"/C/Users/E570487/jetdeck/spec/factories/airframe_images.rb",
-		"/C/Users/E570487/jetdeck/spec/factories/airframe_specs.rb",
-		"/C/Users/E570487/jetdeck/spec/spec_helper.rb",
-		"/C/Users/E570487/jetdeck/app/models/airframe_spec.rb",
-		"/C/Users/E570487/jetdeck/Gemfile",
-		"/C/Users/E570487/jetdeck/app/models/user.rb",
-		"/C/Users/E570487/jetdeck/.irbrc",
-		"/C/Users/E570487/jetdeck/config/initializers/wrap_parameters.rb",
-		"/C/Users/E570487/jetdeck/config/database.yml",
-		"/C/Users/E570487/jetdeck/doc/BUILD",
-		"/C/Users/E570487/jd/app/models/airframe_image.rb",
-		"/C/Users/E570487/jd/spec/models/airframe_image_spec.rb",
-		"/C/Users/E570487/jd/spec/models/airframe_message_spec.rb",
-		"/C/Users/E570487/jd/app/models/airframe_message.rb",
-		"/C/Users/E570487/jd/spec/models/airframe_spec.rb",
-		"/C/Users/E570487/jd/app/models/airframe.rb",
-		"/C/Users/E570487/jd/spec/javascripts/airframe_spec.js.coffee",
-		"/C/Users/E570487/jd/spec/requests/todos_spec.rb",
-		"/C/Users/E570487/jd/app/models/user.rb",
-		"/C/Users/E570487/jd/spec/models/user_spec.rb",
-		"/C/Users/E570487/jd/app/assets/stylesheets/application.less.erb",
-		"/C/Users/E570487/jd/app/assets/stylesheets/signup.css.less.erb",
-		"/C/Users/E570487/jd/config/database.yml",
-		"/C/Users/E570487/jd/config/application.rb",
-		"/C/Users/E570487/jd/doc/ROADMAP",
-		"/C/Users/E570487/jd/doc/DEFERRED",
-		"/C/Users/E570487/jd/doc/THIRD_PARTY",
-		"/C/Users/E570487/jd/app/assets/javascripts/application.js.erb",
-		"/C/Users/E570487/jd/db/migrate/20120313064834_create_schema.rb",
-		"/C/Users/E570487/jd/Gemfile",
-		"/C/Users/E570487/jd/spec/models/todo_spec.rb",
-		"/C/Users/E570487/jd/spec/models/note_spec.rb"
+		"/C/Users/E570487/jetdeck/spec/models/note_spec.rb"
 	],
 	"find":
 	{
@@ -739,9 +739,15 @@
 	},
 	"find_in_files":
 	{
-		"height": 93.0,
+		"height": 0.0,
 		"where_history":
 		[
+			"C:\\Users\\E570487\\projects\\jetdeck\\app\\assets\\stylesheets",
+			"C:\\Users\\E570487\\projects\\jetdeck\\app\\assets\\javascripts\\lib",
+			"C:\\Users\\E570487\\projects\\jetdeck\\app\\assets\\javascripts\\models",
+			"C:\\Users\\E570487\\projects\\jetdeck\\app\\assets\\javascripts\\templates",
+			"C:\\Users\\E570487\\projects\\jetdeck\\app\\controllers",
+			"C:\\Users\\E570487\\projects\\jetdeck\\app\\models",
 			"C:\\Users\\E570487\\projects\\jetdeck\\app\\assets",
 			"C:\\Users\\E570487\\projects\\jetdeck\\app\\controllers",
 			"C:\\Users\\E570487\\projects\\jetdeck\\app\\models",
@@ -800,6 +806,25 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"'",
+			"refresh_view",
+			"fetch",
+			"airframe",
+			"e",
+			"self.",
+			"ShowMastheadView",
+			"partials/",
+			"airframe-thumbnail",
+			"partials",
+			"[ ]{4}",
+			"\\s{4}",
+			"manage",
+			"'",
+			"setting_thumbnail",
+			"'",
+			"\"",
+			"'",
+			"\"",
 			"spec",
 			"reflow",
 			"user_id",
@@ -908,33 +933,18 @@
 			"get_etd",
 			"process_set_aoc_afis_data_update",
 			"update_aoc_data",
-			"set_parameter_defaults",
-			"load",
-			"load_response_from_view",
-			"process_request",
-			"load_response_from_view",
-			"set_parameter_deafaults",
-			"is_emp",
-			"dash_parameter",
-			"process_set_aoc_afis_fp_request_by_update",
-			"d_aoc_afis_data_update_handle",
-			"status_b",
-			"d_insert_lat_lon_xing_poi_job_submited_b",
-			"status_b",
-			"d_insert_lat_lon_xing_poi_job_submited_b",
-			"d_aoc_afis_data_update_handle",
-			"failed",
-			"data",
-			"number",
-			"change_en",
-			"validate_comm"
+			"set_parameter_defaults"
 		],
 		"highlight": true,
-		"in_selection": false,
+		"in_selection": true,
 		"preserve_case": false,
 		"regex": true,
 		"replace_history":
 		[
+			"\"",
+			"  ",
+			"\"",
+			"'",
 			"created_by",
 			"\\n",
 			"\\f",
@@ -976,22 +986,167 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/assets/javascripts/views/airframes/partials/header.js.coffee",
+					"file": "app/assets/javascripts/views/airframes/partials/specs.js.coffee",
 					"settings":
 					{
-						"buffer_size": 5372,
+						"buffer_size": 3045,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								223,
-								223
+								718,
+								718
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1083.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/assets/javascripts/views/airframes/partials/header.js.coffee",
+					"settings":
+					{
+						"buffer_size": 6669,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4452,
+								4452
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close"
+							],
+							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3135.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/assets/javascripts/views/specs/send_view.js.coffee",
+					"settings":
+					{
+						"buffer_size": 9553,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								280,
+								280
 							]
 						],
 						"settings":
@@ -1051,19 +1206,19 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "app/controllers/airframe_images_controller.rb",
+					"buffer": 3,
+					"file": "app/models/airframe_image.rb",
 					"settings":
 					{
-						"buffer_size": 2256,
+						"buffer_size": 2823,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1813,
-								1814
+								1069,
+								1069
 							]
 						],
 						"settings":
@@ -1117,223 +1272,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 399.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "app/assets/javascripts/views/delete/delete_view.js.coffee",
-					"settings":
-					{
-						"buffer_size": 854,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								60,
-								56
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close"
-							],
-							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
 						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/assets/javascripts/views/airframes/show_view.js.coffee",
-					"settings":
-					{
-						"buffer_size": 1325,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								802,
-								808
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close"
-							],
-							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "app/assets/javascripts/views/contacts/show_view.js.coffee",
-					"settings":
-					{
-						"buffer_size": 6169,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2732,
-								2732
-							]
-						],
-						"settings":
-						{
-							"BracketHighlighterBusy": false,
-							"bh_regions":
-							[
-								"bh_regex",
-								"bh_regex_center",
-								"bh_regex_open",
-								"bh_regex_close",
-								"bh_double_quote",
-								"bh_double_quote_center",
-								"bh_double_quote_open",
-								"bh_double_quote_close",
-								"bh_square",
-								"bh_square_center",
-								"bh_square_open",
-								"bh_square_close",
-								"bh_angle",
-								"bh_angle_center",
-								"bh_angle_open",
-								"bh_angle_close",
-								"bh_curly",
-								"bh_curly_center",
-								"bh_curly_open",
-								"bh_curly_close",
-								"bh_default",
-								"bh_default_center",
-								"bh_default_open",
-								"bh_default_close",
-								"bh_unmatched",
-								"bh_unmatched_center",
-								"bh_unmatched_open",
-								"bh_unmatched_close",
-								"bh_round",
-								"bh_round_center",
-								"bh_round_open",
-								"bh_round_close",
-								"bh_tag",
-								"bh_tag_center",
-								"bh_tag_open",
-								"bh_tag_close",
-								"bh_single_quote",
-								"bh_single_quote_center",
-								"bh_single_quote_open",
-								"bh_single_quote_close"
-							],
-							"syntax": "Packages/CoffeeScript/CoffeeScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1140.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1621,6 +1560,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 342.0,
+	"side_bar_width": 242.0,
 	"status_bar_visible": true
 }

@@ -1,7 +1,7 @@
 Jetdeck.Views.Actions ||= {}
 
 class Jetdeck.Views.Actions.ActionItem extends Backbone.View
-  template: JST["templates/actions/partials/action_item"]
+  template: JST["templates/actions/action_item"]
 
   events: 
     "click .close-action" : "close"
@@ -30,7 +30,7 @@ class Jetdeck.Views.Actions.ActionItem extends Backbone.View
     return this
   
 class Jetdeck.Views.Actions.ShowActions extends Backbone.View
-  template: JST["templates/actions/partials/actions"]
+  template: JST["templates/actions/actions"]
     
   initialize: =>
     @type = window.router.view.model.paramRoot.charAt(0).toUpperCase() + window.router.view.model.paramRoot.slice(1)

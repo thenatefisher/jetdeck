@@ -1,0 +1,30 @@
+<h1 style="margin-top: 0px;">
+  <span id="headline" data-pk="1" style="cursor: pointer" data-emptytext="Unknown Aircraft" data-type="aircraft_ymm"><%= year %> <%= make %> <%= model_name %></span>             
+</h1>
+
+<div style="margin-top: 5px; font-size: 110%">
+
+  <div class="span4" style="margin: 5px 0px;">
+
+    <div style="margin: 0px;">
+      Serial &nbsp;
+      <a href="#" id="serial" data-type="text" data-pk="1" data-emptytext="none" data-original-title="Serial"><%= serial %></a> 
+    </div>
+
+    <div style="margin: 5px 0px">
+      Registration &nbsp;
+      <a href="#" id="registration" data-type="text" data-pk="1" data-emptytext="none" data-original-title="Registration"><%= registration %></a> 
+    </div>
+
+    <div style="margin: 5px 0px">
+      Asking Price &nbsp;
+      <a href="#" id="asking_price" data-type="text" data-pk="1" data-emptytext="$--" data-name="asking_price" data-original-title="Asking Price"><%= asking_price %></a> 
+    </div>
+
+  </div>
+
+  <div class="span3" style="margin: 5px 0px 0 20px;">
+    <div id="chart"></div>
+  </div>
+
+</div>

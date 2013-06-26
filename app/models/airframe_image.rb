@@ -26,7 +26,7 @@ class AirframeImage < ActiveRecord::Base
     :bucket => Jetdeck::Application.config.aws_s3_bucket,
     :s3_permissions => :authenticated_read,
     :path => ":attachment/:id/:style/:basename.:extension"
-  validates_attachment_size :image, :less_than => 5.megabytes
+  validates_attachment_size :image, :less_than => 10.megabytes
   validates_presence_of :image
   validates_attachment_content_type :image, :content_type =>
     ["image/png",

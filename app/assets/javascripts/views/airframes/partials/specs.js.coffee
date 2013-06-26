@@ -5,58 +5,61 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
 
   events:
     "click .add-spec" : "add"
-    "click .cancel" : "refresh_view"
+    "click .cancel" : "refreshView"
 
-  send: (spec) =>
-    view = new Jetdeck.Views.Specs.Send(airframe: @model, spec: spec)
-    modal(view.render().el)
+  initialize: =>
+    @showHidden = false
 
-  disable: (spec) =>
-    enabled = spec.get('enabled')
-    spec.save({enabled: !enabled}, success: => @render())
+  toggleHidden: =>
+    @showHidden = !@showHidden
+    @render()
 
-  add: ->
-    @$("#new-spec-well").show()
+  add: =>
     @$("#airframe-document-input").click()
-    return false
 
   renderUploader: =>
     # uploader instantiation and settings
-    @$('#airframe_document_upload').fileupload({
+    @$("#airframe_document_upload").fileupload({
         autoUpload: true
-        url: '/accessories'
+        url: "/airframe_specs"
         acceptFileTypes: /(\.|\/)(word|pdf|doc|docx)$/i
         maxFileSize: 10490000 # 10MB
     })
 
-    # reflow header on image upload and delete
-    @$('#airframe_document_upload').bind('fileuploaddone', => @refresh_view()) 
+    # show progress when started
+    @$("#airframe_document_upload").bind("fileuploadstarted", => @$("#new-spec-well").show()) 
+    # refresh spec list when uploaded
+    @$("#airframe_document_upload").bind("fileuploaddone", => @refreshView()) 
 
     # set CSRF token
     token = $("meta[name='csrf-token']").attr("content")
     @$("#airframe_document_upload input[name='authenticity_token']").val(token)   
 
-  refresh_view: =>
+  refreshView: =>
+    @$("#new-spec-well").hide()
     @model.fetch( success: => 
       @model.updateChildren()
       @render() 
     )
 
-  initialize: =>
-    @showHidden = false
+  renderSpecs: =>
+    @model.specs.each((spec) =>   
+      view = new Jetdeck.Views.Airframes.Spec({model : spec, showHidden: @showHidden})
+      view.on("clicked-send", (data) => @send(data))
+      view.on("clicked-disable", (data) => @disable(data))
+      @$("#specs-table tbody").append(view.render().el) if view
+    )
 
-  show: =>
-    console.log 'show'
-    @showHidden = true
-    @render()
+    # show hidden button
+    @$(".show-hidden").on("click", => @toggleHidden())
 
-  render: ->
+    # remove top border on first table item 
+    @$("tbody").children("tr").first().children("td").css("border-top", "0px")
+
+  render: =>
     # render out main template
     $(@el).html(@template(@model.toJSON()))
   
-    # show hidden button
-    @$(".show-hidden").on("click", => @show())
-
     # setup file uploader when DOM is ready
     @$("#new-spec-well").hide()
     $(() => @renderUploader())
@@ -67,143 +70,34 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     else
       @$("#specs-populated").show()
       @$("#specs-empty").hide()
-    
-      # render spec files in nested tree structure
-      groups = []
-      @model.specs.each((spec) =>
-
-          if (groups.indexOf(spec.get('file_name')) < 0)
-
-              spec_group = @model.specs.where(file_name: spec.get('file_name'))
-              if (spec_group.length > 1)
-
-                  # skip over this group after rendering here
-                  groups.push(spec.get('file_name'))
-
-                  #setup a collection to manupulate these specs
-                  collection = new Jetdeck.Collections.SpecFilesCollection()
-                  collection.reset spec_group
-
-                  # render the header
-                  view = new Jetdeck.Views.Airframes.SpecGroupHeader({model : spec, showHidden: @showHidden})
-                  view.on("clicked-send", (data) => @send(data))
-                  view.on("clicked-disable", (data) => @disable(data))
-                  @$("#specs-table tbody").append(view.render().el) if view
-
-                  # render each nested spec
-                  collection.each((spec_group_item) =>
-                      spec_group_item_view = new Jetdeck.Views.Airframes.SpecGroupItem({model : spec_group_item, showHidden: @showHidden}) 
-                      spec_group_item_view.on("clicked-send", (data) => @send(data))
-                      spec_group_item_view.on("clicked-disable", (data) => @disable(data))
-                      @$("#specs-table tbody").append(spec_group_item_view.render().el) if view
-                  )
-
-              else
-                  view = new Jetdeck.Views.Airframes.Spec({model : spec, showHidden: @showHidden})
-                  view.on("clicked-send", (data) => @send(data))
-                  view.on("clicked-disable", (data) => @disable(data))
-                  @$("#specs-table tbody").append(view.render().el) if view
-
-      )
-
-      # remove top border on first table item 
-      @$('tbody').children('tr').first().children('td').css('border-top', '0px')
+      @renderSpecs()
 
     return this
-
-# each spec item
-class Jetdeck.Views.Airframes.SpecGroupHeader extends Backbone.View
-  template: JST["templates/airframes/specs/spec_group"]
-
-  tagName: "tr"
-
-  initialize: =>
-    $(@el).on("click", @toggle)
-    
-  toggle: =>
-    if $(@el).find('.open').first().is(':hidden')
-        $(@el).find('.open').show()
-        $(@el).find('.closed').hide()
-    else
-        $(@el).find('.open').hide()
-        $(@el).find('.closed').show()
-
-    window.e = $(@el)
-
-    tr = $(@el).next()
-    loop
-        break if tr.size() == 0 || !tr.hasClass('nested_item')
-        if tr.is(':hidden')
-            tr.show() 
-        else
-            tr.hide()
-        tr = tr.next()
-
-  render: ->
-    if @model.get('enabled') || (@options && @options.showHidden)
-      $(@el).html(@template(@model.toJSON() ))
-      $(@el).addClass("group_header")
-      @$(".send").on("click", => @trigger("clicked-send", @model))
-      @$(".disable").on("click", => @trigger("clicked-disable", @model))
-      if !@model.get('enabled')
-        $(@el).addClass("error") 
-        @$(".disable").html("Enable")
-        @$(".send").attr("disabled", "disabled")
-
-    return this
-
-class Jetdeck.Views.Airframes.SpecGroupItem extends Backbone.View
-  template: JST["templates/airframes/specs/spec_group_item"]
-
-  tagName: "tr"
-
-  render: ->
-    if @model.get('enabled') || (@options && @options.showHidden)
-      updated_string = convert_time(@model.get('created_at'))
-      @model.set('updated', updated_string)    
-
-      $(@el).html(@template(@model.toJSON() ))
-      $(@el).addClass("nested_item")
-      @$(".send").on("click", => @trigger("clicked-send", @model))
-      @$(".disable").on("click", => @trigger("clicked-disable", @model))
-      if !@model.get('enabled')
-        $(@el).addClass("error") 
-        @$(".disable").html("Enable")
-        @$(".send").attr("disabled", "disabled")
-
-    return this
-
 
 class Jetdeck.Views.Airframes.Spec extends Backbone.View
   template: JST["templates/airframes/specs/spec_item"]
 
   tagName: "tr"
 
-  render: ->
-    if @model.get('enabled') || (@options && @options.showHidden)
-      updated_string = convert_time(@model.get('created_at'))
-      @model.set('updated', updated_string)  
+  send: (spec) =>
+    view = new Jetdeck.Views.Specs.Send(airframe: @model, spec: spec)
+    modal(view.render().el)
+
+  disable: (spec) =>
+    enabled = spec.get("enabled")
+    spec.save({enabled: !enabled}, success: => @render())
+
+  render: =>
+    if @model.get("enabled") || (@options && @options.showHidden)
+      updated_string = convert_time(@model.get("created_at"))
+      @model.set("updated", updated_string)  
       $(@el).html(@template(@model.toJSON() ))
       @$(".send").on("click", => @trigger("clicked-send", @model))
       @$(".disable").on("click", => @trigger("clicked-disable", @model))
-      if !@model.get('enabled')
+      if !@model.get("enabled")
         $(@el).addClass("error") 
         @$(".disable").html("Enable")
         @$(".send").attr("disabled", "disabled")
 
     return this
 
-class Jetdeck.Views.Airframes.NewSpec extends Backbone.View
-  template: JST["templates/airframes/specs/spec_new"]
-
-  events:
-    "click submit" : "submit"
-
-  save: (e) =>
-    e.preventDefault()
-    e.stopPropagation()
-
-  render: ->
-    $(@el).html(@template(@model.toJSON() ))
-
-    return this

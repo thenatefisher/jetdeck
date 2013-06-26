@@ -1,7 +1,7 @@
 Jetdeck.Views.Notes ||= {}
 
 class Jetdeck.Views.Notes.NoteItem extends Backbone.View
-  template: JST["templates/notes/partials/note_item"]
+  template: JST["templates/notes/note_item"]
   
   events: 
     "click .delete-note"        : "destroy"
@@ -80,7 +80,7 @@ class Jetdeck.Views.Notes.NoteItem extends Backbone.View
     return this
   
 class Jetdeck.Views.Notes.ShowNotes extends Backbone.View
-  template: JST["templates/notes/partials/notes"]
+  template: JST["templates/notes/notes"]
     
   initialize: =>
     @type = window.router.view.model.paramRoot.charAt(0).toUpperCase() + window.router.view.model.paramRoot.slice(1)   

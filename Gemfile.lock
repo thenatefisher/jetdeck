@@ -141,8 +141,6 @@ GEM
     less-rails (2.3.3)
       actionpack (>= 3.1)
       less (~> 2.3.1)
-    libnotify (0.8.0)
-      ffi (>= 1.0.11)
     libv8 (3.3.10.4)
     listen (1.2.2)
       rb-fsevent (>= 0.9.3)
@@ -294,7 +292,6 @@ DEPENDENCIES
   json
   launchy
   less-rails
-  libnotify
   paperclip
   pg
   poltergeist

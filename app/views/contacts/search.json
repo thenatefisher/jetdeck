@@ -1,11 +1,7 @@
-  def search_url
-    "/contacts/#{id}"
-  end
-  
-  def search_desc
-    self.company
-  end
-  
-  def search_label
-    "<i class=\"icon-user\"></i> #{self.fullName}"
-  end
+json.array! @contacts do |contact|
+
+  json.search_url "/contacts/#{contact.id}"
+  json.search_desc contact.company
+  json.search_label "<i class=\"icon-user\"></i> #{contact.fullName}"
+
+end

@@ -9,9 +9,9 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
   initialize: () ->
     @model = new Jetdeck.Models.AirframeModel()
 
-  save: (e) =>
-    e.preventDefault()
-    e.stopPropagation()
+  save: (event) =>
+    event.preventDefault()
+    event.stopPropagation()
     mixpanel.track("Created Airframe")
     collection = new Jetdeck.Collections.AirframesCollection()
     collection = window.router.airframes if window.router.airframes
