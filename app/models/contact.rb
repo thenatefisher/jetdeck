@@ -21,12 +21,12 @@ class Contact < ActiveRecord::Base
     :dependent => :destroy
 
   belongs_to :owner,
-    :class_name => 'User',
-    :foreign_key => 'created_by'
+    :class_name => "User",
+    :foreign_key => "created_by"
 
   has_one :user,
-    :class_name => 'User',
-    :foreign_key => 'contact_id'
+    :class_name => "User",
+    :foreign_key => "contact_id"
 
   validates_presence_of :email,
     :message => "Email address is required"

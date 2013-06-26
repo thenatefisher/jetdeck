@@ -1,4 +1,4 @@
-require 'bcrypt'
+require "bcrypt"
 
 class User < ActiveRecord::Base
 
@@ -9,9 +9,9 @@ class User < ActiveRecord::Base
 
   has_many :todos, :foreign_key => "created_by", :dependent => :destroy
   has_many :airframes, :foreign_key => "created_by", :dependent => :destroy
-  has_many :contacts, :class_name => 'Contact', :foreign_key => "created_by", :dependent => :destroy
-  has_many :airframe_specs, :class_name => 'AirframeSpec', :foreign_key => "created_by"
-  has_many :airframe_images, :class_name => 'AirframeImage', :foreign_key => "created_by"
+  has_many :contacts, :class_name => "Contact", :foreign_key => "created_by", :dependent => :destroy
+  has_many :airframe_specs, :class_name => "AirframeSpec", :foreign_key => "created_by"
+  has_many :airframe_images, :class_name => "AirframeImage", :foreign_key => "created_by"
 
   has_many :messages_sent,
     :class_name => "AirframeMessage",

@@ -61,7 +61,7 @@ class TodosController < ApplicationController
     if @todo && @todo.destroy()
       render :json => :true, :status => :ok
     else
-      render :json => ['Not authorized to delete'], :status => :unprocessable_entity
+      render :json => ["Not authorized to delete"], :status => :unprocessable_entity
     end
   end
 end

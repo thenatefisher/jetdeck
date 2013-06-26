@@ -1,7 +1,7 @@
-require 'uri' 
-require 'open-uri'
-require 'nokogiri'  
-require_relative 'header_spoofer'
+require "uri" 
+require "open-uri"
+require "nokogiri"  
+require_relative "header_spoofer"
 
 module AirframeImport
 

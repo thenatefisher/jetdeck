@@ -4,7 +4,7 @@ class BookmarkletController < ApplicationController
   # /b/:token
   def index
     @user = User.where(:bookmarklet_token => params[:token]).first
-    render :layout => "bookmarklet", :chunked => true, :content_type => 'application/javascript' if @user
+    render :layout => "bookmarklet", :chunked => true, :content_type => "application/javascript" if @user
   end
 
 end

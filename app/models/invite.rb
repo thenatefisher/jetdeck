@@ -36,9 +36,9 @@ class Invite < ActiveRecord::Base
     self.activated = false
 
     ## Create Token
-    self.token = BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, '').last(7)
+    self.token = BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, "").last(7)
     while (Invite.where(:token => self.token).count > 0)
-      self.token = BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, '').last(7)
+      self.token = BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, "").last(7)
     end
 
   end

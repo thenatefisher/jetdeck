@@ -1,7 +1,7 @@
-require 'uri' 
-require 'open-uri'
-require 'nokogiri'  
-require_relative 'header_spoofer'
+require "uri" 
+require "open-uri"
+require "nokogiri"  
+require_relative "header_spoofer"
 
 module AirframeImport
 
@@ -66,7 +66,7 @@ module AirframeImport
         page_details[:DetailedDescription] = doc.css("#ctl00_tdContent > table:nth-child(4) > tbody > tr:last-child > td > table").last rescue nil
 
         # detail sections
-        details = doc.xpath("//table/tr/td/font/b/text()[contains(.,'Detailed Description')]")
+        details = doc.xpath("//table/tr/td/font/b/text()[contains(.,"Detailed Description")]")
             .first.parent.parent.parent.parent.next.inner_html rescue nil
 
         page_details[:DetailedDescription] ||= details.match(
@@ -130,8 +130,8 @@ module AirframeImport
             prefix  = doc.match(/document\.forms\[0\]\.elements\[1\]\.value=\"([^:]*)/)[1]
             c       = doc.match(/c = (.*)$/)[1]
             slt     = doc.match(/slt = \"(.*)\"/)[1]
-            s1      = doc.match(/s1 = '(.*)'/)[1]
-            s2      = doc.match(/s2 = '(.*)'/)[1]
+            s1      = doc.match(/s1 = "(.*)"/)[1]
+            s2      = doc.match(/s2 = "(.*)"/)[1]
             n       = 4
             clg     = ""
         rescue
@@ -161,7 +161,7 @@ module AirframeImport
                 end
             end
             
-            chlg = arr.join('')
+            chlg = arr.join("")
             str = chlg + slt
             crc = -1
             

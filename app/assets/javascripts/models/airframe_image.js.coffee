@@ -1,5 +1,5 @@
 class Jetdeck.Models.AirframeImageModel extends Backbone.Model
-  paramRoot: 'airframe_image'
+  paramRoot: "airframe_image"
 
   defaults:
     file_name: null
@@ -9,10 +9,10 @@ class Jetdeck.Models.AirframeImageModel extends Backbone.Model
 
 class Jetdeck.Collections.AirframeImagesCollection extends Backbone.Collection
   model: Jetdeck.Models.AirframeImageModel
-  url: '/airframe_images'
+  url: "/airframe_images"
 
   initialize: =>
-    @on('change', () => @airframe.set('images', this))
+    @on("change", () => @airframe.set("images", this))
 
   comparator: (i) ->
     dt = new Date(i.get("created_at"))

@@ -85,7 +85,7 @@ class AirframeMessage < ActiveRecord::Base
     end
 
     def create_code
-      BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, '').last(7)
+      BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, "").last(7)
     end
 
     def require_user_activation

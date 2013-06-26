@@ -72,7 +72,7 @@ class AirframesController < ApplicationController
       if @airframes.nil?
         render :layout => false, :nothing => true
       else
-        render :json, :template => 'airframes/search'
+        render :json, :template => "airframes/search"
       end
 
     end
@@ -84,7 +84,7 @@ class AirframesController < ApplicationController
     if params[:id].present?
       @airframe = Airframe.find(:first, :conditions =>
                                 ["id = ? AND created_by = ?", params[:id], @current_user.id])
-      render :json, :template => 'airframes/show'
+      render :json, :template => "airframes/show"
     else
       render :json => ["You do not have access to this aircraft"], :status => :unauthorized
     end
@@ -121,7 +121,7 @@ class AirframesController < ApplicationController
     end
 
     if @airframe.save
-      render :json, :template => 'airframes/show', :status => :created
+      render :json, :template => "airframes/show", :status => :created
     else
       render :json => @airframe.errors.full_messages, :status => :unprocessable_entity
     end
@@ -150,7 +150,7 @@ class AirframesController < ApplicationController
     end
 
     if @airframe.update_attributes(whitelist)
-      render :json, :template => 'airframes/show'
+      render :json, :template => "airframes/show"
     else
       render :json => @airframe.errors.full_messages, :status => :unprocessable_entity
     end

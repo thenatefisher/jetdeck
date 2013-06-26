@@ -120,7 +120,7 @@ class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
                 )
     })
 
-    # reflow avatar thumbnail
+    # re-render avatar thumbnail
     @$('#airframe_image_upload').bind('fileuploaddestroyed', => 
         @model.unset('avatar'); @model.fetch(complete: => @renderAvatar()))
     @$('#airframe_image_upload').bind('fileuploadfinished', => 

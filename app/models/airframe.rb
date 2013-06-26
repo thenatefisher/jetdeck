@@ -12,10 +12,10 @@ class Airframe < ActiveRecord::Base
   has_many :notes, :as => :notable, :dependent => :destroy
   accepts_nested_attributes_for :notes
 
-  has_many :images, :class_name => 'AirframeImage', :conditions => "image_file_name is not null", :dependent => :destroy
+  has_many :images, :class_name => "AirframeImage", :conditions => "image_file_name is not null", :dependent => :destroy
   accepts_nested_attributes_for :images
 
-  has_many :specs, :class_name => 'AirframeSpec', :conditions => "spec_file_name is not null", :dependent => :destroy
+  has_many :specs, :class_name => "AirframeSpec", :conditions => "spec_file_name is not null", :dependent => :destroy
   accepts_nested_attributes_for :specs
 
   has_many :leads, :dependent => :destroy
@@ -59,7 +59,7 @@ class Airframe < ActiveRecord::Base
   end
 
   def to_s
-    retval =   ''
+    retval =   ""
     retval +=  self.year.to_s + " " if self.year.present?
     retval +=  self.make + " " if self.make.present?
     retval +=  self.model_name if self.model_name.present?
@@ -67,7 +67,7 @@ class Airframe < ActiveRecord::Base
   end
 
   def long
-    retval =   ''
+    retval =   ""
     retval +=  self.year.to_s + " " if self.year.present?
     retval +=  self.make + " " if self.make.present?
     retval +=  self.model_name if self.model_name.present?

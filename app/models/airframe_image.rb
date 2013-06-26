@@ -60,7 +60,7 @@ class AirframeImage < ActiveRecord::Base
   # select another thumbnail if it is deleted or none available for the airframe
   def next_thumbnail
     if self.thumbnail
-      new_thumb = self.airframe.images.where("image_file_name IS NOT null AND thumbnail = 'f'").first
+      new_thumb = self.airframe.images.where("image_file_name IS NOT null AND thumbnail = "f"").first
       if new_thumb
         new_thumb.thumbnail = true
         new_thumb.save()

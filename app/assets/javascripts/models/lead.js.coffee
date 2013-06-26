@@ -1,5 +1,5 @@
 class Jetdeck.Models.LeadModel extends Backbone.Model
-    paramRoot : 'lead'
+    paramRoot : "lead"
 
     defaults :
       recipient: null
@@ -17,7 +17,7 @@ class Jetdeck.Collections.LeadsCollection extends Backbone.Collection
   
     model: Jetdeck.Models.LeadModel
     
-    url: '/leads'
+    url: "/leads"
 
 
     

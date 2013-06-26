@@ -1,5 +1,5 @@
 class Jetdeck.Models.AirframeModel extends Backbone.Model
-    paramRoot : 'airframe'
+    paramRoot : "airframe"
 
     defaults :
       serial: null
@@ -34,16 +34,16 @@ class Jetdeck.Models.AirframeModel extends Backbone.Model
       @updateChildren()
         
     updateChildren : =>
-      @leads.reset @get('leads')
-      @todos.reset @get('todos')
-      @specs.reset @get('specs')
-      @images.reset @get('images')
+      @leads.reset @get("leads")
+      @todos.reset @get("todos")
+      @specs.reset @get("specs")
+      @images.reset @get("images")
   
 class Jetdeck.Collections.AirframesCollection extends Backbone.CollectionBook
   
     model: Jetdeck.Models.AirframeModel
     
-    url: '/airframes'
+    url: "/airframes"
     
     initialize: ->
       @order = "year"
