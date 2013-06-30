@@ -1,7 +1,0 @@
-json.array! @contacts do |contact|
-
-  json.search_url "/contacts/#{contact.id}"
-  json.search_desc contact.company
-  json.search_label "<i class=\"icon-user\"></i> #{contact.fullName}"
-
-end

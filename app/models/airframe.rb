@@ -50,11 +50,12 @@ class Airframe < ActiveRecord::Base
 
   # the aircraft default thumbnail
   def avatar
-    images.where(:thumbnail => true).first do |image|
-      { :original => image.url("original"),
-        :listing => image.url("listing"),
-        :mini => image.url("mini"),
-        :thumb => image.url("thumb") }
+    image = images.where(:thumbnail => true).first 
+    if image.present?
+    { :original => image.url("original"),
+      :listing => image.url("listing"),
+      :mini => image.url("mini"),
+      :thumb => image.url("thumb") }
     end
   end
 

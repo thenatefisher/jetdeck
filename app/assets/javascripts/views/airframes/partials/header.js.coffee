@@ -29,39 +29,39 @@ class Jetdeck.Views.Airframes.Header.Editable extends Backbone.View
       }
       placement: "bottom"
       send: "never"
-      url: (obj) => 
-      @model.save({
-        year: obj.value.year
-        make: obj.value.make
-        model_name: obj.value.modelName
-      })
-    })
+      url: (obj) =>
+        @model.save({
+          year: obj.value.year
+          make: obj.value.make
+          model_name: obj.value.modelName
+        } )
+    } )
     @$("#serial").editable({url: (obj) => @model.save(obj.name, obj.value)})
-    @$("#registration").editable({url: (obj) => @model.save(obj.name, obj.value)})
+    @$("#registration").editable({url: (obj) => @model.save(obj.name, obj.value) } )
     @$("#asking_price").editable({
-      url: (obj) => 
+      url: (obj) =>
         d = new $.Deferred
-        intPrice = parseInt(obj.value.replace(/[^0-9]/g,""), 10)
+        intPrice = parseInt(obj.value.replace(/[^0-9]/g, ""), 10)
         @model.set(obj.name, intPrice)
-        @model.save(null, {success: => d.resolve()})
+        @model.save(null, {success: => d.resolve() } )
         return d.promise()
       display: (obj) ->
-        intPrice = parseInt(obj.replace(/[^0-9]/g,""), 10)
-        $(this).html("$" + intPrice.formatMoney(0, ".", ","))
-      })
+        intPrice = parseInt(obj.replace(/[^0-9]/g, ""), 10)
+        $(this).html("$" + intPrice.formatMoney(0, ".", ",") )
+      } )
 
     @$("#asking_price").each(->
       if $(this).html() != null
-        intPrice = parseInt($(this).html().replace(/[^0-9]/g,""), 10)
-        $(this).html("$" + intPrice.formatMoney(0, ".", ","))
+        intPrice = parseInt($(this).html().replace(/[^0-9]/g, ""), 10)
+        $(this).html("$" + intPrice.formatMoney(0, ".", ",") )
     )
 
   render: =>
     # render header container
-    $(@el).html(@template(@model.toJSON() ))
+    $(@el).html(@template(@model.toJSON() ) )
 
     # wait for container content to be loaded in DOM
-    $(() => 
+    $(() =>
       # init editable fields
       @initializeEditableFields()
       # render headline
@@ -75,12 +75,12 @@ class Jetdeck.Views.Airframes.Header.Avatar extends Backbone.View
   tmpl_filled: JST["templates/airframes/header/avatar_filled"]
 
   render: =>
-    $(@el).html(@tmpl_empty())
+    $(@el).html(@tmpl_empty() )
     if @model && @model.get("avatar")
-      $(@el).html(@tmpl_filled({avatar: @model.get("avatar")}))
+      $(@el).html(@tmpl_filled({avatar: @model.get("avatar") } ) )
     return this
 
-class Jetdeck.Views.Airframes.Header extends Backbone.View
+class Jetdeck.Views.Airframes.Header.Show extends Backbone.View
   template: JST['templates/airframes/header/header']
 
   events:
@@ -97,15 +97,15 @@ class Jetdeck.Views.Airframes.Header extends Backbone.View
     @setThumbnailMutex = false
 
   setThumbnail: (event) ->
+    # dont refresh page
+    event.preventDefault()
+
     # this mitigates damage from repeatedly
     # hammering the set thumbnail button
     if @setThumbnailMutex == false
       @setThumbnailHelper(event)
 
   setThumbnailHelper: (event) ->
-    # dont refresh page
-    event.preventDefault()
-
     # lock set thumbnail mutex
     @setThumbnailMutex = true
 
@@ -116,16 +116,16 @@ class Jetdeck.Views.Airframes.Header extends Backbone.View
 
     # if we found one, update thumbnail field
     if image
-      @model.images.forEach((im) -> im.set({thumbnail: false}))
-      image.set({thumbnail: true})
-      @model.save(null, {success: => 
-        # refresh avatar 
+      @model.images.forEach((im) -> im.set({thumbnail: false} ) )
+      image.set({thumbnail: true} )
+      @model.save(null, {success: =>
+        # refresh avatar
         @renderAvatar()
         # reload image list to set thumbnail button state
         @renderImagesList()
         # unlock mutex
         @setThumbnailMutex = false
-      })
+      } )
     else
       # unlock set thumbnail mutex
       @setThumbnailMutex = false
@@ -143,7 +143,7 @@ class Jetdeck.Views.Airframes.Header extends Backbone.View
     $.widget("blueimp.fileupload", $.blueimp.fileupload, {
       _renderExtendedProgress: (data) ->
         this._formatPercentage(data.loaded / data.total) + "  (" + this._formatBitrate(data.bitrate) + ")"
-    })
+    } )
 
     # uploader instantiation and settings
     @$("#airframe_image_upload").fileupload({
@@ -155,10 +155,10 @@ class Jetdeck.Views.Airframes.Header extends Backbone.View
         progress = parseInt(data.loaded / data.total * 100, 10)
         globalProgressNode = @$(".fileupload-progress")
         extendedProgressNode = globalProgressNode.find(".progress-extended")
-        if (extendedProgressNode.length) 
+        if (extendedProgressNode.length)
           extendedProgressNode.html(
             @$("#airframe_image_upload").data("blueimp-fileupload")._renderExtendedProgress(data)
-          )   
+          )
         globalProgressNode
           .find(".progress")
           .attr("aria-valuenow", progress)
@@ -166,23 +166,23 @@ class Jetdeck.Views.Airframes.Header extends Backbone.View
             "width",
             progress + "%"
           )
-    })
+    } )
 
     # re-render avatar thumbnail
-    @$("#airframe_image_upload").bind("fileuploaddestroyed", => 
-      @model.unset("avatar"); @model.fetch(complete: => @renderAvatar()))
-    @$("#airframe_image_upload").bind("fileuploadfinished", => 
-      @model.unset("avatar"); @model.fetch(complete: => @renderAvatar()))
+    @$("#airframe_image_upload").bind("fileuploaddestroyed", =>
+      @model.unset("avatar") ; @model.fetch(complete: => @renderAvatar() ) )
+    @$("#airframe_image_upload").bind("fileuploadfinished", =>
+      @model.unset("avatar") ; @model.fetch(complete: => @renderAvatar() ) )
 
     # set some drag/drop events
     @$("#airframe_image_upload").bind("fileuploaddrop", =>
       $("#uploader").show()
-      mixpanel.track("Added Image To Airframe", {method: "drag-drop"})
+      mixpanel.track("Added Image To Airframe", {method: "drag-drop"} )
     )
 
     # set CSRF token
     token = $("meta[name='csrf-token']").attr("content")
-    @$("#airframe_image_upload input[name='authenticity_token']").val(token)  
+    @$("#airframe_image_upload input[name='authenticity_token']").val(token)
 
   renderImagesList: =>
     # clear list
@@ -190,16 +190,16 @@ class Jetdeck.Views.Airframes.Header extends Backbone.View
     $("#airframe_image_upload .files").html("")
 
     # add all images
-    uploader._renderDownload(@model.images.toJSON())
-      .appendTo($("#airframe_image_upload .files"))
-      .removeClass("fade")     
+    uploader._renderDownload(@model.images.toJSON() )
+      .appendTo($("#airframe_image_upload .files") )
+      .removeClass("fade")
 
   render: ->
     # render header container
-    $(@el).html(@template(@model.toJSON() ))
+    $(@el).html(@template(@model.toJSON() ) )
 
     # wait for container content to be loaded in DOM
-    $(() => 
+    $(() =>
       # render avatar
       @renderAvatar()
       # render editable
@@ -210,4 +210,4 @@ class Jetdeck.Views.Airframes.Header extends Backbone.View
       @renderImagesList()
     )
 
-    return this  
+    return this

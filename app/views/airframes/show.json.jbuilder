@@ -10,7 +10,7 @@ json.import_url h @airframe.import_url
 json.to_s h(@airframe.to_s)
 json.long h(@airframe.long)
 
-json.avatar @airframe.avatar.url("thumb") if @airframe.avatar.present?
+json.avatar @airframe.avatar[:thumb] if @airframe.avatar.present?
 
 json.leads @airframe.leads do |x|
     json.contact x.contact

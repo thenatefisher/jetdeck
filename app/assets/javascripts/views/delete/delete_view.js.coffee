@@ -18,6 +18,7 @@ class Jetdeck.Views.Delete.ShowDelete extends Backbone.View
       @$(".help-message").html("Type DELETE to confirm.").show()
     
   toggleDeleteMessage: ->
+    @$("#delete-confirmation-text").html("")
     if $("#delete-button").is(":visible")
       $("#delete-button").hide()
       $("#delete-section").show()

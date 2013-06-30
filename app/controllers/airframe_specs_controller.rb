@@ -23,8 +23,8 @@ class AirframeSpecsController < ApplicationController
     @spec = AirframeSpec.new(params[:airframe_spec][:files])
     @spec.creator = @current_user
 
-    if Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe_spec][:airframe]]).present?
-      @airframe = Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe_spec][:airframe]])
+    if Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe_spec][:airframe_id]]).present?
+      @airframe = Airframe.find(:first, :conditions => ["created_by = ? AND id = ?", @current_user.id, params[:airframe_spec][:airframe_id]])
       if @airframe.present?
         @spec.airframe_id = @airframe.id
       end

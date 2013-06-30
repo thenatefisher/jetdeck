@@ -66,7 +66,7 @@ module AirframeImport
         page_details[:DetailedDescription] = doc.css("#ctl00_tdContent > table:nth-child(4) > tbody > tr:last-child > td > table").last rescue nil
 
         # detail sections
-        details = doc.xpath("//table/tr/td/font/b/text()[contains(.,"Detailed Description")]")
+        details = doc.xpath("//table/tr/td/font/b/text()[contains(.,'Detailed Description')]")
             .first.parent.parent.parent.parent.next.inner_html rescue nil
 
         page_details[:DetailedDescription] ||= details.match(

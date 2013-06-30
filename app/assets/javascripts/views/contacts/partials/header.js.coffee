@@ -82,7 +82,7 @@ class Jetdeck.Views.Contacts.Header.StickyNote extends Backbone.View
     $(@el).html(@template(@model.toJSON() )) 
     return this
 
-class Jetdeck.Views.Contacts.Header extends Backbone.View
+class Jetdeck.Views.Contacts.Header.Show extends Backbone.View
   template: JST["templates/contacts/header/header"]
   
   initialize: =>

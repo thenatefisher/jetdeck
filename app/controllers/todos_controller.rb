@@ -3,7 +3,7 @@ class TodosController < ApplicationController
 
   def index
 
-    @actions = Action.find(:all, :conditions => ["is_completed != 'true' AND created_by = ?", @current_user.id])
+    @actions = Todo.find(:all, :conditions => ["is_completed != 'true' AND created_by = ?", @current_user.id])
 
   end
 
@@ -15,7 +15,7 @@ class TodosController < ApplicationController
 
         whitelist = params[:todo].slice(:title, :description, :is_completed)
 
-      @action = Action.new(whitelist)
+      @action = Todo.new(whitelist)
       @action.created_by = @current_user.id
       @action.actionable_type = params[:todo][:actionable_type]
       @action.actionable_id = params[:todo][:actionable_id]
@@ -41,7 +41,7 @@ class TodosController < ApplicationController
 
   def update
 
-    @action = Action.find(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
+    @action = Todo.find(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
 
     whitelist = params[:todo].slice(:title, :description, :is_completed, :due_at)
 

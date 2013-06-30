@@ -1,4 +1,4 @@
-<ul class="breadcrumb subsection">
+<ul class="breadcrumb subsection" style="margin-bottom: 0px">
   
   <li style="text-shadow: none"> 
     <strong>
@@ -8,32 +8,29 @@
   
   <a href="#" class="pull-right add-spec" style="margin-left: 15px"> Add </a> 
 
-  <a href="#" class="show-hidden pull-right"> Show Hidden </a>
+  <a href="#" class="hide show-hidden pull-right"> Show Hidden </a>
 
 </ul>
 
-<form id="airframe_document_upload" action="/accessories" 
+<form id="airframe_document_upload" action="/airframe_specs" 
   style="margin: 0;" method="POST" enctype="multipart/form-data"
   data-upload-template-id="document-upload"
   data-download-template-id="document-download">  
 
   <input type="hidden" name="authenticity_token">
-  <input type="hidden" name="airframe" value="<%= id %>" />
+  <input type="hidden" name="airframe_spec[airframe_id]" value="<%= id %>" />
 
   <!-- The table listing the files available for upload/download -->
-  <div id="new-spec-well" class="hide" style="margin-left: 0px; margin-bottom: 20px;">
-    <div class="alert alert-block" style="padding-right: 14px; margin-bottom: 0">
-        <table class="table" id="new-spec-table" style="margin: 0; padding: 0">
-            <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
-        </table>
-        <div class="clearfix"></div>
-    </div>
+  <div id="new-spec-well" style="margin-left: 0px;">
+    <table id="new-spec-table" class="table">
+        <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+    </table>
     <div class="clearfix"></div>
   </div>
 
   <input 
     type="file" 
-    name="files[document]" 
+    name="airframe_spec[files][spec]" 
     id="airframe-document-input" 
     style="width: 0px; height: 0px; position: absolute; top: -9999px; left: -9999px; -moz-opacity:0; filter:alpha(opacity: 0); opacity: 0;"
     multiple>

@@ -27,7 +27,7 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     })
 
     # show progress when started
-    @$("#airframe_document_upload").bind("fileuploadstarted", => @$("#new-spec-well").show()) 
+    @$("#airframe_document_upload").bind("fileuploadstarted", => @$("#new-spec-table").addClass("spec-upload-table")) 
     # refresh spec list when uploaded
     @$("#airframe_document_upload").bind("fileuploaddone", => @refreshView()) 
 
@@ -36,7 +36,7 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     @$("#airframe_document_upload input[name='authenticity_token']").val(token)   
 
   refreshView: =>
-    @$("#new-spec-well").hide()
+    @$("#new-spec-table").removeClass("spec-upload-table")
     @model.fetch( success: => 
       @model.updateChildren()
       @render() 
@@ -59,10 +59,11 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
   render: =>
     # render out main template
     $(@el).html(@template(@model.toJSON()))
-  
-    # setup file uploader when DOM is ready
-    @$("#new-spec-well").hide()
-    $(() => @renderUploader())
+
+    $(() => 
+      @renderUploader()
+      @renderSpecs()
+    )
 
     if @model.specs.length < 1
       @$("#specs-populated").hide()
@@ -70,7 +71,8 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     else
       @$("#specs-populated").show()
       @$("#specs-empty").hide()
-      @renderSpecs()
+      @$(".show-hidden").show()
+
 
     return this
 
