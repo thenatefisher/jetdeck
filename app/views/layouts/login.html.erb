@@ -20,84 +20,21 @@
       <%= stylesheet_link_tag "login", :media => "all" %>
       <!-- Le javascript -->
       <%= javascript_include_tag "login" %>
-      <script type="text/javascript">
-
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-32538435-2']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-        })();
-
-      </script>
       
   </head>
 
   <body>
-  
-      <div class="sweatband"></div>
+
+    <%= render "layouts/partials/brandbar" %>
+
+    <div class="container">
       
-      <div class="container">
+      <div class="row-fluid">
 
-          <div class="navbar row-fluid" style="margin-bottom: 5px;">
-
-                  <div class="span12" style="margin-top: 30px;">
-                  
-                  <a class="brand" style="margin-left: 10px; width: 250px" href="/">
-                    <img src="/assets/logo_black_no_tag_200.png" style="float: left"> 
-                    <div style="float: left; margin: 23px 5px 0 10px" id="beta"><h5><small>BETA</small></h5></div>
-                  </a>
-                    
-                    <div class="pull-right" style="margin-top: 15px;">
-                    <h2>Inventory & Contact Management. <small style="color: #5BB75B;">Made Simple.</small></h2>
-                    </div>
-
-                  </div>
-
-          </div> <!-- navbar navbar-fixed-top -->
-
-          <div class="row-fluid ">
-            <div class="span12" style="margin-bottom: 20px;">
-              <div class="well hide" style="background: #fff; height: 250px;"></div>
-            </div>
-          </div>
-                    
-          <div class="row-fluid" style="padding: 0px 0px 10px;">
-            <div class="span7">
-
-            <div style="margin: 0px 0px 40px 20px; color: #777;">
-            <i class="icon-bolt pull-left" style="font-size: 30px; margin: 3px 20px 0 0; width: 40px; text-align: center"></i>
-            <h3>React to Leads Faster and <span style="color: #5BB75B;">Close More Deals</span></h3>
-            </div> 
-            
-            <div style="margin: 40px 0px 40px 20px; color: #777;">
-            <i class="icon-magic pull-left" style="font-size: 30px; margin: 3px 20px 0 0; width: 40px; text-align: center"></i>
-            <h3>Create <span style="color: #5BB75B;">Beautiful Aircraft Presentations</span> On The Fly</h3>
-            </div>
-            
-            <div style="margin: 40px 0px 40px 20px; color: #777;">
-            <i class="icon-signal pull-left" style="font-size: 30px; margin: 3px 20px 0 0; width: 40px; text-align: center"></i>
-            <h3>Optimize Specs For Today's <span style="color: #5BB75B;">Mobile Customers</span></h3>
-            </div>
-            
-            <div style="margin: 40px 0px 40px 20px; color: #777;">
-            <i class="icon-group pull-left" style="font-size: 30px; margin: 3px 20px 0 0; width: 40px; text-align: center"></i>
-            <h3>Tailor Them To Each Customer For <span style="color: #5BB75B;">Max Impact</span></h3>
-            </div>
-           
-            <div style="margin: 40px 0px 40px 20px; color: #777;">
-            <i class="icon-cloud pull-left" style="font-size: 30px; margin: 3px 20px 0 0; width: 40px; text-align: center"></i>
-            <h3><span style="color: #5BB75B;">Unify</span> Your Aircraft Inventory and Address Book</h3>
-            </div>                                      
-
-            </div>
-            
-
-                      
-            <div class="span5">
+          <%= render "layouts/partials/notifications" %>
+          
+          <div class="span3"></div>
+          <div class="span6"> <!-- span6 -->
 
               <% if Rails.env == "production" %>
               <!--[if IE]>
@@ -121,21 +58,18 @@
               <% end %>
               
               <div class="well nonie"><%= yield %></div>   
-            
-            </div>
-            
-            <div class="row-fluid" style="padding: 0px 0px 10px;">
-            <div class="span12 footer">
-            <div style="margin-left: 20px;">
-            <p>© <%=  Time.now.year %>, JetDeck Services, LLC. <span style="font-weight: normal">All Rights Reserved.</span></p>
-            </div>
-            </div>
-            </div>            
-     
+              
+              <div class="footer">
+              <p>© <%=  Time.now.year %>, <strong>Jet</strong>Deck Services, LLC </p>
+              </div>              
 
-          </div> <!-- end row class for search bar and new spec/contact-->
+          </div> <!-- end span6  -->
 
-      </div> <!-- end container class -->
+      </div> <!-- end main row -->
+
+    
+
+    </div> <!-- end container class -->
 
   </body>
 

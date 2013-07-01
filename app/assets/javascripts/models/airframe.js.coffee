@@ -1,51 +1,49 @@
-class Jetdeck.Models.Airframe extends Backbone.Model
-    paramRoot : 'airframe'
+class Jetdeck.Models.AirframeModel extends Backbone.Model
+    paramRoot : "airframe"
 
     defaults :
       serial: null
       registration: null
-      year: ""
-      listed: false
-      damage: false
-      tags: []
-      location: null
-      make: ""
-      model_name: ""
+      year: null
+      make: null
+      model_name: null
       asking_price: 0
-      description: ""
+      description: null
       avatar: null
+      to_s: null
+      long: null
 
     initialize : =>
       ## leads collection
       @leads = new Jetdeck.Collections.LeadsCollection(page_size: 5)
       @leads.airframe = this
       
-      ## equipment collection
-      @equipment = new Jetdeck.Collections.EquipmentCollection()
-      @equipment.airframe = this
-      
-      ## engines collection
-      @engines = new Jetdeck.Collections.EnginesCollection()
-      @engines.airframe = this
-      
       ## actions collection
-      @actions = new Jetdeck.Collections.ActionsCollection()
-      @actions.contact = this         
+      @todos = new Jetdeck.Collections.TodosCollection(page_size: 9)
+      @todos.airframe = this
 
-      ## populate child collections
+      ## spec files collection
+      @specs = new Jetdeck.Collections.AirframeSpecsCollection()
+      @specs.airframe = this 
+
+      ## images collection
+      @images = new Jetdeck.Collections.AirframeImagesCollection()
+      @images.airframe = this
+
+      ## populate child collections from data loaded with page
       @updateChildren()
         
     updateChildren : =>
-      @leads.reset @get('leads')
-      @equipment.reset @get('equipment')
-      @engines.reset @get('engines')
-      @actions.reset @get('actions')
+      @leads.reset @get("leads")
+      @todos.reset @get("todos")
+      @specs.reset @get("specs")
+      @images.reset @get("images")
   
 class Jetdeck.Collections.AirframesCollection extends Backbone.CollectionBook
   
-    model: Jetdeck.Models.Airframe
+    model: Jetdeck.Models.AirframeModel
     
-    url: '/airframes'
+    url: "/airframes"
     
     initialize: ->
       @order = "year"

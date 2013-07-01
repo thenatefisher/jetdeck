@@ -3,26 +3,41 @@
 #require "#{Rails.root}/db/seeds/baseline_airframes"
 #require "#{Rails.root}/db/seeds/contacts"
 
-# create 100,000 bogus baseline airframes to test db caching in heroku
-100000.times do
 
-  airframe = false
-  alpha = "abcdefghjklmnpqrstuvwxyz".upcase
-  
-  begin
-    iterator = rand(200) + 50
-    registration = "N#{iterator}#{alpha[rand(24)]}#{alpha[rand(24)]}"
-    conditions = {:baseline => true, :registration => registration}
-    airframe = Airframe.find(:first, :conditions => conditions)
-  end while !airframe.blank?
-  
-  details = {
-    :serial => "0000",
-    :make => "Fake Mfg",
-    :model_name => "Fake Model",
-    :year => "2001"
-  }
-  
-  airframe = Airframe.create(conditions.merge(details))
-    
-end
+
+contact = Contact.create(
+  :first => "Nate",
+  :last => "Fisher",
+  :email => "***REMOVED***",
+  :email_confirmation => "***REMOVED***"
+  )
+
+user = User.create({
+    :password => "asd123",
+    :password_confirmation => "asd123",
+    :contact_id => contact.id,
+    :activated => true
+})
+
+recipient = Contact.create(
+    :email => "***REMOVED***",
+    :email_confirmation => "***REMOVED***" 
+)
+
+airframe = Airframe.create(:creator => user)
+
+airframe_spec = AirframeSpec.create(
+    :creator => user,
+    :airframe => airframe,
+    :spec => File.new("#{Rails.root}/spec/fixtures/f1040.pdf")
+)
+
+airframe_message = AirframeMessage.create(
+    :subject => "Test Subject",
+    :airframe_spec => airframe_spec,
+    :airframe => airframe,
+    :creator => user,
+    :recipient => recipient
+)
+
+airframe_message.send_message()

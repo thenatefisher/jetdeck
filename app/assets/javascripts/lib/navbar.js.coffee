@@ -1,24 +1,16 @@
 $(->
-
-    $('#beta').popover({
-      animation: true
-      placement: "bottom"
-      title: "JetDeck is a Beta!"
-      content: "This means it's not a commercial product yet and may have a few bugs here and there. We appreciate your feedback when something isn't perfect. In exchange for any inconvenience, you get to use all the features of JetDeck for free while we keep making it better. Fair trade, right?"
-    })    
-    
+  
     $("#navbar-search").autocomplete({
        minLength: 2,
        autofocus: true,
        focus: (event, ui) =>
-          #$(".select2-choice").children("span").html("<a href='" + ui.item.url + "'><strong>" + ui.item.label + "</strong><br>" + ui.item.desc + "</a>" )
           event.preventDefault(); 
        source: "/search",
        select: ( event, ui ) =>
           window.location.href = ui.item.url
           return false
     })
-    .data("autocomplete")._renderItem = ( ul, item ) ->
+    .data("uiAutocomplete")._renderItem = ( ul, item ) ->
        ul.addClass("dropdown-menu");
        ul.addClass("typeahead");
        return $( "<li class=\"result\" style=\"cursor: pointer\"></li>" )
@@ -26,9 +18,14 @@ $(->
 	        .append( "<a href='" + item.url + "'><strong>" + item.label + "</strong><br>" + item.desc + "</a>" )
 	        .appendTo( ul )  
 	        
-    $("#new-spec").click( ->
+    $("#new-quicksend").tooltip({placement: "bottom", delay: { show: 500, hide: 100 }})
+    $("#new-quicksend").click( ->
+        view = new Jetdeck.Views.Specs.Send()
+        modal(view.render().el)
+    )
+
+    $("#new-airframe").click( ->
         view = new Jetdeck.Views.Airframes.NewView()
-        $(".new-spec").popover('hide')
         modal(view.render().el)
     )
 

@@ -1,11 +1,16 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
+
   factory :note do
-    title "MyString"
-    description "MyText"
-    created_by 1
-    notable_type "MyString"
-    notable_id 1
+  end
+
+  factory :airframe_note, parent: :note do
+    association :author, factory: :user
+    association :notable, factory: :airframe
+    description "An airframe note"
+  end
+  factory :contact_note, parent: :note do
+    association :author, factory: :user
+    association :notable, factory: :contact
+    description "A contact note"
   end
 end

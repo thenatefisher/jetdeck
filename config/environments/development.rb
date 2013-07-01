@@ -32,25 +32,24 @@ Jetdeck::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  # Do not compress assets
+  # compress assets?
   config.assets.compress = false
 
-  # Expands the lines which load the assets
-  config.assets.debug = true
+  # Expand the lines which load the assets?
+  config.assets.debug = false
 
   # Paperclip config path
   Paperclip.options[:command_path] = "/usr/bin/"
 
-  # Actually send emails in dev mode!!
-  config.action_mailer.perform_deliveries = true
+  # send emails in dev mode!!
+  config.action_mailer.perform_deliveries = false
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = { :host => "localhost:3000" }
-  
+
   # AWS
   config.aws_s3_bucket = "jetdeck_dev"
-  
+
   # mix panel
   config.mixpanel_token = "***REMOVED***"
-  
-  
+
 end

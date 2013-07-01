@@ -74,53 +74,17 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
           
     $(@el).html(@template(@model.toJSON() ))
 
-    @header = new Jetdeck.Views.Contacts.ShowHeaderView(model: @model)
+    @header = new Jetdeck.Views.Contacts.Header.Show(model: @model)
     @$("#contact_show_header").html(@header.render().el)
-    
-    @specs = new Jetdeck.Views.Contacts.ShowSpecs(model: @model)
-    if @model.specs.length > 0
-      @$("#contact_specs").html(@specs.render().el) 
-    
-    @send = new Jetdeck.Views.Contacts.ShowSend(model: @model)
-    @$("#contact_send").html(@send.render().el)      
-      
-    @alerts = new Jetdeck.Views.Contacts.ShowAlerts(model: @model)
-    @$("#contact_alerts").html(@alerts.render().el)       
+    @model.on("note-changed", => @header.renderStickyNote() )
 
-    @actions = new Jetdeck.Views.Actions.ShowActions(model: @model)
-    @$("#contact_actions").html(@actions.render().el)  
+    @notes = new Jetdeck.Views.Notes.ShowNotes(model: @model)
+    @$("#contact_notes").html(@notes.render().el)
     
-    @delete = new Jetdeck.Views.Contacts.ShowDelete(model: @model)
+    @todos = new Jetdeck.Views.Actions.ShowActions(model: @model)
+    @$("#contact_actions").html(@todos.render().el)  
+    
+    @delete = new Jetdeck.Views.Delete.ShowDelete(model: @model)
     @$("#contact_delete").html(@delete.render().el)
-        
-    @details = new Jetdeck.Views.Contacts.ShowDetails(model: @model)
-    @$("#contact_details").html(@details.render().el)
-    @$("a[href='#"+lastDetailTab+"']'").tab('show') if lastDetailTab  
     
-    return this
-
-
-class Jetdeck.Views.Contacts.ShowHeaderView extends Backbone.View
-  template: JST["templates/contacts/partials/header"]
-  
-  events:
-    "click #detail-add"         : "add"
-
-  add : =>
-    detail = new Jetdeck.Models.CustomDetailModel()
-    detail.set("pending", "true")
-    @model.custom_details.add(detail)
-    @render()
-    window.router.view.edit()
-
-  renderCustomDetails: =>
-    if @model.custom_details.length > 0
-      @$("#custom-details").append("<div>&nbsp;</div>")
-    @model.custom_details.each (i) =>
-      item_view = new Jetdeck.Views.Contacts.CustomDetailItem(model: i)
-      @$("#custom-details").append(item_view.render().el)
-
-  render: ->
-    $(@el).html(@template(@model.toJSON() )) 
-    @renderCustomDetails()
     return this

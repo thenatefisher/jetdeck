@@ -7,99 +7,78 @@
      
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <title>Jetdeck Signup</title>
+    <title>JetDeck Signup</title>
     
     <%= csrf_meta_tags %>
     
     <link rel="shortcut icon" href="/assets/favicon.png" />
     
-    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!-- HTML5 shim, for IE6-8 support of HTML elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
     <![endif]-->
-
-    <!-- Le styles -->
+    
+    <!-- styles -->
     <%= stylesheet_link_tag "signup", :media => "all" %>
-    <!-- Le javascript -->
-    <%= javascript_include_tag "signup" %>     
+    <!-- javascript -->
+    <%= javascript_include_tag "signup" %>
         
   </head>
 
-    <body>
-    
-      <div class="sweatband"></div>
-    
-      <div class="container">
+  <body>
 
-          <div class="navbar row-fluid" style="margin-bottom: 5px;">
+    <%= render "layouts/partials/brandbar" %>
 
-                  <div class="span12" style="margin-top: 30px;">
-                  
-                  <a class="brand" style="margin-left: 10px; width: 250px" href="/">
-                    <img src="/assets/logo_black_no_tag_200.png" style="float: left"> 
-                    <div style="float: left; margin: 23px 5px 0 10px" id="beta"><h5><small>BETA</small></h5></div>
-                  </a>
-                    
-                    <div class="pull-right" style="margin-top: 15px;">
-                    <h2>Inventory & Contact Management. <small style="color: #5BB75B;">Made Simple.</small></h2>
-                    </div>
+    <div class="container">     
+      
+      <div class="row">
+          
+          <div class="span12"> <h2>Inventory & Contact Management. <small style="color: #5BB75B;">Made Simple.</small></h2> </div>
 
-                  </div>
+          <div class="clearfix"><br><br><br></div>
 
-          </div> <!-- navbar navbar-fixed-top -->
+          <div class="span7">  <!-- MY DECK ... navigation -->
 
-          <div class="row-fluid ">
-            <div class="span12" style="margin-bottom: 20px;">
-              <div class="well hide" style="background: #fff; height: 250px;"></div>
-            </div>
-          </div>
-                    
-          <div class="row-fluid" style="padding: 0px 0px 10px;">
-            <div class="span7">
-
-            <div style="margin: 0px 0px 40px 20px; color: #777;">
+            <div style="margin: 0px 0px 40px 0px; color: #777;">
             <i class="icon-bolt pull-left" style="font-size: 30px; margin: 3px 20px 0 0; width: 40px; text-align: center"></i>
-            <h3>React to Leads Faster and <span style="color: #5BB75B;">Close More Deals</span></h3>
+            <h4>React to Leads Faster and Close More Deals</h4>
             </div> 
             
-            <div style="margin: 40px 0px 40px 20px; color: #777;">
+            <div style="margin: 40px 0px 40px 0px; color: #777;">
             <i class="icon-magic pull-left" style="font-size: 30px; margin: 3px 20px 0 0; width: 40px; text-align: center"></i>
-            <h3>Create <span style="color: #5BB75B;">Beautiful Aircraft Presentations</span> On The Fly</h3>
+            <h4>Send Specs of Any Size Over Email</h4>
             </div>
             
-            <div style="margin: 40px 0px 40px 20px; color: #777;">
+            <div style="margin: 40px 0px 40px 0px; color: #777;">
             <i class="icon-signal pull-left" style="font-size: 30px; margin: 3px 20px 0 0; width: 40px; text-align: center"></i>
-            <h3>Optimize Specs For Today's <span style="color: #5BB75B;">Mobile Customers</span></h3>
+            <h4>Optimize Specs For Today's Mobile Customers</h4>
             </div>
             
-            <div style="margin: 40px 0px 40px 20px; color: #777;">
+            <div style="margin: 40px 0px 40px 0px; color: #777;">
             <i class="icon-group pull-left" style="font-size: 30px; margin: 3px 20px 0 0; width: 40px; text-align: center"></i>
-            <h3>Tailor Them To Each Customer For <span style="color: #5BB75B;">Max Impact</span></h3>
+            <h4>Tailor Them To Each Customer For Max Impact</h4>
             </div>
            
-            <div style="margin: 40px 0px 40px 20px; color: #777;">
+            <div style="margin: 40px 0px 40px 0px; color: #777;">
             <i class="icon-cloud pull-left" style="font-size: 30px; margin: 3px 20px 0 0; width: 40px; text-align: center"></i>
-            <h3><span style="color: #5BB75B;">Unify</span> Your Aircraft Inventory and Address Book</h3>
+            <h4>Unify Your Aircraft Inventory and Address Book</h4>
             </div>                                      
 
-            </div>
-            
-            <div class="span5">
-              <div class="well"><%= yield %></div>
-            </div>
-            
-            <div class="row-fluid" style="padding: 0px 0px 10px;">
-            <div class="span12 footer">
-            <div style="margin-left: 20px;">
-            <p>© <%=  Time.now.year %>, JetDeck Services, LLC. <span style="font-weight: normal">All Rights Reserved.</span></p>
-            </div>
-            </div>
-            </div>            
+                        
+          </div> <!-- end MY DECK ... navigation -->
 
-          </div> <!-- end row class for search bar and new spec/contact-->
+          <div class="span5" id="whitebox"> <!-- span10 entire spec (White background) -->
 
-      </div> <!-- end container class -->      
-      
-    </body>
+             <div class="row-fluid"><div style="margin: 20px;"><%= yield %></div></div>
+
+          </div> <!-- end span10 entire spec (White background) -->
+
+      </div> <!-- end main row -->
+
+    <%= render "layouts/partials/footer" %>
+
+    </div> <!-- end container class -->
+    
+  </body>
     
 </html>

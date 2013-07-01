@@ -2,119 +2,83 @@ Jetdeck.Views.Profile ||= {}
 
 class Jetdeck.Views.Profile.ShowView extends Backbone.View
   template: JST["templates/profile/show"]
+  
+  render: =>
+    view_params = {
+      usage_in_megs: (parseInt(@model.get('storage_usage')) / 1048576).toFixed(1)
+      quota_in_megs: (parseInt(@model.get('storage_quota')) / 1048576).toFixed(1)
+      usage_in_percent: Math.round(100*(parseInt(@model.get('storage_usage')) / parseInt(@model.get('storage_quota'))))
+    }
 
-  events:
-    "click #upload"           : "chooseLogo"
-    "keydown .inline-edit"    : "edit"
-    "change #logo"            : "showSelectedFile"
-    "click #delete"           : "deleteLogo"
-   
-  deleteLogo: (e) =>
-     e.preventDefault()
-     $.ajax(
-       url: "/user_logos/1", 
-       type: "DELETE", 
-       success: =>
-          @model.set('logo', null)
-          window.router.show()
-          mixpanel.track("Deleted Logo")  
-     )
-     
-  showSelectedFile: (event) ->
-    e = event.target || event.currentTarget
-    fileString = $(e).val()
-    
-    if fileString.length > 15
-      fileString = "..." + fileString.substr(fileString.length - 15, 15)
-      
-    @$("#logo-help").html(fileString)
-    $("#changes").children().fadeIn()
-    $("#changes").slideDown()
-    
-  chooseLogo: ->
-    @$("#logo").click()
+    $(@el).html(@template($.extend(view_params,@model.toJSON() )))
 
-  initialize: =>
-    $("#cancel-changes").on("click", @cancel)
-    $("#save-changes").on("click", @save)
-    
-  cancel: =>
-    $("#changes").children().fadeOut()
-    $("#changes").slideUp(=>
-      @model.fetch( success: ->
-        window.router.view.render()
+    # resend activation email
+    @$(".resend").on("click", =>
+      $.get("/resend_activation",
+        success: =>
+          @$("#activation-msg").html("Activation email resent. Please check your inbox for a new email.")
+          @$("#activation-msg").removeClass("alert-danger")
+          @$("#activation-msg").addClass("alert-success")
       )
     )
-    
-  edit: (event) ->
-    element = event.target || event.currentTarget 
-    $(element).addClass("changed")
-    $("#changes").children().fadeIn()
-    $("#changes").slideDown()
-  
-  save: (e) =>
-    mixpanel.track("Updated Profile")  
-    $("#save-changes").prop('disabled', true)
-    $(".error").html("")
-    self = this
-    
-    @model.set('spec_disclaimer', @$("textarea[name='spec_disclaimer']").val())
-    
-    $(".inline-edit").each( ->
-      
-      # strip leading/trailing space
-      this.value = this.value.replace(/(^\s*)|(\s*$)/gi,"")
-      this.value = this.value.replace(/\n /,"\n")
-      self.model.attributes.contact[this.name] = this.value
 
-    )
-    
-    # add protocol onto website url
-    website = @model.attributes.contact['website']
-    website = website.replace(/http\:\/\//, '')
-    website = 'http://' + website
-    @model.attributes.contact['website'] = website
+    # setup editable fields
+    @$('#name').editable({
+      title: 'Enter Your Full Name',
+      value: {
+        first: @model.attributes.contact['first']
+        last: @model.attributes.contact['last']
+      },
+      placement: 'bottom',
+      send: 'never',
+      url: (obj) => 
+        @model.attributes.contact['first'] = obj.value.first
+        @model.attributes.contact['last'] = obj.value.last
+        @model.save()
+    })
+    @$('#last').editable({url: (obj) => @model.attributes.contact[obj.name] = obj.value; @model.save()})
+    @$('#company').editable({url: (obj) => @model.attributes.contact[obj.name] = obj.value; @model.save()})
+    @$('#title').editable({url: (obj) => @model.attributes.contact[obj.name] = obj.value; @model.save()})
+    @$('#phone').editable({url: (obj) => @model.attributes.contact[obj.name] = obj.value; @model.save()})
+    @$('#signature').editable({url: (obj) => @model.set('signature', obj.value); @model.save()})
+    @$('#email').editable({
+      url: (obj) =>       
+        @model.attributes.contact['email'] = obj.value.email
+        @model.attributes.contact['email_confirmation'] = obj.value.email_confirmation
+        @model.save()
+      error: (response, newValue) =>
+        response = JSON.parse(response.responseText)
+        msg = response.email || repsonse.email_confirmation if response
+        msg = msg[0] if msg
+        return msg || "Valid email and confirmation required"
+    })
+    @$('#password').editable({
+      validate: (value) =>
+        if $.trim(value.password_confirmation) == ''
+          return 'Confirmation is required'
+      error: (response, newValue) =>
+        response = JSON.parse(response.responseText)
+        msg = response.password || repsonse.password_confirmation if response
+        msg = msg[0] if msg
+        return msg || "Password and confirmation required"           
+      url: (obj) =>       
+        @model.attributes.contact['password'] = obj.value.password
+        @model.attributes.contact['password_confirmation'] = obj.value.password_confirmation
+        @model.save()
+    })
+    @$('#website').editable({
+      url: (obj) => 
+        website = obj.value.replace(/http\:\/\//, '')
+        website = 'http://' + website
+        @model.attributes.contact[obj.name] = website
+        @model.save()
+      error: (response, newValue) =>
+        response = JSON.parse(response.responseText)
+        msg = response.website response
+        msg = msg[0] if msg
+        return msg || "Valid URL required"        
+      success: (response, newValue) =>
+        return {newValue: response.website}
+    })    
 
-    @model.save(null,
-      success: (response) =>
-        $("#changes").children().fadeOut()
-        $("#changes").slideUp(=>
-          window.router.view.render()
-          alertSuccess("<i class='icon-ok icon-large'></i> Changes Saved!") 
-        )
-        if $("#logo").val() != ""
-          token = $("meta[name='csrf-token']").attr("content")
-          $("input[name='authenticity_token']").val(token)
-          $("form").submit()
-
-      error: (model, error) =>
-        alertFailure(
-          "<i class='icon-warning-sign icon-large'></i> Error Saving Changes"
-        )
-        errorStruct = JSON.parse(error.responseText)      
-        $(".error[for='"+e+"']").html(errorStruct[e].toString()) for e of errorStruct
-
-    )
-    
-    $("#save-changes").prop('disabled', false)
-    
-  updateEmail: ->
-    email = @$("input[name='email']").val()
-    email_confirmation = @$("input[name='email_confirmation']").val()  
-    @model.attributes.contact.email = email
-    @model.attributes.contact.email_confirmation = email_confirmation    
-
-    @model.save(null,
-      success: () ->
-            $('.email-failure').hide()   
-            $('.email-confirmation').val('')
-      error: (c, jqXHR) =>
-            errObj = $.parseJSON(jqXHR.responseText)  
-            if errObj.email[0]  
-                alertFailure("Email " + errObj.email[0])       
-    )
-    return this
-    
-  render: ->
-    $(@el).html(@template(@model.toJSON() ))
     return this

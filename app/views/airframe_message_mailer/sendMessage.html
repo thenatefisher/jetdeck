@@ -1,0 +1,42 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<body>
+
+    <div style="padding: 10px 7px;
+                margin: 10px 0;
+                font-weight: bold;
+                background-color: #f5f5f5;
+                border: 1px solid #e3e3e3;
+                font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-size: 16px;">
+
+        <div>
+            <div style="float:left; margin: 5px 15px 0 10px">
+                <img src="<%= @favicon %>" height="30" style="height: 30px;"/>
+            </div>
+            <div style="float:left; clear: right;">
+                <% if @spec_link.present? %>
+                <a href="<%= @spec_link %>" 
+                    style="color: #2980B9; text-decoration: none; padding-bottom: 10px"><%= @filename %></a> 
+                <span style="font-weight: normal; color: #888888; margin-left: 5px;">(<%= @filesize %>)</span>
+                <% end %>
+                
+                <% if @photos_link.present? %>
+                    <br>
+                    <a href="<%= @photos_link %>" 
+                        style="font-weight: normal; color: #2980B9; font-size: 14px; text-decoration: none; padding-bottom: 10px">
+                        View Photos</a> 
+                <% end %>
+            </div>            
+            <div style="clear: both"></div>
+        </div>
+    </div>
+
+    <p><%= @body.gsub("\n","<br>").html_safe rescue nil %></p>
+
+</body>
+
+</html>
+

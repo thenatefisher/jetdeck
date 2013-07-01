@@ -1,10 +1,17 @@
-Third Party Libraries
+Third Party Libraries and Services
 
   Front End:
-      jQuery MultiSelect
+      Bootstrap
+      bootstrap wysihtml5
+      bootstrap datepicker
+      bootstrap editable
+      Backbone.js
+      D3.js
+      rickshaw
       jQueryUI AutoComplete
       jQuery Select2
-      SubtleBackgrounds
+      jQuery File Upload
+      kicksend mailcheck
 
   Back End:
       Rails
@@ -14,14 +21,13 @@ Third Party Libraries
       jBuilder gem
       Factory Girl
       rspec-rails
+      jasmine
+      Delayed Job
+      Capybara
       
   Hosting / Infrastructure:
       Heroku
-      Amazon S3 (for image hosting)
+      Amazon S3
       SendGrid
       MixPanel
-      Stripe (still implementing)
-      AirBrake
-      Amazon CloudFront (for CDN, not configured yet)
-      
-    
+      Stripe (planned)

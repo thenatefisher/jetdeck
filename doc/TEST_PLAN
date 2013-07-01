@@ -1,0 +1,26 @@
+== Check every action of every controller
+
+* User creation - with invite / without invite
+* forgotten password
+* enumerate airframes in index
+* Images import and upload
+
+== Usability scenarios
+
+* create aircraft with listing images
+* upload a spec file
+* send a spec file to a friend
+* track recipient activity
+* update spec file
+* send updated spec file to all leads
+
+== misc
+
+* check all error pages, make sure they work
+* make sure error page images/assets are correct
+
+== AUTO TESTING
+
+run `spork` in a console to start DRB server to make iterative testing really quick
+use `rspec --drb specs` to execute specs (ie, `rspec --drb specs/models` for just models)
+use Faker to come up with random names (http://rubydoc.info/github/stympy/faker/master/frames)

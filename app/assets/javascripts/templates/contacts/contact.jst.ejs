@@ -1,6 +1,31 @@
 
-    <td><%= first %></td>
-    <td><%= last %></td>
-    <td><%= email %></td>    
-    <td><%= company %></td>    
+<div data-contact="<%= id %>" style="margin-bottom: 20px; width: 340px; float: left;margin-left: 20px;">
+ <a href="/contacts/<%= id %>" class="thumbnail">
+        <% if (typeof(avatar) != "undefined" && avatar != null && typeof(avatar.mini) != "undefined") { %>
+          <img src="<%= avatar.listing %>" alt="">
+        <% } else { %>
+          <div class="contact-index-missing-image"></div>
+        <%}%>
 
+        
+          <div class="caption" style="float:  left;">
+
+            <h5 style="margin-top: 0; font-size: 15px">
+
+              <% if (!first && !last) {%>
+              <%= email %>
+              <%} else {%> 
+              <%= first %>&nbsp;<%= last %>
+              <%} %>
+
+            </h5>
+
+            <br><%= company %>
+                    
+            <br><br><% if (first || last) {%> <%= email %> <%} %>   
+
+          </div>
+          
+          <div class="clearfix">&nbsp;</div>
+</a>
+</div>

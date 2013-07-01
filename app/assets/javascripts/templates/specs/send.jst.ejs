@@ -1,0 +1,104 @@
+<div class="modal-header">
+  <button class="close" data-dismiss="modal">×</button>
+  <h3>Send Spec</h3>
+</div>
+
+<div class="modal-body" style="max-height: 485px; padding: 0px; background: #eee">
+
+  <div style="padding: 15px; padding-bottom: 0px;">
+
+    <form class="form-horizontal">
+
+      <!-- to -->
+      <div class="control-group">
+        <label class="control-label" for="email">To: </label>
+        <div class="controls">
+          <input type="text" id="email" name="email" class="input span5" placeholder="Email">
+        </div>
+      </div>
+
+      <!-- spec -->
+      <div class="control-group">
+        <label class="control-label">Spec: </label>
+        <div id ="spec-controls" class="controls">
+
+          <input type="hidden" id="airframe" class="airframe" name="airframe_id" />
+
+          <span id="nospecs" class="hide error" style="margin-top: 10px;"><em>There are no specs for this aircraft</em></span>
+
+          <input type="hidden" id="spec" name="spec_id" />
+
+          <label for="include-photos" class="checkbox hide" style="margin-top: 10px;">
+            <input type="checkbox" id="include-photos" name="include_photos" checked> Include Pictures
+          </label>
+
+        </div>
+        
+      </div>
+
+      <!-- subject -->
+      <div class="control-group">
+        <label class="control-label" for="message-subject">Subject: </label>
+        <div class="controls">
+          <input type="text" id="message-subject" name="message_subject" class="input span5" placeholder="Subject">
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- body -->
+  <div style="background: white; width: 100%; border-top: 1px solid #ccc; height: 180px;">
+    <div id="message-body" name="message_body" hideFocus="true" contenteditable style="min-height: 150px; outline: 0px solid transparent; margin: 15px;"></div>
+  </div>
+
+</div>
+
+<div class="modal-footer">
+  <span class="pull-left error span4" style="text-align: left;" id="error-message"></span>
+  <a href="#" class="btn" data-dismiss="modal">Cancel</a>
+  <button id="send" class="btn btn-primary" data-loading-text="Sending..." disabled>Send</button>
+</div>
+
+<style type="text/css">
+  #s2id_spec { margin-top: 10px; }
+  #airframe, #spec {
+    width: 379px;
+  }
+  #message-body {
+    -webkit-border-radius: 4px 4px 0 0;
+    -moz-border-radius:  4px 4px 0 0;
+    border-radius:  4px 4px 0 0;  
+  }
+  #attachment {
+    margin-left: 0;
+  }
+  #attachment div {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0; 
+    padding: 10px 7px;
+    -webkit-box-shadow: 0;
+    -moz-box-shadow: 0;
+    box-shadow: 0;
+    font-weight: bold;
+  }
+  #attachment-filename {
+    color: #999;
+    font-style: italic;
+  }
+  #attachment-filename.selected{
+    color: #2C3E50;
+    font-style: normal;
+  }  
+  #attachment div small {
+    color: #555555;
+  }
+  .form-horizontal .controls {
+    margin-left: 124px;
+  }
+  .form-horizontal .control-label {
+    width: 100px;
+  }
+</style>

@@ -1,35 +1,34 @@
-#########     TODAY       #########
+ROADMAP TO LAUNCH:
 
+    3x      create tests 
+                - model specs
+                - request specs
+                - js jasmin specs
 
-  
-#########     THIS WEEK   #########
+    1x      browser compatibilty check with auto tests
 
-  50      Database Migration and Seeding
-  --- ---
-  54      Write Tests
-  55      Access Control Audit
-  60      Browser Compatibility Checking
-  --- ---
+    3x      finish internal application ui
+                - cleanup rails controllers
+                - cleanup rails views
+                - refactor backbone routers
+                - refactor backbone models
+                - refactor backbone views
+                - refactor backbone templates
+                - integrate mixpanel
+                - integrate help_enabled windows
+                - remove BETA flags
 
-  90      Error Pages
+    1x      create bank account
 
-  
-#########     LATER       #########
+    2x      marketing and signup brochure site
 
-#########     DONE        #########
+    1x      integrate stripe payments    
 
-  80      Mail LLC docs
-  110     Make staging/dev AWS S3 area
-  40      Need retail image placeholder of correct dimensions
-  65      Migrate in public spec improvements from mkting demo
-  20      Images need to be resized/cropped on upload to spec defined sizes
-  10      Edit airframe engines, avionics and equipment 
-  15      SSL the profile page logo image from S3
-  30      Contact model: email uniqueness is also specific to an owner
-  45      Make user login email addy case insensitive 
-  70      Turn on New Relic  
-  100     user.rb: has secure password / force ssl  
-  
-================================================================================  
+    1x      browser compatibilty check 
 
+    1x      fix bugs
 
+    1x      push live and check all services operational (s3, sendgrid, etc)
+            crank shit up that needs it
+
+    1x      write press release

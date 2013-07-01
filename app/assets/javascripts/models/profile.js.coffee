@@ -1,19 +1,20 @@
-class Jetdeck.Models.Profile extends Backbone.Model
+class Jetdeck.Models.ProfileModel extends Backbone.Model
 
-  paramRoot: 'profile'
+  paramRoot: "profile"
 
-  url: '/profile'
+  url: "/profile"
 
   defaults:
-    type: null
     first: null
     last: null
     email: null
     company: null
     contact: null
+    website: null
     airframes: 0
     contacts: 0
     sent: 0
-    views: 0
-    spec_disclaimer: null
-    logo: null
+    storage_usage: 0
+    storage_quota: 0
+    signature: null
+    help_enabled: null

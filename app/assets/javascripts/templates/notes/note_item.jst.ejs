@@ -1,0 +1,48 @@
+<h6>
+     <% if (is_sticky) { %><i style="color: #c09853" class="icon-pushpin"></i> <% } %>
+     <% if (author != null) { %><%= author %><small> - <% } else { %><small><% } %> <strong><%= date %></strong> @ <%= time %></small>
+
+    <div class="disable-note-buttons pull-right">
+        
+      <span class="note-buttons hide">
+
+          <% if (is_mine) { %>
+          <span class="pull-right delete-note clicky"><i class="icon-remove"></i> Delete</span>
+          <span class="pull-right edit-note clicky" style="margin-right: 10px;"><i class="icon-pencil"></i> Edit</span>
+          <% } %>
+
+          <% if (is_sticky) { %>
+          <span class="pull-right sticky-note clicky" style="margin-right: 10px;"><i class="icon-pushpin"></i> Un-Stick</span>
+          <% } else { %>
+          <span class="pull-right sticky-note clicky" style="margin-right: 10px;"><i class="icon-pushpin"></i> Stick</span>
+          <% } %>
+
+      </span>
+        
+    </div>
+
+</h6>
+
+<div class="note-description"><%= description.slice(0,175) %>
+<% if (description.length > 175) { %>
+    <span class="elipsis"> 
+     <a href="#" class="muted"> ...more</a> 
+    </span>
+    <span class="more hide"><%= description.substring(175, description.length) %></span>
+<% } %>
+</div>
+
+
+<div class="control-group" style="margin: 0px;">
+  <textarea class="note hide span6"><%= description %></textarea>
+</div>
+
+<div class="note-edit-buttons hide">
+  <button class="pull-right btn btn-primary update-note">Update Note</button>
+  <a href="#" class="pull-right cancel-note-edit" style="margin-right: 10px; margin-top: 6px;">Cancel</a>
+  <div class="clearfix" style="margin-top: 0px"></div>
+</div>
+
+<div class="note-page-header page-header" style="margin-top: 0px"></div>
+
+

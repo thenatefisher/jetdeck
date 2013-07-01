@@ -4,20 +4,9 @@ json.first h @contact.first
 json.last h @contact.last
 json.phone h @contact.phone
 json.id @contact.id
+json.sticky_id @contact.sticky_id
 
-json.ownerships @contact.ownerships do |json, x|
-  json.description h x.description  
-  json.assoc h x.assoc  
-  json.id x.id
-end
-
-json.custom_details @contact.details do |json, x|
-  json.name h x.name  
-  json.value h x.value  
-  json.id x.id
-end
-
-json.notes @contact.notes do |json, x|
+json.notes @contact.notes do |x|
   json.title h x.title
   json.description h x.description  
   json.id x.id
@@ -30,7 +19,7 @@ json.notes @contact.notes do |json, x|
   json.is_mine true if @current_user and (@current_user.id == x.created_by)
 end
 
-json.actions @contact.actions do |json, c|
+json.todos @contact.todos do |c|
     json.id c.id
     json.title h c.title
     json.description h c.description
@@ -46,31 +35,14 @@ json.actions @contact.actions do |json, c|
     json.past_due (c.due_at < Time.now()) if c.due_at   
 end
 
-json.specs @contact.specsReceived do |json, x|
-
-        json.hits x.hits
-
-        if x.hits > 0 && x.views
-            json.last_viewed x.views.last.created_at
-        else
-            json.last_viewed ""
-        end
-
-        json.fire x.fire || false
-
-        json.url "/s/" + x.url_code
-        
-        if x.airframe
-        
-          json.id             x.airframe.id
-          json.registration   x.airframe.registration
-          json.serial         x.airframe.serial
-          json.year           x.airframe.year
-          json.make           x.airframe.make
-          json.model_name     x.airframe.model_name
-          json.avatar         x.airframe.avatar
-          
-        end
-
+json.leads @contact.leads do |x|
+    if x.airframe
+        json.id             x.airframe.id
+        json.registration   x.airframe.registration
+        json.serial         x.airframe.serial
+        json.year           x.airframe.year
+        json.make           x.airframe.make
+        json.model_name     x.airframe.model_name
+        json.avatar         x.airframe.avatar
+    end
 end
-

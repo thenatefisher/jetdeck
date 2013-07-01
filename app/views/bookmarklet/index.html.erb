@@ -1,0 +1,34 @@
+jetdeck_$(function() {
+
+	window.jetdeck_logo = "<%= "http://#{request.host}:#{request.port}#{asset_path 'bookmarklet_logo.png'}" %>";
+
+	show_jetdeck();
+
+	jetdeck_$.ajax("http://<%=request.host%>:<%=request.port%>/airframes/import", {
+		crossDomain: true,
+		type: "POST",
+		dataType: "jsonp",
+		data: {
+			url: window.location.href,
+			token: "<%= @user.bookmarklet_token %>"
+		},
+		headers: {
+			'X-CSRF-Token': CSRF_TOKEN
+		},
+		success: function(response) { 
+			switch (response.status) 
+			{
+				case "OK":
+					window.Jetdeck.router.success();
+					break;
+				case "DUPLICATE":
+					window.Jetdeck.router.duplicate(response.airframe);
+					break;
+				default:
+					window.Jetdeck.router.error();
+					break;				
+			}
+		}
+	});
+
+});

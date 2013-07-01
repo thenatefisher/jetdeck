@@ -1,0 +1,27 @@
+
+  <ul class="left-nav nav nav-list">
+
+    <li>
+      <a href="/airframes">
+        <span class="label"><i class="icon-plane" style="margin: 0 3px 0 2px;"></i></span>
+        My Deck </a>
+    </li>
+
+    <li >
+      <a href="/contacts">  <span class="label"><i class="icon-book" style="margin: 0 2px 0 1px;"></i></span>
+        Contacts </a>
+    </li> 
+
+    <% if current_user.invites > 0 %>
+    <li id="invite-sidebar">
+      <a href="#"
+      data-placement="bottom" 
+      rel="tooltip" 
+      id="new-invite"
+      title="<%= current_user.invites %> Invite(s) Available"> 
+        Send Invite <small>(<%= current_user.invites %>)</small>
+      </a>
+    </li> 
+    <% end %>            
+
+  </ul>

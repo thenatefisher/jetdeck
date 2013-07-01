@@ -1,22 +1,6 @@
-json.(@user, :id)
-
+json.(@user, :id, :activated, :storage_usage, :storage_quota)
 json.contact (@user.contact)
-
 json.airframes @user.airframes.count
 json.contacts @user.contacts.count
-
-@totalSent = 0
-@user.airframes.each { |a| @totalSent += a.xspecs.count }
-json.sent @totalSent
-
-@totalViews = 0
-@user.airframes.each do |a|
-    a.xspecs.each { |x| @totalViews += x.views.count }
-end
-json.views @totalViews
-
-if @user.logo
-  json.logo @user.logo.url  
-end
-
-json.spec_disclaimer h @user.spec_disclaimer
+json.leads @user.airframes.reduce(0) { |s,v| s += v.leads.count }
+json.signature h @user.signature

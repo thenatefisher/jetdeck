@@ -1,14 +1,17 @@
-<div class="span3" data-airframe="<%= id %>" style="margin-bottom: 20px;">
-    <a href="/airframes/<%= id %>" class="thumbnail">
+
+<div data-airframe="<%= id %>" style="margin-bottom: 20px;width: 340px; float: left;margin-left: 20px;">
+ <a href="/airframes/<%= id %>" class="thumbnail">
         <% if (typeof(avatar) != "undefined" && avatar != null && typeof(avatar.mini) != "undefined") { %>
-          <img src="<%= avatar.listing %>" alt="">
+          <div class="index-image" style="background: url(<%= avatar.listing %>)"></div>
         <% } else { %>
-          <div style="width: 210px; height: 157px; background: #eee url(/assets/placeholder/aircraft_default_avatar_small.png)"></div>
+          <div class="airframe-index-missing-image"></div>
         <%}%>
 
-        <div class="caption" style="color: black; min-height: ">
-          <h5><%= to_s %>&nbsp;</h5>
-          <%= serial %> <% if (registration && registration != "") { %>(<%= registration %>) <% } %>&nbsp;
-        </div>
-    </a>
-</div> 
+          <div class="caption" style="float:  left; width: 230px">
+          <h5 style="margin-top: 0; font-size: 15px;"><%= to_s.trunc(23) %>&nbsp;</h5>
+          <% if (serial && serial != "") { %>Serial <%= serial %>  &nbsp; &nbsp; <% } %>
+          <% if (registration && registration != "") { %>Reg. <%= registration %> <% } %>
+          </div>
+          <div class="clearfix">&nbsp;</div>
+</a>
+</div>

@@ -1,78 +1,56 @@
 /*
+ *= require lib/bootstrap
+ *= require components/brand_bar
+ *= require components/fontawesome
  *= require_self
 */
 
-@import "twitter/bootstrap/bootstrap";
-@import "twitter/bootstrap/responsive";
-@iconSpritePath: asset-path('/assets/glyphicons-halflings.png');
-@iconWhiteSpritePath: asset-path('/assets/glyphicons-halflings-white.png');
-<% if (Jetdeck::Application.config.font_awesome) %>
-@fontAwesomeEotPath:  'font/fontawesome-webfont.eot';
-@fontAwesomeWoffPath: 'font/fontawesome-webfont.woff';
-@fontAwesomeTtfPath:  'font/fontawesome-webfont.ttf';
-@fontAwesomeSvgzPath: 'font/fontawesome-webfont.svgz';
-@fontAwesomeSvgPath:  'font/fontawesome-webfont.svg';
-@fontAwesomeEotPath_iefix: 'font/fontawesome-webfont.eot#iefix';
-@import "fontawesome";
-<% end %>
+@import "twitter/bootstrap/variables";
+@import "twitter/bootstrap/mixins";
 
-@placeholderText: #cfcfcf;
-
-input:-moz-placeholder {
-  color: #AAAAAA;
-}
-
-.container { 
-  width: 940px; 
-}
-
-form {margin: 0 0 10px;}
-
+/* document body */
 body {
-	background: url(<%= asset_path 'bg/dots.png' %>) repeat;
-	text-align: left;
-	margin: 0;
-	padding: 0;
+  padding-top: 10px;
+  background: whiteSmoke;
+  color: #2C3E50;
 }
 
-.rounded-corners {
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-}
-
-.logo { width: 200px; }
-
-.login-box {
-  .rounded-corners;
-  border: 1px solid #ccc;
+/* application mode body */
+#whitebox {
+  border: 1px solid #ccc; 
+  margin: 0px; 
+  padding: 0px;
   background: #fff;
-  margin: 20px auto;
 }
 
-.form-horizontal .control-label { width: 100px; }
-
-.login { margin-right: 20px}
-
-label.control-label { margin-top: 5px }
-
+ /* footer */
 .footer {
-  font-weight: bold;
   font-size: 14px;
   color: #9999aa;
   line-height: 20px;
+  text-align: right; 
+  margin: 20px;
+  font-family: 'Helvetica Neue', Helvetica, sans-serif;
 }
 
-.sweatband { 
-  width: 100%; 
-  position: absolute; 
-  top: 0px;
-  left: 0px;
-  background: url(<%= asset_path 'bg/denim.png' %>) repeat;
-  margin: 0;
-  padding: 0;
-  height: 4px;
-  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+.dark_color { color: #999 }
+
+a {color: rgb(41, 127, 170);}
+a.labelLink:hover {text-decoration :none; }
+a.thumbnail:hover {text-decoration :none; }
+
+h3 i {
+  margin-top: 4px;
 }
+
+h4 i {
+  margin-top: 2px;
+}
+
+.caption, .caption h5 { 
+  font-size: 12px; 
+  line-height: 10px;
+}
+
+/* generic error colors */
+.error { color: @red; }

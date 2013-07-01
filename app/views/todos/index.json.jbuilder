@@ -1,4 +1,4 @@
-json.array! @actions do |json, c|
+json.array! @actions do |c|
     json.id c.id
     json.title h c.title
     json.description h c.description

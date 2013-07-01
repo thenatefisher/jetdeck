@@ -1,0 +1,162 @@
+<div style="padding-top: 20px; background:rgb(236, 242, 245); border-bottom: 1px solid #CCC">
+
+  <div class="span2 main-thumbnail" id="airframe-thumbnail" 
+       style="position:relative; height: 130px; margin-bottom: 20px;"></div>
+
+  <div class="offset2" id="airframe-editable"></div>
+
+  <form id="airframe_image_upload" action="/airframe_images" method="POST" enctype="multipart/form-data">
+    <input type="hidden" name="authenticity_token">
+    <input type="hidden" name="airframe" value="<%= id %>" />
+    <div id="uploader" class="hide">
+
+        <!-- The loading indicator is shown during file processing -->
+        <div class="fileupload-loading"></div><br>
+
+        <!-- The table listing the files available for upload/download -->
+        <table class="table">
+            <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery"></tbody>
+        </table>
+
+        <!-- The fileupload-buttonbar contains buttons to add/delete files and 
+        start/cancel the upload -->
+        <div class="fileupload-buttonbar" style="clear: both;">
+
+            <div class="span pull-right" style="margin-right: 20px; position: relative">
+            
+                <!-- The fileinput-button span is used to style the file input 
+                field as button -->
+   
+                <div class="btn btn-primary">
+
+                  <input type="file" name="files[image]" 
+                    id="airframe-image-input" 
+                    value="Add Files" 
+                    style="width: 65px; -moz-opacity:0; filter:alpha(opacity: 0); opacity: 0;" 
+                    multiple />
+                  <span 
+                    style="position: absolute; left: 0px; top: 10px; z-index: 2; margin: 0 auto; width: 100%" 
+                    onclick="$('#airframe-image-input').click(); return false;">
+                    <strong>Upload</strong></span>
+
+                </div>
+
+            </div>
+
+            <!-- The global progress information -->
+            <div class="span5 fileupload-progress fade" style="margin-bottom: 20px">
+                <!-- The global progress bar -->
+                <div class="progress progress-success progress-striped active" style="margin-bottom: 2px">
+                    <div class="bar" style="width:0%;"></div>
+                </div>
+                <!-- The extended global progress information -->
+                <div class="progress-extended">&nbsp;</div>
+            </div>
+
+        </div>
+
+    </div>
+  </form>
+
+  <!-- The template to display files available for upload -->
+  <script id="template-upload" type="text/x-tmpl">
+  {% for (var i=0, file; file=o.files[i]; i++) { %}
+      <tr class="template-upload fade" style="background: #FCF8E3 !important">
+          <td class="preview" style="padding-left: 30px; vertical-align: middle">
+            <span class="fade"></span>
+          </td>
+          <td class="name" style="vertical-align: middle"><span>{%=file.name%}</span></td>
+          <td class="size" style="vertical-align: middle"><span>{%=o.formatFileSize(file.size)%}</span></td>
+          {% if (file.error) { %}
+              <td class="error" style="vertical-align: middle">
+                <span class="label label-important">
+                {%=locale.fileupload.error%}</span> 
+                {%=locale.fileupload.errors[file.error] || file.error%}
+              </td>
+          {% } else if (o.files.valid && !i) { %}
+              <td style="vertical-align: middle">
+                  <div class="span1 progress progress-success progress-striped active"
+                    style="margin: 10px auto;">
+                    <div class="bar" style="width:0%;"></div>
+                  </div>
+              </td>
+
+          {% } else { %}
+              <td></td>
+          {% } %}        
+          <td class="cancel" colspan="2" style="vertical-align: middle; width: 110px;">
+          {% if (!i) { %}
+           
+              <button class="btn pull-right" style="margin: 0px 20px 0px 0px;">
+                  <i class="icon-trash"></i>
+                  <span>Delete</span>
+              </button>
+          {% } %}</td>
+      </tr>
+  {% } %}
+  </script>
+
+  <!-- The template to display files available for download -->
+  <script id="template-download" type="text/x-tmpl">
+  {% for (var i=0, file; file=o.files[i]; i++) { %}
+      <tr class="template-download fade">
+          {% if (file.error) { %}
+              <td></td>
+              <td class="name" style="vertical-align: middle">
+                <span>{%=file.name%}</span>
+              </td>
+              <td class="size" style="vertical-align: middle">
+                <span>{%=o.formatFileSize(file.size)%}</span>
+              </td>
+              <td class="error" style="vertical-align: middle">
+                <span class="label label-important">
+                {%=locale.fileupload.error%}</span> 
+                {%=locale.fileupload.errors[file.error] || file.error%}
+              </td>
+          {% } else { %}
+              <td class="preview" style="padding-left: 30px;">
+              {% if (file.thumbnail_url) { %}
+                  <a href="{%=file.url%}" 
+                    title="{%=file.name%}" 
+                    rel="gallery" 
+                    download="{%=file.name%}">
+                    <img src="{%=file.thumbnail_url%}"></a>
+              {% } %}</td>
+              <td class="name" style="vertical-align: middle">
+                  <a href="{%=file.url%}" 
+                  title="{%=file.name%}" 
+                  rel="{%=file.thumbnail_url&&'gallery'%}" 
+                  download="{%=file.name%}"><h4>{%=file.name%}</h4></a>
+              </td>
+              <td class="size" style="vertical-align: middle"><span>
+                {%=o.formatFileSize(file.size)%}</span>
+              </td>
+              <td style="vertical-align: middle">
+                {% if (file.is_thumbnail != true) { %} 
+                <button
+                  class="btn set-thumbnail pull-right" 
+                  data-aid="{%= file.id %}">Set as Thumbnail</button>
+                {% } else { %} 
+                <button
+                  disabled class="btn set-thumbnail pull-right" 
+                  data-aid="{%= file.id %}">Set as Thumbnail</button>                
+                {% } %}  
+              </td>
+          {% } %}
+          <td class="delete" style="vertical-align: middle; width: 110px;">
+              <button
+                class="btn pull-right"
+                style="margin: 0px 20px 0px 0px;"
+                data-type="{%=file.delete_type%}" 
+                data-url="{%=file.delete_url%}">
+                  <i class="icon-trash"></i>
+                  <span>{%=locale.fileupload.destroy%}</span>
+              </button>
+          </td>
+      </tr>
+  {% } %}
+  </script>
+
+  <div class="clearfix"></div>
+
+</div>

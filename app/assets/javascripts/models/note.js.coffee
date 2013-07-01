@@ -8,11 +8,12 @@ class Jetdeck.Models.NoteModel extends Backbone.Model
       created_at: null
       author: null 
       is_mine: false
+      is_sticky: false
 
 class Jetdeck.Collections.NotesCollection extends Backbone.CollectionBook
 
     model: Jetdeck.Models.NoteModel
-    
+
     url: "/notes"
     
     initialize: ->

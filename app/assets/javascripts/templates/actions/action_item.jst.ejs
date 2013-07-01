@@ -1,0 +1,15 @@
+<label class="checkbox <% if (past_due) { %>late<% } %>">
+
+  <input name="item" class="close-action" type="checkbox"></input> 
+  
+  <span class="short-title"><%= list_title %></span>
+  <span class="long-title hide"><%= title %></span>
+  
+  <% if (due_at != null) { %>
+  <div class="due-date"> 
+    <small class="muted"><%= list_due_at %></small>
+  </div>
+  <% } %>  
+
+</label>
+

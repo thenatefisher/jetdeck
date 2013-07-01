@@ -1,0 +1,18 @@
+<!-- notification message placeholder -->
+<div class="alert alert-success span4 offset4" id="jetdeck-notification">
+	<button class="close" data-dismiss="alert">×</button>
+	<div class="notification-content"></div>
+</div>
+<div class="alert alert-error span4 offset4" id="jetdeck-notification-error">
+	<button class="close" data-dismiss="alert">×</button>
+	<div class="notification-content"></div>
+</div>
+
+<% if flash[:notice] %>
+
+    <script type="text/javascript"> 
+      $(function() { alertFailure("<%= flash[:notice] %>"); });
+    </script>
+
+<% end %>
+

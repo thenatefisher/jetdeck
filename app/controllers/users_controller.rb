@@ -1,99 +1,97 @@
 class UsersController < ApplicationController
 
   before_filter :sanitize_params
-  
+
   def activate
-    if params[:token]
-      user = User.find(:first, :conditions => 
-        ["activation_token = ? AND activation_token IS NOT NULL", params[:token]])
-      user.activated = true
-      user.save
-      
-      flash[:notice] = "Account Activated!"
-      redirect_to "/login"
+    if params[:token].present?
+      user = User.find(:first, :conditions =>
+                       ["activated != true AND activation_token = ?", params[:token]])
+      if user.update_attributes({:activated => true})
+        flash[:notice] = "Account Activated!"
+        redirect_to "/login"
+      else
+        flash[:notice] = "Activation token not found."
+        redirect_to "/login"
+      end
     end
   end
-  
+
   def new
 
     invite = Invite.find_by_token(params[:token])
-    
+
     # invites required
     if !invite
-    
-      redirect_to "http://www.jetdeck.co/signup.php"
-      return
-      
+
+      flash[:notice] = "Signup is currently by invitation only."
+      render :layout => "signup"
+
     elsif invite.activated
-    
+
       flash[:notice] = "Invite already activated!"
       redirect_to "/login"
       return
-      
+
     end
-    
+
     # fill in form values
     @email = invite.email
     @name = invite.name
     @token = params[:token]
 
     render :layout => "signup"
-
   end
 
   def create
 
     # if no token, cancel
     if !Invite.find_by_token(params[:token])
-      redirect_to "http://www.jetdeck.co/signup.php"
-      return    
+      flash[:notice] = "Signup is currently by invitation only."
+      render :layout => "signup", :action => :new
     end
-    
-    # if a user already has this email addy, cancel reg
-    email = params[:email]
-    if !email || !Contact.where(:email => email, :owner_id => -1).empty?
-      flash[:alert] = "#{params[:email]} is already registered!"  
-      redirect_to request.referer
-      return
-    end
-    
-    # if first and last name not supplied, cancel reg
+
+    # if email, first and last name not supplied, cancel reg
     name = params[:name].split(" ") if params[:name]
-    if !name || name.count < 2 
-      flash[:alert] = "First and Last Names Required"
-      redirect_to request.referer
-      return
+    .present?
+    if params[:email].blank? || name.blank? || name.count < 2
+      flash[:alert] = "Email, First and Last Names Required"
+      render :layout => "signup", :action => :new
     end
-    
+
+    # if a user already has this email addy, cancel reg
+    if User.find(:first, :include => :contact,
+                 :conditions => ["lower(contact.email) = ?", params[:email].downcase]).present?
+      flash[:alert] = "#{params[:email]} is already registered!"
+      render :layout => "signup", :action => :new
+    end
+
     # create user records
     contact = Contact.create(:email => params[:email], :first => name[0], :last => name[1])
     user = User.create(:contact_id => contact.id, :password => params[:password]) if contact
-    
-    if user
-    
+
+    if user.present?
+
       # deactivate all invites with this email address
-      Invite.where(:email => params[:email]).each do |i|
-        i.activated = true
-        i.save
+      Invite.find(:all, :conditions => ["lower(email)", params[:email].downcase]).each do |i|
+        i.update_attributes({:activated => true}) # means it was used, ie deactivate
       end
-      
+
       # send activation email
-      ActivationMailer.activation(user).deliver
-     
+      UserMailer.activation(user).deliver
+
       # log user in
-      cookies[:auth_token] = user.auth_token     
+      cookies[:auth_token] = user.auth_token
 
       # redirect to default page
       redirect_to "/"
-      return
-      
+
     else
-    
+
       # cleanup and send user to normal signup page
       contact.destroy
-      redirect_to "http://www.jetdeck.co/signup.php"
-      return
-    
+      flash[:alert] = "Account could not be created"
+      render :layout => "signup", :action => :new
+
     end
 
   end

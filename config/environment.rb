@@ -2,6 +2,7 @@
 require File.expand_path('../application', __FILE__)
 
 # Initialize the rails application
+Rails.logger = Logger.new(STDOUT)
 Jetdeck::Application.initialize!
 
 # Use SendGrid
@@ -14,3 +15,5 @@ ActionMailer::Base.smtp_settings = {
   :authentication => :plain,
   :enable_starttls_auto => true
 }
+
+ActiveRecord::Base.logger.level = 1

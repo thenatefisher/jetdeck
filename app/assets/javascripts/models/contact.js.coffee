@@ -7,44 +7,25 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       last: null
       email: null
       phone: null
+      leads: []
         
     initialize : =>
-      ## specs collection
-      @specs = new Jetdeck.Collections.SpecsCollection(page_size: 10)
-      @specs.contact = this
-      
       ## actions collection
-      @actions = new Jetdeck.Collections.ActionsCollection()
-      @actions.contact = this      
+      @todos = new Jetdeck.Collections.TodosCollection(page_size: 9)
+      @todos.airframe = this
 
       ## notes collection
       @notes = new Jetdeck.Collections.NotesCollection(page_size: 3)
       @notes.contact = this      
       
-      ## ownership collection
-      @ownership = new Jetdeck.Collections.OwnershipCollection(page_size: 5)
-      @ownership.contact = this         
-      
-      ## custom details collection
-      @custom_details = new Jetdeck.Collections.CustomDetailsCollection()
-      @custom_details.contact = this            
-
-      ## alerts collection
-      @alerts = new Jetdeck.Collections.AlertsCollection()
-      @alerts.contact = this 
-      
       ## populate child collections
       @updateChildren()
     
     updateChildren : =>
-      @specs.reset @get('specs')
-      @actions.reset @get('actions')
-      @notes.reset @get('notes')
-      @ownership.reset @get('ownerships')
-      @custom_details.reset @get('custom_details')
-      @alerts.reset @get('alerts')
+      @todos.reset @get("todos")
+      @notes.reset @get("notes")
       
-class Jetdeck.Collections.ContactCollection extends Backbone.CollectionBook
+class Jetdeck.Collections.ContactsCollection extends Backbone.CollectionBook
 
     model: Jetdeck.Models.ContactModel
     

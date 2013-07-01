@@ -1,0 +1,15 @@
+<%= raw Rails.application.assets['bookmarklet.js'].to_s %>
+
+// add stylesheet
+if (jetdeck_$('#jetdeck_css').length == 0) {
+  var link = jetdeck_$("<link id='jetdeck_css'>").appendTo("head");
+  link.attr('rel','stylesheet');
+  link.attr('type','text/css');
+  link.attr('href','<%= "http://#{request.host}:#{request.port}#{stylesheet_path('bookmarklet')}" %>');
+  link.attr('media','all');
+}
+
+// create csrf token header
+var CSRF_TOKEN ="<%= csrf_meta_tags.match(/content="(.*)" name="csrf-token"/)[1] %>";
+
+<%= yield %>

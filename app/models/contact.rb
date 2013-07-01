@@ -1,143 +1,129 @@
 class Contact < ActiveRecord::Base
 
-  has_many :details, :as => :detailable, :dependent => :destroy
-  
-  accepts_nested_attributes_for :details, :allow_destroy => true
+  attr_accessible :phone, :sticky_id, :notes, :todos,
+    :first, :last, :email, :email_confirmation, :company,
+    :title, :description, :website
 
-  has_many :ownerships, :dependent => :destroy
-  
-  has_many :actions, :as => :actionable, :dependent => :destroy
-  
+  has_many :todos, :foreign_key => :actionable_id, :as => :actionable, :dependent => :destroy
+  accepts_nested_attributes_for :todos
+
   has_many :notes, :as => :notable, :dependent => :destroy
-  
-  has_many :specsSent,
-      :class_name => "Xspec",
-      :foreign_key => "sender_id"
+  accepts_nested_attributes_for :notes
 
-  has_many :specsReceived,
-      :class_name => "Xspec",
-      :foreign_key => "recipient_id",
-      :dependent => :destroy
+  has_many :messages_received,
+    :class_name => "AirframeMessage",
+    :foreign_key => "recipient_id",
+    :dependent => :destroy
 
-  has_one :base,
-      :class_name => 'Contact',
-      :foreign_key => 'baseline_id',
-      :readonly => true
+  has_many :leads,
+    :class_name => "Lead",
+    :foreign_key => "contact_id",
+    :dependent => :destroy
 
   belongs_to :owner,
-      :class_name => 'User',
-      :foreign_key => 'owner_id'
+    :class_name => "User",
+    :foreign_key => "created_by"
 
   has_one :user,
-      :class_name => 'User',
-      :foreign_key => 'contact_id'
-  
-  attr_accessible :phone, 
-        :first, :last, :source, :email, 
-        :email_confirmation, :company, :details_attributes,
-        :title, :description, :website, :emailFrom, :fullName
-
-  has_many :credits, :as => :creditable
+    :class_name => "User",
+    :foreign_key => "contact_id"
 
   validates_presence_of :email,
-                        :message => "Email address is required"
+    :message => "Email address is required"
 
-  validates_presence_of :email_confirmation, 
-                        :message => "Confirm email address", 
-                        :if => :email_changed?, :on => :update,
-                        :unless => Proc.new { |q| q.user.nil? }
-  
-  validates_confirmation_of :email, 
-                            :message => "Email should match confirmation", 
-                            :if => :email_changed?, :on => :update,
-                            :unless => Proc.new { |q| q.user.nil? }
+  validates_presence_of :email_confirmation,
+    :message => "Confirm email address",
+    :if => :email_changed?, :on => :update,
+    :unless => Proc.new { |q| q.user.nil? }
 
-  validates_uniqueness_of :email, :scope => :owner_id,
-                          :message => "Another contact already exists with this address"
+  validates_confirmation_of :email,
+    :message => "Email should match confirmation",
+    :if => :email_changed?, :on => :update,
+    :unless => Proc.new { |q| q.user.nil? }
 
-  validates_format_of :email, 
-                      :with => /^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i,
-                      :message => "Email address is invalid" 
+  validates_uniqueness_of :email, :scope => :created_by,
+    :message => "Another contact already exists with this address"
 
-  validates_format_of :website, 
-                      :with => URI::regexp(%w(http https)), 
-                      :allow_blank => true, :allow_nil => true,
-                      :message => "Invalid Website URL"
-                      
+  validates_format_of :email,
+    :with => /^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i,
+    :message => "Email address is invalid"
+
+  validates_format_of :website,
+    :with => URI::regexp(%w(http https)),
+    :allow_blank => true, :allow_nil => true,
+    :message => "Invalid Website URL"
+
   before_validation do
     self.email.gsub!(" ", "") if self.email
-  end       
-  
-  def search_url
-    "/contacts/#{id}"
   end
-  
-  def search_desc
-    self.company
-  end
-  
-  def search_label
-    "<i class=\"icon-user\"></i> #{self.fullName}"
-  end
-  
+
+  # "<joe@usa.gov>"
+  # "Joe <joe@usa.gov>"
+  # "Joe America <joe@usa.gov>"
   def emailField
-  
-    sender_field = "<#{self.email}>"    
-    
+
+    sender_field = "<#{self.email}>"
+
     if self.first.present?
-    
-      sender_field = "#{self.first} <#{self.email}>" 
-      
+
+      sender_field = "#{self.first.capitalize} <#{self.email}>"
+
       if self.last.present?
-      
-        sender_field = "#{self.first} #{self.last} <#{self.email}>" 
-      
+
+        sender_field = "#{self.first.capitalize} #{self.last.capitalize} <#{self.email}>"
+
       end
-    
+
     end
-    
+
     return sender_field
-    
-  end       
-  
+
+  end
+
+  # "joe@usa.gov"
+  # "Joe"
+  # "Joe America"
   def to_s
-  
-    sender_field = "#{self.email}"    
-    
+
+    sender_field = "#{self.email}"
+
     if self.first.present?
-    
-      sender_field = "#{self.first.capitalize}" 
-      
+
+      sender_field = "#{self.first.capitalize}"
+
       if self.last.present?
-      
-        sender_field = "#{self.first.capitalize} #{self.last.capitalize}" 
-      
+
+        sender_field = "#{self.first.capitalize} #{self.last.capitalize}"
+
       end
-    
+
     end
-    
+
     return sender_field
-    
-  end  
-    
+
+  end
+
+  # ""
+  # "Joe"
+  # "Joe America"
   def fullName
-  
-    fullName = ""    
-    
+
+    fullName = ""
+
     if self.first.present?
-    
+
       fullName = self.first.capitalize
-      
+
       if self.last.present?
-      
-        fullName = "#{self.first.capitalize} #{self.last.capitalize}" 
-      
+
+        fullName = "#{self.first.capitalize} #{self.last.capitalize}"
+
       end
-    
+
     end
-    
+
     return fullName
-    
-  end           
-  
+
+  end
+
 end

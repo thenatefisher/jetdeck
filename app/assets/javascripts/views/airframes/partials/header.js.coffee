@@ -1,104 +1,213 @@
 Jetdeck.Views.Airframes ||= {}
+Jetdeck.Views.Airframes.Header ||= {}
 
-class Jetdeck.Views.Airframes.ShowHeader extends Backbone.View
-  template: JST["templates/airframes/partials/header"]
-
-  events:
-    "click .set-thumbnail" : "setThumbnail"
+class Jetdeck.Views.Airframes.Header.Editable extends Backbone.View
+  template: JST["templates/airframes/header/editable"]
 
   initialize: () ->
-    @model.on("change", @updateHeadline)
-    @$(".fileinput-button").on("click", (e) -> e.preventDefault())
+    @model.on('change', @renderHeadline)
 
-  updateHeadline: () =>
-    headline = @model.get('year')
-    headline += " " + @model.get('make')
-    headline += " " + @model.get('model_name')
-    $("#spec_headline").html(headline)
+  renderHeadline: () =>
+    headline = @model.get("year")
+    headline += " " + @model.get("make")
+    headline += " " + @model.get("model_name")
+    $("#headline").html(headline)
+    if headline.length >= 25
+      $("#headline").css("fontSize", "33px")
+    else
+      $("#headline").css("fontSize", "39px")
     return this
-      
+
+  initializeEditableFields: =>
+    # setup editable fields
+    @$("#headline").editable({
+      title: "Year, Make and Model",
+      value: {
+      year: @model.get("year")
+      make: @model.get("make")
+      modelName: @model.get("model_name")
+      }
+      placement: "bottom"
+      send: "never"
+      url: (obj) =>
+        @model.save({
+          year: obj.value.year
+          make: obj.value.make
+          model_name: obj.value.modelName
+        } )
+    } )
+    @$("#serial").editable({url: (obj) => @model.save(obj.name, obj.value)})
+    @$("#registration").editable({url: (obj) => @model.save(obj.name, obj.value) } )
+    @$("#asking_price").editable({
+      url: (obj) =>
+        d = new $.Deferred
+        intPrice = parseInt(obj.value.replace(/[^0-9]/g, ""), 10)
+        @model.set(obj.name, intPrice)
+        @model.save(null, {success: => d.resolve() } )
+        return d.promise()
+      display: (obj) ->
+        intPrice = parseInt(obj.replace(/[^0-9]/g, ""), 10)
+        $(this).html("$" + intPrice.formatMoney(0, ".", ",") )
+      } )
+
+    @$("#asking_price").each(->
+      if $(this).html() != null
+        intPrice = parseInt($(this).html().replace(/[^0-9]/g, ""), 10)
+        $(this).html("$" + intPrice.formatMoney(0, ".", ",") )
+    )
+
+  render: =>
+    # render header container
+    $(@el).html(@template(@model.toJSON() ) )
+
+    # wait for container content to be loaded in DOM
+    $(() =>
+      # init editable fields
+      @initializeEditableFields()
+      # render headline
+      @renderHeadline()
+    )
+
+    return this
+
+class Jetdeck.Views.Airframes.Header.Avatar extends Backbone.View
+  tmpl_empty: JST["templates/airframes/header/avatar_empty"]
+  tmpl_filled: JST["templates/airframes/header/avatar_filled"]
+
+  render: =>
+    $(@el).html(@tmpl_empty() )
+    if @model && @model.get("avatar")
+      $(@el).html(@tmpl_filled({avatar: @model.get("avatar") } ) )
+    return this
+
+class Jetdeck.Views.Airframes.Header.Show extends Backbone.View
+  template: JST['templates/airframes/header/header']
+
+  events:
+    "click .set-thumbnail"    : "setThumbnail"
+    "click .manage-images"    : "manageImages"
+
+  manageImages: () ->
+    if $("#uploader").is(":visible")
+      $("#uploader").hide()
+    else
+      $("#uploader").show()
+
+  initialize: () ->
+    @setThumbnailMutex = false
+
   setThumbnail: (event) ->
-    e = event.target || event.currentTarget
+    # dont refresh page
     event.preventDefault()
-    accessoryId = $(e).data("aid")
-    $.ajax( {
-        url: "/accessories/" + accessoryId, 
-        data: {thumbnail: true},
-        type: "PUT",
-        success: => 
-            @model.fetch(
-                success: => 
-                    window.router.view.cancel()
-                    $("#uploader").show()
-            )
-        }
-    )
 
-  loadAccessories: () =>
-    # instantiate file uploader
-    @$('#airframe_image_upload').fileupload()
+    # this mitigates damage from repeatedly
+    # hammering the set thumbnail button
+    if @setThumbnailMutex == false
+      @setThumbnailHelper(event)
 
-    # uploader settings
-    @$('#airframe_image_upload').fileupload('option', {
-        autoUpload: true
-        url: '/accessories'
-        process: [
-            {
-                action: 'load',
-                fileTypes: /^image\/(gif|jpeg|png)$/,
-                maxFileSize: 50000000 # 5MB
-            },
-            {
-                action: 'resize',
-                maxWidth: 1440,
-                maxHeight: 900
-            },
-            {
-                action: 'save'
-            }
-        ]
-    })
+  setThumbnailHelper: (event) ->
+    # lock set thumbnail mutex
+    @setThumbnailMutex = true
 
-    ### open edit box when adding via the button
-    @$('#airframe_image_upload').bind('fileuploadadd', ->
-      $("#changes").children().fadeIn()
-      $("#changes").slideDown()
-    )###
-    
+    # capture image from dom attributes and click event
+    e = event.target || event.currentTarget
+    image_id = $(e).data("aid")
+    image = @model.images.where({id: image_id})[0]
+
+    # if we found one, update thumbnail field
+    if image
+      @model.images.forEach((im) -> im.set({thumbnail: false} ) )
+      image.set({thumbnail: true} )
+      @model.save(null, {success: =>
+        # refresh avatar
+        @renderAvatar()
+        # reload image list to set thumbnail button state
+        @renderImagesList()
+        # unlock mutex
+        @setThumbnailMutex = false
+      } )
+    else
+      # unlock set thumbnail mutex
+      @setThumbnailMutex = false
+
+  renderAvatar: =>
+    avatar_view = new Jetdeck.Views.Airframes.Header.Avatar(model: @model)
+    @$("#airframe-thumbnail").html(avatar_view.render().el)
+
+  renderEditable: =>
+    editable_view = new Jetdeck.Views.Airframes.Header.Editable(model: @model)
+    @$("#airframe-editable").html(editable_view.render().el)
+
+  initializeImagesUploader: () =>
+    # format transfer progress output
+    $.widget("blueimp.fileupload", $.blueimp.fileupload, {
+      _renderExtendedProgress: (data) ->
+        this._formatPercentage(data.loaded / data.total) + "  (" + this._formatBitrate(data.bitrate) + ")"
+    } )
+
+    # uploader instantiation and settings
+    @$("#airframe_image_upload").fileupload({
+      autoUpload: true
+      url: "/airframe_images"
+      acceptFileTypes: /(\.|\/)(gif|png|jpg|jpeg)$/i
+      maxFileSize: 10490000 # 10MB
+      progressall: (e, data) =>
+        progress = parseInt(data.loaded / data.total * 100, 10)
+        globalProgressNode = @$(".fileupload-progress")
+        extendedProgressNode = globalProgressNode.find(".progress-extended")
+        if (extendedProgressNode.length)
+          extendedProgressNode.html(
+            @$("#airframe_image_upload").data("blueimp-fileupload")._renderExtendedProgress(data)
+          )
+        globalProgressNode
+          .find(".progress")
+          .attr("aria-valuenow", progress)
+          .find(".bar").css(
+            "width",
+            progress + "%"
+          )
+    } )
+
+    # re-render avatar thumbnail
+    @$("#airframe_image_upload").bind("fileuploaddestroyed", =>
+      @model.unset("avatar") ; @model.fetch(complete: => @renderAvatar() ) )
+    @$("#airframe_image_upload").bind("fileuploadfinished", =>
+      @model.unset("avatar") ; @model.fetch(complete: => @renderAvatar() ) )
+
     # set some drag/drop events
-    @$('#airframe_image_upload').bind('fileuploaddrop', =>
-      $('#uploader').show()
-      #$("#changes").children().fadeIn()
-      #$("#changes").slideDown()
-      $(".manage_images a").html("Hide Images")
-      #mixpanel.track("Dropped Image Into Airframe")
+    @$("#airframe_image_upload").bind("fileuploaddrop", =>
+      $("#uploader").show()
+      mixpanel.track("Added Image To Airframe", {method: "drag-drop"} )
     )
 
-    # upload server status check for browsers with CORS support:
-    if ($.support.cors)
-        $.ajax({
-            url: '/accessories',
-            type: 'HEAD'
-        }).fail( ->
-            $('<span class="alert alert-error"/>')
-                .text('Uploads Unavailable')
-                .appendTo('#airframe_image_upload')
-        )
+    # set CSRF token
+    token = $("meta[name='csrf-token']").attr("content")
+    @$("#airframe_image_upload input[name='authenticity_token']").val(token)
 
-    # get all existing images
-    $.getJSON("/accessories/?airframe=" + @model.get("id"),  (files) =>
-        fu = $('#airframe_image_upload').data('fileupload')
-        fu._renderDownload(files)
-            .appendTo($('#airframe_image_upload .files'))
-            .removeClass("fade")
-    )  
-    
+  renderImagesList: =>
+    # clear list
+    uploader = $("#airframe_image_upload").data("blueimpFileupload")
+    $("#airframe_image_upload .files").html("")
+
+    # add all images
+    uploader._renderDownload(@model.images.toJSON() )
+      .appendTo($("#airframe_image_upload .files") )
+      .removeClass("fade")
+
   render: ->
-  
-    # render header
-    $(@el).html(@template(@model.toJSON() ))
-    
-    # wait for this content to be loaded in DOM, then activate fileupload()
-    $(() => @loadAccessories())
-    
-    return this    
+    # render header container
+    $(@el).html(@template(@model.toJSON() ) )
+
+    # wait for container content to be loaded in DOM
+    $(() =>
+      # render avatar
+      @renderAvatar()
+      # render editable
+      @renderEditable()
+      # init image uploader
+      @initializeImagesUploader()
+      # render images list
+      @renderImagesList()
+    )
+
+    return this

@@ -1,24 +1,21 @@
 class ContactsController < ApplicationController
+
   before_filter :authorize, :sanitize_params
 
-  # GET /contacts/search
+  # /contacts/search
   def search
 
     if params[:term]
       @contacts = Contact.find(:all,
-        :conditions => ["upper(first || ' ' || last || ' ' || email) LIKE ?
-                             AND owner_id = ?",
-                          "%#{params[:term].to_s.upcase}%",
-                          @current_user.id
-                       ],
-         :select => "DISTINCT ON (id) id, *"
-      ).first(4)
+                               :conditions => ["(upper(email) LIKE ? OR upper(first || ' ' || last) LIKE ?) AND created_by = ?",
+                                               "%#{params[:term].to_s.upcase}%","%#{params[:term].to_s.upcase}%",
+                                               @current_user.id
+                                               ],
+                               :select => "DISTINCT ON (id) id, *"
+                               ).first(4)
     end
-
   end
-  
-  # GET /contacts
-  # GET /contacts.json
+
   def index
     @contacts = @current_user.contacts
 
@@ -28,45 +25,33 @@ class ContactsController < ApplicationController
     end
   end
 
-  # GET /contacts/1
-  # GET /contacts/1.json
   def show
 
-    @contact = Contact.find(:first, 
-      :conditions => [
-        "id = ? AND owner_id = ?", 
-        params[:id], 
-        @current_user.id]
-    )
+    @contact = Contact.find(:first,
+                            :conditions => ["id = ? AND created_by = ?",
+                                            params[:id],
+                                            @current_user.id]
+                            )
   end
 
-  # GET /contacts/new
-  # GET /contacts/new.json
   def new
     @contact = Contact.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render :json => @contact }
-    end
+    render :json => @contact
   end
 
-  # GET /contacts/1/edit
   def edit
     @contact = Contact.find(params[:id])
   end
 
-  # POST /contacts
-  # POST /contacts.json
   def create
     whitelist = params[:contact].slice(:first, :last, :company, :email, :phone)
 
     @contact = Contact.new(whitelist)
-    @contact.owner_id = @current_user.id
+    @contact.created_by = @current_user.id
 
     respond_to do |format|
       if @contact.save
-        format.html { redirect_to @contact, :notice => 'Contact was successfully created.' }
+        format.html { redirect_to @contact, :notice => "Contact was successfully created." }
         format.json { render :json => @contact, :status => :created, :location => @contact }
       else
         format.html { render :action => "new" }
@@ -75,53 +60,36 @@ class ContactsController < ApplicationController
     end
   end
 
-  # PUT /contacts/1
-  # PUT /contacts/1.json
   def update
 
     @contact = Contact.find(:first, :conditions =>
-      ["id = ? AND owner_id = ?", params[:id], @current_user.id])
-      
-    details = Array.new()
-    params[:contact][:custom_details].each do |e|
-      details << e.slice(:name, :value, :id)
-    end
-    params[:contact][:details_attributes] = details 
-            
-    whitelist = params[:contact].slice(
-        :id,
-        :first,
-        :last,
-        :company,
-        :phone,
-        :email, 
-        :email_confirmation,
-        :details_attributes
-      )
+                            ["id = ? AND created_by = ?", params[:id], @current_user.id])
 
-    respond_to do |format|
-      if @contact.update_attributes(whitelist)
-  
-        format.html { redirect_to @contact, :notice => 'Contact was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render :action => "edit" }
-        format.json { render :json => @contact.errors, :status => :unprocessable_entity }
-      end
+    whitelist = params[:contact].slice(
+      :id,
+      :first,
+      :last,
+      :company,
+      :phone,
+      :email,
+      :email_confirmation,
+      :sticky_id
+    )
+
+
+    if @contact.update_attributes(whitelist)
+      render :json => @contact
+    else
+      render :json => @contact.errors.full_messages, :status => :unprocessable_entity
     end
   end
 
-  # DELETE /contacts/1
-  # DELETE /contacts/1.json
   def destroy
-    @contact = Contact.find(:first, :conditions =>
-      ["id = ? AND owner_id = ?", params[:id], @current_user.id])
-      
-    @contact.destroy
-
-    respond_to do |format|
-      format.html { redirect_to contacts_url }
-      format.json { head :no_content }
+    @contact = Contact.find(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
+    if @contact && @contact.destroy
+      render :json => true, :status => :ok
+    else
+      render :json => ["Not authorized to delete"], :status => :unprocessable_entity
     end
   end
 end
