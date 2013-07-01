@@ -222,9 +222,9 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
 
         )
 
-        # create a lead and connect form fields to it
-        @lead = new Jetdeck.Models.LeadModel()
-        @$("form").backboneLink(@lead)
+        # create a message and connect form fields to it
+        @message = new Jetdeck.Models.AirframeMessageModel()
+        @$("form").backboneLink(@message)
 
         return this
         
@@ -232,7 +232,7 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
         # set send button to spinner
         @$("#send").button('loading')
 
-        @lead.set(
+        @message.set(
             "recipient_email"   : @$("#email").val()
             "airframe_id"       : @$("#airframe").val()
             "spec_id"           : @$("#spec").val()
@@ -241,8 +241,8 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
             "include_photos"    : @$("#include-photos").is(":checked") && @$("#include-photos").is(":visible") 
         )
 
-        leads_collection = new Jetdeck.Collections.LeadsCollection()
-        leads_collection.create(@lead,
+        messages_collection = new Jetdeck.Collections.AirframeMessagesCollection()
+        messages_collection.create(@message,
             success: =>
                 # reset send button
                 @$("#send").button('reset')
