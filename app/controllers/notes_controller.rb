@@ -56,7 +56,7 @@ class NotesController < ApplicationController
   end
 
   def destroy
-    @note = Note.first(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
+    @note = Note.find(:first, :conditions => ["id = ? AND created_by = ?", params[:id], @current_user.id])
     if @note && @note.destroy()
       render :json => :true, :status => :ok
     else

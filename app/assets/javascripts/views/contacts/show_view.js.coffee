@@ -76,15 +76,11 @@ class Jetdeck.Views.Contacts.ShowView extends Backbone.View
 
     @header = new Jetdeck.Views.Contacts.Header.Show(model: @model)
     @$("#contact_show_header").html(@header.render().el)
+    @model.on("note-changed", => @header.renderStickyNote() )
 
     @notes = new Jetdeck.Views.Notes.ShowNotes(model: @model)
-    @$("#contact_notes").html(@notes.render().el)    
-      
-    @model.on("unstick", => 
-      @model.set("sticky_id", null)
-      @notes.render() 
-    )
-
+    @$("#contact_notes").html(@notes.render().el)
+    
     @todos = new Jetdeck.Views.Actions.ShowActions(model: @model)
     @$("#contact_actions").html(@todos.render().el)  
     

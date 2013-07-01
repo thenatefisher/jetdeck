@@ -3,8 +3,14 @@ Jetdeck.Views.Profile ||= {}
 class Jetdeck.Views.Profile.ShowView extends Backbone.View
   template: JST["templates/profile/show"]
   
-  render: ->
-    $(@el).html(@template(@model.toJSON() ))
+  render: =>
+    view_params = {
+      usage_in_megs: (parseInt(@model.get('storage_usage')) / 1048576).toFixed(1)
+      quota_in_megs: (parseInt(@model.get('storage_quota')) / 1048576).toFixed(1)
+      usage_in_percent: Math.round(100*(parseInt(@model.get('storage_usage')) / parseInt(@model.get('storage_quota'))))
+    }
+
+    $(@el).html(@template($.extend(view_params,@model.toJSON() )))
 
     # resend activation email
     @$(".resend").on("click", =>

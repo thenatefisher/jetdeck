@@ -13,7 +13,7 @@ class Jetdeck.Models.NoteModel extends Backbone.Model
 class Jetdeck.Collections.NotesCollection extends Backbone.CollectionBook
 
     model: Jetdeck.Models.NoteModel
-    
+
     url: "/notes"
     
     initialize: ->

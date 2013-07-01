@@ -10,6 +10,14 @@
     <table>
       <tbody style="font-weight: bold">
         <tr>
+          <td colspan=2 style="padding-bottom: 20px; width: 30px; text-align: left;">
+            <div class="progress" style="margin: 0">
+              <div class="bar bar-success" style="width: <%= usage_in_percent %>%;"></div>
+            </div>
+            <small style="font-weight: normal"><%= usage_in_megs %>Mb / <%= quota_in_megs %>Mb</small>
+          </td>
+        </tr>
+        <tr>
           <td style="width: 30px; text-align: center;"><%= airframes %></td>
           <td>Aircraft</td>
         </tr>

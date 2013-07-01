@@ -32,7 +32,7 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
                     airframe: b
                 }) 
             , [])
-
+        console.log ac_collection_data
         @$("#airframe").ready( =>
             @$("#airframe").select2(
                 placeholder: "Select Aircraft"
@@ -103,7 +103,7 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
                 return a.concat({
                     id: b.get('id'), 
                     spec: b, 
-                    text: b.get('file_name').trunc(40) + " v" + (parseInt(b.get('version'))+1)
+                    text: b.get('file_name').trunc(40) 
                 }) 
             , [])
 
@@ -114,7 +114,7 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
                 id = parseInt(element.val())
                 spec = airframe.specs.where({id: id})[0]
                 if spec?
-                    text = spec.get('file_name').trunc(40) + " v" + (parseInt(spec.get('version'))+1)
+                    text = spec.get('file_name').trunc(40)
                 else
                     text = "Select Spec File"
                     $("#spec").select2("val", null)
@@ -181,14 +181,14 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
         #crete message
         message = ""
         # add recipient name
-        message += "#{@recipient},\n\n" if @recipient?
+        message += "#{@recipient},<br><br>" if @recipient?
         # add boilerplate message
-        message += "Please review the attached document regarding the #{@airframe.get('to_s')}. Thank you,\n\n" if (@airframe and @airframe.get('to_s')?)
+        message += "Please review the attached document regarding the #{@airframe.get('to_s')}. Thank you,<br><br>" if (@airframe and @airframe.get('to_s')?)
         # enter signature into message body
-        message = "\n\n\n" if message == ""
+        message = "<br><br><br>" if message == ""
         message += @signature if @signature?
         # enter body if user hasnt edited it
-        @$("#message-body").val(message) if !(@touchedBody)
+        @$("#message-body").html(message) if !(@touchedBody)
 
     initialize: =>
         # state
@@ -199,7 +199,7 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
         @touchedBody = false
         # setup a/c collection 
         @aircraft_collection = new Jetdeck.Collections.AirframesCollection()
-        @aircraft_collection.reset window.data.aircraft_index_json        
+        @aircraft_collection.reset window.data.airframe_index
         # signature
         @signature = window.data.signature
 

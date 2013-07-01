@@ -44,9 +44,8 @@ class Jetdeck.Views.Notes.NoteItem extends Backbone.View
     
     @model.save({
       description: @$("textarea.note").val()
-    }, success: (n) => 
+    }, success: () => 
       mixpanel.track "Updated Note", {type: @model.get("type")}
-      @model = n
       @render()
       if @model.get("is_sticky") 
         @trigger("sticky") 
@@ -153,7 +152,8 @@ class Jetdeck.Views.Notes.ShowNotes extends Backbone.View
     
   addOne: (note) => 
     if note
-      note.on("deleted", => @render() )
+      note.on("change", => @model.trigger("note-changed"))
+      note.on("deleted", => @model.trigger("note-changed"); @render() )
       # set is_sticky
       is_sticky = if (@model.get("sticky_id") == note.get("id")) then true else false
       note.set("is_sticky", is_sticky)

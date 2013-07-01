@@ -1,4 +1,4 @@
-json.(@user, :id, :activated)
+json.(@user, :id, :activated, :storage_usage, :storage_quota)
 json.contact (@user.contact)
 json.airframes @user.airframes.count
 json.contacts @user.contacts.count

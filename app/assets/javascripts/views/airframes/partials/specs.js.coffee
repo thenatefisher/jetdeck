@@ -42,6 +42,14 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
       @render() 
     )
 
+  send: (spec) =>
+    view = new Jetdeck.Views.Specs.Send(airframe: @model, spec: spec)
+    modal(view.render().el)
+
+  disable: (spec) =>
+    enabled = spec.get("enabled")
+    spec.save({enabled: !enabled}, success: => @render())
+
   renderSpecs: =>
     @model.specs.each((spec) =>   
       view = new Jetdeck.Views.Airframes.Spec({model : spec, showHidden: @showHidden})
@@ -80,14 +88,6 @@ class Jetdeck.Views.Airframes.Spec extends Backbone.View
   template: JST["templates/airframes/specs/spec_item"]
 
   tagName: "tr"
-
-  send: (spec) =>
-    view = new Jetdeck.Views.Specs.Send(airframe: @model, spec: spec)
-    modal(view.render().el)
-
-  disable: (spec) =>
-    enabled = spec.get("enabled")
-    spec.save({enabled: !enabled}, success: => @render())
 
   render: =>
     if @model.get("enabled") || (@options && @options.showHidden)

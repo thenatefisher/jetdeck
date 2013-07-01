@@ -4,5 +4,5 @@
 	window.data.signature = "<%= @current_user.signature %>";
 	window.data.activated = "<%= @current_user.activated %>";
 	window.data.help_enabled = "<%= @current_user.help_enabled %>";
-	window.data.airframe_index = <%= @airframes_index.reduce(Array.new) {|output, airframe| output.push airframe.as_json(:include => [:specs])}.to_json.html_safe %> 
+	window.data.airframe_index = <%= @airframes_index.reduce(Array.new) {|output, airframe| output.push airframe.as_json(:methods => [:long], :include => [:specs])}.to_json.html_safe %> 
 </script>

@@ -7,6 +7,7 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       last: null
       email: null
       phone: null
+      leads: []
         
     initialize : =>
       ## actions collection

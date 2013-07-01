@@ -3,66 +3,55 @@
   <h3>Send Spec</h3>
 </div>
 
-<div class="modal-body" style="max-height: 485px;">
+<div class="modal-body" style="max-height: 485px; padding: 0px; background: #eee">
 
-  <form class="form-horizontal">
+  <div style="padding: 15px; padding-bottom: 0px;">
 
-    <!-- to -->
-    <div class="control-group">
-      <label class="control-label" for="email">To: </label>
-      <div class="controls">
-        <input type="text" id="email" name="email" class="input span5" placeholder="Email">
-      </div>
-    </div>
+    <form class="form-horizontal">
 
-    <!-- spec -->
-    <div class="control-group">
-      <label class="control-label">Spec: </label>
-      <div id ="spec-controls" class="controls">
-
-        <input type="hidden" id="airframe" class="airframe" name="airframe_id" />
-
-        <span id="nospecs" class="hide error" style="margin-top: 10px;"><em>There are no specs for this aircraft</em></span>
-
-        <input type="hidden" id="spec" name="spec_id" />
-
-        <label for="include-photos" class="checkbox hide" style="margin-top: 10px;">
-          <input type="checkbox" id="include-photos" name="include_photos" checked> Include Pictures
-        </label>
-
-      </div>
-      
-    </div>
-
-    <!-- subject -->
-    <div class="control-group">
-      <label class="control-label" for="message-subject">Subject: </label>
-      <div class="controls">
-        <input type="text" id="message-subject" name="message_subject" class="input span5" placeholder="Subject">
-      </div>
-    </div>
-
-    <!-- body -->
-    <div class="controls" style="margin-left: 44px">
-        <textarea class="input span6" id="message-body" name="message_body" style="min-height: 140px;"></textarea>
-        <div id="attachment" class="span6">
-          <div class="well" style="min-height: 0; padding-bottom: 0">
-            <div class="span hide" id="attachment-icon" style="margin-left: 5px; padding: 0px">
-              <i class="icon-large icon-paper-clip"></i>
-            </div> 
-            <div class="span" style="margin-left: 10px; padding: 0px;">
-              <span style="height: 25px;" id="attachment-filename"> Select a Spec File to Send <i class="icon-circle-arrow-up"></i></span>
-              <br>
-              <span style="height: 25px;" class="hide" id="attachment-photos-link"> 
-                <small><a href='#'>View Photos</a></small>
-              </span>
-            </div>
-            <div class="clearfix"></div>
-          </div>
+      <!-- to -->
+      <div class="control-group">
+        <label class="control-label" for="email">To: </label>
+        <div class="controls">
+          <input type="text" id="email" name="email" class="input span5" placeholder="Email">
         </div>
-    </div>
+      </div>
 
-  </form>
+      <!-- spec -->
+      <div class="control-group">
+        <label class="control-label">Spec: </label>
+        <div id ="spec-controls" class="controls">
+
+          <input type="hidden" id="airframe" class="airframe" name="airframe_id" />
+
+          <span id="nospecs" class="hide error" style="margin-top: 10px;"><em>There are no specs for this aircraft</em></span>
+
+          <input type="hidden" id="spec" name="spec_id" />
+
+          <label for="include-photos" class="checkbox hide" style="margin-top: 10px;">
+            <input type="checkbox" id="include-photos" name="include_photos" checked> Include Pictures
+          </label>
+
+        </div>
+        
+      </div>
+
+      <!-- subject -->
+      <div class="control-group">
+        <label class="control-label" for="message-subject">Subject: </label>
+        <div class="controls">
+          <input type="text" id="message-subject" name="message_subject" class="input span5" placeholder="Subject">
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+
+  <!-- body -->
+  <div style="background: white; width: 100%; border-top: 1px solid #ccc; height: 180px;">
+    <div id="message-body" name="message_body" hideFocus="true" contenteditable style="min-height: 150px; outline: 0px solid transparent; margin: 15px;"></div>
+  </div>
 
 </div>
 
