@@ -18,6 +18,12 @@ Jetdeck::Application.routes.draw do
 
   resources :airframes
 
+  match "/s/:code" => "airframe_messages#spec"
+
+  match "/p/:code" => "airframe_messages#photos"
+
+  resources :airframe_messages
+
   resources :airframe_specs
 
   resources :airframe_images
@@ -49,10 +55,6 @@ Jetdeck::Application.routes.draw do
   match "/profile" => "profile#index", :via => "get"
 
   match "/profile" => "profile#update", :via => "put"
-
-  match "/s/:code" => "airframe_messages#spec"
-
-  match "/p/:code" => "airframe_messages#photos"
 
   resources :leads
 

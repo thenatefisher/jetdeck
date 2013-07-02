@@ -1,4 +1,5 @@
 class UserMailer < ActionMailer::Base
+  include SendGrid
   default from: "JetDeck <support@jetdeck.co>"
 
   def password_reset(user)

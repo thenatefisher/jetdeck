@@ -5,6 +5,7 @@ class AirframeMessageMailer < ActionMailer::Base
   sendgrid_enable :ganalytics
 
   def sendMessage(airframe_message)
+
     sendgrid_enable :opentrack
     sendgrid_category "airframe-message"
     sendgrid_unique_args :airframe_message_id => airframe_message.id

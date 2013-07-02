@@ -7,13 +7,6 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     "click .add-spec" : "add"
     "click .cancel" : "refreshView"
 
-  initialize: =>
-    @showHidden = false
-
-  toggleHidden: =>
-    @showHidden = !@showHidden
-    @render()
-
   add: =>
     @$("#airframe-document-input").click()
 
@@ -47,19 +40,16 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     modal(view.render().el)
 
   disable: (spec) =>
-    enabled = spec.get("enabled")
-    spec.save({enabled: !enabled}, success: => @render())
+    spec.save({enabled: false}, success: => @render())
 
   renderSpecs: =>
-    @model.specs.each((spec) =>   
-      view = new Jetdeck.Views.Airframes.Spec({model : spec, showHidden: @showHidden})
-      view.on("clicked-send", (data) => @send(data))
-      view.on("clicked-disable", (data) => @disable(data))
-      @$("#specs-table tbody").append(view.render().el) if view
+    @model.specs.each((spec) =>  
+      if spec.get("enabled") == true
+        view = new Jetdeck.Views.Airframes.Spec({model : spec})
+        view.on("clicked-send", (data) => @send(data))
+        view.on("clicked-disable", (data) => @disable(data))
+        @$("#specs-table tbody").append(view.render().el) if view
     )
-
-    # show hidden button
-    @$(".show-hidden").on("click", => @toggleHidden())
 
     # remove top border on first table item 
     @$("tbody").children("tr").first().children("td").css("border-top", "0px")
@@ -79,7 +69,6 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     else
       @$("#specs-populated").show()
       @$("#specs-empty").hide()
-      @$(".show-hidden").show()
 
 
     return this

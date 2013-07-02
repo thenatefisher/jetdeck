@@ -32,7 +32,6 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
                     airframe: b
                 }) 
             , [])
-        console.log ac_collection_data
         @$("#airframe").ready( =>
             @$("#airframe").select2(
                 placeholder: "Select Aircraft"
@@ -235,9 +234,9 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
         @message.set(
             "recipient_email"   : @$("#email").val()
             "airframe_id"       : @$("#airframe").val()
-            "spec_id"           : @$("#spec").val()
-            "message_subject"   : @$("#message-subject").val()
-            "message_body"      : @$("#message-body").val()
+            "airframe_spec_id"  : @$("#spec").val()
+            "subject"           : @$("#message-subject").val()
+            "body"              : @$("#message-body").html()
             "include_photos"    : @$("#include-photos").is(":checked") && @$("#include-photos").is(":visible") 
         )
 

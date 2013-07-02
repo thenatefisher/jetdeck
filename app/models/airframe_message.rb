@@ -17,7 +17,7 @@ class AirframeMessage < ActiveRecord::Base
   validate :require_user_activation
 
   def init
-    self.status_id  ||= 0
+    self.status_id ||= 0
     self.status_date ||= Time.now()
     self.photos_enabled ||= true
     self.spec_enabled ||= true
@@ -27,7 +27,7 @@ class AirframeMessage < ActiveRecord::Base
 
   def send_message
     success = false
-    if self.creator.activated && self.airframe_spec.enabled
+    if self.creator.activated && self.airframe_spec && self.airframe_spec.enabled
       success = AirframeMessageMailer.sendMessage(self).deliver
     end
     return success

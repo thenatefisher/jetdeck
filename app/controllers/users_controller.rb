@@ -20,35 +20,22 @@ class UsersController < ApplicationController
 
     invite = Invite.find_by_token(params[:token])
 
-    # invites required
-    if !invite
-
-      flash[:notice] = "Signup is currently by invitation only."
-      render :layout => "signup"
-
-    elsif invite.activated
-
-      flash[:notice] = "Invite already activated!"
-      redirect_to "/login"
-      return
-
+    if invite
+      if invite.activated
+        flash[:notice] = "Invite already activated!"
+        redirect_to "/login"
+        return
+      end
+      # fill in form values
+      @email = invite.email
+      @name = invite.name
+      @token = params[:token]
     end
-
-    # fill in form values
-    @email = invite.email
-    @name = invite.name
-    @token = params[:token]
 
     render :layout => "signup"
   end
 
   def create
-
-    # if no token, cancel
-    if !Invite.find_by_token(params[:token])
-      flash[:notice] = "Signup is currently by invitation only."
-      render :layout => "signup", :action => :new
-    end
 
     # if email, first and last name not supplied, cancel reg
     name = params[:name].split(" ") if params[:name]
@@ -56,13 +43,15 @@ class UsersController < ApplicationController
     if params[:email].blank? || name.blank? || name.count < 2
       flash[:alert] = "Email, First and Last Names Required"
       render :layout => "signup", :action => :new
+      return
     end
 
     # if a user already has this email addy, cancel reg
     if User.find(:first, :include => :contact,
-                 :conditions => ["lower(contact.email) = ?", params[:email].downcase]).present?
+                 :conditions => ["lower(contacts.email) = ?", params[:email].downcase]).present?
       flash[:alert] = "#{params[:email]} is already registered!"
       render :layout => "signup", :action => :new
+      return
     end
 
     # create user records
@@ -72,7 +61,7 @@ class UsersController < ApplicationController
     if user.present?
 
       # deactivate all invites with this email address
-      Invite.find(:all, :conditions => ["lower(email)", params[:email].downcase]).each do |i|
+      Invite.find(:all, :conditions => ["lower(email) = ?", params[:email].downcase]).each do |i|
         i.update_attributes({:activated => true}) # means it was used, ie deactivate
       end
 

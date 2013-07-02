@@ -15,7 +15,7 @@ class Invite < ActiveRecord::Base
 
     # dont create the invite if a user already exists
     if User.find(:first, :include => :contact,
-                 :conditions => ["lower(contact.email) = ?", self.email.downcase]).present?
+                 :conditions => ["lower(contacts.email) = ?", self.email.downcase]).present?
       self.errors.add(:email, "already has a JetDeck account")
       return false
     end

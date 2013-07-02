@@ -10,9 +10,10 @@ class AirframeSpec < ActiveRecord::Base
   validates_associated :creator
   validates_presence_of :creator
 
-  has_many :airframe_messages
+  has_many :airframe_messages, :dependent => :destroy
   validates_associated :airframe_messages
-
+  accepts_nested_attributes_for :airframe_messages
+  
   has_attached_file :spec,
     :s3_credentials => "#{Rails.root}/config/aws_keys.yml",
     :storage => :s3,
@@ -34,10 +35,10 @@ class AirframeSpec < ActiveRecord::Base
      "application/pdf"]
     validate :validate_space_available
 
-  before_validation :init
+  before_create :init
 
   def init
-    self.enabled ||= true
+    self.enabled = true if !self.enabled.present?
   end
 
   # do not create a spec if use is over quota
