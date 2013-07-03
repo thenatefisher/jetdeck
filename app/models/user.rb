@@ -43,69 +43,67 @@ class User < ActiveRecord::Base
     (self.storage_usage > self.storage_quota)
   end
 
-  private
+  def set_defaults
 
-    def set_defaults
+    # in bytes, set storage quota to 100Mb if not mass assigned
+    self.storage_quota ||= 104857600
 
-      # in bytes, set storage quota to 100Mb if not mass assigned
-      self.storage_quota ||= 104857600
+    # set 10 invites if not mass assigned
+    self.invites ||= 10
 
-      # set 10 invites if not mass assigned
-      self.invites ||= 10
+    # default tutorial enabled status if not mass assigned
+    self.help_enabled ||= true
 
-      # default tutorial enabled status if not mass assigned
-      self.help_enabled ||= true
+    # default to enabled status if not mass assigned
+    self.enabled ||= true
 
-      # default to enabled status if not mass assigned
-      self.enabled ||= true
+    # default to not activated
+    self.activated ||= false
 
-      # default to not activated
-      self.activated ||= false
+    # generate auth token
+    generate_token(:auth_token)
 
-      # generate auth token
-      generate_token(:auth_token)
+    # generate activation token
+    generate_token(:activation_token)
 
-      # generate activation token
-      generate_token(:activation_token)
+    # generate activation token
+    generate_token(:bookmarklet_token)
 
-      # generate activation token
-      generate_token(:bookmarklet_token)
+  end
 
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
+  end
+
+  def encrypt_password
+    if password.present?
+      self.password_salt = BCrypt::Engine.generate_salt
+      self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
+    end
+  end
+
+  def self.authenticate(email, password)
+
+    return nil if email.blank? || password.blank?
+
+    user = User.find(:first, :include => :contact,
+                     :conditions => ["enabled = true AND lower(contacts.email) = ?", email.downcase])
+
+    if user.present? && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
+      user
+    else
+      nil
     end
 
-    def generate_token(column)
-      begin
-        self[column] = SecureRandom.urlsafe_base64
-      end while User.exists?(column => self[column])
-    end
+  end
 
-    def encrypt_password
-      if password.present?
-        self.password_salt = BCrypt::Engine.generate_salt
-        self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
-      end
-    end
-
-    def self.authenticate(email, password)
-
-      return nil if email.blank? || password.blank?
-
-      user = User.find(:first, :include => :contact,
-                       :conditions => ["enabled = true AND lower(contacts.email) = ?", email.downcase])
-
-      if user.present? && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
-        user
-      else
-        nil
-      end
-
-    end
-
-    def send_password_reset
-      generate_token(:password_reset_token)
-      self.password_reset_sent_at = Time.zone.now
-      save!
-      UserMailer.password_reset(self).deliver
-    end
+  def send_password_reset
+    generate_token(:password_reset_token)
+    self.password_reset_sent_at = Time.zone.now
+    save!
+    UserMailer.password_reset(self).deliver
+  end
 
 end

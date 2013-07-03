@@ -2,7 +2,8 @@ class AirframeMessagesController < ApplicationController
 
   # GET /s/:code
   def spec
-    airframe_message = AirframeMessage.where(:spec_url_code => params[:code], :spec_enabled => true).first   @spec = airframe_message.airframe_spec
+    airframe_message = AirframeMessage.where(:spec_url_code => params[:code], :spec_enabled => true).first   
+    @spec = airframe_message.airframe_spec if airframe_message.present?
     if airframe_message.blank? || @spec.blank? || !@spec.enabled then
       render :template => "airframe_messages/missing_spec", :layout => "error"
     else

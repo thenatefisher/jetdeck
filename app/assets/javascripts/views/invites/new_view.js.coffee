@@ -30,22 +30,13 @@ class Jetdeck.Views.Invites.NewView extends Backbone.View
           modalClose()
         )
 
-      error: (m, j) =>
-      
+      error: (m, response) =>
         @$("#invite-send").button('reset')
-      
-        if $.parseJSON(j.responseText).email
-          @$(".email_group").children(".help-block").html("Recipient " + $.parseJSON(j.responseText).email[0])
-        
-        if $.parseJSON(j.responseText).sender
-          @$(".email_group").children(".help-block").html($.parseJSON(j.responseText).sender[0])
-        
+        errors = $.parseJSON(response.responseText)
+        @$(".email_group").children(".help-block").html(errors[0])
         @$(".email_group").addClass("error")
         @$(".email_group").children(".help-block").removeClass("hide")
-
-    )
-    
-    
+    )    
 
   render: ->
     $(@el).html(@template( ))

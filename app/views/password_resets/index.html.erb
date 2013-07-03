@@ -2,14 +2,6 @@
 <h4>Reset Password</h4>
 
 <h4><br></h4>
-
-<% if flash[:notice] %>
-  <div class="alert alert-danger span12" id="jetdeck-notification" style="margin-left: 0px;">
-
-    <div class="notification-content"><%= flash[:notice] %></div>
-  </div>
-  <div style="clear: both"></div>
-<% end %> 
   
 <%= form_tag "/password_resets" do %>
   <div class="control-group clearfix">
@@ -19,9 +11,7 @@
   </div>   
 <% end %>
         
-<button class="btn btn-success pull-right" onclick="$('form').submit()"><h3>Reset Password</h3></button>
+<button class="btn btn-primary pull-right btn-large" onclick="$('form').submit()"><strong>Reset Password</strong></button>
                 
 <h4><br><br></h4>
-
-</div>
 

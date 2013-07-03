@@ -10,9 +10,22 @@ class Invite < ActiveRecord::Base
     :message => "email address is invalid"
 
   before_create :init
-
+  validate :check_invite_valid
+  
   def init
 
+    # not used yet
+    self.activated = false
+
+    ## Create Token
+    self.token = BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, "").last(7)
+    while (Invite.where(:token => self.token).count > 0)
+      self.token = BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, "").last(7)
+    end
+
+  end
+
+  def check_invite_valid
     # dont create the invite if a user already exists
     if User.find(:first, :include => :contact,
                  :conditions => ["lower(contacts.email) = ?", self.email.downcase]).present?
@@ -28,19 +41,9 @@ class Invite < ActiveRecord::Base
 
     # is user activated?
     if !self.sender.activated
-      self.errors.add(:sender, "Please check account verification email")
+      self.errors.add(:base, "Invites disabled pending <a href='/profile'>account verification</a>.")
       return false
     end
-
-    # not used yet
-    self.activated = false
-
-    ## Create Token
-    self.token = BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, "").last(7)
-    while (Invite.where(:token => self.token).count > 0)
-      self.token = BCrypt::Engine.generate_salt.gsub(/[^a-zA-Z0-9]+/, "").last(7)
-    end
-
   end
 
 end

@@ -17,29 +17,31 @@ class UsersController < ApplicationController
   end
 
   def new
+    if current_user.present?
+      redirect_to airframes_url
+    else
+      invite = Invite.find_by_token(params[:token])
 
-    invite = Invite.find_by_token(params[:token])
-
-    if invite
-      if invite.activated
-        flash[:notice] = "Invite already activated!"
-        redirect_to "/login"
-        return
+      if invite
+        if invite.activated
+          flash[:notice] = "Invite already activated!"
+          redirect_to "/login"
+          return
+        end
+        # fill in form values
+        @email = invite.email
+        @name = invite.name
+        @token = params[:token]
       end
-      # fill in form values
-      @email = invite.email
-      @name = invite.name
-      @token = params[:token]
-    end
 
-    render :layout => "signup"
+      render :layout => "signup"
+    end
   end
 
   def create
 
     # if email, first and last name not supplied, cancel reg
-    name = params[:name].split(" ") if params[:name]
-    .present?
+    name = params[:name].split(" ") if params[:name].present?
     if params[:email].blank? || name.blank? || name.count < 2
       flash[:alert] = "Email, First and Last Names Required"
       render :layout => "signup", :action => :new
@@ -56,9 +58,9 @@ class UsersController < ApplicationController
 
     # create user records
     contact = Contact.create(:email => params[:email], :first => name[0], :last => name[1])
-    user = User.create(:contact_id => contact.id, :password => params[:password]) if contact
+    user = User.create(:contact_id => contact.id, :password => params[:password]) if contact.valid?
 
-    if user.present?
+    if user.present? && user.valid?
 
       # deactivate all invites with this email address
       Invite.find(:all, :conditions => ["lower(email) = ?", params[:email].downcase]).each do |i|

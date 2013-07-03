@@ -9,7 +9,7 @@ class InvitesController < ApplicationController
       :name => params[:invite][:name],
       :message => params[:invite][:message],
       :email => params[:invite][:email],
-    :sender => @current_user)
+      :sender => @current_user)
 
     if invite.save
 
@@ -21,7 +21,7 @@ class InvitesController < ApplicationController
       @current_user.save
 
       # reply OK
-      render :json => @current_user
+      render :json => @current_user, :status => :ok
 
     else
 

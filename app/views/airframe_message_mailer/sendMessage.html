@@ -13,24 +13,18 @@
                 font-size: 16px;">
 
         <div>
-            <div style="float:left; margin: 5px 15px 0 10px">
-                <img src="<%= @favicon %>" height="30" style="height: 30px;"/>
-            </div>
-            <div style="float:left; clear: right;">
-                <% if @spec_link.present? %>
-                <a href="<%= @spec_link %>" 
-                    style="color: #2980B9; text-decoration: none; padding-bottom: 10px"><%= @filename %></a> 
-                <span style="font-weight: normal; color: #888888; margin-left: 5px;">(<%= @filesize %>)</span>
-                <% end %>
-                
-                <% if @photos_link.present? %>
-                    <br>
-                    <a href="<%= @photos_link %>" 
-                        style="font-weight: normal; color: #2980B9; font-size: 14px; text-decoration: none; padding-bottom: 10px">
-                        View Photos</a> 
-                <% end %>
-            </div>            
-            <div style="clear: both"></div>
+            <% if @spec_link.present? %>
+            <a href="<%= @spec_link %>" 
+                style="color: #2980B9; text-decoration: none; padding-bottom: 10px"><%= @filename %></a> 
+            <span style="font-weight: normal; color: #888888; margin-left: 5px;">(<%= @filesize %>)</span>
+            <% end %>
+            
+            <% if @photos_link.present? %>
+                <br>
+                <a href="<%= @photos_link %>" 
+                    style="font-weight: normal; color: #2980B9; font-size: 14px; text-decoration: none; padding-bottom: 10px">
+                    View Photos</a> 
+            <% end %>
         </div>
     </div>
 

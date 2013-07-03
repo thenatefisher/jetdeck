@@ -90,7 +90,7 @@ class AirframeMessage < ActiveRecord::Base
 
     def require_user_activation
       if !self.creator || self.creator.activated != true
-        self.errors.add(:creator, "Please check account verification email")
+        self.errors.add(:base, "Sending disabled pending <a href='/profile'>account verification</a>.")
         false
       end
     end

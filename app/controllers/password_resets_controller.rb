@@ -7,15 +7,11 @@ class PasswordResetsController < ApplicationController
   end
 
   def create
-    contact = Contact.find(:first, :conditions => ["email = ? AND created_by = -1", params[:email]])
-    if contact
-      user_record = contact.user
-      if user_record.present?
-        user_record.send_password_reset
-        redirect_to login_url, :notice => "Email sent with password reset instructions."
-      else
-        redirect_to password_resets_url, :notice => "User not found."
-      end
+    user_record = User.find(:first, :include => :contact,
+                 :conditions => ["lower(contacts.email) = ?", params[:email].downcase])
+    if user_record.present?
+      user_record.send_password_reset
+      redirect_to login_url, :notice => "Email sent with password reset instructions."
     else
       redirect_to password_resets_url, :notice => "User not found."
     end

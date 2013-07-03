@@ -38,9 +38,11 @@ class ApplicationController < ActionController::Base
     def authorize
       redirect_to login_url, alert: "Not authorized" if current_user.nil?
 
-      # for the railsjs partial; loads on every page
-      @airframes_index = Airframe.find(:all, :conditions => ["created_by = ?", @current_user.id], :order => "created_at DESC")
-      @bookmarklet_url = "http://#{request.host_with_port}/b/#{@current_user.bookmarklet_token}"
+      if current_user.present?
+        # for the railsjs partial; loads on every page
+        @airframes_index = Airframe.find(:all, :conditions => ["created_by = ?", current_user.id], :order => "created_at DESC")
+        @bookmarklet_url = "http://#{request.host_with_port}/b/#{current_user.bookmarklet_token}"
+      end
     end
 
 end

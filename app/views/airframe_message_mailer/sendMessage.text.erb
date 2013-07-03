@@ -1,0 +1,8 @@
+<% if @spec_link.present? %>
+<%= @filename %> (<%= @filesize %>): <%= @spec_link %>
+<% end %>
+<% if @photos_link.present? %>
+View Photos: <%= @photos_link %>
+<% end %>
+
+<%= @body.gsub("\n","<br>").html_safe rescue nil %>
