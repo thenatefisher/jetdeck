@@ -148,6 +148,7 @@ class Jetdeck.Views.Airframes.Header.Show extends Backbone.View
     # uploader instantiation and settings
     @$("#airframe_image_upload").fileupload({
       autoUpload: true
+      dropZone: null
       url: "/airframe_images"
       acceptFileTypes: /(\.|\/)(gif|png|jpg|jpeg)$/i
       maxFileSize: 10490000 # 10MB

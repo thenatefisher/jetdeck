@@ -14,6 +14,7 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     # uploader instantiation and settings
     @$("#airframe_document_upload").fileupload({
         autoUpload: true
+        dropZone: null
         url: "/airframe_specs"
         acceptFileTypes: /(\.|\/)(word|pdf|doc|docx)$/i
         maxFileSize: 10490000 # 10MB

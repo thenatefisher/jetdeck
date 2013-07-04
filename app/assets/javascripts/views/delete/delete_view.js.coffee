@@ -9,10 +9,11 @@ class Jetdeck.Views.Delete.ShowDelete extends Backbone.View
     "click .delete-cancel"      : "toggleDeleteMessage"
     
   delete: () ->
-    if @$("#delete-confirmation-text").html() == "DELETE"
+    if @$("#delete-confirmation-text").val() == "DELETE"
+      type = /\/(.*)s/.exec(@model.url)[1]
       @model.destroy()
-      mixpanel.track("Deleted " + @model.get("type"), {}, ->
-        window.location.href = "/" +  @model.get("type").toLowerCase() + "s"
+      mixpanel.track("Deleted " + type, {}, ->
+        window.location.href = "/" +  type.toLowerCase() + "s"
       )
     else
       @$(".help-message").html("Type DELETE to confirm.").show()
@@ -30,4 +31,8 @@ class Jetdeck.Views.Delete.ShowDelete extends Backbone.View
   render: ->
     $(@el).html(@template(@model.toJSON() ))
     @$(".help-message").hide()
+    @$("#delete-confirmation-text").keyup( (event) =>
+      if(event.keyCode == 13)
+        @delete()
+    )
     return this

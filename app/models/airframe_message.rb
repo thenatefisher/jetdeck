@@ -14,7 +14,9 @@ class AirframeMessage < ActiveRecord::Base
   validates_presence_of :creator
 
   before_create :init
-  validate :require_user_activation
+  validate :require_user_activation, :limit_send_rate
+
+  @@message_rate_limit = 100
 
   def init
     self.status_id ||= 0
@@ -27,9 +29,19 @@ class AirframeMessage < ActiveRecord::Base
 
   def send_message
     success = false
-    if self.creator.activated && self.airframe_spec && self.airframe_spec.enabled
+
+    # limit 40 per hour
+    messages_in_last_hour = AirframeMessage.find(:all, :conditions => 
+      ["created_by = ? and created_at > ?", self.created_by, 1.hour.ago]).count
+
+    if self.creator.activated &&
+        self.airframe_spec &&
+        self.airframe_spec.enabled &&
+        messages_in_last_hour <=  @@message_rate_limit
+
       success = AirframeMessageMailer.sendMessage(self).deliver
     end
+
     return success
   end
 
@@ -91,6 +103,19 @@ class AirframeMessage < ActiveRecord::Base
     def require_user_activation
       if !self.creator || self.creator.activated != true
         self.errors.add(:base, "Sending disabled pending <a href='/profile'>account verification</a>.")
+        false
+      end
+    end
+
+    def limit_send_rate
+      # limit send rate
+      messages_in_last_hour = AirframeMessage.find(:all, :conditions => 
+        ["created_by = ? and created_at > ?", self.created_by, 1.hour.ago])
+
+      try_again = ((messages_in_last_hour.first.created_at - 1.hour.ago) / 60).round
+
+      if messages_in_last_hour.count > @@message_rate_limit
+        self.errors.add(:base, "You can only send #{@@message_rate_limit} messages per hour. Try again in #{try_again} minutes.")
         false
       end
     end
