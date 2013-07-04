@@ -19,6 +19,7 @@ module AirframeImport
             thumb = AirframeImage.new(:image => open(URI::encode("http://www.aso.com/"+image[1]) ) )
             thumb.image_file_name = "#{img_id}.jpg"
             thumb.thumbnail = true if index == 0
+            thumb.created_by = airframe.created_by
             thumb.save
             airframe.accessories << thumb
         end        

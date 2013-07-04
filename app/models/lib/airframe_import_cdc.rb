@@ -19,6 +19,7 @@ module AirframeImport
                 thumb = AirframeImage.new(:image => open(img.attr("src")))
                 thumb.image_file_name = "#{img_id}.jpg"
                 thumb.thumbnail = true if index == 0
+                thumb.created_by = airframe.created_by
                 thumb.save
                 airframe.images << thumb
             end
@@ -107,6 +108,8 @@ module AirframeImport
         airframe.asking_price   = page_details[:Price]
         airframe.description    = page_details[:DetailedDescription]
         airframe.save
+
+        self.import_cdc_images(airframe, link)
 
         return airframe.save
 
