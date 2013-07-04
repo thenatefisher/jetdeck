@@ -22,7 +22,7 @@
         Apply new filters
         Sorting
 
-    Mobile Views
+    Mobile Layout
 
     Reading Emails (replied from recipients)
 
@@ -54,7 +54,6 @@
     IE8: No bookmarklet drag/drop capability
     IE8: Send button loading state is HUGE on invite send
     Enable close button on import error popup
-    Mobile background width cutoff   
     
 == Code Enhancements
 
