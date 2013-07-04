@@ -112,11 +112,13 @@ class AirframeMessage < ActiveRecord::Base
       messages_in_last_hour = AirframeMessage.find(:all, :conditions => 
         ["created_by = ? and created_at > ?", self.created_by, 1.hour.ago])
 
-      try_again = ((messages_in_last_hour.first.created_at - 1.hour.ago) / 60).round
+      if messages_in_last_hour.present?
+        try_again = ((messages_in_last_hour.first.created_at - 1.hour.ago) / 60).round
 
-      if messages_in_last_hour.count > @@message_rate_limit
-        self.errors.add(:base, "You can only send #{@@message_rate_limit} messages per hour. Try again in #{try_again} minutes.")
-        false
+        if messages_in_last_hour.count > @@message_rate_limit
+          self.errors.add(:base, "You can only send #{@@message_rate_limit} messages per hour. Try again in #{try_again} minutes.")
+          false
+        end
       end
     end
 

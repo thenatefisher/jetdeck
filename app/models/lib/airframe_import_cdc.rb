@@ -107,8 +107,6 @@ module AirframeImport
         airframe.asking_price   = page_details[:Price]
         airframe.description    = page_details[:DetailedDescription]
         airframe.save
-        
-        self.import_cdc_images(airframe, link)
 
         return airframe.save
 
@@ -130,8 +128,8 @@ module AirframeImport
             prefix  = doc.match(/document\.forms\[0\]\.elements\[1\]\.value=\"([^:]*)/)[1]
             c       = doc.match(/c = (.*)$/)[1]
             slt     = doc.match(/slt = \"(.*)\"/)[1]
-            s1      = doc.match(/s1 = "(.*)"/)[1]
-            s2      = doc.match(/s2 = "(.*)"/)[1]
+            s1      = doc.match(/s1 = '(.*)'/)[1]
+            s2      = doc.match(/s2 = '(.*)'/)[1]
             n       = 4
             clg     = ""
         rescue
