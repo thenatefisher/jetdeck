@@ -244,8 +244,9 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
         messages_collection.create(@message,
             success: =>
                 # reset send button
+                mixpanel.track("Sent Spec", {to: @$("#email").val()})
                 @$("#send").button('reset')
-                window.modalClose()   
+                window.modalClose() 
             error: (o,response) =>
                 errors = $.parseJSON(response.responseText)
                 @$("#error-message").html(errors[0])
