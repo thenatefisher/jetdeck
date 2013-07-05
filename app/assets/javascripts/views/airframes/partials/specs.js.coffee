@@ -21,7 +21,7 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     })
 
     # show progress when started
-    @$("#airframe_document_upload").bind("fileuploadstarted", => @$("#new-spec-table").addClass("spec-upload-table")) 
+    @$("#airframe_document_upload").bind("fileuploadstarted", => @startedUpload()) 
     # refresh spec list when uploaded
     @$("#airframe_document_upload").bind("fileuploaddone", => @refreshView()) 
 
@@ -29,7 +29,11 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     token = $("meta[name='csrf-token']").attr("content")
     @$("#airframe_document_upload input[name='authenticity_token']").val(token)   
 
+  startedUpload: =>
+    @$("#new-spec-table").addClass("spec-upload-table")
+
   refreshView: =>
+    mixpanel.track("Uploaded Spec")
     @$("#new-spec-table").removeClass("spec-upload-table")
     @model.fetch( success: => 
       @model.updateChildren()
@@ -41,6 +45,7 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     modal(view.render().el)
 
   disable: (spec) =>
+    mixpanel.track("Disabled Spec")
     spec.save({enabled: false}, success: => @render())
 
   renderSpecs: =>

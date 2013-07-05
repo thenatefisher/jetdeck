@@ -1,5 +1,4 @@
 class ProfileController < ApplicationController
-
   before_filter :authorize, :sanitize_params
 
   def index

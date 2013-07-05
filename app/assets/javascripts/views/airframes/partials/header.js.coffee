@@ -4,20 +4,6 @@ Jetdeck.Views.Airframes.Header ||= {}
 class Jetdeck.Views.Airframes.Header.Editable extends Backbone.View
   template: JST["templates/airframes/header/editable"]
 
-  initialize: () ->
-    @model.on('change', @renderHeadline)
-
-  renderHeadline: () =>
-    headline = @model.get("year")
-    headline += " " + @model.get("make")
-    headline += " " + @model.get("model_name")
-    $("#headline").html(headline)
-    if headline.length >= 25
-      $("#headline").css("fontSize", "33px")
-    else
-      $("#headline").css("fontSize", "39px")
-    return this
-
   initializeEditableFields: =>
     # setup editable fields
     @$("#headline").editable({
@@ -64,8 +50,6 @@ class Jetdeck.Views.Airframes.Header.Editable extends Backbone.View
     $(() =>
       # init editable fields
       @initializeEditableFields()
-      # render headline
-      @renderHeadline()
     )
 
     return this

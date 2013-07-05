@@ -7,7 +7,7 @@ function show_jetdeck() {
 
 	// backbone setup
 	window.Jetdeck.router = new Jetdeck.Routers.BookmarkletRouter();
-	window.Jetdeck.router.index();
+    window.Jetdeck.router.index();
 	
 	// init position
 	jetdeck_$("div#jetdeck").css('top', '-300px');

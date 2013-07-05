@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   before_filter :sanitize_params
 
   def activate

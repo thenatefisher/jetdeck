@@ -1,5 +1,4 @@
 class PasswordResetsController < ApplicationController
-
   before_filter :sanitize_params
 
   def index

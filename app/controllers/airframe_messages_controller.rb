@@ -1,5 +1,6 @@
 class AirframeMessagesController < ApplicationController
-
+  before_filter :sanitize_params
+  
   # GET /s/:code
   def spec
     airframe_message = AirframeMessage.where(:spec_url_code => params[:code], :spec_enabled => true).first   

@@ -1,5 +1,4 @@
 class ContactsController < ApplicationController
-
   before_filter :authorize, :sanitize_params
 
   # /contacts/search

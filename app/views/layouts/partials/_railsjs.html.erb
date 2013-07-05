@@ -2,7 +2,7 @@
 <script type="text/javascript">
 	window.bookmarklet_url = "<%= @bookmarklet_url %>";
 	window.data = new Object();
-	window.data.signature = "<%= @current_user.signature %>";
+	window.data.signature = "<%= @current_user.signature.squish rescue nil %>";
 	window.data.activated = "<%= @current_user.activated %>";
 	window.data.help_enabled = "<%= @current_user.help_enabled %>";
 	window.data.airframe_index = <%= @airframes_index.reduce(Array.new) {|output, airframe| output.push airframe.as_json(:methods => [:long], :include => [:specs])}.to_json.html_safe %> 

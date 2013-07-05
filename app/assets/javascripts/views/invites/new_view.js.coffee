@@ -21,7 +21,7 @@ class Jetdeck.Views.Invites.NewView extends Backbone.View
     
     collection.create(model.toJSON(),
       success: (i) =>
-        mixpanel.track("Sent Invite", {}, =>
+        mixpanel.track("Sent Invite", {to: @$("input[name='email']").val()}, =>
           @$("#invite-send").button('reset')
           # update invite count
           $("#invite-count").html(i.get("invites"))

@@ -24,6 +24,9 @@ jetdeck_$(function() {
 				case "DUPLICATE":
 					window.Jetdeck.router.duplicate(response.airframe);
 					break;
+				case "OWNGOAL":
+					window.Jetdeck.router.own_goal(response.airframe);
+					break;
 				default:
 					window.Jetdeck.router.error();
 					break;				

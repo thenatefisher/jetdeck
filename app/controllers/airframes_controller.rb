@@ -19,21 +19,29 @@ class AirframesController < ApplicationController
       # start airframe import
       airframe = nil
       if params[:url].present? && user.present?
-        airframe = Airframe.import(user.id, params[:url])
-      end
+        # dont own-goal us
 
-      # create response
-      case airframe.class.name
-      when "Delayed::Backend::ActiveRecord::Job"
-        response[:status] = "OK"
-      when "Airframe"
-        response[:status] = "DUPLICATE"
-        response[:airframe] = {
-          :name => airframe.to_s,
-          :link => "http://#{request.host}:#{request.port}/airframes/#{airframe.id}",
-        }
-      when "NilClass"
-        response[:status] = "ERROR"
+        if params[:url].match(/jetdeck\.co/) || params[:url].match(/herokuapp\.com/)
+          response[:status] = "OWNGOAL"
+        else
+          airframe = Airframe.import(user.id, params[:url])
+
+          # create response
+          case airframe.class.name
+          when "Delayed::Backend::ActiveRecord::Job"
+            response[:status] = "OK"
+          when "Airframe"
+            response[:status] = "DUPLICATE"
+            response[:airframe] = {
+              :name => airframe.to_s,
+              :link => "http://#{request.host}:#{request.port}/airframes/#{airframe.id}",
+            }
+          when "NilClass"
+            response[:status] = "ERROR"
+          end
+
+        end
+
       end
 
     end
