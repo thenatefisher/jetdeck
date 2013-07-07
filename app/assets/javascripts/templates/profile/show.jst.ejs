@@ -40,7 +40,7 @@
       <table id="profile-table" class="span7">
           <tbody>
               <tr>
-                  <td colspan=2>
+                  <td>
                       <h1 style="margin-top: 0px;">
                         <a data-pk="1" style="cursor: pointer" id="name" 
                           data-pk="1" data-emptytext="What's Your Name?" data-type="fullname"><%= contact.first %> <%= contact.last %></a> 
@@ -50,7 +50,7 @@
               </tr>
               <% if (!activated) { %>
               <tr>
-                <td colspan=2>
+                <td>
                   <div id="activation-msg" class="alert alert-danger">
                     <strong>Emails Disabled Pending Activation</strong>
                     <p><br>All emails from your account will be disabled (invites and specs) until your account is activated. Check your inbox for a message from JetDeck and click the link. If you didn't receive an email, you can have it <a href="#" class="resend">resent</a> or contact <a href="mailto:support@jetdeck.co">support@jetdeck.co</a></p>
@@ -59,80 +59,151 @@
               </tr>
               <% } %>
 
-              <tr>
-                  <td class="span3">
-                      Title
-                  </td>
-                  <td>
-                      <a href="#" id="title" data-type="text" data-pk="1" 
-                        data-emptytext="Click to Enter Title" data-original-title="Title"><%= contact.title %></a> 
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      Company
-                  </td>
-                  <td>
-                      <a href="#" id="company" data-type="text" data-pk="1" 
-                        data-emptytext="Click to Enter Company" data-original-title="Company"><%= contact.company %></a> 
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      Account Type
-                  </td>
-                  <td>
-                      Free Trial
-                  </td>
-              </tr>
-              <tr>
-                  <td>
-                      Phone Number
-                  </td>
-                  <td>
-                      <a href="#" id="phone" data-type="text" data-pk="1" 
-                        data-emptytext="Click to Enter Phone" data-original-title="Phone"><%= contact.phone %></a> 
-                  </td>
-              </tr>   
-              <tr>
-                  <td>
-                      Website
-                  </td>
-                  <td>
-                      <a href="#" id="website" data-type="text" data-pk="1" 
-                        data-emptytext="Click to Enter URL" data-original-title="Website"><%= contact.website %></a> 
-                  </td>
-              </tr> 
-              <tr>
-                  <td>
-                      Email Address
-                  </td>
-                  <td>
-                      <a href="#" id="email" data-type="email" data-pk="1" 
-                        data-emptytext="Click to Update Email" data-original-title="Email"><%= contact.email %></a> 
-                  </td>
-              </tr>    
-                            
-              <tr>
-                  <td>
-                      Password
-                  </td>
-                  <td>
-                      <a href="#" id="password" data-type="password" data-pk="1"
-                        data-emptytext="Click to Update Password" data-original-title="Password">*******</a> 
-                  </td>
-              </tr>                  
-              <tr>
-                  <td>
-                      Email Signature
-                  </td>
-                  <td>
-                      <a href="#" id="signature" data-type="textarea" data-pk="1" 
-                        data-emptytext="Click to Enter Signature" data-original-title="Signature"><%= signature %></a> 
-                  </td>
-              </tr>                           
+              <tr><td>
+
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#settings" data-toggle="tab">Settings</a></li>
+                <li><a href="#account" data-toggle="tab">Account</a></li>
+                <li><a href="#billing" data-toggle="tab">Billing</a></li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane active" id="settings">
+                  <table>
+                    <tr>
+                        <td class="span3">
+                            Title
+                        </td>
+                        <td>
+                            <a href="#" id="title" data-type="text" data-pk="1" 
+                              data-emptytext="Click to Enter Title" data-original-title="Title"><%= contact.title %></a> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Company
+                        </td>
+                        <td>
+                            <a href="#" id="company" data-type="text" data-pk="1" 
+                              data-emptytext="Click to Enter Company" data-original-title="Company"><%= contact.company %></a> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Phone Number
+                        </td>
+                        <td>
+                            <a href="#" id="phone" data-type="text" data-pk="1" 
+                              data-emptytext="Click to Enter Phone" data-original-title="Phone"><%= contact.phone %></a> 
+                        </td>
+                    </tr> 
+                    <tr>
+                        <td>
+                            Website
+                        </td>
+                        <td>
+                            <a href="#" id="website" data-type="text" data-pk="1" 
+                              data-emptytext="Click to Enter URL" data-original-title="Website"><%= contact.website %></a> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Email Address
+                        </td>
+                        <td>
+                            <a href="#" id="email" data-type="email" data-pk="1" 
+                              data-emptytext="Click to Update Email" data-original-title="Email"><%= contact.email %></a> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Password
+                        </td>
+                        <td>
+                            <a href="#" id="password" data-type="password" data-pk="1"
+                              data-emptytext="Click to Update Password" data-original-title="Password">*******</a> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Email Signature
+                        </td>
+                        <td>
+                            <a href="#" id="signature" data-type="textarea" data-pk="1" 
+                              data-emptytext="Click to Enter Signature" data-original-title="Signature"><%= signature %></a> 
+                        </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="tab-pane" id="account">
+                  <table style="width: 100%">
+                    <tr>
+                        <td>
+                            Plan
+                        </td>
+                        <td>
+                            <%= plan %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colpsan=2>
+                            Cancel
+                        </td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="tab-pane" id="billing">
+                  <table style="width: 100%">
+                    <tr>
+                        <td class="span3">
+                            Credit Card
+                        </td>
+                        <td>
+                            <i class="icon-credit-card"></i> <%= card %> <small>(<a href="#" id="update-cc">update</a>)</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="span3">
+                           Balance
+                        </td>
+                        <td>
+                            <%= balance %>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="span3">
+                           Next Scheduled Payment
+                        </td>
+                        <td>
+                            <%=scheduled_amount%> on <%=scheduled_date%>
+                        </td>
+                    </tr>
+    
+                    <tr>
+                        <td colspan=2>
+                           <table id="paymentHistory" class="table table-striped table-bordered table-condensed" style="width: 100%">
+                            <thead>
+                              <tr>
+                                <th colspan=3>Payment History</th>
+                              </tr>
+                            </thead>
+                            <tbody></tbody>
+                          </table>
+                        </td>
+                    </tr>
+    
+                  </table>
+                </div>
+              </div>
+
+              </td></tr>
           </tbody>
       </table>
     </div>
 
 </div> <!-- offset2 -->
+
+<form id="stripe-profile-form" action="/charges" method="POST">
+  <input type=hidden name="authenticity_token" />
+</form>
+

@@ -6,8 +6,6 @@ Third Party Libraries and Services
       bootstrap datepicker
       bootstrap editable
       Backbone.js
-      D3.js
-      rickshaw
       jQueryUI AutoComplete
       jQuery Select2
       jQuery File Upload
@@ -30,4 +28,5 @@ Third Party Libraries and Services
       Amazon S3
       SendGrid
       MixPanel
-      Stripe (planned)
+      Stripe
+      UserVoice

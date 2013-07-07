@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/stripe/stripe-ruby
+  revision: 9b64772b7edc78f18e6694a73b45d610a1bcaa49
+  specs:
+    stripe (1.8.3)
+      multi_json (>= 1.0.4, < 2)
+      rest-client (~> 1.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -209,6 +217,8 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -303,6 +313,7 @@ DEPENDENCIES
   rspec-rails
   sendgrid
   spring
+  stripe!
   therubyracer (= 0.10.2)
   thin
   twitter-bootstrap-rails

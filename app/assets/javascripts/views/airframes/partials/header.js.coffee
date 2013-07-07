@@ -135,7 +135,7 @@ class Jetdeck.Views.Airframes.Header.Show extends Backbone.View
       dropZone: null
       url: "/airframe_images"
       acceptFileTypes: /(\.|\/)(gif|png|jpg|jpeg)$/i
-      maxFileSize: 10490000 # 10MB
+      maxFileSize: 209800000 # 20MB
       progressall: (e, data) =>
         progress = parseInt(data.loaded / data.total * 100, 10)
         globalProgressNode = @$(".fileupload-progress")

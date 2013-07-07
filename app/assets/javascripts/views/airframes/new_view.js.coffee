@@ -21,8 +21,8 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
         window.location.href = "/airframes/#{@model.id}"
         modalClose()
       error: (airframe, jqXHR) =>
-        @model.set({errors: $.parseJSON(jqXHR.responseText)})
-        @$("#error-message").html();
+        errors = $.parseJSON(jqXHR.responseText)
+        @$("#error-message").html(errors[0])
     )
 
   render: =>

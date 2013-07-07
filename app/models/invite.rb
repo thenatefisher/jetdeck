@@ -34,7 +34,7 @@ class Invite < ActiveRecord::Base
     end
 
     # does user still have invites to use?
-    if self.sender.invites < 1
+    if self.sender.invites_quota < 1
       self.errors.add(:sender, "No invites remaining")
       return false
     end

@@ -23,6 +23,14 @@ class Airframe < ActiveRecord::Base
   belongs_to :creator, :class_name => "User", :foreign_key => "created_by"
   validates_associated :creator
   validates_presence_of :creator
+  validate :airframes_available, :on => :create
+
+  # do not create if user is over quota
+  def airframes_available
+    if self.creator && self.creator.over_airframes_quota?
+      self.errors.add :base, "Please <a href='/profile'>upgrade your account</a> to create more aircraft."
+    end
+  end
 
   # static method to create a new airframe from listing URL
   def self.import(user_id=nil, link=nil)
@@ -60,21 +68,21 @@ class Airframe < ActiveRecord::Base
   end
 
   def to_s
-    retval =   ""
+    retval =  ""
     retval +=  self.year.to_s + " " if self.year.present?
     retval +=  self.make + " " if self.make.present?
     retval +=  self.model_name if self.model_name.present?
-    retval if retval.present? else "Unidentified Aircraft"
+    return retval if retval.present? else "Unidentified Aircraft"
   end
 
   def long
-    retval =   ""
+    retval =  ""
     retval +=  self.year.to_s + " " if self.year.present?
     retval +=  self.make + " " if self.make.present?
     retval +=  self.model_name if self.model_name.present?
     retval +=  " SN:#{self.serial}" if self.serial.present?
     retval +=  " (#{self.registration})" if self.registration.present?
-    retval if retval.present? else "Unidentified Aircraft"
+    return retval if retval.present? else "Unidentified Aircraft"
   end
 
 end

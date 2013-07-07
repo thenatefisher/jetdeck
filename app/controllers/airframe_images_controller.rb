@@ -53,7 +53,7 @@ class AirframeImagesController < ApplicationController
       if @image.update_attributes(params[:airframe_image].slice(:enabled))
         render :json => @image, :status => :ok
       else
-        render :json => @image.full_messages, :status => :unprocessable_entity
+        render :json => @image.errors.full_messages, :status => :unprocessable_entity
       end
 
     end

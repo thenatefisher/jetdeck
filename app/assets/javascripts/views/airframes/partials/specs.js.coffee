@@ -17,13 +17,15 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
         dropZone: null
         url: "/airframe_specs"
         acceptFileTypes: /(\.|\/)(word|pdf|doc|docx)$/i
-        maxFileSize: 10490000 # 10MB
+        maxFileSize: 209800000 # 20MB
     })
 
     # show progress when started
     @$("#airframe_document_upload").bind("fileuploadstarted", => @startedUpload()) 
     # refresh spec list when uploaded
     @$("#airframe_document_upload").bind("fileuploaddone", => @refreshView()) 
+    # failed
+    @$("#airframe_document_upload").bind("fileuploadfailed", (event, object) => @showUploadError(object)) 
 
     # set CSRF token
     token = $("meta[name='csrf-token']").attr("content")
@@ -39,6 +41,11 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
       @model.updateChildren()
       @render() 
     )
+
+  showUploadError: (object) =>
+    mixpanel.track("Failed Spec Upload")
+    message = $.parseJSON(object.jqXHR.responseText)[0]
+    @$("#new-spec-table").html(message).addClass("error")
 
   send: (spec) =>
     view = new Jetdeck.Views.Specs.Send(airframe: @model, spec: spec)
@@ -69,7 +76,7 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
       @renderSpecs()
     )
 
-    if @model.specs.length < 1
+    if @model.specs.where({enabled: "true"}).length < 1
       @$("#specs-populated").hide()
       @$("#specs-empty").show()
     else

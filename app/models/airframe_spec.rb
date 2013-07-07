@@ -27,13 +27,13 @@ class AirframeSpec < ActiveRecord::Base
     :bucket => Jetdeck::Application.config.aws_s3_bucket,
     :s3_permissions => :authenticated_read,
     :path => ":attachment/:id/:basename.:extension"
-  validates_attachment_size :spec, :less_than => 10.megabytes
+  validates_attachment_size :spec, :less_than => 20.megabytes
   validates_presence_of :spec
   validates_attachment_content_type :spec, :content_type =>
     ["application/msword",
      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
      "application/pdf"]
-    validate :validate_space_available
+  validate :validate_space_available, :on => :create
 
   before_create :init
 
@@ -45,7 +45,7 @@ class AirframeSpec < ActiveRecord::Base
   def validate_space_available
     if spec_file_size.blank?
       self.errors.add :spec, "file is not valid"
-    elsif self.creator && ((self.creator.storage_usage + self.spec_file_size) >= self.creator.storage_quota)
+    elsif self.creator && ((self.creator.storage_usage + self.spec_file_size) >= self.creator.storage_quota * 30720)
       self.errors.add :spec, "exceeds account storage allowance"
     end
   end

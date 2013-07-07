@@ -40,7 +40,7 @@ class AirframeSpecsController < ApplicationController
         logger.warn @spec
         render :json => @spec, :status => :ok
       else
-        render :json => @spec.full_messages, :status => :unprocessable_entity
+        render :json => @spec.errors.full_messages, :status => :unprocessable_entity
       end
     end
   end

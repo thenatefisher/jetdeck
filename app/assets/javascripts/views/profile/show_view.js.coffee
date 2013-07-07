@@ -3,6 +3,35 @@ Jetdeck.Views.Profile ||= {}
 class Jetdeck.Views.Profile.ShowView extends Backbone.View
   template: JST["templates/profile/show"]
   
+  events:
+    "click #update-cc" : "updateCc"
+
+  cancelSubscription : =>
+
+  changePlan : =>
+
+  stripe_token: (res) ->
+    # set stripe token and makes ajax call
+    $input = $('<input type=hidden name=stripeToken />').val(res.id)
+    $.post('/profile/account', @$('#stripe-profile-form').append($input).serialize())
+
+  updateCc: =>
+    # set CSRF token
+    csrf_token = $("meta[name='csrf-token']").attr("content")
+    @$("input[name='authenticity_token']").val(csrf_token)   
+
+    # displays strip window
+    StripeCheckout.open({
+      key:         @model.get("stripe_key")
+      address:     false
+      amount:      0
+      currency:    'usd'
+      name:        'JetDeck Services, LLC'
+      description: 'Update Payment Details'
+      panelLabel:  'Update'
+      token:        @stripe_token
+    })
+
   render: =>
     view_params = {
       usage_in_megs: (parseInt(@model.get('storage_usage')) / 1048576).toFixed(1)
@@ -11,6 +40,11 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
     }
 
     $(@el).html(@template($.extend(view_params,@model.toJSON() )))
+
+    # add payment history
+    _.each(@model.get("charges"), (charge) => 
+      @$("#paymentHistory tbody").append("<tr><td>"+charge.created+"</td><td>"+charge.amount+"</td><td>"+charge.paid+"</td></tr>")
+    )
 
     # resend activation email
     @$(".resend").on("click", =>

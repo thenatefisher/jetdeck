@@ -12,14 +12,14 @@
         Contacts </a>
     </li> 
 
-    <% if current_user.invites > 0 %>
+    <% if current_user.invites_quota > 0 %>
     <li id="invite-sidebar">
       <a href="#"
       data-placement="bottom" 
       rel="tooltip" 
       id="new-invite"
-      title="<%= current_user.invites %> Invite(s) Available"> 
-        Send Invite <small>(<%= current_user.invites %>)</small>
+      title="<%= current_user.invites_quota %> Invite(s) Available"> 
+        Send Invite <small>(<%= current_user.invites_quota %>)</small>
       </a>
     </li> 
     <% end %>            

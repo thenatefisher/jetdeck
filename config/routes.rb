@@ -1,5 +1,7 @@
 Jetdeck::Application.routes.draw do
 
+  resources :charges
+
   resources :invites, :only => [:create]
 
   resources :notes

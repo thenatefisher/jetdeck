@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   has_many :contacts, :class_name => "Contact", :foreign_key => "created_by", :dependent => :destroy
   has_many :airframe_specs, :class_name => "AirframeSpec", :foreign_key => "created_by"
   has_many :airframe_images, :class_name => "AirframeImage", :foreign_key => "created_by"
+  has_many :invites, :class_name => "Invite", :foreign_key => "created_by"
 
   has_many :messages_sent,
     :class_name => "AirframeMessage",
@@ -40,16 +41,56 @@ class User < ActiveRecord::Base
   end
 
   def over_storage_quota?
-    (self.storage_usage > self.storage_quota)
+    (self.storage_usage >= (self.storage_quota * 1048576))
+  end
+
+  def over_airframes_quota?
+    # airframes_quota = 0 indicates unlimitd
+    (self.airframes_quota > 0) ? (self.airframes.count >= self.airframes_quota) : false
+  end
+
+  def trial_time_remaining
+    # check stripe account type first
+    plan = (self.stripe.subscription.plan.name.present? && self.stripe.subscription.status == "active") rescue false
+    interval = (((User.first.created_at+14.days)-Time.now)/3600/24).round
+    interval = 0 if interval < 0
+    return interval if !plan else nil
+  end
+
+  def stripe
+    Stripe::Customer.retrieve(self.stripe_id) rescue nil
+  end
+
+  def warnings
+    warnings = Hash.new
+
+    if !self.activated
+      warnings[:message] = "Please activate your account to send emails."
+      warnings[:type] = "activate"
+    elsif self.over_storage_quota?
+      warnings[:message] = "Want more file storage?"
+      warnings[:type] = "upgrade"
+    elsif self.over_airframes_quota?
+      warnings[:message] = "Need to add more aircraft?"
+      warnings[:type] = "upgrade"
+    elsif self.trial_time_remaining.present? && self.trial_time_remaining == 0
+      warnings[:message] = "Your free trial has expired!"
+      warnings[:type] = "upgrade"
+    elsif self.trial_time_remaining.present? && self.trial_time_remaining < 6
+      warnings[:message] = "Only #{self.trial_time_remaining} days left on your free trial!"
+      warnings[:type] = "upgrade"
+    end
+
+    return warnings
   end
 
   def set_defaults
 
-    # in bytes, set storage quota to 100Mb if not mass assigned
-    self.storage_quota ||= 104857600
+    # set quotas
+    self.update_account_quotas
 
     # set 10 invites if not mass assigned
-    self.invites ||= 10
+    self.invites_quota ||= 10
 
     # default tutorial enabled status if not mass assigned
     self.help_enabled ||= true
@@ -84,19 +125,41 @@ class User < ActiveRecord::Base
     end
   end
 
+  def update_account_quotas
+
+    plan = self.stripe.subscription.plan.name if self.stripe.subscription.status == "active" rescue false
+
+    case plan
+      when "Pro"
+        # in bytes, set storage quota to 30Gb 
+        self.storage_quota = 30720
+        # unlimited airframes quota 
+        self.airframes_quota = 0
+      when "Standard"
+        # in bytes, set storage quota to 10Gb 
+        self.storage_quota = 10240
+        # assign airframes quota 
+        self.airframes_quota = 20
+      else
+        # in bytes, set storage quota to 1Gb 
+        self.storage_quota = 1024
+        # assign airframes quota to initial free trial limit
+        self.airframes_quota = 5
+    end
+
+    self.save!
+    return self
+  end
+
   def self.authenticate(email, password)
-
     return nil if email.blank? || password.blank?
-
     user = User.find(:first, :include => :contact,
                      :conditions => ["enabled = true AND lower(contacts.email) = ?", email.downcase])
-
     if user.present? && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
-      user
+      user.update_account_quotas
     else
       nil
     end
-
   end
 
   def send_password_reset

@@ -26,7 +26,7 @@ class AirframeImage < ActiveRecord::Base
     :bucket => Jetdeck::Application.config.aws_s3_bucket,
     :s3_permissions => :authenticated_read,
     :path => ":attachment/:id/:style/:basename.:extension"
-  validates_attachment_size :image, :less_than => 10.megabytes
+  validates_attachment_size :image, :less_than => 20.megabytes
   validates_presence_of :image
   validates_attachment_content_type :image, :content_type =>
     ["image/png",
@@ -36,7 +36,7 @@ class AirframeImage < ActiveRecord::Base
      "image/bmp",
      "image/targa",
      "image/gif"]
-    validate :validate_space_available
+  validate :validate_space_available, :on => :create
 
   before_destroy :next_thumbnail
 
@@ -52,7 +52,7 @@ class AirframeImage < ActiveRecord::Base
   def validate_space_available
     if image_file_size.blank?
       self.errors.add :image, "file is not valid"
-    elsif self.creator && ((self.creator.storage_usage + self.image_file_size) >= self.creator.storage_quota)
+    elsif self.creator && ((self.creator.storage_usage + self.image_file_size) >= self.creator.storage_quota * 30720)
       self.errors.add :image, "exceeds account storage allowance"
     end
   end
