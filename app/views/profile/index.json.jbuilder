@@ -1,4 +1,4 @@
-json.(@user, :id, :activated, :storage_quota, :airframes_quota, :help_enabled)
+json.(@user, :id, :activated, :storage_usage, :airframes_quota, :help_enabled)
 json.storage_quota @user.storage_quota * 1048576
 json.contact (@user.contact)
 json.airframes @user.airframes.count
