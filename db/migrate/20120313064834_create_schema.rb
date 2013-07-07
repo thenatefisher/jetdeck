@@ -111,7 +111,8 @@ class CreateSchema < ActiveRecord::Migration
       t.datetime "updated_at",              :null => false
     end
 
-    create_table "leads", :id => false do |t|
+    create_table "leads" do |t|
+      t.integer  "created_by"
       t.integer  "airframe_id"
       t.integer  "contact_id"
     end

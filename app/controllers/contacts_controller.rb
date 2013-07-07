@@ -54,7 +54,7 @@ class ContactsController < ApplicationController
         format.json { render :json => @contact, :status => :created, :location => @contact }
       else
         format.html { render :action => "new" }
-        format.json { render :json => @contact.errors, :status => :unprocessable_entity }
+        format.json { render :json => @contact.errors.full_messages, :status => :unprocessable_entity }
       end
     end
   end

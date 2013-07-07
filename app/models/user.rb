@@ -54,11 +54,28 @@ class User < ActiveRecord::Base
     plan = (self.stripe.subscription.plan.name.present? && self.stripe.subscription.status == "active") rescue false
     interval = (((User.first.created_at+14.days)-Time.now)/3600/24).round
     interval = 0 if interval < 0
-    return interval if !plan else nil
+    return (!plan) ? interval : nil
+  end
+
+  def standard_plan_available
+    # if user is pro and has under the standard plan usage, he can downgrade
+    retval = true
+    if self.plan && self.plan.downcase == "pro" &&
+        (self.airframes.count >= 20 ||
+        self.storage_usage >= 10240)
+        retval = false
+    end
+    return retval
+  end
+
+  def plan
+    self.stripe.subscription.plan.name rescue nil
   end
 
   def stripe
-    Stripe::Customer.retrieve(self.stripe_id) rescue nil
+    @stripe = Stripe::Customer.retrieve(self.stripe_id) rescue nil if @stripe.blank?
+    @stripe = nil if @stripe.deleted rescue @stripe
+    return @stripe
   end
 
   def warnings
@@ -110,6 +127,14 @@ class User < ActiveRecord::Base
     # generate activation token
     generate_token(:bookmarklet_token)
 
+    # create stripe account
+    customer = Stripe::Customer.create(
+      :email => self.contact.email
+    )
+    self.stripe_id = customer.id rescue nil
+
+    # seed account with sample records
+
   end
 
   def generate_token(column)
@@ -147,7 +172,6 @@ class User < ActiveRecord::Base
         self.airframes_quota = 5
     end
 
-    self.save!
     return self
   end
 
@@ -157,6 +181,8 @@ class User < ActiveRecord::Base
                      :conditions => ["enabled = true AND lower(contacts.email) = ?", email.downcase])
     if user.present? && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
       user.update_account_quotas
+      user.save!
+      user
     else
       nil
     end

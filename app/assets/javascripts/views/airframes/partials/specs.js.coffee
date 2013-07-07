@@ -76,7 +76,7 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
       @renderSpecs()
     )
 
-    if @model.specs.where({enabled: "true"}).length < 1
+    if @model.specs.where({enabled: true}).length < 1
       @$("#specs-populated").hide()
       @$("#specs-empty").show()
     else

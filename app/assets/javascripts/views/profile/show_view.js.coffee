@@ -4,21 +4,75 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
   template: JST["templates/profile/show"]
   
   events:
-    "click #update-cc" : "updateCc"
+    "click #update-cc"            : "updateCc"
+    "click #select-standard-plan" : "selectStandardPlan"
+    "click #select-pro-plan"      : "selectProPlan"
 
-  cancelSubscription : =>
+  cancelSubscription: =>
 
-  changePlan : =>
+  selectProPlan: =>
+    # set CSRF token
+    csrf_token = $("meta[name='csrf-token']").attr("content")
+    @$("input[name='authenticity_token']").val(csrf_token)   
 
-  stripe_token: (res) ->
+    # set plan type
+    @$("input[name='plan']").val("PRO")   
+    mixpanel.track("Changed Plan", {type: "Pro"})
+
+    if @model.get("card")
+      @$('#stripe-profile-form').submit()
+      return
+
+    # displays strip window
+    StripeCheckout.open({
+      key:         @model.get("stripe_key")
+      address:     false
+      amount:      3900
+      currency:    'usd'
+      name:        'JetDeck Services, LLC'
+      description: 'Pro Account Monthly Subscription'
+      panelLabel:  'Select Plan'
+      token:        @stripe_token
+    })
+
+  selectStandardPlan: =>
+    # set CSRF token
+    csrf_token = $("meta[name='csrf-token']").attr("content")
+    @$("input[name='authenticity_token']").val(csrf_token)   
+
+    # set plan type
+    @$("input[name='plan']").val("STANDARD") 
+    mixpanel.track("Changed Plan", {type: "Standard"})
+
+    if @model.get("card")
+      @$('#stripe-profile-form').submit()
+      return
+
+    # displays strip window
+    StripeCheckout.open({
+      key:         @model.get("stripe_key")
+      address:     false
+      amount:      2500
+      currency:    'usd'
+      name:        'JetDeck Services, LLC'
+      description: 'Standard Account Monthly Subscription'
+      panelLabel:  'Select Plan'
+      token:        @stripe_token
+    })
+
+  stripe_token: (res) =>
     # set stripe token and makes ajax call
     $input = $('<input type=hidden name=stripeToken />').val(res.id)
-    $.post('/profile/account', @$('#stripe-profile-form').append($input).serialize())
+    @$('#stripe-profile-form').append($input).submit()
 
   updateCc: =>
     # set CSRF token
     csrf_token = $("meta[name='csrf-token']").attr("content")
     @$("input[name='authenticity_token']").val(csrf_token)   
+
+    # set plan type
+    @$("input[name='plan']").val("") 
+    mixpanel.track("Changed Credit Card")
 
     # displays strip window
     StripeCheckout.open({
@@ -33,10 +87,20 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
     })
 
   render: =>
+    storage_usage_in_percent = Math.round(100*(parseInt(@model.get('storage_usage')) / parseInt(@model.get('storage_quota'))))
+    airframes_usage_in_percent = Math.round(100*(parseInt(@model.get('airframes')) / parseInt(@model.get('airframes_quota'))))
+    storage_usage_style = if (storage_usage_in_percent < 80) then "success" else "warning"
+    storage_usage_style = "danger" if (storage_usage_in_percent > 95)
+    airframes_usage_style = if (airframes_usage_in_percent < 80) then "success" else "warning"
+    airframes_usage_style = "danger" if (airframes_usage_in_percent > 95)
+
     view_params = {
-      usage_in_megs: (parseInt(@model.get('storage_usage')) / 1048576).toFixed(1)
-      quota_in_megs: (parseInt(@model.get('storage_quota')) / 1048576).toFixed(1)
-      usage_in_percent: Math.round(100*(parseInt(@model.get('storage_usage')) / parseInt(@model.get('storage_quota'))))
+      storage_usage_in_megs: (parseInt(@model.get('storage_usage')) / 1048576).toFixed(1)
+      storage_quota_in_megs: (parseInt(@model.get('storage_quota')) / 1048576).toFixed(1)
+      storage_usage_in_percent: storage_usage_in_percent
+      storage_usage_style: storage_usage_style
+      airframes_usage_in_percent: airframes_usage_in_percent
+      airframes_usage_style: airframes_usage_style
     }
 
     $(@el).html(@template($.extend(view_params,@model.toJSON() )))

@@ -110,7 +110,8 @@ ActiveRecord::Schema.define(:version => 20120313064834) do
     t.string   "email"
   end
 
-  create_table "leads", :id => false, :force => true do |t|
+  create_table "leads", :force => true do |t|
+    t.integer "created_by"
     t.integer "airframe_id"
     t.integer "contact_id"
   end

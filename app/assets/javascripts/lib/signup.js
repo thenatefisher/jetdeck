@@ -160,18 +160,6 @@ function emailEntryValid(email_field) {
     
   }
    
-  // ensure entry is not already taken (deferred for later build)
-  /*email_field.siblings(".help-inline").html("Checking Availability..."); 
-  if (emailTaken(email_field.val())) {    
-    
-    email_field.parents(".control-group").addClass("error")
-    var suggestion_msg = "Looks like you already have an account! <a href='/login'>Login</a>";
-    email_field.siblings(".help-inline").html(suggestion_msg); 
-    return false;
-    
-  }
-  email_field.siblings(".help-inline").html("");*/
-  
   return true;
   
 }

@@ -50,16 +50,18 @@ class UsersController < ApplicationController
     # if a user already has this email addy, cancel reg
     if User.find(:first, :include => :contact,
                  :conditions => ["lower(contacts.email) = ?", params[:email].downcase]).present?
-      flash[:alert] = "#{params[:email]} is already registered!"
+      flash[:alert] = "#{params[:email]} is already registered! <a href='login'>Sign In</a>"
       render :layout => "signup", :action => :new
       return
     end
 
-    # create user records
+    # create contact record
     contact = Contact.create(:email => params[:email], :first => name[0], :last => name[1])
-    user = User.create(:contact_id => contact.id, :password => params[:password]) if contact.valid?
+    
+    begin 
 
-    if user.present? && user.valid?
+      # attempt creation of user
+      user = User.create(:contact_id => contact.id, :password => params[:password]) if contact.valid?
 
       # deactivate all invites with this email address
       Invite.find(:all, :conditions => ["lower(email) = ?", params[:email].downcase]).each do |i|
@@ -75,11 +77,17 @@ class UsersController < ApplicationController
       # redirect to default page
       redirect_to "/"
 
-    else
+    rescue => error
+      
+      logger.warn error.message 
+
+      error_messages = contact.errors.full_messages.join(";")
 
       # cleanup and send user to normal signup page
-      contact.destroy
+      contact.destroy! rescue nil
       flash[:alert] = "Account could not be created"
+      flash[:alert] = error_messages if error_messages.present?
+
       render :layout => "signup", :action => :new
 
     end

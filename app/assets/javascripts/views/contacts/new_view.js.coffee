@@ -24,12 +24,10 @@ class Jetdeck.Views.Contacts.NewView extends Backbone.View
         )
 
       error: (c, jqXHR) =>
-        errObj = $.parseJSON(jqXHR.responseText)
-        if (errObj.email)
-            @$(".email_group").addClass("error")
-            @$(".email_group").children(".help-block").removeClass("hide")
-            if errObj.email[0]
-                @$(".email_group").children(".help-block").html(errObj.email[0])
+        errors = $.parseJSON(jqXHR.responseText)[0]
+        @$(".email_group").addClass("error")
+        @$(".email_group").children(".help-block").removeClass("hide")
+        @$(".email_group").children(".help-block").html(errors)
     )
 
   render: ->

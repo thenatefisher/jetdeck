@@ -29,29 +29,29 @@ class Contact < ActiveRecord::Base
     :foreign_key => "contact_id"
 
   validates_presence_of :email,
-    :message => "Email address is required"
+    :message => "address is required"
 
   validates_presence_of :email_confirmation,
-    :message => "Confirm email address",
+    :message => "requires confirmation",
     :if => :email_changed?, :on => :update,
     :unless => Proc.new { |q| q.user.nil? }
 
   validates_confirmation_of :email,
-    :message => "Email should match confirmation",
+    :message => "should match confirmation",
     :if => :email_changed?, :on => :update,
     :unless => Proc.new { |q| q.user.nil? }
 
   validates_uniqueness_of :email, :scope => :created_by,
-    :message => "Another contact already exists with this address"
+    :message => "is already used by another contact"
 
   validates_format_of :email,
     :with => /^(|(([A-Za-z0-9]+_+)|([A-Za-z0-9]+\-+)|([A-Za-z0-9]+\.+)|([A-Za-z0-9]+\++))*[A-Za-z0-9]+@((\w+\-+)|(\w+\.))*\w{1,63}\.[a-zA-Z]{2,6})$/i,
-    :message => "Email address is invalid"
+    :message => "address is an invalid format"
 
   validates_format_of :website,
     :with => URI::regexp(%w(http https)),
     :allow_blank => true, :allow_nil => true,
-    :message => "Invalid Website URL"
+    :message => "has invalid URL"
 
   before_validation do
     self.email.gsub!(" ", "") if self.email

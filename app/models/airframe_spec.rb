@@ -3,11 +3,9 @@ class AirframeSpec < ActiveRecord::Base
   attr_protected :spec_file_name, :spec_content_type, :spec_file_size
 
   belongs_to :airframe
-  validates_associated :airframe
   validates_presence_of :airframe
 
   belongs_to :creator, :foreign_key => :created_by, :class_name => "User"
-  validates_associated :creator
   validates_presence_of :creator
 
   has_many :airframe_messages, :dependent => :destroy
