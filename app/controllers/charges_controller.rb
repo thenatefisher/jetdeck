@@ -14,6 +14,8 @@ class ChargesController < ApplicationController
             )
             current_user.stripe_id = customer.id
           else
+            customer_stripe.card = params[:stripeToken] if params[:stripeToken].present?
+            customer_stripe.save
             customer_stripe.update_subscription(:plan => params[:plan])
           end
           current_user.update_account_quotas

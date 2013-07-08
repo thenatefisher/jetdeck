@@ -21,7 +21,7 @@ class Airframe < ActiveRecord::Base
   has_many :leads, :dependent => :destroy
 
   validates_uniqueness_of :import_url, :scope => :created_by,
-    :message => "has already been imported", :on => :create
+    :message => "has already been imported", :on => :create, :if => "import_url.present?"
 
   belongs_to :creator, :class_name => "User", :foreign_key => "created_by"
   validates_associated :creator
