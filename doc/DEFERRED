@@ -2,7 +2,7 @@
 
     Enable adding a spec file in aircraft create dialog
     
-    Aircraf lead list listing
+    Aircraft lead list listing
     
     Aircraft activity chart in header
 
@@ -15,7 +15,6 @@
 
     Airframe Send
         Allow Analytics Code
-        Re-send
         Permissions
 
     Searching
@@ -40,9 +39,6 @@
     Email signature rich text
 
     Get tab indexes correct on all form fields
-
-    Disable bookmarklet for current domain; but add a helpful popup to drag it to bookmarks instead
-    Allow collapsing the bookmarklet instructions once bm is created
     
     spec send dialog - cache the aircraft listing and profile data for quicker reloads
 
@@ -50,6 +46,8 @@
 
 == Bugs
 
+    Standard plan not available as a Pro even when within limits
+    View photos link shows in emails even when not selected on aircraft without images
     Dates are incorrect
     IE8: No bookmarklet drag/drop capability
     IE8: Send button loading state is HUGE on invite send
