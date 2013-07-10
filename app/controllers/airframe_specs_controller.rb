@@ -27,7 +27,7 @@ class AirframeSpecsController < ApplicationController
     if @spec.save
       render :json => {"files" => [@spec.to_jq_upload]}.to_json
     else
-      render :json => @spec.errors.full_messages, :status => :unprocessable_entity
+      render :json => {"files" => [@spec.to_jq_upload]}.to_json
     end
   end
 

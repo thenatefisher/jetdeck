@@ -16,7 +16,7 @@ class InvitesController < ApplicationController
       UserMailer.invite(invite).deliver
 
       # decrement invite counter
-      @current_user.invites_quota -= 1
+      @current_user.invites_available -= 1
       @current_user.save
 
       # reply OK

@@ -27,7 +27,7 @@ class AirframeSpec < ActiveRecord::Base
     :path => ":attachment/:id/:basename.:extension"
   validates_attachment_size :spec, :less_than => 20.megabytes
   validates_presence_of :spec
-  validates_attachment_content_type :spec, :content_type =>
+  validates_attachment_content_type :spec, :message => "must be PDF or Word Doc", :content_type =>
     ["application/msword",
      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
      "application/pdf"]
@@ -39,11 +39,19 @@ class AirframeSpec < ActiveRecord::Base
     self.enabled = true if !self.enabled.present?
   end
 
+  # do not edit/create if user is delinquent
+  validate :creator_account_current, :on => :create
+  def creator_account_current
+    if self.creator && self.creator.delinquent?
+      self.errors.add :base, "Your account is not current. Please update subscription payment information."
+    end
+  end
+
   # do not create a spec if use is over quota
   def validate_space_available
     if spec_file_size.blank?
       self.errors.add :spec, "file is not valid"
-    elsif self.creator && ((self.creator.storage_usage + self.spec_file_size) >= self.creator.storage_quota * 30720)
+    elsif self.creator && ((self.creator.storage_usage + self.spec_file_size) >= self.creator.storage_quota)
       self.errors.add :spec, "exceeds account storage allowance"
     end
   end
@@ -56,7 +64,7 @@ class AirframeSpec < ActiveRecord::Base
   # one convenient method to pass jq_upload the necessary information
   def to_jq_upload
 
-    {
+    ajax_response = {
       "name" => self.spec_file_name,
       "size" => self.spec_file_size,
       "url" => self.url(1.day),
@@ -65,7 +73,8 @@ class AirframeSpec < ActiveRecord::Base
       "delete_type" => "DELETE",
       "id" => self.id
     }
-
+    ajax_response.merge!({"error" => self.errors.full_messages}) if !self.errors.messages.empty?
+    return ajax_response
   end
 
 end

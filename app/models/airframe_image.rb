@@ -48,11 +48,19 @@ class AirframeImage < ActiveRecord::Base
     nil
   end
 
+  # do not edit/create if user is delinquent
+  validate :creator_account_current, :on => :create
+  def creator_account_current
+    if self.creator && self.creator.delinquent?
+      self.errors.add :base, "Your account is not current. Please update subscription payment information."
+    end
+  end
+  
   # do not create a spec if use is over quota
   def validate_space_available
     if image_file_size.blank?
       self.errors.add :image, "file is not valid"
-    elsif self.creator && ((self.creator.storage_usage + self.image_file_size) >= self.creator.storage_quota * 30720)
+    elsif self.creator && ((self.creator.storage_usage + self.image_file_size) >= self.creator.storage_quota)
       self.errors.add :image, "exceeds account storage allowance"
     end
   end
@@ -76,7 +84,7 @@ class AirframeImage < ActiveRecord::Base
   # one convenient method to pass jq_upload the necessary information
   def to_jq_upload
 
-    {
+    ajax_response = {
       "name" => self.image_file_name,
       "size" => self.image_file_size,
       "url" => self.url("original", 1.day),
@@ -86,6 +94,8 @@ class AirframeImage < ActiveRecord::Base
       "is_thumbnail" => self.thumbnail,
       "id" => self.id
     }
+    ajax_response.merge!({"error" => self.errors.full_messages}) if !self.errors.messages.empty?
+    return ajax_response
 
   end
 

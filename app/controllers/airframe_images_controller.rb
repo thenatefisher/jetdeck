@@ -19,7 +19,7 @@ class AirframeImagesController < ApplicationController
   end
 
   def create
-    logger.warn params.inspect
+
     @image = AirframeImage.new(params[:files])
     @image.creator = @current_user
 
@@ -33,7 +33,7 @@ class AirframeImagesController < ApplicationController
     if @image.save
       render :json => {"files" => [@image.to_jq_upload]}.to_json
     else
-      render :json => @image.errors.full_messages, :status => :unprocessable_entity
+      render :json => {"files" => [@image.to_jq_upload]}.to_json
     end
 
   end

@@ -9,17 +9,15 @@ class ChargesController < ApplicationController
           if customer_stripe.blank?
             customer = Stripe::Customer.create(
               :email => current_user.contact.email,
-              :card  => params[:stripeToken],
-              :plan  => params[:plan]
+              :card  => params[:stripeToken]
             )
             current_user.stripe_id = customer.id
+            current_user.save!
           else
             customer_stripe.card = params[:stripeToken] if params[:stripeToken].present?
             customer_stripe.save
-            customer_stripe.update_subscription(:plan => params[:plan])
           end
-          current_user.update_account_quotas
-          current_user.save!
+          current_user.change_plan(params[:plan])
       rescue => error
           flash[:notice] = "Could not process payment: #{error.message}"
       end
@@ -33,7 +31,6 @@ class ChargesController < ApplicationController
               :card  => params[:stripeToken]
             )
             current_user.stripe_id = customer.id
-            current_user.update_account_quotas
             current_user.save!
           else
             customer_stripe.card = params[:stripeToken]

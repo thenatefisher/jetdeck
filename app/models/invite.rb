@@ -1,7 +1,6 @@
 class Invite < ActiveRecord::Base
 
   belongs_to :sender, :class_name => "User", :foreign_key => "created_by"
-  validates_associated :sender
   validates_presence_of :sender
 
   validates_presence_of :email
@@ -11,7 +10,7 @@ class Invite < ActiveRecord::Base
 
   before_create :init
   validate :check_invite_valid
-  
+
   def init
 
     # not used yet
@@ -34,7 +33,7 @@ class Invite < ActiveRecord::Base
     end
 
     # does user still have invites to use?
-    if self.sender.invites_quota < 1
+    if self.sender.invites_available < 1
       self.errors.add(:sender, "No invites remaining")
       return false
     end

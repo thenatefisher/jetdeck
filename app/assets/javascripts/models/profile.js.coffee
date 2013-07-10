@@ -13,7 +13,7 @@ class Jetdeck.Models.ProfileModel extends Backbone.Model
     website: null
     airframes: 0
     contacts: 0
-    sent: 0
+    specs_sent: 0
     storage_usage: 0
     storage_quota: 0
     airframes_quota: 0

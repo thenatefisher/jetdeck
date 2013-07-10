@@ -15,6 +15,8 @@ class Jetdeck.Views.Airframes.Header.Editable extends Backbone.View
       }
       placement: "bottom"
       send: "never"
+      error: (response, newValue) =>
+        return null
       url: (obj) =>
         @model.save({
           year: obj.value.year
@@ -22,8 +24,16 @@ class Jetdeck.Views.Airframes.Header.Editable extends Backbone.View
           model_name: obj.value.modelName
         } )
     } )
-    @$("#serial").editable({url: (obj) => @model.save(obj.name, obj.value)})
-    @$("#registration").editable({url: (obj) => @model.save(obj.name, obj.value) } )
+    @$("#serial").editable({
+      error: (response, newValue) =>
+        return $.parseJSON(response.responseText)[0]
+      url: (obj) => @model.save(obj.name, obj.value)
+    })
+    @$("#registration").editable({
+      error: (response, newValue) =>
+        return $.parseJSON(response.responseText)[0]
+      url: (obj) => @model.save(obj.name, obj.value) 
+    })
     @$("#asking_price").editable({
       url: (obj) =>
         d = new $.Deferred
@@ -31,10 +41,12 @@ class Jetdeck.Views.Airframes.Header.Editable extends Backbone.View
         @model.set(obj.name, intPrice)
         @model.save(null, {success: => d.resolve() } )
         return d.promise()
+      error: (response, newValue) =>
+        return $.parseJSON(response.responseText)[0]        
       display: (obj) ->
         intPrice = parseInt(obj.replace(/[^0-9]/g, ""), 10)
         $(this).html("$" + intPrice.formatMoney(0, ".", ",") )
-      } )
+    })
 
     @$("#asking_price").each(->
       if $(this).html() != null

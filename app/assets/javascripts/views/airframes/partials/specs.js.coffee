@@ -16,16 +16,14 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
         autoUpload: true
         dropZone: null
         url: "/airframe_specs"
-        acceptFileTypes: /(\.|\/)(word|pdf|doc|docx)$/i
         maxFileSize: 209800000 # 20MB
     })
 
     # show progress when started
     @$("#airframe_document_upload").bind("fileuploadstarted", => @startedUpload()) 
     # refresh spec list when uploaded
-    @$("#airframe_document_upload").bind("fileuploaddone", => @refreshView()) 
-    # failed
-    @$("#airframe_document_upload").bind("fileuploadfailed", (event, object) => @showUploadError(object)) 
+    @$("#airframe_document_upload").bind("fileuploaddone", (event,response) => @refreshView(response)) 
+
 
     # set CSRF token
     token = $("meta[name='csrf-token']").attr("content")
@@ -34,18 +32,17 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
   startedUpload: =>
     @$("#new-spec-table").addClass("spec-upload-table")
 
-  refreshView: =>
-    mixpanel.track("Uploaded Spec")
-    @$("#new-spec-table").removeClass("spec-upload-table")
-    @model.fetch( success: => 
-      @model.updateChildren()
-      @render() 
-    )
-
-  showUploadError: (object) =>
-    mixpanel.track("Failed Spec Upload")
-    message = $.parseJSON(object.jqXHR.responseText)[0]
-    @$("#new-spec-table").html(message).addClass("error")
+  refreshView: (response) =>
+    files = $.parseJSON(response.jqXHR.responseText).files[0]
+    if files && files.error && files.error[0]
+      mixpanel.track("Failed Spec Upload")
+    else
+      mixpanel.track("Uploaded Spec")
+      @$("#new-spec-table").removeClass("spec-upload-table")
+      @model.fetch( success: => 
+        @model.updateChildren()
+        @render() 
+      )
 
   send: (spec) =>
     view = new Jetdeck.Views.Specs.Send(airframe: @model, spec: spec)

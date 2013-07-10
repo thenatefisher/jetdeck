@@ -27,6 +27,15 @@ class Airframe < ActiveRecord::Base
   validates_associated :creator
   validates_presence_of :creator
   validate :airframes_available, :on => :create
+  
+
+  # do not edit/create if user is delinquent
+  validate :creator_account_current
+  def creator_account_current
+    if self.creator.delinquent?
+      self.errors.add :base, "Your account is not current. Please update subscription payment information."
+    end
+  end
 
   # do not create if user is over quota
   def airframes_available
@@ -75,7 +84,7 @@ class Airframe < ActiveRecord::Base
     retval +=  self.year.to_s + " " if self.year.present?
     retval +=  self.make + " " if self.make.present?
     retval +=  self.model_name if self.model_name.present?
-    return retval if retval.present? else "Unidentified Aircraft"
+    return (retval.present?) ? retval : "Unidentified Aircraft"
   end
 
   def long
@@ -85,7 +94,7 @@ class Airframe < ActiveRecord::Base
     retval +=  self.model_name if self.model_name.present?
     retval +=  " SN:#{self.serial}" if self.serial.present?
     retval +=  " (#{self.registration})" if self.registration.present?
-    return retval if retval.present? else "Unidentified Aircraft"
+    return (retval.present?) ? retval : "Unidentified Aircraft"
   end
 
 end

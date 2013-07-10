@@ -130,8 +130,6 @@ class CreateSchema < ActiveRecord::Migration
     create_table "users" do |t|
       t.integer  "type"
       t.integer  "contact_id"
-      t.integer  "storage_quota"
-      t.integer  "airframes_quota"
       t.datetime "created_at",             :null => false
       t.datetime "updated_at",             :null => false
       t.string   "password_hash"
@@ -140,16 +138,16 @@ class CreateSchema < ActiveRecord::Migration
       t.string   "auth_token"
       t.string   "password_reset_token"
       t.datetime "password_reset_sent_at"
-      t.integer  "invites_quota"
+      t.integer  "invites_available"
       t.string   "activation_token"
       t.boolean  "activated"
       t.string   "bookmarklet_token"
       t.text     "signature"
       t.boolean  "help_enabled"
       t.string   "stripe_id"
-      t.string   "plan"
+      t.string   "subscription_plan"
       t.string   "subscription_status"
-      t.datetime "trial_time_end"
+      t.datetime "subscription_trial_end"
     end
 
     add_index "users", ["contact_id"], :name => "indexusers_on_contact_id"

@@ -10,13 +10,14 @@ class User < ActiveRecord::Base
   has_many :todos, :foreign_key => "created_by", :dependent => :destroy
   has_many :airframes, :foreign_key => "created_by", :dependent => :destroy
   has_many :contacts, :class_name => "Contact", :foreign_key => "created_by", :dependent => :destroy
-  has_many :airframe_specs, :class_name => "AirframeSpec", :foreign_key => "created_by"
-  has_many :airframe_images, :class_name => "AirframeImage", :foreign_key => "created_by"
+  has_many :airframe_specs, :class_name => "AirframeSpec", :foreign_key => "created_by", :dependent => :destroy
+  has_many :airframe_images, :class_name => "AirframeImage", :foreign_key => "created_by", :dependent => :destroy
   has_many :invites, :class_name => "Invite", :foreign_key => "created_by"
 
   has_many :messages_sent,
     :class_name => "AirframeMessage",
-    :foreign_key => "created_by"
+    :foreign_key => "created_by", 
+    :dependent => :destroy
 
   belongs_to :contact, :dependent => :destroy
   validates_associated :contact
@@ -34,14 +35,24 @@ class User < ActiveRecord::Base
     { :minimum => 6, :message => "Password must be at least 6 chars" },
     :if => "password.present?"
 
+  # set subscription plan attributes
+  @@bytes_in_gigabyte          = 1073741824
+  @@pro_storage_quota          = @@bytes_in_gigabyte*30
+  @@standard_storage_quota     = @@bytes_in_gigabyte*10
+  @@trial_storage_quota        = @@bytes_in_gigabyte
+  @@pro_airframes_quota        = 0
+  @@standard_airframes_quota   = 20
+  @@trial_airframes_quota      = 5
+  @@trial_length               = 14.days
+
   def storage_usage
     specs = self.airframe_specs.reduce(0){|sum, spec| sum += spec.spec_file_size}
     images = self.airframe_images.reduce(0){|sum, image| sum += image.image_file_size}
-    images+specs
+    (images+specs)
   end
 
   def over_storage_quota?
-    (self.storage_usage >= (self.storage_quota * 1048576))
+    (self.storage_usage >= self.storage_quota)
   end
 
   def over_airframes_quota?
@@ -50,34 +61,99 @@ class User < ActiveRecord::Base
   end
 
   def trial_time_remaining
-    # check stripe account type first
-    plan = (self.stripe.subscription.plan.name.present? && self.stripe.subscription.status == "active") rescue false
-    interval = (((User.first.created_at+14.days)-Time.now)/3600/24).round
-    interval = 0 if interval < 0
-    return (!plan) ? interval : nil
+    # trial time remaining in days
+    # nil if not in a trial
+    time_left = ((self.subscription_trial_end - self.created_at)/3600/24).round
+    if (self.plan == "Trial" && time_left >= 0) 
+      time_left
+    else
+      nil
+    end
   end
 
-  def standard_plan_available
+  def standard_plan_available?
     # if user is pro and has under the standard plan usage, he can downgrade
-    retval = true
-    if self.plan && self.plan.downcase == "pro" &&
-        (self.airframes.count >= 20 ||
-        self.storage_usage >= 10240)
-        retval = false
+    (self.airframes.count <= @@standard_airframes_quota &&
+        self.storage_usage <= @@standard_storage_quota)
+  end
+
+  def delinquent?
+    if self.trial_time_remaining.present?
+      return false
+    else
+      (self.status != 'active' && self.status != 'past_due') 
     end
-    return retval
+  end
+
+  def status 
+    self.subscription_status
   end
 
   def plan
-    self.stripe.subscription.plan.name rescue nil
+    self.subscription_plan
+  end
+
+  def change_plan(newplan)
+    begin
+      # get stripe customer record and attempt to change plan type
+      stripe_customer = self.stripe
+      stripe_customer.update_subscription(:plan => newplan.upcase, :prorate => true)
+      # if it worked, change the local user record to match
+      self.subscription_plan = stripe_customer.subscription.plan.name
+      self.subscription_status = stripe_customer.subscription.status
+      # save
+      return self.save!
+    rescue => error 
+      logger.warn error.message
+      return false
+    end
+  end
+
+  def cancel(delete_data=false)
+    begin
+      stripe_customer = self.stripe
+      stripe_customer.cancel_subscription
+      self.subscription_status = stripe_customer.subscription.status
+    rescue
+      return false
+    end
+      self.enabled = false
+      return self.destroy if delete_data
+      return self.save!
+  end
+
+  def airframes_quota
+    case self.subscription_plan.upcase
+      when "PRO"
+        # unlimited airframes quota 
+        return @@pro_airframes_quota
+      when "STANDARD"
+        # assign airframes quota 
+        return @@standard_airframes_quota
+      else
+        # assign airframes quota to initial free trial limit
+        return @@trial_airframes_quota
+    end
+  end
+
+  def storage_quota
+    case self.subscription_plan.upcase
+      when "PRO"
+        # in bytes, set storage quota to 30Gb 
+        return @@pro_storage_quota
+      when "STANDARD"
+        # in bytes, set storage quota to 10Gb 
+        return @@standard_storage_quota
+      else
+        # in bytes, set storage quota to 1Gb 
+        return @@trial_storage_quota
+    end
   end
 
   def stripe
-    Rails.cache.fetch("/user/#{id}-#{created_at}", :expires => 20.minutes) do
-      @stripe = Stripe::Customer.retrieve(self.stripe_id) rescue nil
-      @stripe = nil if @stripe.deleted rescue @stripe
-      return @stripe
-    end
+    @stripe = Stripe::Customer.retrieve(self.stripe_id) rescue nil if @stripe.blank?
+    @stripe = nil if @stripe.deleted rescue @stripe
+    return @stripe
   end
 
   def warnings
@@ -86,16 +162,19 @@ class User < ActiveRecord::Base
     if !self.activated
       warnings[:message] = "Please activate your account to send emails."
       warnings[:type] = "activate"
-    elsif self.over_storage_quota?
+    elsif ((self.storage_usage / self.storage_quota) > 0.90)
       warnings[:message] = "Want more file storage?"
       warnings[:type] = "upgrade"
-    elsif self.over_airframes_quota?
+    elsif (self.airframes_quota > 0) && ((self.airframes.count / self.airframes_quota) > 0.90)
       warnings[:message] = "Need to add more aircraft?"
       warnings[:type] = "upgrade"
-    elsif self.trial_time_remaining.present? && self.trial_time_remaining == 0
+    elsif self.plan == "Trial" && self.trial_time_remaining.nil?
       warnings[:message] = "Your free trial has expired!"
       warnings[:type] = "upgrade"
-    elsif self.trial_time_remaining.present? && self.trial_time_remaining < 6
+    elsif self.plan == "Trial" && self.trial_time_remaining == 0
+      warnings[:message] = "This is the last day of your free trial!"
+      warnings[:type] = "upgrade"
+    elsif self.plan == "Trial" && (self.trial_time_remaining.present? && self.trial_time_remaining < 6)
       warnings[:message] = "Only #{self.trial_time_remaining} days left on your free trial!"
       warnings[:type] = "upgrade"
     end
@@ -103,22 +182,39 @@ class User < ActiveRecord::Base
     return warnings
   end
 
+  def self.authenticate(email, password)
+    return nil if email.blank? || password.blank?
+    user = User.find(:first, :include => :contact,
+                     :conditions => ["enabled = true AND lower(contacts.email) = ?", email.downcase])
+    if user.present? && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
+      user
+    else
+      nil
+    end
+  end
+
+  def send_password_reset
+    generate_token(:password_reset_token)
+    self.password_reset_sent_at = Time.zone.now
+    save!
+    UserMailer.password_reset(self).deliver
+  end
+
+  private
+
   def set_defaults
 
-    # set quotas
-    self.update_account_quotas
-
     # set 10 invites if not mass assigned
-    self.invites_quota ||= 10
+    self.invites_available ||= 10
 
-    # default tutorial enabled status if not mass assigned
-    self.help_enabled ||= true
+    # default tutorial enabled status 
+    self.help_enabled = true
 
-    # default to enabled status if not mass assigned
-    self.enabled ||= true
+    # default to enabled status 
+    self.enabled = true
 
     # default to not activated
-    self.activated ||= false
+    self.activated = false
 
     # generate auth token
     generate_token(:auth_token)
@@ -135,8 +231,13 @@ class User < ActiveRecord::Base
     )
     self.stripe_id = customer.id rescue nil
 
+    # set trial start
+    self.subscription_plan = "Trial"
+    self.subscription_trial_end = Time.now() + @@trial_length
+
     # seed account with sample records
 
+    return true
   end
 
   def generate_token(column)
@@ -150,51 +251,6 @@ class User < ActiveRecord::Base
       self.password_salt = BCrypt::Engine.generate_salt
       self.password_hash = BCrypt::Engine.hash_secret(password, password_salt)
     end
-  end
-
-  def update_account_quotas
-
-    plan = self.stripe.subscription.plan.name if self.stripe.subscription.status == "active" rescue false
-
-    case plan
-      when "Pro"
-        # in bytes, set storage quota to 30Gb 
-        self.storage_quota = 30720
-        # unlimited airframes quota 
-        self.airframes_quota = 0
-      when "Standard"
-        # in bytes, set storage quota to 10Gb 
-        self.storage_quota = 10240
-        # assign airframes quota 
-        self.airframes_quota = 20
-      else
-        # in bytes, set storage quota to 1Gb 
-        self.storage_quota = 1024
-        # assign airframes quota to initial free trial limit
-        self.airframes_quota = 5
-    end
-
-    return self
-  end
-
-  def self.authenticate(email, password)
-    return nil if email.blank? || password.blank?
-    user = User.find(:first, :include => :contact,
-                     :conditions => ["enabled = true AND lower(contacts.email) = ?", email.downcase])
-    if user.present? && user.password_hash == BCrypt::Engine.hash_secret(password, user.password_salt)
-      user.update_account_quotas
-      user.save!
-      user
-    else
-      nil
-    end
-  end
-
-  def send_password_reset
-    generate_token(:password_reset_token)
-    self.password_reset_sent_at = Time.zone.now
-    save!
-    UserMailer.password_reset(self).deliver
   end
 
 end

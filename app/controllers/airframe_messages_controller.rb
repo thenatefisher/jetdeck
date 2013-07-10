@@ -86,8 +86,8 @@ class AirframeMessagesController < ApplicationController
         :airframe => airframe,
         :body => body,
         :subject => subject,
-        :photos_enabled => (params[:airframe_message][:include_photos]),
-        :spec_enabled => (params[:airframe_message][:include_spec]),
+        :photos_enabled => params[:airframe_message][:include_photos],
+        :spec_enabled => params[:airframe_message][:include_spec],
         :airframe_spec => spec
       )
 

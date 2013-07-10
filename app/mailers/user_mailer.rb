@@ -21,9 +21,16 @@ class UserMailer < ActionMailer::Base
     @name       = invite.name
     @email      = invite.email
     @sender     = invite.sender
+    if @sender.present?
+      @sender_name = @sender.contact.to_s
+      @sender_fullname = @sender.contact.fullName
+    else
+      @sender_name = "Someone"
+      @sender_fullname = "Someone"
+    end
     @url        = "#{root_url}signup/#{invite.token}"
     mail  :to => @email,
-          :subject => "#{@sender.contact.to_s} Has Invited You to JetDeck!"
+          :subject => "#{@sender_name} Has Invited You to JetDeck!"
   end
 
 end
