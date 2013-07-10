@@ -2,7 +2,7 @@ require "bcrypt"
 
 class User < ActiveRecord::Base
 
-  attr_accessor  :password, :password_confirmation
+  attr_accessor  :password, :password_confirmation, :storage_quota, :airframes_quota
 
   before_save :encrypt_password
   before_create :set_defaults
