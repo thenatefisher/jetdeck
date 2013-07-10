@@ -73,9 +73,11 @@ class User < ActiveRecord::Base
   end
 
   def stripe
-    @stripe = Stripe::Customer.retrieve(self.stripe_id) rescue nil if @stripe.blank?
-    @stripe = nil if @stripe.deleted rescue @stripe
-    return @stripe
+    Rails.cache.fetch("/user/#{id}-#{created_at}", :expires => 20.minutes) do
+      @stripe = Stripe::Customer.retrieve(self.stripe_id) rescue nil
+      @stripe = nil if @stripe.deleted rescue @stripe
+      return @stripe
+    end
   end
 
   def warnings

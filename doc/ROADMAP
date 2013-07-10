@@ -1,11 +1,35 @@
 ROADMAP TO LAUNCH:
 
-    3x      finish internal application ui
-                - integrate help_enabled windows
-
-    1x      get EIN; fix bugs; run tests
-
-    1x      push live and check all services operational (s3, sendgrid, etc)
-            crank shit up that needs it
-
-    1x      write press release
+tutorial
+sample aircraft on account creation
+-----
+Create Cancel Account feature
+Standard plan not available as a Pro even when within limits
+Free trial should use Stripe
+-----
+require confirmation to deactivate a spec file
+View photos link shows in emails even when not selected on aircraft without images
+convert bookmarklet to URL entry
+Inhibit import if over limit
+-----
+test import from cdc
+test import from aso
+test import from tap
+-----
+setup memcache in test
+-----
+provide security note on homepage
+screenshot floats above fold on homepage
+Video on Homepage
+-----
+turn on bug tracking service
+Run test on MTurk
+Send Email to Current Users
+-----
+switch stripe to live mode
+switch heroku to live mode (scale)
+add memcache to heroku
+switch uservoice to live mode
+turn on pingdom service
+-----
+Press Release

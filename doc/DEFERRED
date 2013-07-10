@@ -44,14 +44,13 @@
 
     enable drag/drop for specs and airframe images
 
+    Instant feedback on bookmarklet click
+
 == Bugs
 
-    Standard plan not available as a Pro even when within limits
     View photos link shows in emails even when not selected on aircraft without images
     Dates are incorrect
-    IE8: No bookmarklet drag/drop capability
     IE8: Send button loading state is HUGE on invite send
-    Enable close button on import error popup
     
 == Code Enhancements
 
