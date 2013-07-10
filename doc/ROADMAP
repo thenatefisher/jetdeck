@@ -1,29 +1,27 @@
 ROADMAP TO LAUNCH:
 
-tutorial
-sample aircraft on account creation
------
-Create Cancel Account feature
------
-require confirmation to deactivate a spec file
-convert bookmarklet to URL entry
-Inhibit import if over limit
------
-test import from cdc
-test import from aso
-test import from tap
------
-provide security note on homepage
-screenshot floats above fold on homepage
-Video on Homepage
------
-turn on bug tracking service
-Run test on MTurk
-Send Email to Current Users
------
-switch stripe to live mode
-switch heroku to live mode (scale)
-switch uservoice to live mode
-turn on pingdom service
------
-Press Release
+    tutorial
+    sample aircraft on account creation
+    -----
+    Create Cancel Account feature
+    -----
+    require confirmation to deactivate a spec file
+    convert bookmarklet to URL entry
+    Inhibit import if over limit
+    -----
+    test import from cdc
+    test import from aso
+    test import from tap
+    -----
+    Video on Homepage
+    -----
+    turn on bug tracking service
+    Run test on MTurk
+    Send Email to Current Users
+    -----
+    switch stripe to live mode
+    switch heroku to live mode (scale)
+    switch uservoice to live mode
+    turn on pingdom service
+    -----
+    Press Release
