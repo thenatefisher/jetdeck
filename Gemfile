@@ -48,4 +48,5 @@ gem 'aws-sdk' # amazon toolkit for S3
 gem 'delayed_job_active_record' # delayed job
 gem 'sendgrid' # sendgrid tools
 gem 'gridhook' # sendgrid webhook helper
+gem 'newrelic_rpm' # track app and server stats
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby' # ka-ching

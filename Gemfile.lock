@@ -164,6 +164,7 @@ GEM
     mime-types (1.23)
     mini_portile (0.5.0)
     multi_json (1.7.7)
+    newrelic_rpm (3.4.2)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     paperclip (3.4.2)
@@ -305,6 +306,7 @@ DEPENDENCIES
   launchy
   less-rails
   libnotify
+  newrelic_rpm
   paperclip
   pg
   poltergeist

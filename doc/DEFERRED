@@ -35,6 +35,10 @@
     Edit actions
 
     Import photos from listing url
+    
+    Convert bookmarklet to URL entry, or at least allow URL entry on aircraft creation
+    
+    Inhibit import if over limit    
 
     Email signature rich text
 
