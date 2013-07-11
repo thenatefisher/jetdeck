@@ -15,15 +15,15 @@ f="mixpanel";g.people=g.people||[];h=['disable','track','track_pageview','track_
 a._i.push([b,c,f])};a.__SV=1.1;})(document,window.mixpanel||[]);
 mixpanel.init("<%= Jetdeck::Application.config.mixpanel_token %>");}
 
-$(function() {
+jetdeck_$(function() {
   mixpanel.people.set({
-    $email        : "<%= current_user.contact.email %>",
-    $created      : "<%= current_user.created_at %>",
-    $first_name   : "<%= current_user.contact.first %>",
-    $last_name    : "<%= current_user.contact.last %>",
-    $company      : "<%= current_user.contact.company %>",
-    $specs        : "<%= current_user.airframes.count %>",
-    $distinct_id  : "<%= Digest::SHA1.base64digest(current_user.id.to_s) %>"
+    jetdeck_$email        : "<%= current_user.contact.email %>",
+    jetdeck_$created      : "<%= current_user.created_at %>",
+    jetdeck_$first_name   : "<%= current_user.contact.first %>",
+    jetdeck_$last_name    : "<%= current_user.contact.last %>",
+    jetdeck_$company      : "<%= current_user.contact.company %>",
+    jetdeck_$specs        : "<%= current_user.airframes.count %>",
+    jetdeck_$distinct_id  : "<%= Digest::SHA1.base64digest(current_user.id.to_s) %>"
   });
   mixpanel.people.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");    
   mixpanel.identify("<%= Digest::SHA1.base64digest(current_user.id.to_s) %>");

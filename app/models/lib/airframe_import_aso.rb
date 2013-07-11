@@ -21,7 +21,7 @@ module AirframeImport
             thumb.thumbnail = true if index == 0
             thumb.created_by = airframe.created_by
             thumb.save
-            airframe.accessories << thumb
+            airframe.images << thumb
         end        
 
     end
@@ -116,11 +116,10 @@ module AirframeImport
         airframe.model_name     = page_details[:Model]
         airframe.year           = page_details[:Year]
         airframe.asking_price   = page_details[:Price]
+        airframe.save
 
         # store images
         self.import_aso_images(airframe, link)
-
-        airframe.save
 
         return airframe
 
