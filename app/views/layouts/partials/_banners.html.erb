@@ -23,6 +23,10 @@
             <small>
               <a href="/profile" onclick="mixpanel.track('Clicked Banner', {type: 'activate'})">(More Info)</a> 
             </small> 
+          <% elsif current_user.warnings[:type] == 'delinquent' %>
+            <a href="/profile" style="margin: 0 20px;" class="btn btn-large" onclick="mixpanel.track('Clicked Banner', {type: 'delinquent'})">
+              <i class="icon-credit-card"></i> <strong>Update Payment Method</strong>
+            </a> 
           <% end %>
 
         </h3>

@@ -58,6 +58,8 @@ Jetdeck::Application.routes.draw do
 
   match "/profile" => "profile#update", :via => "put"
 
+  match "/profile" => "profile#destroy", :via => "delete"
+
   resources :leads
 
   match "/favicon.ico" => redirect("/assets/favicon.png")

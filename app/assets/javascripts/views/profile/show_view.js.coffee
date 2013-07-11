@@ -7,8 +7,26 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
     "click #update-cc"            : "updateCc"
     "click #select-standard-plan" : "selectStandardPlan"
     "click #select-pro-plan"      : "selectProPlan"
+    "click #destroy-account"      : "toggleDestroyMessage"
+    "click #destroy-confirm"      : "destroy"
+    "click .destroy-cancel"       : "toggleDestroyMessage"
+    
+  destroy: =>
+    if @$("#destroy-confirmation-text").val() == "DESTROY MY ACCOUNT"
+      @model.destroy({complete: =>
+        mixpanel.track("Account Destroyed")
+        window.location.href = "/"
+      })
 
-  cancelSubscription: =>
+  toggleDestroyMessage: ->
+    @$("#destroy-confirmation-text").html("")
+    if $("#destroy-actions").is(":visible")
+      $("#destroy-actions").hide()
+      $("#destroy-account").show()
+    else
+      $("#destroy-actions").show()
+      $("#destroy-account").hide()
+    return false
 
   selectProPlan: =>
     # set CSRF token

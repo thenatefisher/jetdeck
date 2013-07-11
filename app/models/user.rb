@@ -159,7 +159,10 @@ class User < ActiveRecord::Base
   def warnings
     warnings = Hash.new
 
-    if !self.activated
+    if self.delinquent?
+      warnings[:message] = "Your account is past due."
+      warnings[:type] = "delinquent"
+    elsif !self.activated
       warnings[:message] = "Please activate your account to send emails."
       warnings[:type] = "activate"
     elsif ((self.storage_usage / self.storage_quota) > 0.90)

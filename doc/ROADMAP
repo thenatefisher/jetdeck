@@ -3,11 +3,10 @@ ROADMAP TO LAUNCH:
     tutorial
     sample aircraft on account creation
     -----
-    Create Cancel Account feature
-    -----
     require confirmation to deactivate a spec file
     convert bookmarklet to URL entry
     Inhibit import if over limit
+    need to make virtual functions attr_accessor
     -----
     test import from cdc
     test import from aso
@@ -15,16 +14,15 @@ ROADMAP TO LAUNCH:
     -----
     Video on Homepage
     fucking hero still floats - make it a laptop or something...
+    have newsletter signup somewhere
     -----
     turn on bug tracking service
     Run test on MTurk
-    Send Email to Current Users
     -----
     switch stripe to live mode
     switch heroku to live mode (scale)
     switch uservoice to live mode
     turn on pingdom service
+    turn on new relic
     -----
-    Send Email to mailchimp list    
-    Press Kit
-    Press Release
+    Take it to Press

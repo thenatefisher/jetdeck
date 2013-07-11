@@ -86,9 +86,9 @@
               <tr><td>
 
               <ul class="nav nav-tabs" id="profile-tabs">
-                <li class="active"><a href="#settings" data-toggle="tab">Settings</a></li>
-                <li><a href="#account" data-toggle="tab">Account</a></li>
-                <li><a href="#billing" data-toggle="tab">Billing</a></li>
+                <li class="active"><a href="#settings" data-toggle="tab"><i class="icon-cog"></i> Settings</a></li>
+                <li><a href="#account" data-toggle="tab"><i class="icon-rocket"></i> Account</a></li>
+                <li><a href="#billing" data-toggle="tab"><i class="icon-credit-card"></i> Billing</a></li>
               </ul>
 
               <div class="tab-content">
@@ -201,9 +201,28 @@
                     </div>
                   </div>
     
+                  <div class="row-fluid">
+                    <div class="span12">
+                      <a href="#" id="destroy-account" class="pull-right muted">Cancel Service and Delete Account</a>
+                      <div class="clearfix"></div>
+                      <div class="hide" id="destroy-actions">
+                        <p> <strong> Warning: </strong> <span class="label label-important">This cannot be undone!</span> Continuing will 
+                        permanently delete all images, specs and any associated data  with this account. In addition, any material sent to customers through JetDeck will no longer be accessible to them.</p>
+                        <p>Type 'DESTROY MY ACCOUNT' in the text box below and click the button to confirm. You will be immediately logged out and will not have further access to your data.</p>
+                        <div class="row-fluid">
+                          <div class="span8">
+                            <input type="text" id="destroy-confirmation-text" placeholder="Type 'DESTROY MY ACCOUNT' to end it all." style="float: left; width: 100%"></div>
+                          <div class="span4"><button id="destroy-confirm" class="btn btn-danger pull-right">Destroy My Account</button></div>
+                        </div>
+                        <br>
+                        <a href="#" class="destroy-cancel pull-right" style="margin-top: 5px;">Cancel this Action and Close Message</a>
+                        <br>
+                      </div>
+                    </div>
+                  </div>
 
                   <div class="row-fluid">
-                    <a href="mailto:support@jetdeck.co?subject=Cancel Account for <%= contact.email %>" class="pull-right muted">Cancel Account</a>
+                    
                   </div>
 
 
