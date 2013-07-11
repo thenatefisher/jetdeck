@@ -49,8 +49,12 @@ class Jetdeck.Views.Airframes.ShowSpecs extends Backbone.View
     modal(view.render().el)
 
   disable: (spec) =>
-    mixpanel.track("Disabled Spec")
-    spec.save({enabled: false}, success: => @render())
+    view = new Jetdeck.Views.Specs.DisableConfirmation()
+    modal(view.render().el)
+    view.on("clicked-disable", => 
+      mixpanel.track("Disabled Spec")
+      spec.save({enabled: false}, success: => @render())
+    )
 
   renderSpecs: =>
     @model.specs.each((spec) =>  
@@ -101,4 +105,5 @@ class Jetdeck.Views.Airframes.Spec extends Backbone.View
         @$(".send").attr("disabled", "disabled")
 
     return this
+
 

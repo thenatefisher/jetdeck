@@ -3,10 +3,8 @@ ROADMAP TO LAUNCH:
     tutorial
     sample aircraft on account creation
     -----
-    require confirmation to deactivate a spec file
     convert bookmarklet to URL entry
     Inhibit import if over limit
-    need to make virtual functions attr_accessor
     -----
     test import from cdc
     test import from aso

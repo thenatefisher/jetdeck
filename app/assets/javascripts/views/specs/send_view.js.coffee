@@ -1,4 +1,4 @@
-Jetdeck.Views.Specs = {}
+Jetdeck.Views.Specs ||= {}
 
 class Jetdeck.Views.Specs.Send extends Backbone.View
     template: JST["templates/specs/send"]

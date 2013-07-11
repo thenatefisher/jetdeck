@@ -109,19 +109,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def cancel(delete_data=false)
-    begin
-      stripe_customer = self.stripe
-      stripe_customer.cancel_subscription
-      self.subscription_status = stripe_customer.subscription.status
-    rescue
-      return false
-    end
-      self.enabled = false
-      return self.destroy if delete_data
-      return self.save!
-  end
-
   def airframes_quota
     case self.subscription_plan.upcase
       when "PRO"
