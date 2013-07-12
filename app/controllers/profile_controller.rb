@@ -60,8 +60,11 @@ class ProfileController < ApplicationController
   def destroy
 
     # cancel stripe plan
-    customer_stripe = @current_user.stripe rescue nil
-    customer_stripe.cancel_subscription if customer_stripe.present?
+    begin
+      customer_stripe = @current_user.stripe
+      customer_stripe.cancel_subscription if customer_stripe.present?
+    rescue
+    end
     # destroy user record
     @current_user.destroy
     # confirm

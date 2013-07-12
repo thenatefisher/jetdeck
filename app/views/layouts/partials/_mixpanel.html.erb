@@ -1,5 +1,5 @@
 <!-- Mixpanel -->
-<% if Rails.env != "test" %>
+<% if Rails.env != "test" && current_user.present? %>
 <% require "digest/sha1" %>
 
   <script type="text/javascript">  

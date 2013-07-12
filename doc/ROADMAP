@@ -4,17 +4,15 @@ ROADMAP TO LAUNCH:
     convert bookmarklet to url field in aircraft create
     make the url field work in index_empty
     ----
-    Video on Homepage
-    fucking hero still floats - make it a laptop or something...
+    hero image still floats above line - make it a laptop or something...
     have newsletter signup somewhere
     -----
-    turn on bug tracking service
     Run test on MTurk
     -----
     switch stripe to live mode
     switch heroku to live mode (scale)
-    switch uservoice to live mode
-    turn on pingdom service
+    turn on ping service
     turn on new relic
     -----
+    Make Press Kit
     Take it to Press
