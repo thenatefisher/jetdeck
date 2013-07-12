@@ -1,8 +1,9 @@
 ROADMAP TO LAUNCH:
 
-    tutorial
-    sample aircraft on account creation
-    -----
+    instructions for bookmarklet
+    convert bookmarklet to url field in aircraft create
+    make the url field work in index_empty
+    ----
     Video on Homepage
     fucking hero still floats - make it a laptop or something...
     have newsletter signup somewhere

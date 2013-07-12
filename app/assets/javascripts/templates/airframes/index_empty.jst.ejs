@@ -1,0 +1,113 @@
+
+<script type="text/javascript">
+$(function(){
+    $("#new-airframe").tooltip({
+        placement: "bottom",
+        title: "You can also just click here."
+    }).tooltip("show");
+});
+</script>
+
+<div style="margin-bottom: 20px; padding: 20px; background:rgb(236, 242, 245); border-bottom: 1px solid #CCC">
+    <h3>Welcome To JetDeck!</h3>
+    <h2 style="padding: 0px; margin: 0px"> Let's create your first aircraft.</h2>
+    <h2 style="line-height: 15px; padding: 0px; margin-top: 0px; margin-bottom: 20px;"><small>(In the future, you can use the 'New Aircraft' button located to the upper right)</small></h2>
+</div>
+
+
+<div class="row-fluid">
+<div class="row" style="margin-left: 20px;">
+<div class="span12">
+
+
+    <ul class="breadcrumb subsection" style="margin-bottom: 30px; width: 710px">
+      <li style="text-shadow: none"> 
+        <strong>
+          Either, import from a popular listing website <small class="muted">(ie, controller.com or aso.com)</small>:
+        </strong> 
+      </li>
+    </ul>
+
+    <div class="row-fluid">
+    <div class="span1"></div>
+    <div class="span10">
+        <p>Enter the Aircraft Listing URL:</p>
+        <div class="row-fluid">
+            <div class="span10">
+                <input type="text" class="input" placeholder="http://..." style="width: 100%">
+            </div>
+            <div class="span2">
+                <button class="btn btn-primary pull-right" style="width: 80%"><strong>Import</strong></button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <span class="hide error">No aircraft found at this location. Try again.</span>
+        <small><span class="label">Pro-Tip</span> To make this even easier, you can also use the <a href="#bookmarklet-help" data-toggle="modal">JetDeck Bookmarklet</a>.</small>
+
+    </div>
+    </div>
+    <div class="clearfix"><br><br></div>
+        
+    <ul class="breadcrumb subsection" style="margin-bottom: 30px; width: 710px">
+      <li style="text-shadow: none"> 
+        <strong>
+          Or, enter an off-market aircraft manually:
+        </strong> 
+      </li>
+    </ul>
+
+    <div class="row-fluid">
+    <div class="span1"></div>
+    <div class="span10">
+
+        <style>
+            #manual-entry td { vertical-align: middle;}
+            #manual-entry input { margin: 5px 0; }
+        </style>
+
+        <form id="manual-form">
+        <small class="pull-right">All fields are optional.</small>
+        <table id="manual-entry" class="table" style="width: 100%">
+        <tbody>
+            <tr>
+                <td><strong>Year:</strong></td>
+                <td><input type="text" name="year" class="input pull-right"></td>
+                <td><strong>Serial:</strong></td>
+                <td><input type="text" name="serial" class="input pull-right"></td>
+            </tr>
+            <tr>
+                <td><strong>Make/Model:</strong></td>
+                <td colspan=3><input name="headline" type="text" placeholder="ie, Dassault Falcon 7X" class="input pull-right span12"></td>
+            </tr>
+            <tr>
+                <td colspan=4>
+                    <button id="manual-create" class="btn btn-primary pull-right"><strong>Create</strong></button>
+                    <div class="clearfix"></div>
+                    <p id="error-message" class="error pull-right"></p>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+        </form>
+        
+
+    </div>
+    </div>
+
+</div>
+</div>
+</div>
+
+<div class="modal hide" id="bookmarklet-help">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>The Handy JetDeck Importer Bookmarklet</h3>
+  </div>
+  <div class="modal-body">
+    <p>You can also add this link to your bookmark toolbar to import on-the-go. Then when you are browsing listings, simply click the bookmark and aircraft details (including photos) from the current page will be added to your deck automatically. Saving keystrokes saves you time! </p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+  </div>
+</div>
+

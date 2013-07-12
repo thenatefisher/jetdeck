@@ -76,12 +76,50 @@ class Jetdeck.Views.Airframes.IndexView extends Backbone.View
         view = new Jetdeck.Views.Airframes.AirframeView({model : airframe})
         @$("#airframes").append(view.render().el)
 
-  render: =>  
-    params =
-        count : @options.airframes.length
-        pages : @options.airframes.pages()
-        
-    $(@el).html(@template(params))
-    @addAll()    
-    @$('.page[rel=1]').parent('li').addClass('active')   
+  render: =>
+    if @options.airframes.length < 1
+        empty_view = new Jetdeck.Views.Airframes.IndexEmptyView()
+        $(@el).html(empty_view.render().el)
+    else
+        params =
+            count : @options.airframes.length
+            pages : @options.airframes.pages()
+            
+        $(@el).html(@template(params))
+        @addAll()    
+        @$('.page[rel=1]').parent('li').addClass('active')   
+    return this
+
+class Jetdeck.Views.Airframes.IndexEmptyView extends Backbone.View
+  template: JST["templates/airframes/index_empty"]
+
+  events:
+    "click #manual-create" : "manual"
+
+  manual: (event) =>   
+    # hold up, Turbo
+    event.preventDefault()
+    event.stopPropagation()
+
+    # feedback
+    $("#manual-create").button("loading")
+
+    # make a collection to handle the http txn
+    collection = new Jetdeck.Collections.AirframesCollection()
+    collection.create(@model.toJSON(),
+      success: (airframe) =>
+        mixpanel.track("Created Airframe")
+        window.location.href = "/airframes/#{airframe.id}"
+      error: (airframe, jqXHR) =>
+        errors = $.parseJSON(jqXHR.responseText)
+        @$("#error-message").html(errors[0])
+        $("#manual-create").button("reset")
+    )
+
+  render: =>
+    $(@el).html(@template())
+
+    @model = new Jetdeck.Models.AirframeModel()
+    @$('#manual-form').backboneLink(@model)
+
     return this

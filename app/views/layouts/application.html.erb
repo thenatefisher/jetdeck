@@ -24,7 +24,6 @@
     <%= javascript_include_tag "application" %>
         
     <%= render "layouts/partials/railsjs" %>
-    <%= render "layouts/partials/analytics" %>
 
   </head>
 
@@ -69,5 +68,7 @@
   <% end %>
     
   </body>
-    
+  <%= render "layouts/partials/analytics" %>
+  <%= render "layouts/partials/mixpanel" %>
+        
 </html>
