@@ -5,40 +5,51 @@ require_relative "header_spoofer"
 
 module AirframeImport
 
-    def import_cdc_images(airframe, link=nil)
-        return nil if airframe.blank? || link.blank?
-        # add images
-        listing_id = link.match(/([\d]+).htm[l]?/)[1] rescue nil
-        if listing_id.present?
-            mobile_link = "http://m.controller.com/Picture/Index?listingId=#{listing_id}"
-            mobile_content = fetch_cdc(mobile_link)
-            mobile_doc = Nokogiri::HTML(mobile_content)
-            images_list = mobile_doc.css(".cImgList img")
-            images_list.each_with_index do |img, index|
-                img_id = img.attr("src").match(/id=([\d]*)/)[1] rescue index
-                thumb = AirframeImage.new(:image => open(img.attr("src")))
-                thumb.image_file_name = "#{img_id}.jpg"
-                thumb.thumbnail = true if index == 0
-                thumb.created_by = airframe.created_by
-                thumb.save
-                airframe.images << thumb
+
+    def import_cdc(airframe)
+
+        begin
+
+            if airframe.present? && !airframe.destroyed?
+                # get content
+                content = self.get_content(airframe.import_url).read
+                return nil if content.blank?
+
+                airframe.save!
+                self.delay(:priority => 0).import_cdc_essentials(airframe, content) if airframe.new_import
+                #self.delay(:priority => 2).import_aso_details(airframe, content) if airframe.new_import
+                self.delay(:priority => 3).import_cdc_images(airframe)
+                
+                return airframe
             end
+
+        rescue => error
+
+            if airframe.present? && !airframe.destroyed?
+                airframe.model_name = "Import Failed" if airframe.new_import
+                airframe.save! 
+
+                
+                NewRelic::Agent.notice_error("Airframe Import Error: #{error.message}", {
+                    :url => airframe.import_url, 
+                    :user_id => airframe.created_by
+                })
+
+            else
+                NewRelic::Agent.notice_error("Airframe Import Error, Airframe record not available: #{error.message}")
+            end
+
         end
+
     end
 
-    def import_cdc(user_id=nil, link=nil)
+    def import_cdc_essentials(airframe, content)
 
-        # url is required
-        return nil if user_id.blank? || link.blank?
+        # skip in case airframe is now deleted
+        return nil if airframe.blank? || airframe.destroyed?
 
         # fwd declare page hash
         page_details = Hash.new
-
-        # spoof headers
-        include HeaderSpoofer
-        content = open(link,
-            "User-Agent" => HeaderSpoofer::header,
-            "Referer" => "https://www.google.com/webhp?sourceid=chrome-instant&ion=1&ie=UTF-8").read rescue nil
 
         # get page content        
         doc = Nokogiri::HTML(content)
@@ -57,6 +68,24 @@ module AirframeImport
                 end
             end
         end
+
+        # convert price to only digits
+        page_details[:Price].gsub!(/[^\d]/, "") if page_details[:Price]
+
+        # store off the details
+        airframe.serial         = page_details[:SerialNumber]
+        airframe.registration   = page_details[:RegistrationNumber]
+        airframe.make           = page_details[:Manufacturer]
+        airframe.model_name     = page_details[:Model]
+        airframe.year           = page_details[:Year]
+        airframe.asking_price   = page_details[:Price]
+        
+        # save
+        airframe.save!
+
+    end
+
+    def import_cdc_details(airframe, content)
 
         # convert to only digits
         page_details[:TotalTime].gsub!(/[^\d]/, "") if page_details[:TotalTime]
@@ -95,31 +124,45 @@ module AirframeImport
         page_details[:YearInterior] = details.match(
             /Year Interior:<\/b><\/font><br>(.*?)((?:<\/td)|(?:<hr))/m)[1].gsub!(/[^\d]/, "") rescue nil
 
-        airframe = Airframe.new()
+    end
 
-        # store airframe details        
-        airframe.import_url     = link
-        airframe.created_by     = user_id
-        airframe.serial         = page_details[:SerialNumber]
-        airframe.registration   = page_details[:RegistrationNumber]
-        airframe.make           = page_details[:Manufacturer]
-        airframe.model_name     = page_details[:Model]
-        airframe.year           = page_details[:Year]
-        airframe.asking_price   = page_details[:Price]
-        airframe.description    = page_details[:DetailedDescription]
-        airframe.save
+    def import_cdc_images(airframe)
 
-        self.import_cdc_images(airframe, link)
+        # skip in case airframe is now deleted
+        return nil if airframe.blank? || airframe.destroyed?
 
-        return airframe.save
+        # formulate the mobile web page url
+        listing_id = airframe.import_url.match(/([\d]+).htm[l]?/)[1] rescue nil
+        if listing_id.present?
+
+            # grab mobile content
+            mobile_link = "http://m.controller.com/Picture/Index?listingId=#{listing_id}"
+            mobile_content = self.get_cdc_crypto_content(mobile_link)
+            mobile_doc = Nokogiri::HTML(mobile_content)
+
+            # enumurate images in mobile document
+            images_list = mobile_doc.css(".cImgList img")
+            images_list.each_with_index do |img, index|
+
+                img_id = img.attr("src").match(/id=([\d]*)/)[1] rescue index
+
+                # dont re-add photos
+                if AirframeImage.where(:image_file_name => "#{img_id}.jpg", :airframe_id => airframe.id).blank?
+
+                    # create the airframe image
+                    image = AirframeImage.new(:image => self.get_content(img.attr("src")))
+                    image.image_file_name   = "#{img_id}.jpg"
+                    image.thumbnail         = true if index == 0
+                    image.created_by        = airframe.created_by
+
+                    airframe.images << image
+                end
+            end
+        end    
 
     end
 
-    def decode_string(str) 
-        return URI.unescape str
-    end
-
-    def fetch_cdc(url)
+    def get_cdc_crypto_content(url)
 
         include HeaderSpoofer
         header = HeaderSpoofer::header
@@ -186,7 +229,7 @@ module AirframeImport
         end
 
         # parameters for document request
-        tS40436f_75 = decode_string(prefix + ":" + chlg.to_s + ":" + slt.to_s + ":" + crc.to_s)
+        tS40436f_75 = URI.unescape(prefix + ":" + chlg.to_s + ":" + slt.to_s + ":" + crc.to_s)
         tS40436f_id = 3
         tS40436f_md = 1
         tS40436f_rf = "http://www.controller.com/"
@@ -195,6 +238,21 @@ module AirframeImport
         
         content = `curl -i -F "tS40436f_id=3&tS40436f_md=1&tS40436f_rf=0&tS40436f_ct=0&tS40436f_pd=0&tS40436f_75=#{tS40436f_75}"  --user-agent "#{header}" "#{url}"`
         
+    end
+
+    def get_content(import_url)
+
+        # url is required
+        return nil if import_url.blank? 
+
+        # spoof headers
+        include HeaderSpoofer
+        content = open(import_url,
+            "User-Agent" => HeaderSpoofer::header,
+            "Referer" => "https://www.google.com/webhp?sourceid=chrome-instant&ion=1&ie=UTF-8") rescue nil;
+
+        return content
+
     end
 
 end

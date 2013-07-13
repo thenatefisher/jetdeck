@@ -78,7 +78,7 @@ class AirframeMessage < ActiveRecord::Base
     else;                new_status_id = 0
     end
 
-    if new_status_id != self.status_id
+    if new_status_id != self.status_id && new_status_id > self.status_id
       status_date = Time.now()
       self.status_id = new_status_id
     end

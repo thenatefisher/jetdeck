@@ -1,5 +1,7 @@
 Jetdeck::Application.routes.draw do
 
+  match "javascript_error" => "javascript_error#javascript_error"
+
   resources :charges
 
   resources :invites, :only => [:create]

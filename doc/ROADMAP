@@ -1,16 +1,12 @@
 ROADMAP TO LAUNCH:
 
-    instructions for bookmarklet
-    convert bookmarklet to url field in aircraft create
-    make the url field work in index_empty
-    ----
-    hero image still floats above line - make it a laptop or something...
     have newsletter signup somewhere
     -----
     Run test on MTurk
     -----
     switch stripe to live mode
     switch heroku to live mode (scale)
+    enter live stripe keys in heroku prod
     turn on ping service
     turn on new relic
     -----

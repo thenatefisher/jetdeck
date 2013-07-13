@@ -5,11 +5,12 @@ class AirframesController < ApplicationController
   def import
 
     # defaults
-    response = {:status => "UNAUTHORIZED"}
+    response = {:import_status => "UNAUTHORIZED"}
     status = :forbidden
 
     # find the user
-    user = @current_user || User.where(:bookmarklet_token => params[:token]).first
+    user = @current_user 
+    user ||= User.where(:enabled => true, :bookmarklet_token => params[:token]).first if params[:token].present?
 
     if user.present?
 
@@ -18,33 +19,38 @@ class AirframesController < ApplicationController
 
       # start airframe import
       airframe = nil
-      if params[:url].present? && user.present?
-        # dont own-goal us
 
+      if params[:url].present?
+        
+        # dont own-goal us
         if params[:url].match(/jetdeck\.co/) || params[:url].match(/herokuapp\.com/)
-          response[:status] = "OWNGOAL"
+          response[:import_status] = "OWNGOAL"
+          response[:errors] = "No aircraft found at that location"
         else
-          airframe = Airframe.import(user.id, params[:url])
+          airframe = Airframe::import(user.id, params[:url])
+          response[:errors] = airframe.errors.full_messages if airframe.present?
 
           # create response
-          case airframe.class.name
-          when "Delayed::Backend::ActiveRecord::Job"
-            response[:status] = "OK"
-          when "Airframe"
-            response[:status] = "DUPLICATE"
+          if airframe.present?
+            response[:import_status] = "OK"
             response[:airframe] = {
               :name => airframe.to_s,
               :link => "http://#{request.host}:#{request.port}/airframes/#{airframe.id}",
             }
-          when "NilClass"
-            response[:status] = "ERROR"
+          else 
+            response[:import_status] = "ERROR"
+            response[:errors] = "Unabled to create aircraft"
           end
 
         end
 
+      else
+        response[:errors] = "URL is required"
       end
 
     end
+
+    status = :unprocessable_entity if response[:errors].present?
 
     # render response
     render :json => response, :callback => params[:callback], :status => status

@@ -5,6 +5,8 @@ class Airframe < ActiveRecord::Base
 
   extend AirframeImport
 
+  attr_accessor :new_import
+
   # relationships
   has_many :todos, :foreign_key => :actionable_id, :as => :actionable, :dependent => :destroy
   accepts_nested_attributes_for :todos
@@ -44,7 +46,17 @@ class Airframe < ActiveRecord::Base
     end
   end
 
-  # static method to create a new airframe from listing URL
+  def import(link=nil)
+
+    # use link if supplied
+    self.import_url = link if link.present?
+    # otherwise use import url already attached
+    return nil if self.import_url.blank?
+    # import that machine data
+    return Airframe::select_parser(self)
+
+  end
+
   def self.import(user_id=nil, link=nil)
 
     # require a url and owner
@@ -52,20 +64,17 @@ class Airframe < ActiveRecord::Base
 
     # if already imported...
     airframe = Airframe.where(:created_by => user_id, :import_url => link).first
-    return airframe if airframe.present?
-
-    # switch to correct parser
-    case link
-    when /[www\.]?controller\.com/
-      airframe = delay.import_cdc(user_id, link)
-    when /[www\.]?aso\.com/
-      airframe = delay.import_aso(user_id, link)
-    else
-      airframe = nil
+    if airframe.blank?
+      # create location for imported data
+      airframe = Airframe.create(:created_by => user_id, :import_url => link, :model_name => "Importing Data...")
+      airframe.new_import = true # used to not override airframe details and only import images
     end
 
-    return airframe
-
+    if airframe.valid?
+      return Airframe::select_parser(airframe)
+    else
+      return airframe
+    end
   end
 
   # the aircraft default thumbnail
@@ -95,6 +104,32 @@ class Airframe < ActiveRecord::Base
     retval +=  " SN:#{self.serial}" if self.serial.present?
     retval +=  " (#{self.registration})" if self.registration.present?
     return (retval.present?) ? retval : "Unidentified Aircraft"
+  end
+
+  private 
+
+  def self.select_parser(airframe)
+
+    return nil if airframe.blank? || airframe.import_url.blank?
+
+    # switch to correct parser
+    case airframe.import_url
+      when /[www\.]?controller\.com/
+          import_cdc(airframe)
+      when /[www\.]?aso\.com/
+          import_aso(airframe)
+      else
+        airframe.destroy
+        airframe.errors.add :base, "No aircraft found at that location"
+    end
+
+    # create the airframe for immediate use
+    if airframe.present? 
+      airframe.save! if !airframe.destroyed? 
+      # return the airframe that will be loaded with import data
+      return airframe
+    end
+
   end
 
 end

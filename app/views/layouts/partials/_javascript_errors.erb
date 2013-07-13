@@ -1,0 +1,31 @@
+
+<% if Rails.env != "production" %>
+<script type="text/javascript">
+// Determine if the error occurred before or after document ready
+$(function() { window.documentIsReady = true; });
+
+// report a maximum of 5 errors
+window.MaximumErrorCount = 5;
+
+window.onerror = function(errorMsg, file, lineNumber) {
+  window.errorCount || (window.errorCount = 0);
+
+  if (window.errorCount <= window.MaximumErrorCount) {
+    window.errorCount += 1;
+
+    // post the error with all the information we need.
+    $.post('/javascript_error', {
+        error: errorMsg, 
+        file: file, 
+        location: window.location.href, 
+        lineNumber: lineNumber, 
+        userId: <%= current_user.id %>, 
+        userEmail: "<%= current_user.contact.email %>", 
+        documentReady: window.documentIsReady, 
+        ua: navigator.userAgent,
+        authenticity_token: $("meta[name='csrf-token']").attr("content")
+    });
+  }
+}
+</script>
+<% end %>

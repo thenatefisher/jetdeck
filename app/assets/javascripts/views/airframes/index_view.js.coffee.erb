@@ -95,6 +95,24 @@ class Jetdeck.Views.Airframes.IndexEmptyView extends Backbone.View
 
   events:
     "click #manual-create" : "manual"
+    "click #import-button" : "import"
+
+  import: =>
+
+    @$("#import-error").hide()
+    @$("#import-button").button("loading")
+
+    $.post("/airframes/import", {
+            url: @$("#import-url").val()
+            authenticity_token: $("meta[name='csrf-token']").attr("content")
+        }
+    ).done( (a,b,c) ->
+        window.location.href = a.airframe.link
+    ).fail( (a,b,c) =>
+        @$("#import-error").show()
+        @$("#import-button").button("reset")
+        @$("#import-error").html($.parseJSON(a.responseText).errors)
+    )
 
   manual: (event) =>   
     # hold up, Turbo

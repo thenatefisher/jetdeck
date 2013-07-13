@@ -5,6 +5,24 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
 
   events:
     "click #new_airframe": "save"
+    "click #import-button" : "import"
+
+  import: =>
+
+    @$("#error-message").hide()
+    @$("#import-button").button("loading")
+
+    $.post("/airframes/import", {
+            url: @$("#import-url").val()
+            authenticity_token: $("meta[name='csrf-token']").attr("content")
+        }
+    ).done( (a,b,c) ->
+        window.location.href = a.airframe.link
+    ).fail( (a,b,c) =>
+        @$("#error-message").show()
+        @$("#import-button").button("reset")
+        @$("#error-message").html($.parseJSON(a.responseText).errors)
+    )
 
   initialize: () ->
     @model = new Jetdeck.Models.AirframeModel()
@@ -61,7 +79,7 @@ class Jetdeck.Views.Airframes.NewView extends Backbone.View
         results: (data) ->
           return { results: data }
     )
-    @$(".airframe-headline").css("width", "250px")
+    @$(".airframe-headline").css("width", "300px")
 
     @$("form").backboneLink(@model)
 

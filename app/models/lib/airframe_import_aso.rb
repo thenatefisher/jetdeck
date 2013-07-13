@@ -5,46 +5,102 @@ require_relative "header_spoofer"
 
 module AirframeImport
 
-    def import_aso_images(airframe, link=nil)
+    def get_content(import_url)
 
-        return nil if airframe.blank? || link.blank?
+        # url is required
+        return nil if import_url.blank? 
 
+        # spoof headers
         include HeaderSpoofer
-        content = open(link,
+        content = open(import_url,
             "User-Agent" => HeaderSpoofer::header,
-            "Referer" => "https://www.google.com/webhp?sourceid=chrome-instant&ion=1&ie=UTF-8").read rescue nil
+            "Referer" => "https://www.google.com/webhp?sourceid=chrome-instant&ion=1&ie=UTF-8") rescue nil;
 
+        return content
+
+    end
+
+    def import_aso_images(airframe, content)
+
+        # skip in case airframe is now deleted
+        return nil if airframe.blank? || airframe.destroyed?
+
+        # crawl page for images
         content.scan(/Graphic_Id":([\d]*),.*?File_Path":"~(.*?)"/).each_with_index do |image, index|
+
             img_id = image[0] rescue index
-            thumb = AirframeImage.new(:image => open(URI::encode("http://www.aso.com/"+image[1]) ) )
-            thumb.image_file_name = "#{img_id}.jpg"
-            thumb.thumbnail = true if index == 0
-            thumb.created_by = airframe.created_by
-            thumb.save
-            airframe.images << thumb
+
+            # dont re-add photos
+            if AirframeImage.where(:image_file_name => "#{img_id}.jpg", :airframe_id => airframe.id).blank?
+
+                # grab image from remote site and doll it up
+                image = AirframeImage.new(:image => self.get_content(URI::encode("http://www.aso.com/"+image[1]) ) )
+                image.image_file_name   = "#{img_id}.jpg"
+                image.thumbnail         = true if index == 0
+                image.created_by        = airframe.created_by
+
+                # attach to airframe
+                airframe.images << image 
+
+            end
+
         end        
 
     end
 
-    def import_aso(user_id=nil, link=nil)
+    def import_aso_essentials(airframe, content)
 
-        # url is required
-        return nil if user_id.blank? || link.blank?
+        # skip in case airframe is now deleted
+        return nil if airframe.blank? || airframe.destroyed?
+
+        # create a hash to hold details
+        page_details = Hash.new
+
+        # parse the document
+        doc = Nokogiri::HTML(content)
+
+        # grab all the important stuff
+        mms                                 = doc.css(".adSpecView-header-Descr div")[0].content rescue nil
+        page_details[:Manufacturer]         = mms.match(/[\d]*?\s(.*?)\s/)[1] rescue nil
+        page_details[:Model]                = mms[page_details[:Manufacturer].length+5..-1] rescue nil
+        page_details[:Year]                 = mms.match(/([\d]{4})/)[0] rescue nil
+        page_details[:RegistrationNumber]   = doc.css(".adSpecView-header-RegSerialPrice")[0]
+            .css("span")[0].content.gsub("Reg #", "") rescue nil
+
+        page_details[:SerialNumber]         = doc.css(".adSpecView-header-RegSerialPrice")[0]
+            .css("span")[1].content.gsub("Serial #", "") rescue nil
+
+        page_details[:Price]                = doc.css(".adSpecView-header-RegSerialPrice")[1]
+            .css("span")[0].content.gsub("Price:", "") rescue nil
+        page_details[:Price].gsub!(/[^\d]/, "") if page_details[:Price]
+
+        # for each parameter, remove all escapes and strip it
+        page_details.each do |key, val|
+            if val.present?
+                page_details[key] = val.gsub(/[\r\n\t]/, "").strip 
+            end
+        end
+
+        # store off the details
+        airframe.serial         = page_details[:SerialNumber]
+        airframe.registration   = page_details[:RegistrationNumber]
+        airframe.make           = page_details[:Manufacturer]
+        airframe.model_name     = page_details[:Model]
+        airframe.year           = page_details[:Year]
+        airframe.asking_price   = page_details[:Price]
+        
+        # save
+        airframe.save!
+
+    end
+
+    def import_aso_details(airframe, content)
 
         # fwd declare page hash
         page_details = Hash.new
 
-        # spoof headers
-        include HeaderSpoofer
-        content = open(link,
-            "User-Agent" => HeaderSpoofer::header,
-            "Referer" => "https://www.google.com/webhp?sourceid=chrome-instant&ion=1&ie=UTF-8").read rescue nil
-
         # get page content        
         doc = Nokogiri::HTML(content)
-
-        # airframe
-        airframe = Airframe.new()
 
         doc.css(".adSpecView-section-header").each do |header|
             case header.content
@@ -71,22 +127,6 @@ module AirframeImport
             end
         end
 
-        # general parameters
-        mms                                 = doc.css(".adSpecView-header-Descr div")[0].content rescue nil
-
-        page_details[:Manufacturer]         = mms.match(/[\d]*?\s(.*?)\s/)[1] rescue nil
-        page_details[:Model]                = mms[page_details[:Manufacturer].length+5..-1]
-        page_details[:Year]                 = mms.match(/([\d]{4})/)[0] rescue nil
-
-        page_details[:RegistrationNumber]   = doc.css(".adSpecView-header-RegSerialPrice")[0]
-            .css("span")[0].content.gsub("Reg #", "") rescue nil
-
-        page_details[:SerialNumber]         = doc.css(".adSpecView-header-RegSerialPrice")[0]
-            .css("span")[1].content.gsub("Serial #", "") rescue nil
-
-        page_details[:Price]                = doc.css(".adSpecView-header-RegSerialPrice")[1]
-            .css("span")[0].content.gsub("Price:", "") rescue nil
-
         page_details[:Currency]             = doc.css(".adSpecView-header-RegSerialPrice")[1]
             .css("span")[1].content rescue nil       
 
@@ -105,23 +145,43 @@ module AirframeImport
 
         # find digits for numeric data
         page_details[:TotalTime].gsub!(/[^\d]/, "") if page_details[:TotalTime]
-        page_details[:Price].gsub!(/[^\d]/, "") if page_details[:Price]
 
-        # airframe parameters
-        airframe.import_url     = link
-        airframe.created_by     = user_id
-        airframe.serial         = page_details[:SerialNumber]
-        airframe.registration   = page_details[:RegistrationNumber]
-        airframe.make           = page_details[:Manufacturer]
-        airframe.model_name     = page_details[:Model]
-        airframe.year           = page_details[:Year]
-        airframe.asking_price   = page_details[:Price]
-        airframe.save
+    end
 
-        # store images
-        self.import_aso_images(airframe, link)
+    def import_aso(airframe)
 
-        return airframe
+        begin
+
+            if airframe.present? && !airframe.destroyed?
+                # get content
+                content = self.get_content(airframe.import_url).read
+                return nil if content.blank?
+
+                airframe.save!
+                self.delay(:priority => 0).import_aso_essentials(airframe, content) if airframe.new_import
+                #self.delay(:priority => 2).import_aso_details(airframe, content) if airframe.new_import
+                self.delay(:priority => 3).import_aso_images(airframe, content)
+                
+                return airframe
+            end
+
+        rescue => error
+
+            if airframe.present? && !airframe.destroyed?
+                airframe.model_name = "Import Failed" if airframe.new_import
+                airframe.save! 
+
+                
+                NewRelic::Agent.notice_error("Airframe Import Error: #{error.message}", {
+                    :url => airframe.import_url, 
+                    :user_id => airframe.created_by
+                })
+
+            else
+                NewRelic::Agent.notice_error("Airframe Import Error, Airframe record not available: #{error.message}")
+            end
+
+        end
 
     end
 

@@ -11,6 +11,19 @@
 
       <div>
         <h4>Import From an Online Listing</h4>
+
+        <p>Enter the Aircraft Listing URL: <small class="muted">(ie, controller.com or aso.com)</small></p>
+        <div class="row-fluid">
+            <div class="span9">
+                <input type="text" class="input" id="import-url" placeholder="http://..." style="width: 100%">
+            </div>
+            <div class="span3">
+                <button class="btn btn-primary pull-right" id="import-button" style="width: 80%"><strong>Import</strong></button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        
+        <!--
         <div class="pull-left" style="padding-right: 20px">
           <ol>
 
@@ -29,15 +42,20 @@
             <small>Drag Me to Bookmarks!</small>
           </div>     
         </div>  
+        -->
 
       </div>
 
-      <div class="page-header"><div class="clearfix"><br></div></div>
+      <div class="row-fluid">
+          <div class="span11">
+            <div class="page-header" style="margin: 10 0"></div>
+          </div>
+      </div>
 
-      <div class="offmarket_group" style="margin-top: 30px">
+      <div class="offmarket_group">
       
         <h4>Or Add an Off-Market Machine </h4>
-        <div style="margin-left: 10px; margin-top: 20px">
+        <div style="margin-left: 0px; margin-top: 20px">
           <input type="text" name="year" 
             id="airframe_year" 
             class="input-mini" 
@@ -76,6 +94,9 @@
 
           </div>
         </div>
+
+        <button id="new_airframe" class="btn btn-primary pull-right"><strong>Create</strong></button>
+
       </div>
 
     </label>
@@ -85,9 +106,7 @@
 </div>
 
 <div class="modal-footer">
-  <span class="pull-left error span4" style="text-align: left;" id="error-message"></span>
-  <a href="#" class="btn" data-dismiss="modal">Cancel</a>
-  <button id="new_airframe" class="btn btn-primary">Add Aircraft</button>
+  <span class="pull-left error" style="text-align: left;" id="error-message"></span>
 </div>
 
 <style>

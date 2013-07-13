@@ -29,7 +29,17 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
         if $(this).val() != null
           intPrice = parseInt($(this).val().replace(/[^0-9]/g,""), 10)
           $(this).val("$" + intPrice.formatMoney(0, ".", ","))
-    )        
+    )
+
+    if @model.get('model_name') == "Importing Data..."
+      @timeout = window.setTimeout(@refreshHeader,2000)  
     
     return this
     
+  refreshHeader: =>
+    window.clearTimeout(@timeout)
+    @model.fetch( success: => 
+      @header.render()
+      if @model.get('model_name') == "Importing Data..."
+        @timeout = window.setTimeout(@refreshHeader,2000)  
+    )

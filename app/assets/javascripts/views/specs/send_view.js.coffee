@@ -99,11 +99,14 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
     setupSpecField: (airframe) =>
         data = airframe.specs.reduce(
             (a,b) -> 
-                return a.concat({
-                    id: b.get('id'), 
-                    spec: b, 
-                    text: b.get('file_name').trunc(40) 
-                }) 
+                if b.get("enabled") == true
+                    return a.concat({
+                        id: b.get('id'), 
+                        spec: b, 
+                        text: b.get('file_name').trunc(40) 
+                    })
+                else
+                    return a
             , [])
 
         @$("#spec").select2(

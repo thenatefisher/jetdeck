@@ -25,15 +25,15 @@
         <p>Enter the Aircraft Listing URL:</p>
         <div class="row-fluid">
             <div class="span10">
-                <input type="text" class="input" placeholder="http://..." style="width: 100%">
+                <input type="text" class="input" id="import-url" placeholder="http://..." style="width: 100%">
             </div>
             <div class="span2">
-                <button class="btn btn-primary pull-right" style="width: 80%"><strong>Import</strong></button>
+                <button class="btn btn-primary pull-right" id="import-button" style="width: 80%"><strong>Import</strong></button>
             </div>
         </div>
         <div class="clearfix"></div>
-        <span class="hide error">No aircraft found at this location. Try again.</span>
-        <small><span class="label">Pro-Tip</span> To make this even easier, you can also use the <a href="#bookmarklet-help" data-toggle="modal">JetDeck Bookmarklet</a>.</small>
+        <span class="hide error clearfix" id="import-error"></span>
+        <span class="hide"><small><span class="label">Pro-Tip</span> To make this even easier, you can also use the <a href="#bookmarklet-help" data-toggle="modal">JetDeck Bookmarklet</a>.</small></span>
 
     </div>
     </div>
