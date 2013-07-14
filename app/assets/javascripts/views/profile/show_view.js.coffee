@@ -14,8 +14,9 @@ class Jetdeck.Views.Profile.ShowView extends Backbone.View
   destroy: =>
     if @$("#destroy-confirmation-text").val() == "DESTROY MY ACCOUNT"
       @model.destroy({complete: =>
-        mixpanel.track("Account Destroyed")
-        window.location.href = "/"
+        mixpanel.track("Account Destroyed", ->
+          window.location.href = "/"
+        )
       })
 
   toggleDestroyMessage: ->

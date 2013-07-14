@@ -26,8 +26,9 @@ $(function() {
     
     if ($(".error").size() == 0) 
       mixpanel.name_tag(email_field.val());
-      mixpanel.track("Created Account");
-      $("form").submit();
+      mixpanel.track("Created Account", function() {
+        $("form").submit();
+      });
     
   });
   
