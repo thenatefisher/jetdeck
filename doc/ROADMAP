@@ -2,7 +2,9 @@ ROADMAP TO LAUNCH:
 
     have newsletter signup somewhere
     -----
-    Run test on MTurk
+    Run test on mturk
+    -----
+    migrate current prod data in
     -----
     switch stripe to live mode
     switch heroku to live mode (scale)
