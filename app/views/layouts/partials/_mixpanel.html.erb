@@ -1,7 +1,4 @@
-<!-- Mixpanel -->
-<% if Rails.env != "test" && current_user.present? %>
-<% require "digest/sha1" %>
-
+<% if Rails.env != "test" %>
   <script type="text/javascript">  
 
     (function(c,a){window.mixpanel=a;var b,d,h,e;b=c.createElement("script");
@@ -15,6 +12,14 @@
     'set_config','people.identify','people.set','people.increment'];for(e=0;e<h.length;e++)d(g,h[e]);
     a._i.push([b,c,f])};a.__SV=1.1;})(document,window.mixpanel||[]);
     mixpanel.init("<%= Jetdeck::Application.config.mixpanel_token %>");
+  </script>
+<% end %>
+
+<!-- Mixpanel -->
+<% if Rails.env != "test" && current_user.present? %>
+<% require "digest/sha1" %>
+
+  <script type="text/javascript">  
 
     $(function() {
       mixpanel.people.set({
