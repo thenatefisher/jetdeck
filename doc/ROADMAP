@@ -9,7 +9,7 @@ ROADMAP TO LAUNCH:
     switch stripe to live mode
     switch heroku to live mode (scale)
     enter live stripe keys in heroku prod
-    turn on ping service
+    turn on ping service for both sites
     turn on new relic
     -----
     Make Press Kit

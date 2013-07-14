@@ -24,7 +24,10 @@ $(function() {
       terms_check.parents(".control-group").find(".help-inline").html(suggestion_msg);
     }
     
-    if ($(".error").size() == 0) $("form").submit();
+    if ($(".error").size() == 0) 
+      mixpanel.name_tag(email_field.val());
+      mixpanel.track("Created Account");
+      $("form").submit();
     
   });
   
