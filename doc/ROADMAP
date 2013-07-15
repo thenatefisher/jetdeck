@@ -4,8 +4,6 @@ ROADMAP TO LAUNCH:
     -----
     Run test on mturk
     -----
-    migrate current prod data in
-    -----
     switch stripe to live mode
     switch heroku to live mode (scale)
     enter live stripe keys in heroku prod
