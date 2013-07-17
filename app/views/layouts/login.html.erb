@@ -19,13 +19,12 @@
       <!-- Le styles -->
       <%= stylesheet_link_tag "login", :media => "all" %>
       <!-- Le javascript -->
-      <%= javascript_include_tag "login" %>
-      
+
+      <%= render "layouts/partials/analytics" %>
   </head>
 
   <body>
 
-    <%= render "layouts/partials/brandbar" %>
 
     <div class="container">
       
@@ -49,7 +48,7 @@
     </div> <!-- end container class -->
 
   </body>
-  <%= render "layouts/partials/analytics" %>
-  <%= render "layouts/partials/mixpanel" %>
+  
+
     
 </html>
