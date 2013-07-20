@@ -1,43 +1,15 @@
-<div class="span6">
+<div style="margin-left: 20px; width: 710px">
 
-    <ul class="breadcrumb pull-left" style="background: #ecf2f5; width: 430px;">
+  <ul class="breadcrumb subsection" style="width: 100%; margin-bottom: 0px">
+    
+    <li style="text-shadow: none"> 
+      <strong>
+        <i class="icon-user"></i> Leads
+      </strong> 
+    </li>
 
-      <li style="text-shadow: none"> 
-        <strong>
-          <i class="icon-file-alt"></i> 
-          Leads
-        </strong> 
-      </li>
+  </ul>
 
-      <li class="show-specs" style="height: 20px; float: right; text-shadow: none"> </li>  
-                           
-    </ul>
+    <div id="leads-populated" class="accordion" style="margin-top: 10px;"></div>
 
-    <table style="font-size:90%" class="table table-hover table-condensed">
-      <thead>
-        <th>Recipient</th>
-        <th style="text-align: center">Views</th>
-        <th>Last Viewed</th>
-        <th></th>
-      </thead>
-      <tbody></tbody>
-    </table>
-
-    <% if (pages > 1) { %>
-    <div class="row small"  style="margin-left: 20px;">
-        <div class="pagination pull-right" style="margin: 0">
-          <ul>
-            <li><a class="prev" onclick="return false;" href="#">Prev</a></li>
-
-            <% if (pages > 2) { %>
-            <% for (var i = 1; i < pages + 1; i++) { %>
-            <li><a class="page" rel="<%= i %>" onclick="return false;" href="#"><%= i %></a></li>
-            <% } } %>
-
-            <li><a class="next" onclick="return false;" href="#">Next</a></li>
-          </ul>
-        </div>
-    </div>
-    <% } %> 
-      
-  </div> <!-- leads -->
+</div> <!-- leads -->

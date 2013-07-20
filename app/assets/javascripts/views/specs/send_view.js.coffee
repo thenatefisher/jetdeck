@@ -250,6 +250,17 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
                 mixpanel.track("Sent Spec", {to: @$("#email").val()})
                 @$("#send").button('reset')
                 window.modalClose() 
+
+                # refresh lead list
+                if (typeof(window.router.view.model != "undefined") &&
+                    typeof(window.router.view.model.constructor.name != "undefined") && 
+                    (window.router.view.model.constructor.name == "AirframeModel") &&
+                    (window.router.view.constructor.name == "ShowView"))
+                        window.router.view.model.fetch(success: => 
+                            window.router.view.model.updateChildren()
+                            window.router.view.leads.render())
+                        
+
             error: (o,response) =>
                 errors = $.parseJSON(response.responseText)
                 @$("#error-message").html(errors[0])

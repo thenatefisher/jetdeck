@@ -1,0 +1,42 @@
+  
+<% if (messages.length > 1) { %>
+
+    <div class="accordion-heading row-fluid">
+
+      <div class="span" style="width: 20px">
+        <a class="accordion-toggle" 
+        data-toggle="collapse" 
+        data-parent="#leads-populated" 
+        href="#collapse-<%= id %>" 
+        style="display: inline; text-decoration: none; color: black">
+        <i class="icon-caret-right"></i>
+      </a>
+      </div>
+
+      <div class="span3"><a href="/contacts/<%= contact.id %>"><%= contact_label.trunc(20) %></a></div>
+      <div class="span5"><%= status_label %>: <a href="<%=spec_url%>"><%= spec_label.rtrunc(25) %></a></div>
+
+    </div>
+
+    <div id="collapse-<%= id %>" class="accordion-body collapse">
+      <div class="accordion-inner messages" style="border: 0px">
+        <table style="width: 100%">
+        <% for (var i = 0; i < messages.length; i++) {%>
+          <tr>
+            <td><%=  messages[i].status %>: <a href="<%= messages[i].spec_url%>"><%=  messages[i].spec_file_name %></a></td>
+            <td>(as of <%=  messages[i].status_date_label %> at <%=  messages[i].status_time_label %>)</td>
+          </tr> 
+        <% } %>
+        </table>
+      </div>
+    </div>
+
+<% } else { %>
+  
+      <div class="accordion-heading row-fluid">
+        <div class="span" style="width: 20px"></div>
+        <div class="span3"><a href="/contacts/<%= contact.id %>"><%= contact_label.trunc(20) %></a></div>
+        <div class="span5"><%= status_label %>: <a href="<%=spec_url%>"><%= spec_label.rtrunc(25) %></a></div>
+      </div>
+
+<% } %>

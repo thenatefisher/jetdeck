@@ -92,7 +92,17 @@ class AirframeMessagesController < ApplicationController
       )
 
       # render it all out
-      if @airframe_message.save && @airframe_message.send_message()
+      if @airframe_message.save
+        # send it
+        @airframe_message.send_message()
+        # create lead record if not already made
+        begin
+          lead = Lead.new(:creator => @current_user, :contact => recipient, :airframe => airframe) 
+          lead.save
+        rescue => error
+          logger.warn "Could not create Lead record: #{error.message} (#{lead.inspect})"
+        end
+        # respond to UI
         render :json, template: "airframe_messages/show", handlers: [:jbuilder]
       else
         errors = @airframe_message.errors.full_messages

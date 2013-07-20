@@ -33,7 +33,6 @@ class AirframeMessage < ActiveRecord::Base
   end
 
   def send_message
-    success = false
 
     # limit 40 per hour
     messages_in_last_hour = AirframeMessage.find(:all, :conditions => 
@@ -45,10 +44,9 @@ class AirframeMessage < ActiveRecord::Base
         self.airframe_spec.enabled &&
         messages_in_last_hour <=  @@message_rate_limit
 
-      success = AirframeMessageMailer.sendMessage(self).deliver
+        AirframeMessageMailer.delay(:priority => 2).sendMessage(self)
     end
 
-    return success
   end
 
   # Sent, Bounced, Opened, Downloaded
@@ -60,7 +58,7 @@ class AirframeMessage < ActiveRecord::Base
     when 4; "Opened"
     when 5; "Downloaded"
     when 6; "Send Failed"
-    else;   "Unknown"
+    else;   "Processing"
     end
   end
 

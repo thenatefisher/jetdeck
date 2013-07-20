@@ -52,4 +52,8 @@ Jetdeck::Application.configure do
   # mix panel
   config.mixpanel_token = "***REMOVED***"
 
+  # stripe TEST keys
+  config.stripe_private_key = "***REMOVED***"
+  config.stripe_public_key = "***REMOVED***"
+
 end

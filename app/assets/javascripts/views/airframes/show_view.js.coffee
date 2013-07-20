@@ -7,6 +7,9 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
       
     $(@el).html(@template(@model.toJSON() ))
     
+    @leads = new Jetdeck.Views.Airframes.Leads.Show(model: @model)
+    @$("#airframe_leads").html(@leads.render().el)
+
     @header = new Jetdeck.Views.Airframes.Header.Show(model: @model)
     @$("#airframe_show_header").html(@header.render().el)
     
