@@ -252,14 +252,8 @@ class Jetdeck.Views.Specs.Send extends Backbone.View
                 window.modalClose() 
 
                 # refresh lead list
-                if (typeof(window.router.view.model != "undefined") &&
-                    typeof(window.router.view.model.constructor.name != "undefined") && 
-                    (window.router.view.model.constructor.name == "AirframeModel") &&
-                    (window.router.view.constructor.name == "ShowView"))
-                        window.router.view.model.fetch(success: => 
-                            window.router.view.model.updateChildren()
-                            window.router.view.leads.render())
-                        
+                if (@options && @options.airframe) 
+                    @options.airframe.trigger("sent-spec")                        
 
             error: (o,response) =>
                 errors = $.parseJSON(response.responseText)

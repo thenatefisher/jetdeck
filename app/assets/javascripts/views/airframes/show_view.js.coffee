@@ -9,6 +9,7 @@ class Jetdeck.Views.Airframes.ShowView extends Backbone.View
     
     @leads = new Jetdeck.Views.Airframes.Leads.Show(model: @model)
     @$("#airframe_leads").html(@leads.render().el)
+    @model.on("sent-spec", => @leads.refresh())
 
     @header = new Jetdeck.Views.Airframes.Header.Show(model: @model)
     @$("#airframe_show_header").html(@header.render().el)

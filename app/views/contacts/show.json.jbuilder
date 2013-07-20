@@ -40,9 +40,7 @@ json.leads @contact.leads do |x|
         json.id             x.airframe.id
         json.registration   x.airframe.registration
         json.serial         x.airframe.serial
-        json.year           x.airframe.year
-        json.make           x.airframe.make
-        json.model_name     x.airframe.model_name
-        json.avatar         x.airframe.avatar
+        json.label          x.airframe.to_s
+        json.thumbnail      x.airframe.avatar[:mini] if x.airframe.avatar.present?
     end
 end

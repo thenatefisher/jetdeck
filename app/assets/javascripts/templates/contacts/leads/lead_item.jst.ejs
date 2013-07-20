@@ -1,0 +1,10 @@
+<div class="media span6" style="margin-top: 5px;">
+  <a class="pull-left" href="/airframes/<%= id %>">
+    <img class="media-object" style="height: 60px;" height="60" src="<%= thumbnail %>">
+  </a>
+  <div class="media-body">
+    <h4 class="media-heading"><%= label.trunc(30) %></h4>
+      <% if (serial && serial != "") { %>Serial <%= serial %>  &nbsp; &nbsp; <% } %>
+      <% if (registration && registration != "") { %>Reg. <%= registration %> <% } %>
+  </div>
+</div>

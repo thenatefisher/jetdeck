@@ -15,13 +15,13 @@ json.avatar @airframe.avatar[:thumb] if @airframe.avatar.present?
 json.leads @airframe.leads do |x|
     json.id x.id
     json.contact_label x.contact.to_s
-    json.spec_label x.contact.messages_received.last.airframe_spec.spec_file_name rescue nil
-    json.spec_url x.contact.messages_received.last.airframe_spec.url rescue nil
-    json.status_label x.contact.messages_received.last.status rescue nil
-    json.status_date_label x.contact.messages_received.last.status_date.localtime.strftime("%b %d, %Y") rescue nil
-    json.status_time_label x.contact.messages_received.last.status_date.localtime.strftime("%H:%M %p") rescue nil
+    json.spec_label x.contact.messages_received.where(:airframe_id => @airframe.id).last.airframe_spec.spec_file_name rescue nil
+    json.spec_url x.contact.messages_received.where(:airframe_id => @airframe.id).last.airframe_spec.url rescue nil
+    json.status_label x.contact.messages_received.where(:airframe_id => @airframe.id).last.status rescue nil
+    json.status_date_label x.contact.messages_received.where(:airframe_id => @airframe.id).last.status_date.localtime.strftime("%b %d, %Y") rescue nil
+    json.status_time_label x.contact.messages_received.where(:airframe_id => @airframe.id).last.status_date.localtime.strftime("%H:%M %p") rescue nil
     json.contact x.contact
-    json.messages x.contact.messages_received do |m|
+    json.messages x.contact.messages_received.where(:airframe_id => @airframe.id) do |m|
         json.id m.id
         json.created_at m.created_at
         json.status m.status

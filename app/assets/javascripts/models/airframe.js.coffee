@@ -15,7 +15,7 @@ class Jetdeck.Models.AirframeModel extends Backbone.Model
 
     initialize : =>
       ## leads collection
-      @leads = new Jetdeck.Collections.LeadsCollection(page_size: 5)
+      @leads = new Jetdeck.Collections.LeadsCollection()
       @leads.airframe = this
       
       ## actions collection

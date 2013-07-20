@@ -14,7 +14,10 @@
       </div>
 
       <div class="span3"><a href="/contacts/<%= contact.id %>"><%= contact_label.trunc(20) %></a></div>
-      <div class="span5"><%= status_label %>: <a href="<%=spec_url%>"><%= spec_label.rtrunc(25) %></a></div>
+      <div class="span8">
+        <%= status_label %>: <a href="<%=spec_url%>"><%= spec_label.rtrunc(25) %></a>
+        <small class="pull-right"><%=  status_date_label %> at <%= status_time_label %></small>
+      </div>
 
     </div>
 
@@ -23,8 +26,10 @@
         <table style="width: 100%">
         <% for (var i = 0; i < messages.length; i++) {%>
           <tr>
-            <td><%=  messages[i].status %>: <a href="<%= messages[i].spec_url%>"><%=  messages[i].spec_file_name %></a></td>
-            <td>(as of <%=  messages[i].status_date_label %> at <%=  messages[i].status_time_label %>)</td>
+            <td class="span1"></td>
+            <td><a href="<%= messages[i].spec_url%>"><%=  messages[i].spec_file_name.rtrunc(25) %></a></td>
+            <td><%=  messages[i].status %></td>
+            <td class="muted"><small><%=  messages[i].status_date_label %> at <%=  messages[i].status_time_label %></small></td>
           </tr> 
         <% } %>
         </table>

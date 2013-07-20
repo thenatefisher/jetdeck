@@ -4,6 +4,7 @@ class Jetdeck.Models.LeadModel extends Backbone.Model
     defaults :
       contact: null
       airframe: null
+      thumbnail: "/assets/placeholder/aircraft_default_avatar_small.png"
 
 class Jetdeck.Collections.LeadsCollection extends Backbone.Collection
   

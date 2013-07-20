@@ -3,8 +3,13 @@ Jetdeck.Views.Airframes.Leads ||= {}
 class Jetdeck.Views.Airframes.Leads.Show extends Backbone.View
   template: JST["templates/airframes/leads/leads"]
 
-  render: =>
+  refresh: =>
+    @model.fetch(success: =>
+      @model.updateChildren()
+      @render()
+      )
 
+  render: =>
     if @model.leads.length > 0
       # render out main template
       $(@el).html(@template(@model.toJSON()))

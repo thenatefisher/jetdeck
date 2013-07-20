@@ -10,6 +10,10 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       leads: []
         
     initialize : =>
+      ## leads collection
+      @leads = new Jetdeck.Collections.LeadsCollection()
+      @leads.airframe = this
+
       ## actions collection
       @todos = new Jetdeck.Collections.TodosCollection(page_size: 9)
       @todos.airframe = this
@@ -22,6 +26,7 @@ class Jetdeck.Models.ContactModel extends Backbone.Model
       @updateChildren()
     
     updateChildren : =>
+      @leads.reset @get("leads")
       @todos.reset @get("todos")
       @notes.reset @get("notes")
       

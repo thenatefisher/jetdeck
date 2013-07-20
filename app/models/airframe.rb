@@ -22,6 +22,11 @@ class Airframe < ActiveRecord::Base
 
   has_many :leads, :dependent => :destroy
 
+  has_many :messages,
+    :class_name => "AirframeMessage",
+    :foreign_key => "airframe_id",
+    :dependent => :destroy
+
   validates_uniqueness_of :import_url, :scope => :created_by,
     :message => "has already been imported", :on => :create, :if => "import_url.present?"
 
