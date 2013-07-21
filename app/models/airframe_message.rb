@@ -16,7 +16,7 @@ class AirframeMessage < ActiveRecord::Base
   @@message_rate_limit = 100
 
   # do not edit/create if user is delinquent
-  validate :creator_account_current, :unless => Proc.new {|m| m.status_id_changed?}
+  validate :creator_account_current, :on => :create
   def creator_account_current
     if self.creator.delinquent?
       self.errors.add :base, "Your account is not current. Please update subscription <a href='/profile'>payment information</a>."

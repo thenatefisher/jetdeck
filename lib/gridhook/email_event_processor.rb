@@ -19,9 +19,15 @@ class EmailEventProcessor
         message.status = "failed"
       end
 
-      message.save!
+      begin
+        message.save!
+      rescue error
+        puts error.message
+      end
 
     end
+
+    return true
 
   end
 
