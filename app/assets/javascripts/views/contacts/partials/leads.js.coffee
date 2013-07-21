@@ -15,13 +15,15 @@ class Jetdeck.Views.Contacts.Leads.Show extends Backbone.View
       $(@el).html(@template(@model.toJSON()))
       @model.leads.each((lead) =>  
         view = new Jetdeck.Views.Contacts.Leads.Item({model : lead})
-        @$("#leads-populated").append(view.render().el) if view
+        @$("#leads-populated table").append(view.render().el) if view
       )
 
     return this
 
 class Jetdeck.Views.Contacts.Leads.Item extends Backbone.View
   template: JST["templates/contacts/leads/lead_item"]
+
+  tagName: "tr"
 
   render: =>
     $(@el).html(@template(@model.toJSON() ))

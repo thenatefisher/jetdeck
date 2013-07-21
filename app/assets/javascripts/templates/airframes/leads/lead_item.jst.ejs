@@ -1,7 +1,7 @@
   
 <% if (messages.length > 1) { %>
 
-    <div class="accordion-heading row-fluid">
+    <div class="accordion-heading row-fluid <% if (fold) { %>fold<% } %>">
 
       <div class="span4">
         <div style="margin: 0px 5px">
@@ -41,7 +41,7 @@
 
 <% } else { %>
   
-      <div class="accordion-heading row-fluid">
+      <div class="accordion-heading row-fluid <% if (fold) { %>fold<% } %>">
         <div class="span4">
           <div style="margin: 0px 5px">
             <a href="/contacts/<%= contact.id %>"><%= contact_label.trunc(20) %></a>

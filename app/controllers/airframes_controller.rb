@@ -151,9 +151,9 @@ class AirframesController < ApplicationController
       whitelist[:images_attributes] = params[:airframe][:images].map{|x| x.slice(:id, :thumbnail)}
     end
 
-    if params[:airframe][:leads].present?
-      whitelist[:leads_attributes] = params[:airframe][:leads].map{|x| x.slice(:id)}
-    end
+    #if params[:airframe][:leads].present?
+    #  whitelist[:leads_attributes] = params[:airframe][:leads].map{|x| x.slice(:id)}
+    #end
 
     if params[:airframe][:todos].present?
       whitelist[:todos_attributes] = params[:airframe][:todos].map{|x| x.slice(:id)}
