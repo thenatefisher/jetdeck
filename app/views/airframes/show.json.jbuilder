@@ -20,6 +20,7 @@ json.leads @airframe.leads do |x|
     json.status_label x.contact.messages_received.where(:airframe_id => @airframe.id).last.status rescue nil
     json.status_date_label x.contact.messages_received.where(:airframe_id => @airframe.id).last.status_date.localtime.strftime("%b %d, %Y") rescue nil
     json.status_time_label x.contact.messages_received.where(:airframe_id => @airframe.id).last.status_date.localtime.strftime("%H:%M %p") rescue nil
+    json.photos_enabled x.contact.messages_received.where(:airframe_id => @airframe.id).last.photos_enabled rescue nil    
     json.contact x.contact
     json.messages x.contact.messages_received.where(:airframe_id => @airframe.id) do |m|
         json.id m.id

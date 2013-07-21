@@ -3,17 +3,18 @@
 
     <div class="accordion-heading row-fluid">
 
-      <div class="span" style="width: 20px">
-        <a class="accordion-toggle" 
-        data-toggle="collapse" 
-        data-parent="#leads-populated" 
-        href="#collapse-<%= id %>" 
-        style="display: inline; text-decoration: none; color: black">
-        <i class="icon-caret-right"></i>
-      </a>
-      </div>
+      <div class="span4">
+        <div style="margin: 0px 5px">
+          <a class="accordion-toggle" 
+          data-toggle="collapse" 
+          data-parent="#leads-populated" 
+          href="#collapse-<%= id %>" 
+          style="padding: 0px 5px; display: inline; text-decoration: none; color: black">
+            <i class="icon-caret-right"></i>
+          </a>
 
-      <div class="span3"><a href="/contacts/<%= contact.id %>"><%= contact_label.trunc(20) %></a></div>
+          <a href="/contacts/<%= contact.id %>"><%= contact_label.trunc(20) %></a></div>
+        </div>
       <div class="span8">
         <%= status_label %>: <a href="<%=spec_url%>"><%= spec_label.rtrunc(25) %></a>
         <small class="pull-right"><%=  status_date_label %> at <%= status_time_label %></small>
@@ -23,13 +24,15 @@
 
     <div id="collapse-<%= id %>" class="accordion-body collapse">
       <div class="accordion-inner messages" style="border: 0px">
-        <table style="width: 100%">
+        <table style="width: 100%" class="table">
         <% for (var i = 0; i < messages.length; i++) {%>
           <tr>
-            <td class="span1"></td>
-            <td><a href="<%= messages[i].spec_url%>"><%=  messages[i].spec_file_name.rtrunc(25) %></a></td>
-            <td><%=  messages[i].status %></td>
-            <td class="muted"><small><%=  messages[i].status_date_label %> at <%=  messages[i].status_time_label %></small></td>
+            <td>
+              <a href="<%= messages[i].spec_url%>"><%= messages[i].spec_file_name.rtrunc(25) %></a>
+              <% if (messages[i].photos_enabled) { %> <small><i rel="tooltip" title="Includes Photos" class="icon-picture"></i></small><% } %>
+            </td>
+            <td><%= messages[i].status %></td>
+            <td><small class="pull-right"><%= messages[i].status_date_label %> at <%= messages[i].status_time_label %></small></td>
           </tr> 
         <% } %>
         </table>
@@ -39,9 +42,16 @@
 <% } else { %>
   
       <div class="accordion-heading row-fluid">
-        <div class="span" style="width: 20px"></div>
-        <div class="span3"><a href="/contacts/<%= contact.id %>"><%= contact_label.trunc(20) %></a></div>
-        <div class="span5"><%= status_label %>: <a href="<%=spec_url%>"><%= spec_label.rtrunc(25) %></a></div>
+        <div class="span4">
+          <div style="margin: 0px 5px">
+            <a href="/contacts/<%= contact.id %>"><%= contact_label.trunc(20) %></a>
+            <% if (photos_enabled) { %> <small><i rel="tooltip" title="Includes Photos" class="icon-picture"></i></small><% } %>
+          </div>
+        </div>
+        <div class="span8">
+          <%= status_label %>: <a href="<%=spec_url%>"><%= spec_label.rtrunc(25) %></a>
+          <small class="pull-right"><%=  status_date_label %> at <%= status_time_label %></small>
+        </div>
       </div>
 
 <% } %>
