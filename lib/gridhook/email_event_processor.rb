@@ -2,8 +2,6 @@ class EmailEventProcessor
 
   def call(event)
 
-
-
     return true if event[:airframe_message_id].blank?
 
     AirframeMessage.find(event[:airframe_message_id].to_i) do |message|
@@ -20,9 +18,6 @@ class EmailEventProcessor
       end
 
       message.save
-
-      puts "MESSAGE: #{message.inspect}"
-      puts "EVENT: #{event[:event]}"
 
     end
 
