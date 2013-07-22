@@ -6,8 +6,6 @@ class EmailEventProcessor
 
     AirframeMessage.find(event[:airframe_message_id].to_i) do |message|
 
-      next if event[:event].blank?
-
       case event[:event].downcase
       when "delivered"
         message.status = "sent"
