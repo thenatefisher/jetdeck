@@ -49,8 +49,10 @@
           </div>
         </div>
         <div class="span8">
-          <%= status_label %>: <a href="<%=spec_url%>"><%= spec_label.rtrunc(25) %></a>
-          <small class="pull-right"><%=  status_date_label %> at <%= status_time_label %></small>
+          <% if (spec_label) { %>
+            <%= status_label %>: <a href="<%=spec_url%>"><%= spec_label.rtrunc(25) %></a>
+            <small class="pull-right"><%=  status_date_label %> at <%= status_time_label %></small>
+          <% } %>
         </div>
       </div>
 

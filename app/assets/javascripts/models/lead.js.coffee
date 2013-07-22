@@ -4,6 +4,14 @@ class Jetdeck.Models.LeadModel extends Backbone.Model
     defaults :
       contact: null
       airframe: null
+      photos_enabled: false
+      status_label: ""
+      contact_label: ""
+      spec_label: ""
+      spec_url: ""
+      status_date_label: ""
+      status_time_label: ""
+      messages: []
       thumbnail: "/assets/placeholder/aircraft_default_avatar_small.png"
 
 class Jetdeck.Collections.LeadsCollection extends Backbone.Collection

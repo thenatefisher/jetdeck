@@ -19,7 +19,7 @@ class EmailEventProcessor
         message.status = "failed"
       end
 
-      message.save!
+      message.save
 
     end
 

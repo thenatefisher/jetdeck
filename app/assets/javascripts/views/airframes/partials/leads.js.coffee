@@ -40,8 +40,8 @@ class Jetdeck.Views.Airframes.Leads.Item extends Backbone.View
   template: JST["templates/airframes/leads/lead_item"]
 
   render: =>
-    fold = {fold: @options.fold}
-    $(@el).html(@template($.extend(@model.toJSON(), fold)))
+    params = {fold: @options.fold}
+    $(@el).html(@template($.extend(@model.toJSON(), params)))
 
     @$('.collapse').on('hidden', =>
       @$('.accordion-toggle').html("<i class='icon-caret-right'></i>")
