@@ -17,7 +17,9 @@ class EmailEventProcessor
         message.status = "failed"
       end
 
-      message.save
+      puts "MESSAGE SAVE: #{message.save}"
+      puts "MESSAGE: #{message.inspect}"
+      puts "EVENT: #{event[:event]}"
 
     end
 
