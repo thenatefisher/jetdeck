@@ -10,6 +10,7 @@ class EmailEventProcessor
     message = AirframeMessage.find(event[:airframe_message_id].to_i)
 
     case event[:event].downcase.strip
+    when "processed"
     when "delivered"
       message.status = "sent"
     when "open"
@@ -22,7 +23,7 @@ class EmailEventProcessor
 
     message.save
     puts "MESSAGE: #{message.inspect}"
-      
+
   end
 
 end
