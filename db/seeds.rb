@@ -8,20 +8,20 @@
 contact = Contact.create(
   :first => "Nate",
   :last => "Fisher",
-  :email => "***REMOVED***",
-  :email_confirmation => "***REMOVED***"
+  :email => "xxx@jetdeck.co",
+  :email_confirmation => "xxx@jetdeck.co"
   )
 
 user = User.create({
-    :password => "asd123",
-    :password_confirmation => "asd123",
+    :password => "xxx",
+    :password_confirmation => "xxx",
     :contact_id => contact.id,
     :activated => true
 })
 
 recipient = Contact.create(
-    :email => "***REMOVED***",
-    :email_confirmation => "***REMOVED***" 
+    :email => "xxx@gmail.com",
+    :email_confirmation => "xxx@gmail.com" 
 )
 
 airframe = Airframe.create(:creator => user)

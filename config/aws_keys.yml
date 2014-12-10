@@ -1,15 +1,12 @@
 staging:
-  access_key_id: ***REMOVED***
-  secret_access_key: t72j+f9/***REMOVED***
+  access_key_id: xxx
+  secret_access_key: xxx
 development:
-  access_key_id: ***REMOVED***
-  secret_access_key: t72j+f9/***REMOVED***
+  access_key_id: xxx
+  secret_access_key: xxx
 test:
-  access_key_id: ***REMOVED***
-  secret_access_key: t72j+f9/***REMOVED***
+  access_key_id: xxx
+  secret_access_key: xxx
 production:
-  access_key_id: ***REMOVED***
-  secret_access_key: t72j+f9/***REMOVED***
-purple:
-  access_key_id: ***REMOVED***
-  secret_access_key: t72j+f9/***REMOVED***
+  access_key_id: xxx
+  secret_access_key: xxx

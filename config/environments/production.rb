@@ -70,6 +70,6 @@ Jetdeck::Application.configure do
   config.aws_s3_bucket = "jetdeck_prod"
   
   # mix panel
-  config.mixpanel_token = "***REMOVED***"
+  config.mixpanel_token = "xxx"
     
 end

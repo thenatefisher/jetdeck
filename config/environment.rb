@@ -8,7 +8,7 @@ Jetdeck::Application.initialize!
 # Use SendGrid
 ActionMailer::Base.smtp_settings = {
   :user_name => "jetdeck",
-  :password => "***REMOVED***",
+  :password => "xxx",
   :domain => "jetdeck.co",
   :address => "smtp.sendgrid.net",
   :port => 587,

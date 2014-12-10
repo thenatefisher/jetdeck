@@ -16,5 +16,5 @@ class MyTestMailer < ActionMailer::Base
 
 end
 
-#to = "***REMOVED***, ***REMOVED***, steve@jetdeck.co, rafeal@jetdeck.co, tom@jetdeck.co"
+#to = "nate.scott.fisher@gmail.com, nate@jetdeck.co, steve@jetdeck.co, rafeal@jetdeck.co, tom@jetdeck.co"
 #MyTestMailer::mailer(to).deliver()

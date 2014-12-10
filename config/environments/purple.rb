@@ -51,10 +51,10 @@ Jetdeck::Application.configure do
   config.aws_s3_bucket = "jetdeck_staging"
   
   # mix panel
-  config.mixpanel_token = "***REMOVED***"
+  config.mixpanel_token = "xxx"
 
   # stripe TEST keys
-  config.stripe_private_key = "***REMOVED***"
-  config.stripe_public_key = "***REMOVED***"
+  config.stripe_private_key = "xxx"
+  config.stripe_public_key = "xxx"
     
 end

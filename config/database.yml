@@ -8,16 +8,6 @@ development:
   password: postgres
   timeout: 5000
 
-myheroku: &myheroku
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  host: ***REMOVED***
-  database: ***REMOVED***
-  username: ***REMOVED***
-  port: 5432
-  password: ***REMOVED***
-
 test_local: &test_local
   adapter: postgresql
   database: jetdeck_test
@@ -29,5 +19,4 @@ test_local: &test_local
 test:
   <<: *test_local
 
-purple:
-  <<: *myheroku
+
